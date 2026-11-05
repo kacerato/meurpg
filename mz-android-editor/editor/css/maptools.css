@@ -1,0 +1,184 @@
+/* Módulo maptools: paleta de tiles, faixa de ferramentas, diálogos de propriedades. */
+
+#mtPanel {
+    width: calc(8 * 32px + 14px); /* ajustado pelo JS conforme o tamanho dos tiles */
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel2);
+    border-right: 1px solid var(--line);
+    min-height: 0;
+    transition: margin-left .15s ease;
+}
+#mtPanel.hidden { display: none; }
+
+.mtStrip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line2);
+}
+.mtStrip .mtTool {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 6px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.mtStrip .mtTool img { width: 22px; height: 22px; display: block; margin: auto; }
+.mtStrip .mtLayer {
+    height: 36px;
+    flex: 1;
+    min-width: 96px;
+    font: inherit;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--panel2);
+}
+.mtMarquee {
+    display: block; width: 18px; height: 14px; margin: auto;
+    border: 2px dashed var(--text);
+}
+.mtNoAuto { position: relative; display: inline-block; }
+.mtNoAuto::after {
+    content: ""; position: absolute; left: -3px; right: -3px; top: 50%;
+    border-top: 2px solid #c03030; transform: rotate(-35deg);
+}
+.mtPalIcon {
+    display: block; width: 22px; height: 22px;
+    background:
+        linear-gradient(#5aa04a, #5aa04a) 0 0 / 10px 10px no-repeat,
+        linear-gradient(#3c82e6, #3c82e6) 12px 0 / 10px 10px no-repeat,
+        linear-gradient(#b08040, #b08040) 0 12px / 10px 10px no-repeat,
+        linear-gradient(#888, #888) 12px 12px / 10px 10px no-repeat;
+}
+
+.mtPalette {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+.mtPaletteScroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    touch-action: pan-y;
+}
+.mtPaletteCanvas { display: block; touch-action: pan-y; image-rendering: pixelated; }
+
+.mtTabs {
+    display: flex;
+    border-top: 1px solid var(--line);
+    background: var(--panel);
+}
+.mtTabs button {
+    flex: 1;
+    height: 38px;
+    border-radius: 0;
+    border: 0;
+    border-right: 1px solid var(--line2);
+    font-family: "M+ 1p", sans-serif;
+    font-weight: 500;
+}
+.mtTabs button.on { background: var(--panel2); box-shadow: inset 0 3px 0 var(--accent); }
+
+#viewport.mtPainting { cursor: crosshair; }
+
+button.tb.mtModified { box-shadow: inset 0 -3px 0 #e07020; }
+#mtModifiedFlag { color: #c05000; font-weight: bold; }
+
+@media (max-width: 700px) {
+    #mtPanel {
+        position: absolute; top: 0; bottom: 0; left: 0; z-index: 9;
+        box-shadow: 4px 0 16px rgba(0,0,0,.35);
+    }
+}
+
+/* Menu de contexto da lista de mapas */
+#mtTreeMenu {
+    position: fixed; z-index: 60;
+    display: flex; flex-direction: column;
+    min-width: 170px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.3);
+    padding: 3px 0;
+}
+#mtTreeMenu button {
+    height: 40px; text-align: left; padding: 0 16px;
+    border: 0; border-radius: 0;
+}
+
+/* Diálogos */
+.mtProps { padding: 6px; }
+.mtPropsCols { display: flex; gap: 8px; height: 100%; min-height: 0; }
+.mtPropsCols > .mtGroup:first-child { flex: 1.35; overflow: auto; }
+.mtEnc { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.mtGroup {
+    border: 1px solid var(--line2);
+    border-radius: 3px;
+    margin: 0 0 6px;
+    padding: 4px 8px 8px;
+    min-width: 0;
+}
+.mtGroup legend { padding: 0 4px; font-family: "M+ 1p", sans-serif; font-weight: 500; }
+.mtGrid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; margin-bottom: 6px; }
+.mtField { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mtField > span { font-size: 12px; color: var(--muted); }
+.mtField input, .mtField select, .mtField textarea, .mtGroup select, .mtRow input {
+    font: inherit;
+    min-height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--panel2);
+    padding: 2px 6px;
+    min-width: 0;
+    user-select: text;
+}
+.mtField textarea { resize: vertical; min-height: 64px; }
+.mtRow { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+.mtRow > * { flex: 1; }
+.mtCheck { display: flex; align-items: center; gap: 4px; min-height: 36px; }
+.mtCheck input { width: 20px; height: 20px; }
+.mtBtn {
+    min-height: 36px; padding: 0 12px;
+    border: 1px solid var(--line) !important;
+    background: var(--panel2);
+}
+.mtPick { width: 100%; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mtTableWrap { flex: 1; overflow: auto; border: 1px solid var(--line2); background: var(--panel2); min-height: 120px; margin-bottom: 6px; }
+.mtTable { width: 100%; border-collapse: collapse; }
+.mtTable th { position: sticky; top: 0; background: #e4e4e4; font-weight: 500; text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--line2); }
+.mtTable td { padding: 8px 6px; border-bottom: 1px solid #eee; }
+.mtTable tr.sel td { background: var(--accent); color: #fff; }
+.mtTable tr.blank td { height: 36px; }
+
+.mtAudio { display: flex; gap: 10px; height: 100%; }
+.mtAudioList { flex: 1; display: flex; }
+.mtList { width: 100%; height: 100%; font: inherit; border: 1px solid var(--line); background: var(--panel2); }
+.mtList option { padding: 6px 4px; }
+.mtAudioSide { width: 220px; display: flex; flex-direction: column; gap: 6px; }
+.mtRange { display: flex; align-items: center; gap: 6px; }
+.mtRange input { flex: 1; }
+.mtRangeVal { width: 42px; text-align: right; }
+
+.mtImgDialog { display: flex; gap: 8px; height: 100%; }
+.mtImgLists { display: flex; gap: 6px; width: 46%; }
+.mtImgPreview {
+    flex: 1; position: relative; overflow: hidden;
+    background: repeating-conic-gradient(#ddd 0 25%, #fff 0 50%) 0 0 / 16px 16px;
+    border: 1px solid var(--line2);
+}
+.mtImgPreview img { position: absolute; left: 0; top: 0; max-width: 100%; }
+
+@media (max-width: 900px) {
+    .mtPropsCols { flex-direction: column; height: auto; }
+    .mtGrid2 { grid-template-columns: 1fr; }
+}
