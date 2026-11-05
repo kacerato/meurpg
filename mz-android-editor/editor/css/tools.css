@@ -100,6 +100,13 @@ html[data-theme="dark"] input, html[data-theme="dark"] select, html[data-theme="
     display: flex; flex-direction: column;
 }
 html[data-theme="dark"] .tlPreviewBox { background: repeating-conic-gradient(#3a3a3a 0 25%, #303030 0 50%) 0 0 / 16px 16px; }
+/* Opções → Cor transparente (MZ: fundo das áreas transparentes no editor). options.js define
+   --mz-transparent; vale para os visualizadores de imagem de todos os módulos (Resource Manager,
+   seletores de imagem do banco, de eventos, do mapa e dos plugins) e não para o fundo do mapa. */
+html .tlPreviewBox, html[data-theme="dark"] .tlPreviewBox,
+html .dbPickPreview, html .evFilePreview, html .mtImgPreview, html .pgPreview {
+    background: var(--mz-transparent, #808080) !important;
+}
 .tlPreviewCanvas { flex: 1; min-height: 0; overflow: auto; display: flex; align-items: center; justify-content: center; padding: 6px; }
 .tlPreviewImg { max-width: 100%; max-height: 100%; image-rendering: pixelated; object-fit: contain; }
 .tlPreviewImgBig { image-rendering: pixelated; }
@@ -141,6 +148,14 @@ html[data-theme="dark"] .tlPreviewBox { background: repeating-conic-gradient(#3a
 .tlCheckLbl { display: flex; align-items: center; gap: 8px; min-height: 36px; }
 .tlCheckLbl input { width: 22px; height: 22px; }
 .tlColor { width: 64px; height: 36px; padding: 2px; border: 1px solid var(--line); background: var(--panel2); }
+.tlNum { width: 90px; }
+/* amostra da Cor transparente: uma imagem com transparência sobre a cor (como a prévia do MZ) */
+.tlSwatch {
+    height: 44px; border: 1px solid var(--line); border-radius: 3px;
+    background: radial-gradient(circle at 50% 50%, #e8c070 0 30%, transparent 31%) center / 44px 44px no-repeat, var(--sw, #808080);
+}
+.tlWarn { display: block; margin-top: 6px; color: #b05000; font-weight: 500; }
+html[data-theme="dark"] .tlWarn { color: #ffb060; }
 
 /* ---------- Ajuda / Sobre ---------- */
 .tlHelpBody { display: flex; flex-direction: column; gap: 6px; padding: 6px !important; overflow: hidden !important; }

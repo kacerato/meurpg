@@ -70,16 +70,26 @@ linha 0 da comum é branca e aparece como xadrez = "original"). Cada quadrado da
 
 Abas Homem/Mulher/Criança (cada aba guarda seu próprio personagem, como no MZ), Lista de Peças,
 Variação (ícones de `Variation/`, primeiro quadro vazio = sem a parte, exceto partes essenciais),
-Cor (lista de cores da parte — as que a variação atual não usa aparecem em cinza — e paleta),
-Ajustar (△◁▷▽), Pré-visualização igual à do MZ (rosto + andando + caído à esquerda, battler SV à
-direita) e, extra, modo **Animação** (andando com direção, battler SV com os 18 movimentos do
-`Sprite_Actor.MOTIONS`, caído). Botões: Aleatório, **Redefinir** (extra: o MZ não tem; volta ao
+Cor (lista de cores da parte — as que a variação atual não usa em nenhuma imagem, rosto, andando,
+caído ou SV, aparecem em cinza — e paleta), Ajustar (△◁▷▽; desabilitado para partes sem imagem no
+rosto, como cauda e asa, ou sem variação escolhida, porque o deslocamento só vale no rosto),
+Pré-visualização igual à do MZ (rosto + andando + caído à esquerda, battler SV à direita) e, extra,
+modo **Animação** (andando com direção, battler SV com os 18 movimentos do `Sprite_Actor.MOTIONS`:
+os em loop fazem 0-1-2-1; os únicos — dano, esquiva, estocada, golpe, projétil, habilidade, magia,
+item — tocam 0-1-2 uma vez e param no último quadro; toque no battler toca de novo; caído). Botões: Aleatório, **Redefinir** (extra: o MZ não tem; volta ao
 padrão), Imagem do rosto…, Personagem Andando…, Personagem Caído…, Personagem Lutando…,
 Salvar Configurações…, Carregar Configurações…  Alvos ≥ 36 px (quadros da paleta: 26×30, como no MZ).
 
 Exportação (mesmo esquema do `Dialog_CharacterExporter`): folha de destino com cursor; toque numa
 célula para escolher onde entra a imagem; Importar… carrega um PNG da pasta do projeto como base;
 Exportar… pede o nome e avisa se o arquivo existe ("Sobrescrever?").
+
+**Outro local** (como os diálogos de arquivo do MZ, que aceitam qualquer pasta): Importar… e
+Carregar Configurações… têm o botão "Outro local…" (`<input type=file>`: arquivo do PC ou, no
+Android, do seletor de arquivos do WebView); Exportar… e Salvar Configurações… têm "Outro local…",
+que grava fora do projeto (`saveOutside` em `ui.js`): no PC (Chrome/Edge) `showSaveFilePicker`;
+no Android grava no caminho do projeto e abre o compartilhamento (`Android.shareFile`) para
+mandar a Arquivos/Drive/outro app; sem nenhum dos dois, download do navegador.
 
 | botão | pasta | folha | célula |
 |---|---|---|---|
@@ -95,7 +105,9 @@ Gravação: `PUT /api/file?path=img/...png` com corpo binário. Configurações:
 
 - Os tamanhos das janelas de exportação vêm de vínculos numéricos do QML que não decodifiquei; usei
   os tamanhos do RTP (conferidos com `Actor1.png`, `Damage1.png`, `sv_actors/*.png`).
-- Salvar/Carregar Configurações gravam dentro do projeto (no PC o MZ permite qualquer pasta).
+- Android: "Outro local…" para abrir arquivo depende do file chooser do WebView
+  (`onShowFileChooser`, da casca); para gravar, usa `Android.shareFile` (o arquivo também fica
+  no projeto, porque a ponte só compartilha arquivos do projeto).
 - Não há botão "Redefinir" no MZ; mantido como extra.
 - Gostaria na API: `api.project.writeBinary(path, blob)` e um evento `resource:changed` oficial
   (o módulo já emite `api.emit("resource:changed", {path})` após exportar).

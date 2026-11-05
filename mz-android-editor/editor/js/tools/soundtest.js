@@ -100,6 +100,26 @@ export async function openSoundTest() {
         },
         buttons: [{ label: t("Close", "BasicConstants"), primary: true, value: true }]
     });
-    await selectType(st.type);
-    await p;
+    // Teclado como no MZ: Espaço toca o arquivo selecionado; ↑/↓ mudam a seleção.
+    const onKey = ev => {
+        const tag = ev.target && ev.target.tagName;
+        const typing = (tag === "INPUT" && ev.target.type !== "range") || tag === "TEXTAREA" || tag === "SELECT";
+        if (ev.key === " " && !typing && !ev.repeat) {
+            ev.preventDefault();
+            playSel();
+        } else if ((ev.key === "ArrowDown" || ev.key === "ArrowUp") && !typing && tag !== "INPUT" && cur.names.length) {
+            ev.preventDefault();
+            const i = cur.names.indexOf(st.sel[st.type]);
+            const j = Math.max(0, Math.min(cur.names.length - 1, i < 0 ? 0 : i + (ev.key === "ArrowDown" ? 1 : -1)));
+            st.sel[st.type] = cur.names[j];
+            renderList();
+        }
+    };
+    document.addEventListener("keydown", onKey, true);
+    try {
+        await selectType(st.type);
+        await p;
+    } finally {
+        document.removeEventListener("keydown", onKey, true);
+    }
 }

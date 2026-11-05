@@ -24,11 +24,11 @@
 | Eventos (modo, editor, criação rápida, lista, busca) | 55 | 6 | 4 | Ausentes: Aplicar, busca por nome, Ctrl+Enter, desfazer em evento comum. |
 | Mapa (design, paleta, lista, propriedades, masmorra, amostras, imagem) | quase tudo | poucos | 1 | Desenho completo. Falta expandir/recolher a árvore; há alguns limites diferentes. |
 | Menus Arquivo / Editar / Modo / Desenho / Escala / Ferramentas / Jogo / Ajuda | — | — | barra de menus | **Não há barra de menus.** As ações ficam em ícones e no menu ☰. Fechar, Sair, Abrir pasta, Atualizar core script, Tutoriais e Site estão ausentes. |
-| Ferramentas (Recursos, Teste de som, Opções) | maioria | vários | `movies/`, Tutoriais | No Android, Importar não funciona (o WebView não tem file chooser). |
+| Ferramentas (Recursos, Teste de som, Opções) | maioria | vários | Tutoriais | Pasta `movies/` presente. No Android, Importar depende do file chooser do WebView (casca). |
 | Jogo (teste de jogo, de batalha, de evento) | — | todos | modo `test` | Roda sem `?test` (sem F9 e sem atravessar obstáculos) e sem salvar antes. |
 | Implantação | Web fiel | — | Windows/macOS | APK é extra. O .zip vem dentro de `www/`. |
 | Plugins (gerenciador, tipos, comando 357) | quase tudo | poucos | Inserir ícone, texto livre | — |
-| Gerador de personagens | todas as partes | poucos | — | Tamanhos de saída corretos. Importar/Exportar presos à pasta do projeto. |
+| Gerador de personagens | todas as partes | poucos | — | Tamanhos de saída corretos. Importar/Exportar e Salvar/Carregar também em outro local. |
 
 ## Verificação no editor rodando
 
@@ -87,7 +87,7 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 | Novo projeto: campo Nome (pasta) | 01_02 (2) | OK | `tools/newproject.js:153`, validação `:146`/`:193` | Não mostra a recomendação de usar caracteres alfanuméricos. |
 | Novo projeto: campo Título | 01_02 (2) | OK | `newproject.js:154`; aplicado a `System.json.gameTitle` e ao `<title>` em `:117-125` | — |
 | Novo projeto: Local + botão "Escolher…" | 01_02 (2) | Parcial | `newproject.js:155-175`. Android: `MainActivity.java:262-273` (SAF) e `:135-163` | No Android o local só é escolhido **depois** do OK (não aparece no diálogo). No PC depende de `showDirectoryPicker`; sem ele, baixa um .zip. |
-| Novo projeto: criar "projeto de exemplo" com todos os recursos | 01_02 (2) | Parcial | `newproject.js:109-133` (template mínimo em `editor/template/`); `app.js:162-179` (`?newProject`) | O template não traz img/characters, tilesets, titles e áudio, então o projeto novo **não roda** até usar "Importar recursos padrão", que por sua vez não funciona no Android (sem file chooser). Se a pasta já existir, o SAF cria "Nome (1)" sem avisar (`MainActivity.java:148`). |
+| Novo projeto: criar "projeto de exemplo" com todos os recursos | 01_02 (2) | OK | `tools/newproject.js` (`loadTemplate`, `createProject`); `android/app/template.gradle` (copia o `newdata` completo para `assets/editor/template-full/` + `manifest.json`); `app.js` (`?newProject`) | No APK o projeto novo é o `newdata` inteiro (1310 arquivos, 100 MB) e roda até o título e o MAP001 (testado no aparelho). No PC sem `editor/template-full/` cai para o template mínimo e avisa. Se a pasta já existir, o SAF cria "Nome (1)" sem avisar (`MainActivity.java:148`). |
 | Novo projeto fecha o projeto atual | 01_04 | Parcial | Android: `MainActivity.java:157-158` (`loadUrl` com o novo projeto) | Não pergunta se deseja salvar: as alterações de mapa não salvas são perdidas sem aviso (`beforeunload` não dispara em `loadUrl` no WebView). |
 | Gera `game.rmmzproject` | 01_02 | OK | `newproject.js:130` ("RPGMZ 1.1.1") | — |
 | Abrir projeto | 01_02, 01_04 | Parcial | `app.js:129-135` → `Android.pickProject()` → `MainActivity.java:111-131` (SAF de pasta, persistido em `:45-48`) | No PC fica desabilitado (só via `--project` em `server.mjs:25`). Escolhe uma **pasta**, não o arquivo `game.rmmzproject`, e não valida se a pasta é um projeto MZ (`project.js:12-20`). Não confirma o descarte de alterações não salvas antes de trocar de projeto. |
@@ -166,26 +166,26 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 | Gerenciador de plugins (botão) | 01_04, 01_05 | OK (existência) | `plugins/index.js:30` | Conteúdo coberto por outra auditoria. |
 | Buscador de eventos | 01_04, 01_05 | OK | `events/index.js:53`; `events/search.js:79-110` (Switch, Variable, Item, Weapon, Armor, Common Event, Text) | Já vai além do manual (switch, variável, nome). |
 | Gerador de personagens (existência) | 01_04, 01_05 | OK (existência) | `generator/index.js:56` | Detalhes em outra auditoria. |
-| **Gerenciador de recursos**: lista de pastas | 01_05 | Parcial | `tools/resources.js:8-15` (`FOLDERS`), `:238-246` | Inclui `img/animations` (pasta de MV, ausente no MZ por padrão). **Falta `movies/`**: não dá para importar vídeos .webm/.mp4 (01_11_01 exige os dois formatos). |
+| **Gerenciador de recursos**: lista de pastas | 01_05 | OK | `tools/resources.js:8-17` (`FOLDERS`) | Ordem do MZ, com `movies/` (.webm/.mp4, prévia em `<video>`); `img/animations` (pasta do MV) saiu. |
 | Gerenciador de recursos: lista de arquivos | 01_05 | OK | `resources.js:35-42` (`listFolder`, filtro por extensão), `:247-277` | Arquivos `.png_`/`.ogg_` (já criptografados) não aparecem, o que é coerente com "arquivos criptografados não podem ser usados no projeto". |
 | Gerenciador de recursos: Pré-visualização | 01_05 | OK+ | `resources.js:175-205` (imagem com dimensões; áudio com Tocar/Parar; efkefc só o nome); `:207-215` (janela grande) | Extra fiel. Effekseer sem pré-visualização. |
 | Gerenciador de recursos: Importar (vários arquivos) | 01_05 | Parcial | `resources.js:87-105`, `:46-56` (`<input type=file multiple>`) | **Não funciona no Android**: o WebView não tem `onShowFileChooser` (`MainActivity.java:62-68`). No PC está OK, valida extensão e confirma a sobrescrita. Não valida tamanho/formato pelos padrões de 01_11_01 (ex.: face 144×144). |
 | Gerenciador de recursos: Exportar | 01_05 | OK | `resources.js:156-171`; Android `MainActivity.java:166-193,276-279` (`ACTION_SEND`) | No Android "Exportar" vira "Compartilhar" (um arquivo por vez, um seletor por arquivo). |
 | Gerenciador de recursos: Excluir (vários com Shift) | 01_05 | OK | `resources.js:301-316`; seleção múltipla `:228-235,256-265`; `LocalServer.java:229` (DELETE) | — |
 | Gerenciador de recursos: DLC | 01_05 | Parcial | `resources.js:317-320` → `importFromFolder` `:109-152` (`webkitdirectory`) | Não existe pasta DLC fixa (escolhe-se uma pasta). **Inoperante no Android** (`webkitdirectory` e file chooser ausentes). |
-| (extra) Importar recursos padrão | — | Parcial | `resources.js:325-328` | Mesmo bloqueio do Android. É crítico porque o Novo projeto depende dele. |
+| (extra) Importar recursos padrão | — | OK | `resources.js` (`importDefaultResources`, `copyMissing`) | Usa o template completo do editor (o mesmo do Novo projeto) sem pedir pasta; só copia o que falta. Sem o template completo (PC), pede a pasta do `newdata`. |
 | **Teste de som**: abas BGM/BGS/ME/SE | 01_05 | OK | `tools/soundtest.js:7,75-79` | — |
 | Teste de som: lista de arquivos | 01_05 | OK | `soundtest.js:13-24,53-66` | — |
 | Teste de som: Volume 0–100 % | 01_05 | OK | `soundtest.js:88`; `audio.js:54,75` | — |
 | Teste de som: Pitch 50–150 % | 01_05 | OK | `soundtest.js:89` | No modo de reserva `<audio>` o pitch altera a velocidade (`audio.js:34`), igual ao WebAudio. |
 | Teste de som: Balanço (Pan) −100–100 | 01_05 | OK | `soundtest.js:90`; aviso no modo de reserva `:96` | — |
 | Teste de som: Tocar / Parar | 01_05 | OK | `soundtest.js:47-52,91-93` (+ "Parar tudo" `:94`) | — |
-| Teste de som: barra de espaço toca | 01_05 | Ausente | — | Não há atalho de teclado. Só o duplo clique na lista toca (`:61`). |
+| Teste de som: barra de espaço toca | 01_05 | OK | `soundtest.js` (`onKey`) | Espaço toca o selecionado; ↑/↓ mudam a seleção. ME interrompe a BGM e ela volta do mesmo ponto quando o ME termina (`audio.js`, `resumeBgm`). |
 | Teste de som: música continua após fechar | 01_05 | OK | `soundtest.js:1-3` (nada é parado ao fechar) | — |
-| **Opções**: Cor transparente | 01_05 | Parcial | `tools/options.js:8,46,97-98,108` | É aplicada ao fundo do `#viewport` do mapa. No MZ, é o fundo transparente dos visualizadores de imagem; aqui os seletores de imagem não usam essa cor. |
+| **Opções**: Cor transparente | 01_05 | OK | `tools/options.js` (R/G/B 0–255 + amostra, `--mz-transparent`); `css/tools.css` | Vale como fundo dos visualizadores de imagem (Resource Manager e seletores de imagem do banco, eventos, mapa e plugins), não do mapa. |
 | Opções: Grade do mapa "Mostrar" | 01_05 | OK | `options.js:9,48-49,72-82,109` (sincroniza com `btnGrid`) | — |
 | Opções: Tema | 01_05 | OK | `options.js:10,39,111` (claro/escuro) | — |
-| Opções: Seletor de objetos (Dropdown/Extended/Smart) | 01_05 | Parcial | `options.js:11,112` | Apenas guardado: nenhum módulo lê o valor (confirmado em NOTES.md e por busca). |
+| Opções: Seletor de objetos (Dropdown/Extended/Smart) | 01_05 | Parcial | `options.js` (`objectSelectorMode`); `api.tools.objectSelectorMode(n)`; `html[data-object-selector]` | O valor já decide "dropdown"/"extended" (Smart: lista suspensa abaixo de 100). Falta os seletores de objetos de `events/ui.js` (`dataPick`) e `database/pickers.js` consultarem a função. |
 | (extras) Ícones, Idioma, Confirmar ao sair, Salvar automaticamente | — | Extra | `options.js:12-15,113-117,50-60` | O idioma não traduz nada. O salvamento automático clica `btnSave` (só mapas). |
 | Tutoriais | 01_04, 01_05 | Ausente | — | Não implementado (declarado em NOTES.md). |
 | Gerar masmorra | 01_05 | Fora do escopo | (maptools / `afterBulkEdit`) | Coberto pela auditoria de mapas. |
@@ -1040,23 +1040,23 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | Abas Homem / Mulher / Criança (estado próprio por aba) | 01_05 | OK | `index.js:31-48, 91-99`; `data.js:134-138` | — |
 | Lista de peças (18 categorias, textos pt_BR oficiais) | 01_05 / Layout_CharacterGenerator | OK | `index.js:102-116`; `data.js:5-16` | — |
 | Variação (ícones de `Variation/`, vazio permitido exceto nas partes essenciais) | 01_05 / Group_CharacterPatterns | OK | `index.js:119-144`; `data.js:103-105` | — |
-| Cor por camada / máscara (24 cores-chave, nomes por parte, indisponíveis em cinza) | 01_05 / Group_CharacterColors | OK | `index.js:151-235`; `data.js:33-100`; `composer.js:265-346` | "Disponível" considera só face e TV (`composer.js:303-306, 330-332`), não SV/TVD |
+| Cor por camada / máscara (24 cores-chave, nomes por parte, indisponíveis em cinza) | 01_05 / Group_CharacterColors | OK | `index.js:151-235`; `data.js:33-100`; `composer.js:265-346` | "Disponível" considera rosto, andando, caído e SV. |
 | Paletas `grad_hair/eyes/skin/common` (comum: cor 0 = original) | Group_CharacterColors | OK | `composer.js:103-134`; `index.js:173-218` | — |
 | Algoritmo de colorização (255 − qGray → gradiente, alfa preservado) | ImageComposer (C++) | OK (empírico) | `composer.js:142-176` | Conferido apenas com screenshot do manual (NOTES.md) |
-| Deslocamento (Ajustar, −8..+8) | 01_05 ("offset") | OK | `index.js:238-260`; aplicado só ao rosto (`composer.js:290-293`) | Botões aparecem para todas as partes, mas só valem no rosto (fiel ao bytecode, segundo NOTES) |
+| Deslocamento (Ajustar, −8..+8) | 01_05 ("offset") | OK | `index.js` (`refreshOffset`, `partShifts`); aplicado só ao rosto (`composer.js:290-293`) | Botões desabilitados para partes sem imagem no rosto (cauda, asa) ou sem variação. |
 | Pré-visualização (rosto + andando + caído + SV) | 01_05 ("Preview") | OK | `index.js:284-308` | — |
-| Prévia animada (andar 4 direções, 18 movimentos SV) | — | Extra | `index.js:311-366` | Ver Divergências (1-2-3 vs 1-2-3-2) |
+| Prévia animada (andar 4 direções, 18 movimentos SV) | — | Extra | `index.js:311-370` | Loop 0-1-2-1; movimentos únicos tocam 0-1-2 uma vez (`Sprite_Actor.MOTIONS`). |
 | Aleatório (probabilidade de vazio, orelhas 90% p01, pele 70% ≤12, comum 50% original) | 01_05 "Randomize" | OK | `index.js:387-411`; `data.js:113-120` | — |
 | Redefinir | — | Extra | `index.js:413-417` | — |
 | Imagem do rosto… → `img/faces`, célula 144×144, folha 576×288 | 01_05 "Face Image" | OK | `data.js:128`; `composer.js:20` | — |
 | Personagem Andando… → `img/characters`, 144×192, folha 576×384 ou `$` único | 01_05 "Walking Character" | OK | `data.js:129`; `exporter.js:45-61, 153` | — |
 | Personagem Caído… → `img/characters`, 144×48, folha 576×384 (4×8) | 01_05 "Damaged Character" | OK | `data.js:130` | Tamanho da janela tirado do RTP, não do QML (NOTES.md) |
 | Personagem Lutando… → `img/sv_actors`, 576×384 (9×6 = 54 quadros de 64×64) | 01_05 "Battler", 01_11_02 | OK | `data.js:131`; `composer.js:22` | — |
-| Exportador: Importar (imagem base) | 01_05 "Import" ("from a file") | Parcial | `exporter.js:115-140` | Só lista PNG da pasta de destino do projeto. Não abre arquivo externo do aparelho (seletor do SO) |
+| Exportador: Importar (imagem base) | 01_05 "Import" ("from a file") | OK | `exporter.js:115-150`; `ui.js` (`pickFile` com `accept`, `chooseLocalFile`) | Lista os PNG da pasta de destino e tem "Outro local…" (arquivo do PC/aparelho). No Android depende do file chooser do WebView. |
 | Exportador: escolher a célula de destino | Dialog_CharacterExporter | OK | `exporter.js:105-113` | — |
-| Exportador: Exportar (nome, confirmação de sobrescrita, PNG sem perdas) | 01_05 "Export" | OK | `exporter.js:142-177`; `png.js` | Só dentro do projeto. Não salva fora (por exemplo em Downloads/compartilhar) |
-| Salvar Configurações (JSON `CharacterGeneratorSettings` 2.0.0) | 01_05 "Save Settings" | Parcial | `index.js:425-452` | Salva só na raiz do projeto, com nome digitado. No MZ o diálogo de arquivo permite qualquer pasta |
-| Carregar Configurações | 01_05 "Load Settings" | Parcial | `index.js:454-483` | Só `.json` da raiz do projeto. Não há validação de versão |
+| Exportador: Exportar (nome, confirmação de sobrescrita, PNG sem perdas) | 01_05 "Export" | OK | `exporter.js:152-200`; `png.js`; `ui.js` (`saveOutside`) | "Outro local…": PC = `showSaveFilePicker`; Android = grava no projeto e compartilha (`Android.shareFile`). |
+| Salvar Configurações (JSON `CharacterGeneratorSettings` 2.0.0) | 01_05 "Save Settings" | OK | `index.js` (botão `save`); `ui.js` (`saveOutside`) | Na raiz do projeto ou em "Outro local…" (mesmo esquema do Exportar). |
+| Carregar Configurações | 01_05 "Load Settings" | OK | `index.js` (botão `load`) | `.json` da raiz do projeto ou "Outro local…" (arquivo do PC/aparelho). Não há validação de versão. |
 | Aplicar ao ator (gravar faceName/characterName/battlerName) | não existe no MZ 1.1.1 | N/A | — | Não é requisito de fidelidade. Hoje o usuário escolhe a imagem exportada no ator (o módulo emite `resource:changed`, `exporter.js:173`) |
 
 ### Plugins
@@ -1188,13 +1188,12 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Novo projeto e recursos (`tools/`)
 
-1. **P0** — Novo projeto com os recursos padrão: empacotar o `newdata` completo no APK ou copiá-lo via SAF.
-   Hoje o template mínimo (`newproject.js:1-5`) gera um jogo que não roda.
-2. **P1** — Gerenciador de recursos com a pasta `movies/` (`resources.js:8-15`).
+1. ~~**P0** — Novo projeto com os recursos padrão~~ — **OK**: `android/app/template.gradle` empacota o `newdata` completo em `assets/editor/template-full/`; o Novo projeto e o "Importar recursos padrão" usam essa fonte.
+2. ~~**P1** — Gerenciador de recursos com a pasta `movies/`~~ — **OK**.
 3. **P2** — Opções:
-   - "Seletor de objetos" precisa ter efeito;
-   - "Cor transparente" deve valer nos visualizadores de imagem, e não no fundo do mapa.
-4. **P3** — Barra de espaço no Teste de som; ME deve retomar a BGM depois de tocar (`audio.js:63`).
+   - "Cor transparente" nos visualizadores de imagem — **OK**;
+   - "Seletor de objetos" — **Parcial**: `api.tools.objectSelectorMode(n)` pronto; falta events e database usarem.
+4. ~~**P3** — Barra de espaço no Teste de som; ME retoma a BGM~~ — **OK**.
 
 ### Mapa (`maptools/`)
 
@@ -1258,9 +1257,8 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Gerador (`generator/`)
 
-1. **P2** — Importar/Exportar e Salvar/Carregar configurações também fora da pasta do projeto (seletor ou `Android.shareFile`).
-2. **P3** — Prévia SV com os movimentos únicos tocando 1-2-3 uma vez (`index.js:351,360-362`).
-   Cores "disponíveis" devem considerar SV e TVD; botões Ajustar desabilitados para partes que não deslocam.
+1. ~~**P2** — Importar/Exportar e Salvar/Carregar configurações também fora da pasta do projeto~~ — **OK** ("Outro local…").
+2. ~~**P3** — Prévia SV com movimentos únicos uma vez; cores "disponíveis" com SV e TVD; Ajustar desabilitado onde não desloca~~ — **OK**.
 
 ### Implantação (`deploy/`)
 
@@ -1281,7 +1279,7 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
 - **Gravação:** Banco, Plugins (`plugins.js` no OK/Aplicar, `manager.js:312-323`) e Eventos gravam na hora.
   No MZ, tudo fica em memória até "Salvar projeto"; aqui, "não salvar" não desfaz essas mudanças.
 - **Abrir projeto** escolhe uma pasta (SAF), e não o `game.rmmzproject`. Não valida se é projeto MZ nem a versão.
-- **Novo projeto** gera um template mínimo (49 arquivos). No Android, a pasta-mãe é escolhida depois do OK, e um nome repetido vira "Nome (1)" sem aviso.
+- **Novo projeto** gera o `newdata` completo no APK (template mínimo só no PC sem `template-full`). No Android, a pasta-mãe é escolhida depois do OK, e um nome repetido vira "Nome (1)" sem aviso.
 - **Teste de jogo** roda em iframe sem `test`, então o jogo se comporta como versão final.
 - **Layout:** lista de mapas e paleta em colunas separadas e ocultáveis; no celular (≤ 700 px) as duas começam ocultas.
 
@@ -1346,9 +1344,8 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
 - `number` sem `@min`/`@max` fica sem limite; `file` sem `@dir` abre `img/` (padrões do MZ a confirmar).
 - **Extras do port:** Redefinir no Gerador; Ativar/Desativar todos; aba Comandos e campo URL no Gerenciador.
 - **Gerador:**
-  - a prévia SV repete 1-2-3-2 em todos os movimentos;
-  - as cores "disponíveis" consideram só face e TV;
-  - Ajustar só desloca o rosto (fiel ao bytecode, segundo o NOTES);
+  - Ajustar só desloca o rosto (fiel ao bytecode, segundo o NOTES); os botões ficam desabilitados nas partes sem rosto;
+  - "Outro local…" no Android grava no projeto e compartilha (não há "Salvar como" do sistema);
   - o exportador de Caído usa `Damage1.png` do RTP.
 
 ### Ferramentas e Implantação

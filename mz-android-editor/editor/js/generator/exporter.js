@@ -1,11 +1,12 @@
 // Janela de exportação (Dialog_CharacterExporter do MZ): mostra a folha de destino,
 // a célula escolhida recebe a imagem gerada; "Importar…" carrega uma imagem base do projeto
-// e "Exportar…" grava o PNG em img/faces, img/characters ou img/sv_actors.
+// e "Exportar…" grava o PNG em img/faces, img/characters ou img/sv_actors. Como no MZ, as duas
+// também aceitam outro local ("Outro local…": arquivo do aparelho/PC; salvar fora do projeto).
 
 import { EXPORTS } from "./data.js";
 import { decodePng, encodePng, createImage } from "./png.js";
 import { blit, imageToCanvas } from "./composer.js";
-import { el, promptText, pickFile, message, confirmBox, hasProject } from "./ui.js";
+import { el, promptText, pickFile, message, confirmBox, hasProject, saveOutside } from "./ui.js";
 import { t } from "../i18n.js";
 
 export function openExporter(api, type, image) {
@@ -120,23 +121,31 @@ export function openExporter(api, type, image) {
             dirs: [cfg.folder],
             filter: n => n.toLowerCase().endsWith(".png"),
             hint: t("Loads a base image from a file.", "Dialog_CharacterExporter"),
-            thumbs: true
+            thumbs: true,
+            accept: ".png,image/png"
         });
         if (!path) { return; }
+        const local = typeof path !== "string";   // File de outro local
         try {
-            const res = await fetch("/api/file?path=" + encodeURIComponent(path), { cache: "no-store" });
-            if (!res.ok) { throw new Error(String(res.status)); }
-            const img = await decodePng(await res.arrayBuffer());
+            let buf;
+            if (local) {
+                buf = await path.arrayBuffer();
+            } else {
+                const res = await fetch("/api/file?path=" + encodeURIComponent(path), { cache: "no-store" });
+                if (!res.ok) { throw new Error(String(res.status)); }
+                buf = await res.arrayBuffer();
+            }
+            const img = await decodePng(buf);
             if (img.width < cfg.imageWidth || img.height < cfg.imageHeight) {
                 throw new Error(t("The image (%1×%2) is smaller than one cell (%3×%4).", null, img.width, img.height, cfg.imageWidth, cfg.imageHeight));
             }
             state.base = img;
-            state.baseName = path.split("/").pop();
+            state.baseName = local ? path.name : path.split("/").pop();
             state.single = type === "sv" || (img.width === cfg.imageWidth && img.height === cfg.imageHeight);
             state.cx = 0; state.cy = 0;
             redraw();
         } catch (e) {
-            await message(api, t("Import", "Dialog_CharacterExporter"), t("Unable to read file %1.", "ProjectManager", path) + "\n" + e.message);
+            await message(api, t("Import", "Dialog_CharacterExporter"), t("Unable to read file %1.", "ProjectManager", local ? path.name : path) + "\n" + e.message);
         }
     });
 
@@ -147,12 +156,27 @@ export function openExporter(api, type, image) {
             title: t("Export", "Dialog_CharacterExporter"),
             label: t("File name (%1):", null, cfg.folder + "/"),
             value: def,
-            hint: type === "tv" && state.single ? t("Single character: the name must start with $.") : t("Saves the image to a file.", "Dialog_CharacterExporter")
+            hint: type === "tv" && state.single ? t("Single character: the name must start with $.") : t("Saves the image to a file.", "Dialog_CharacterExporter"),
+            outside: t("Other Location…")
         });
         if (!name) { return; }
+        const outside = typeof name === "object";
+        if (outside) { name = name.value; }
         name = name.replace(/\.png$/i, "").replace(/[\\/:*?"<>|]/g, "_");
         if (type === "tv" && state.single && !name.startsWith("$") && !name.startsWith("!$")) { name = "$" + name; }
         const path = cfg.folder + "/" + name + ".png";
+        if (outside) {
+            try {
+                const how = await saveOutside(await encodePng(sheetImage()), name + ".png", "image/png", path);
+                if (how) {
+                    api.status(t("Image exported: %1", null, how === "share" ? path : name + ".png"));
+                    if (how === "share") { api.emit("resource:changed", { path }); api.emit("resources:changed", { folder: cfg.folder }); }
+                }
+            } catch (e) {
+                await message(api, t("Export", "Dialog_CharacterExporter"), t("Unable to write to file %1.", "ProjectManager", name + ".png") + "\n" + e.message);
+            }
+            return;
+        }
         let exists = false;
         try {
             const res = await fetch("/api/list?dir=" + encodeURIComponent(cfg.folder), { cache: "no-store" });

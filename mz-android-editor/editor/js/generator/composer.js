@@ -326,9 +326,8 @@ export async function compose(type, assets, data) {
                 if (hasMask) {
                     const mask = images.get(maskPath);
                     if (mask) {
-                        if (type === "tv") {
-                            for (const id of makeMaskList(mask)) { available.add(id); }
-                        }
+                        // cores "disponíveis": as que aparecem em qualquer imagem (andando, caído, SV)
+                        for (const id of makeMaskList(mask)) { available.add(id); }
                         const rows = maskIDs.map((id, k) => {
                             const g = (lgMasks.indexOf(id) === eyeIndex && eyeIndex >= 0) ? eyesGrad : grad;
                             return colors[k] < paletteLength(g) ? gradientRow(g, colors[k]) : null;
