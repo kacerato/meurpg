@@ -36,7 +36,16 @@
         adv.uiAreaWidth = Math.min(adv.uiAreaWidth || w, adv.screenWidth);
         adv.uiAreaHeight = Math.min(adv.uiAreaHeight || h, adv.screenHeight);
     }
+    let graphicsPatched = false;
     function patch() {
+        // Graphics._stretchHeight usa só 90% da altura em celular fora de file:// (reserva para barras do
+        // navegador). Num app em tela cheia isso só cria margem: usa a altura inteira.
+        if (!graphicsPatched && window.Graphics && Graphics._stretchHeight) {
+            Graphics._stretchHeight = function () {
+                return Utils.isMobileDevice() ? document.documentElement.clientHeight : window.innerHeight;
+            };
+            graphicsPatched = true;
+        }
         if (!window.Scene_Boot || !Scene_Boot.prototype.resizeScreen) {
             return false;
         }

@@ -391,6 +391,15 @@ final class Deployer {
         v.put(MediaStore.MediaColumns.IS_PENDING, 1);
         String location;
         Uri uri = null;
+        // como o MZ, a nova saída substitui a anterior de mesmo nome (só as que este app gravou;
+        // as de outra instalação o sistema não deixa apagar, e o MediaStore cria "nome (1)")
+        try {
+            cr.delete(MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+                MediaStore.MediaColumns.DISPLAY_NAME + "=? AND " + MediaStore.MediaColumns.RELATIVE_PATH + "=?",
+                new String[]{displayName, Environment.DIRECTORY_DOWNLOADS + "/" + DOWNLOAD_SUBDIR + "/"});
+        } catch (Exception e) {
+            Log.w(TAG, "MediaStore delete", e);
+        }
         try {
             uri = cr.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, v);
         } catch (Exception e) {
@@ -411,6 +420,14 @@ final class Deployer {
             done.put(MediaStore.MediaColumns.IS_PENDING, 0);
             cr.update(uri, done, null, null);
             location = "Download/" + DOWNLOAD_SUBDIR;
+            // nome real (o MediaStore acrescenta " (1)" se já houver um arquivo igual)
+            try (android.database.Cursor c = cr.query(uri, new String[]{MediaStore.MediaColumns.DISPLAY_NAME}, null, null, null)) {
+                if (c != null && c.moveToFirst() && c.getString(0) != null) {
+                    displayName = c.getString(0);
+                }
+            } catch (Exception ignored) {
+                // fica o nome pedido
+            }
             job.log("Salvo em Download/" + DOWNLOAD_SUBDIR + "/" + displayName);
         } else {
             location = "armazenamento interno do app";

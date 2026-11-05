@@ -95,3 +95,20 @@ Aparelho: `gradle assembleDebug`, instalar, Implantação > Android APK > OK. Te
 - Windows/macOS aparecem desabilitados (precisam do runtime NW.js do editor de PC).
 - `scan.js`: `@type file` + `@require 1` mantém `<@dir>/<valor>`; `@noteParam`/`@noteDir`(/`@noteType file`/`@noteData`)
   mantém `<@noteDir>/<valor>` das notas indicadas (`pluginAssetSpecs`).
+
+## Tela cheia e Novo projeto em lote (mz-shell, 2026-11-05)
+- **Tela cheia (extensão do port):** `editor/fitscreen.js` (ver comentário no arquivo). Teste de jogo: devserver e
+  `LocalServer` injetam `<script src="/fitscreen.js">` antes do `main.js` de qualquer `index.html` do projeto; o
+  script só age com `localStorage["mzEditor.fitScreen"]==="1"` (botão "Tela cheia" na barra do teste; padrão ligado
+  no Android). APK: opção "Tela cheia (ajustar resolução à tela)" (padrão ligada) → `mz_fitscreen.js` vai no pacote,
+  `app.json` ganha `"fit": true` e o `PlayerActivity` injeta o script. Também anula a reserva de 10% de altura que o
+  runtime faz em celular (`Graphics._stretchHeight`). Verificado no Xiaomi/RedMagic (2772×1280): título e mapa
+  ocupam a tela toda, inclusive o recorte da câmera; resolução 1474×624 no teste (janela 1200×508), sem distorção.
+  Mapas mais estreitos que a tela (ex.: 17×13) ficam centralizados com preto em volta, como o runtime faz.
+- **Saída em Download/MZEditor** substitui o arquivo anterior de mesmo nome (antes o MediaStore criava "nome (1)"
+  e o log mostrava o nome errado); o log agora mostra o nome real.
+- **Novo projeto em lote (`TemplateCopier.java`):** `POST /api/template/copy {title, dir?}` +
+  `GET /api/template/status`. Medido no aparelho com o template atual (50 arquivos, `editor/template`):
+  **1,6 s** em Java (6 threads, pastas criadas antes com Uri em cache) contra **8,4 s** arquivo a arquivo
+  (`newproject.js` com PUT por arquivo) — ~5× mais rápido. Para o template completo (~1311 arquivos), a
+  estimativa proporcional é ~42 s contra ~3,7 min.
