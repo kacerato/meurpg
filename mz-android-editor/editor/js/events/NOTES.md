@@ -10,14 +10,15 @@ Registro: `register(api)` em `index.js`; CSS em `editor/css/events.css` (injetad
 | `index.js` | registro, CSS, botões `btnModeEvent` / `btnEventSearch`, troca de modo |
 | `data.js` | cache do banco (`db`), modelos de página/evento (`TEMPLATE`) |
 | `ui.js` | diálogos com Promise, campos, rádios no estilo MZ, seletores (switch/variável com renomear e "Change Maximum", banco, áudio com Play/Stop, imagem, gráfico de personagem com frame/direção e tiles B–E, rosto, tom de cor, mini-mapa de local) |
-| `commands.js` | definição de **todos** os comandos (101…357): nome, texto na lista, diálogo, referências para o buscador; paleta "Event Commands" de 3 abas; prévia da mensagem (cores de `Window.png`, ícones de `IconSet.png`) |
+| `commands.js` | definição de **todos** os comandos (101…357): nome, texto na lista, diálogo, referências para o buscador; paleta "Event Commands" de 3 abas; prévia da mensagem (cores de `Window.png`, ícones de `IconSet.png`); guia de largura do Show Text; Plugin Command sobre o módulo plugins |
 | `commandlist.js` | lista de conteúdo: texto igual ao MZ (`◆Text：…`, `：　　：…`, `：When …`, `：End`), recuo por `indent`, seleção por bloco, multi-seleção, novo/editar/recortar/copiar/colar/apagar, Select All, Copy as Text/HTML; reconstrução de ramos (Choices, If/Else, Battle) preservando os corpos |
-| `moveroute.js` | editor de rota (45 comandos `ROUTE_*`, opções Repeat/Skip/Wait, alvo) |
+| `moveroute.js` | editor de rota (45 comandos `ROUTE_*`, opções Repeat/Skip/Wait, alvo) com **prévia no mapa**: simulação da rota (`simulateRoute`) e desenho (`drawRoute`) |
+| `minimap.js` | mini-visualizador de mapa (Tilemap do corescript) usado pela prévia da rota |
+| `etest.js` | "Test" da lista: grava `data/Test_*.json` + `data/Test_Event.json` e abre `/project/index.html?etest` |
 | `eventeditor.js` | Event Editor (nome, nota, páginas New/Copy/Paste/Delete/Clear, condições, imagem, movimento autônomo, opções, prioridade, trigger, conteúdo) e editor de lista de evento comum |
 | `eventmode.js` | sobreposição PIXI em `api.view.world`, cursor, molduras, posições iniciais (azul), toque/arrasto/menu, barra flutuante e Event List |
 | `quick.js` | Quick Event Creation: Transfer, Door, Treasure, Inn |
 | `search.js` | Event Searcher (switch, variável, item, arma, armadura, evento comum, texto) em todos os mapas, eventos comuns e tropas |
-| `plugincmd.js` | parse de `@command/@arg/@type/@option…` do bloco `/*:` dos arquivos em `js/plugins/` |
 
 ## Controles (toque)
 
@@ -26,13 +27,15 @@ Registro: `register(api)` em `index.js`; CSS em `editor/css/events.css` (injetad
 - **Toque longo e soltar**: menu de contexto (Edit/New, Cut, Copy, Paste, Delete, Quick Event Creation, Set Starting Position) — equivalente ao botão direito do MZ. Botão direito do mouse também funciona.
 - **Arrastar um evento**: move (segurar e arrastar também move). Arrastar em área vazia rola o mapa (MapView); pinça continua dando zoom.
 - Barra flutuante no rodapé do mapa com as mesmas ações + "☰ List" (Event List).
-- Teclado no PC: setas movem o cursor, Enter edita, Delete, Ctrl+C/X/V.
-- Lista de conteúdo: toque seleciona o bloco, duplo toque edita (ou insere na linha `◆` vazia), toque longo abre o menu; botão "Multi" = Shift+clique.
+- **Desfazer/Refazer** (↶ Undo / ↷ Redo na barra flutuante, Ctrl+Z / Ctrl+Y ou Ctrl+Shift+Z, e o `btnUndo` da barra principal no modo evento): criar, editar, mover, apagar, recortar, colar, Quick Event e Set Starting Position. Histórico por mapa (até 100 passos), em memória.
+- No modo evento, `btnCut`/`btnCopy`/`btnPaste`/`btnDelete` da barra principal agem sobre o evento selecionado (o maptools ignora o modo evento).
+- Teclado no PC: setas movem o cursor, Enter edita, Delete, Ctrl+C/X/V, Ctrl+Z/Y.
+- Lista de conteúdo: toque seleciona o bloco, duplo toque edita (ou insere na linha `◆` vazia), toque longo abre o menu; botão "Multi" = Shift+clique; botão/menu **Test** executa no jogo os comandos selecionados (ou a lista toda, se só a linha vazia estiver selecionada).
 
 ## Gravação
 
 Cada alteração grava `data/MapXXX.json` na hora e emite `map:changed {id}`; depois chama
-`api.view._drawOverlay()` para atualizar as molduras do MapView. Set Starting Position grava
+`api.view.redrawOverlay()` para atualizar as molduras do MapView. Set Starting Position grava
 `data/System.json` e emite `db:changed`. Renomear switch/variável no seletor também grava `System.json`.
 O editor de evento comum (aberto pelo buscador) grava `data/CommonEvents.json`.
 
@@ -43,22 +46,38 @@ O editor de evento comum (aberto pelo buscador) grava `data/CommonEvents.json`.
 - Expõe `api.events` (instância de `EventMode`): `openEvent(id, page, row)`, `setMap`, `refresh`.
 - Escuta `map:selected`, `map:changed` (redesenha se o mapa atual mudou) e `db:changed` (recarrega o arquivo no cache).
 
-## Gostaria que fosse promovido à API
+## Recursos desta rodada
 
-- `api.selectMap(id)` — o buscador hoje clica em `#mapTree div[data-id]` para trocar de mapa.
-- `api.view.redrawOverlay()` público (hoje uso `_drawOverlay()`).
-- `api.off(name, fn)` para remover ouvintes.
-- Atualizar o texto "N eventos" da barra de status ao receber `map:changed`.
-- `api.mode` e o evento `mode:changed` como contrato oficial entre maptools e events.
+- **Test** (`etest.js`): como o editor do PC, copia os 14 arquivos do banco para `data/Test_*.json`
+  (`DataManager.loadDatabase` usa o prefixo `Test_` com `?etest`) e grava os comandos em
+  `data/Test_Event.json`; abre `/project/index.html?etest` no `#playOverlay`. O runtime faz
+  `DataManager.setupEventTest()` (mapa vazio -1, grupo inicial) e `Game_Map.setupTestEvent()` roda a
+  lista. Ao fechar o teste os `Test_*.json` são apagados (`api.project.delete`).
+- **Prévia da rota**: no diálogo Movement Route (página com movimento Custom e comando Set Movement
+  Route) há um painel com o mapa do evento; a partir da posição/direção do alvo (evento, This Event ou
+  jogador na posição inicial do mapa) desenha moldura azul no início, setas vermelhas por passo (o passo
+  do comando selecionado em amarelo), arco para Jump, "?" para movimentos aleatórios/para o jogador,
+  "…" para Wait, ponto para giros, moldura branca no fim e tracejado de volta ao início com Repeat.
+  "▶ Preview" anima um marcador pelo trajeto. Passabilidade não é simulada.
+- **Plugin Command** usa `plugins/commands.js` (`getEnabledPluginsWithCommands`, `getPluginCommands`,
+  `defaultArgs`), `plugins/params.js` (`ParamTable`: árvore por `@parent`, editores por `@type`,
+  `struct<…>` e arrays estruturados, `file` com `@dir`) e `plugins/store.js` (`listPluginFiles`).
+  Lista os plugins ativos como o MZ; se nenhum estiver ativo, ou se o comando usa um plugin desativado,
+  mostra-os com "(OFF)" para não perder dados. Grava `[plugin, comando, @text, args]` + linhas 657
+  `Texto = valor`. `@require` só afeta a exportação (não há o que editar).
+- **Show Text**: a caixa de texto usa a fonte do jogo (`advanced.mainFontFilename`) em escala; a guia
+  vermelha marca a largura útil real da janela (`uiAreaWidth - 8 - 24`, menos 164 px com rosto, como
+  `Window_Message.newLineX`). Cada linha é medida como no runtime (códigos de controle sem largura,
+  `\I[n]` = 36 px, `\{ \}`, `\FS[n]`, `\PX[n]`, `\N[n]`/`\P[n]`/`\G` expandidos) e a parte que passa da
+  janela aparece em vermelho; ao lado, "largura/limite px" por linha.
+- API oficial: `api.selectMap(id)` no buscador, `api.view.redrawOverlay()`, `api.mode`.
 
 ## Fora do escopo / limitações
 
-- "Test" do menu da lista (executar comandos selecionados no jogo) não implementado.
-- Preview da rota de movimento no mapa não implementado.
-- Undo/redo de eventos não implementado (o `btnUndo` é do maptools).
-- Plugin Command: args `struct<…>`/arrays editados como texto JSON; `@parent`, `@require`, `@dir` não usados.
 - Troops: o buscador encontra referências nas páginas de tropas, mas a edição é do módulo database.
-- Show Text: "Batch Entry" divide em blocos de 4 linhas; a guia vertical de largura é apenas visual.
+- Show Text: "Batch Entry" divide em blocos de 4 linhas; `\V[n]` é medido como "0".
+- A prévia da rota não testa passabilidade nem eventos no caminho.
+- Desfazer não cobre renomear switches/variáveis nem edições de evento comum.
 - Textos da lista seguem o MZ em inglês; algumas variações de redação do editor original podem diferir em detalhes.
 
 ## Como testar
@@ -67,10 +86,16 @@ O editor de evento comum (aberto pelo buscador) grava `data/CommonEvents.json`.
 node mz-android-editor/devserver/server.mjs --project "<caminho absoluto>/testproject" --port 8782
 ```
 
-Abra `http://127.0.0.1:8782/?modules=./events/index.js`, clique em Modo evento, dê duplo toque num tile,
+Abra `http://127.0.0.1:8782/` (todos os módulos) ou `?modules=./events/index.js`, clique em Modo evento, dê duplo toque num tile,
 adicione Show Text + Transfer Player, OK, e confira `data/Map001.json`. Teste de jogo pelo botão play.
 
 Verificado em 1280×600: criar/editar/mover/copiar/colar/apagar, Quick Event (os 4 tipos), Set Starting
 Position, Event List, Event Searcher (pula para a linha), todos os diálogos de comandos abrindo e gerando
 parâmetros válidos, e execução no runtime real (`rmmz_objects.js`) de Show Text + Transfer, Treasure
 (item + self switch + página 2), Inn (cobra e recupera) e Door (rotas + transfer).
+
+Rodada 2 (verificado em 1280×600): Test de Show Text pela lista (mensagem com rosto aparece no jogo
+com `?etest`; `Test_*.json` removidos ao fechar), prévia da rota com passos, salto, aleatório e
+repetição, undo/redo (botões, Ctrl+Z/Y e `btnUndo` da barra principal), Plugin Command com a tabela
+do módulo plugins (editor de `multiline_string[]` do EventCommandByCode), guia de largura do Show Text
+com a fonte do jogo.

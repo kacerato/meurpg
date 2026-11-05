@@ -31,6 +31,7 @@ export class EventMode {
         this.container.addChild(this.spriteLayer, this.gfx);
         this.container.visible = false;
         this.drag = null;
+        this.history = new Map(); // mapId -> {undo: [], redo: []}
         this._buildUi();
         this._bindInput();
         api.view.app.ticker.add(this._tick, this);
@@ -47,6 +48,11 @@ export class EventMode {
         this.refresh();
     }
     setActive(on) {
+        // btnUndo da barra principal: no modo evento reflete o histórico de eventos; ao sair devolve
+        // o estado que o maptools tinha deixado.
+        const tbUndo = document.getElementById("btnUndo");
+        if (tbUndo && on && !this.active) { this._tbUndoDisabled = tbUndo.disabled; }
+        if (tbUndo && !on && this.active && this._tbUndoDisabled !== undefined) { tbUndo.disabled = this._tbUndoDisabled; }
         this.active = on;
         this.container.visible = on;
         this.bar.classList.toggle("hidden", !on);
@@ -65,7 +71,7 @@ export class EventMode {
         while (evs.length > 1 && !evs[evs.length - 1]) { evs.pop(); }
         await this.api.project.writeJson(mapPath(this.mapId), this.map);
         this.api.emit("map:changed", { id: this.mapId });
-        if (this.api.view && this.api.view._drawOverlay) { this.api.view._drawOverlay(); }
+        if (this.api.view && this.api.view.redrawOverlay) { this.api.view.redrawOverlay(); }
         this.refresh();
     }
     newId() {
@@ -82,6 +88,52 @@ export class EventMode {
         return ev;
     }
 
+    // ---------- desfazer / refazer ----------
+    _hist() {
+        if (!this.history.has(this.mapId)) { this.history.set(this.mapId, { undo: [], redo: [] }); }
+        return this.history.get(this.mapId);
+    }
+    _startSnap() {
+        const s = db.system || {};
+        const v = k => (s[k] ? { startMapId: s[k].startMapId, startX: s[k].startX, startY: s[k].startY } : null);
+        return { startMapId: s.startMapId, startX: s.startX, startY: s.startY, boat: v("boat"), ship: v("ship"), airship: v("airship") };
+    }
+    _snapshot() { return { events: clone(this.map.events), sys: this._startSnap(), cursor: { ...this.cursor } }; }
+    // Grava o estado ANTES de uma operação (criar, mover, apagar, colar, editar, posição inicial).
+    record() {
+        if (!this.map) { return; }
+        const h = this._hist();
+        h.undo.push(this._snapshot());
+        if (h.undo.length > 100) { h.undo.shift(); }
+        h.redo.length = 0;
+        this._updateBar();
+    }
+    async _restore(snap) {
+        this.map.events = clone(snap.events);
+        this.cursor = { ...snap.cursor };
+        const now = this._startSnap();
+        if (JSON.stringify(now) !== JSON.stringify(snap.sys)) {
+            const s = db.system;
+            s.startMapId = snap.sys.startMapId; s.startX = snap.sys.startX; s.startY = snap.sys.startY;
+            for (const k of ["boat", "ship", "airship"]) { if (snap.sys[k] && s[k]) { Object.assign(s[k], snap.sys[k]); } }
+            await this.api.project.writeJson("data/System.json", s);
+            this.api.emit("db:changed", { file: "data/System.json" });
+        }
+        await this.save();
+    }
+    async undo() {
+        const h = this._hist();
+        if (!this.map || !h.undo.length) { return; }
+        h.redo.push(this._snapshot());
+        await this._restore(h.undo.pop());
+    }
+    async redo() {
+        const h = this._hist();
+        if (!this.map || !h.redo.length) { return; }
+        h.undo.push(this._snapshot());
+        await this._restore(h.redo.pop());
+    }
+
     // ---------- ações ----------
     async editAt(x, y) {
         if (!this.map) { return; }
@@ -90,6 +142,8 @@ export class EventMode {
         const ev = existing || TEMPLATE.event(this.newId(), x, y);
         const r = await openEventEditor({ map: this.map, mapId: this.mapId, event: ev, tileset: this.tileset });
         if (!r) { this.refresh(); return; }
+        if (existing && JSON.stringify(r) === JSON.stringify(existing)) { this.refresh(); return; }
+        this.record();
         if (existing) { this.map.events[existing.id] = r; } else { this.placeEvent(r, x, y); }
         await this.save();
     }
@@ -100,7 +154,7 @@ export class EventMode {
         this.centerOn(ev.x, ev.y);
         this.refresh();
         const r = await openEventEditor({ map: this.map, mapId: this.mapId, event: ev, tileset: this.tileset, page, row });
-        if (r) { this.map.events[id] = r; await this.save(); }
+        if (r && JSON.stringify(r) !== JSON.stringify(ev)) { this.record(); this.map.events[id] = r; await this.save(); }
     }
     copy() { const e = this.selectedEvent; if (e) { this.clip = clone(e); try { localStorage.setItem("mzEventsEventClip", JSON.stringify(this.clip)); } catch (err) { /* ignora */ } } }
     async cut() { if (this.selectedEvent) { this.copy(); await this.del(); } }
@@ -109,12 +163,14 @@ export class EventMode {
         if (!clip) { try { clip = JSON.parse(localStorage.getItem("mzEventsEventClip") || "null"); } catch (e) { clip = null; } }
         if (!clip || !this.map) { return; }
         if (this.selectedEvent) { this.api.status("Já existe um evento neste tile."); return; }
+        this.record();
         this.placeEvent(clone(clip), this.cursor.x, this.cursor.y);
         await this.save();
     }
     async del() {
         const e = this.selectedEvent;
         if (!e) { return; }
+        this.record();
         this.map.events[e.id] = null;
         await this.save();
     }
@@ -123,12 +179,14 @@ export class EventMode {
         if (this.selectedEvent) { this.api.status("Já existe um evento neste tile."); return; }
         const ev = await quickEvent(kind, { mapId: this.mapId, x: this.cursor.x, y: this.cursor.y, tileset: this.tileset });
         if (!ev) { return; }
+        this.record();
         this.placeEvent(ev, this.cursor.x, this.cursor.y);
         await this.save();
     }
     async setStart(kind) {
         const sys = db.system;
         const { x, y } = this.cursor;
+        this.record();
         if (kind === "player") { sys.startMapId = this.mapId; sys.startX = x; sys.startY = y; }
         else { Object.assign(sys[kind], { startMapId: this.mapId, startX: x, startY: y }); }
         await this.api.project.writeJson("data/System.json", sys);
@@ -138,6 +196,7 @@ export class EventMode {
     async moveEvent(ev, x, y) {
         if (x === ev.x && y === ev.y) { return; }
         if (x < 0 || y < 0 || x >= this.map.width || y >= this.map.height || this.eventAt(x, y)) { return; }
+        this.record();
         ev.x = x; ev.y = y;
         this.cursor = { x, y };
         await this.save();
@@ -187,7 +246,7 @@ export class EventMode {
         sprite.alpha = alpha;
         this.spriteLayer.addChild(sprite);
         const place = (tex, w, hh) => {
-            if (sprite.destroyed) { return; }
+            if (sprite.destroyed || !sprite.transform) { return; }
             sprite.texture = tex;
             const s = Math.min(1, T / w, T / hh);
             sprite.scale.set(s, s);
@@ -259,6 +318,7 @@ export class EventMode {
         this.btnEdit = b("New…", () => this.editAt(this.cursor.x, this.cursor.y), "Editar/Novo (duplo toque)");
         this.bar = h("div", { class: "evModeBar hidden" },
             this.info, this.btnEdit,
+            this.btnUndo = b("↶ Undo", () => this.undo(), "Desfazer (Ctrl+Z)"), this.btnRedo = b("↷ Redo", () => this.redo(), "Refazer (Ctrl+Y)"),
             b("Cut", () => this.cut()), b("Copy", () => this.copy()), b("Paste", () => this.paste()), b("Delete", () => this.del()),
             b("Quick ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([
                 { label: "Transfer…", action: () => this.quick("transfer") }, { label: "Door…", action: () => this.quick("door") },
@@ -271,11 +331,23 @@ export class EventMode {
             el.addEventListener("wheel", e => e.stopPropagation());
         }
         vp.append(this.bar, this.listPanel);
+        // Barra principal do MZ: Desfazer/Recortar/Copiar/Colar/Excluir agem sobre eventos no modo evento
+        // (os handlers do maptools ignoram o modo evento).
+        const tb = { btnUndo: () => this.undo(), btnCut: () => this.cut(), btnCopy: () => this.copy(), btnPaste: () => this.paste(), btnDelete: () => this.del() };
+        for (const [id, fn] of Object.entries(tb)) {
+            const btn = document.getElementById(id);
+            if (btn) { btn.addEventListener("click", () => { if (this.active && this.map) { fn(); } }); }
+        }
     }
     _updateBar() {
         const e = this.map ? this.selectedEvent : null;
         this.info.textContent = `(${this.cursor.x},${this.cursor.y})` + (e ? ` ${String(e.id).padStart(3, "0")}:${e.name}` : "");
         this.btnEdit.textContent = e ? "Edit…" : "New…";
+        const h = this.map ? this._hist() : { undo: [], redo: [] };
+        this.btnUndo.disabled = !h.undo.length;
+        this.btnRedo.disabled = !h.redo.length;
+        const tbUndo = document.getElementById("btnUndo");
+        if (tbUndo && this.active) { tbUndo.disabled = !h.undo.length; }
     }
     _renderList() {
         if (!this.listPanel || this.listPanel.classList.contains("hidden")) { return; }
@@ -413,6 +485,8 @@ export class EventMode {
             else if (mod && e.key === "c") { this.copy(); }
             else if (mod && e.key === "x") { this.cut(); }
             else if (mod && e.key === "v") { this.paste(); }
+            else if (mod && (e.key === "z" || e.key === "Z") && !e.shiftKey) { e.preventDefault(); this.undo(); }
+            else if (mod && (e.key === "y" || ((e.key === "z" || e.key === "Z") && e.shiftKey))) { e.preventDefault(); this.redo(); }
         });
     }
     _dragPreview() {
