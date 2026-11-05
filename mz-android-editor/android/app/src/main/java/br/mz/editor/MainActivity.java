@@ -28,6 +28,8 @@ public class MainActivity extends Activity {
     /** FileChooserParams.MODE_OPEN_FOLDER (constante oculta do SDK): <input webkitdirectory>. */
     private static final int MODE_OPEN_FOLDER = 2;
     private static final String PREF_PROJECT = "projectTreeUri";
+    /** Documento raiz do projeto dentro de PREF_PROJECT (Novo projeto: pasta filha da pasta-mãe). */
+    private static final String PREF_PROJECT_DOC = "projectDocId";
 
     private LocalServer server;
     private WebView web;
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 
         String saved = prefs().getString(PREF_PROJECT, null);
         if (saved != null) {
-            openProject(Uri.parse(saved));
+            openProject(Uri.parse(saved), prefs().getString(PREF_PROJECT_DOC, null));
         }
 
         web = new WebView(this);
@@ -113,9 +115,9 @@ public class MainActivity extends Activity {
         return getSharedPreferences("mz", MODE_PRIVATE);
     }
 
-    private void openProject(Uri treeUri) {
+    private void openProject(Uri treeUri, String rootDocId) {
         try {
-            server.setProject(new SafProject(getContentResolver(), treeUri));
+            server.setProject(new SafProject(getContentResolver(), treeUri, rootDocId));
         } catch (Exception e) {
             Log.e(TAG, "openProject", e);
             Toast.makeText(this, "Não foi possível abrir o projeto", Toast.LENGTH_LONG).show();
@@ -231,8 +233,8 @@ public class MainActivity extends Activity {
             Uri tree = data.getData();
             getContentResolver().takePersistableUriPermission(tree,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            prefs().edit().putString(PREF_PROJECT, tree.toString()).apply();
-            openProject(tree);
+            prefs().edit().putString(PREF_PROJECT, tree.toString()).remove(PREF_PROJECT_DOC).apply();
+            openProject(tree, null);
             web.loadUrl("http://127.0.0.1:" + server.getPort() + "/");
         } else if (requestCode == REQ_NEW_PROJECT_PARENT && resultCode == RESULT_OK && data != null && data.getData() != null) {
             createNewProjectIn(data.getData());
@@ -259,10 +261,11 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "Não foi possível criar a pasta " + name, Toast.LENGTH_LONG).show();
                 return;
             }
+            // A pasta nova é aberta DENTRO da árvore da pasta-mãe (que tem a permissão persistente);
+            // uma tree URI nova para a filha não tem permissão e toda gravação falharia (SecurityException).
             String childDocId = android.provider.DocumentsContract.getDocumentId(created);
-            Uri childTree = android.provider.DocumentsContract.buildTreeDocumentUri(parentTree.getAuthority(), childDocId);
-            prefs().edit().putString(PREF_PROJECT, childTree.toString()).apply();
-            openProject(childTree);
+            prefs().edit().putString(PREF_PROJECT, parentTree.toString()).putString(PREF_PROJECT_DOC, childDocId).apply();
+            openProject(parentTree, childDocId);
             web.loadUrl("http://127.0.0.1:" + server.getPort() + "/?newProject=" + Uri.encode(title));
         } catch (Exception e) {
             Log.e(TAG, "newProject", e);
@@ -302,7 +305,7 @@ public class MainActivity extends Activity {
 
     /** Arquivo > Fechar projeto: volta ao estado "sem projeto". */
     private void closeProject() {
-        prefs().edit().remove(PREF_PROJECT).apply();
+        prefs().edit().remove(PREF_PROJECT).remove(PREF_PROJECT_DOC).apply();
         server.setProject(null);
         web.loadUrl("http://127.0.0.1:" + server.getPort() + "/");
     }
@@ -315,7 +318,7 @@ public class MainActivity extends Activity {
         }
         Uri tree = prj.getRootUri();
         try {
-            Uri doc = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree));
+            Uri doc = prj.getRootDocumentUri();
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setDataAndType(doc, DocumentsContract.Document.MIME_TYPE_DIR);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

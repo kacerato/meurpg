@@ -40,13 +40,24 @@ public class SafProject {
     private final Map<String, Map<String, Entry>> dirCache = new HashMap<>();
 
     public SafProject(ContentResolver resolver, Uri treeUri) {
+        this(resolver, treeUri, null);
+    }
+
+    /** Raiz = documento rootDocId dentro da árvore treeUri (ex.: pasta criada no Novo projeto dentro da
+     *  pasta-mãe, que é a árvore com permissão persistente). null = a raiz da própria árvore. */
+    public SafProject(ContentResolver resolver, Uri treeUri, String rootDocId) {
         this.resolver = resolver;
         this.treeUri = treeUri;
-        this.rootDocId = DocumentsContract.getTreeDocumentId(treeUri);
+        this.rootDocId = rootDocId != null ? rootDocId : DocumentsContract.getTreeDocumentId(treeUri);
     }
 
     public Uri getRootUri() {
         return treeUri;
+    }
+
+    /** URI de documento da pasta raiz do projeto (para abrir no app de arquivos). */
+    public Uri getRootDocumentUri() {
+        return DocumentsContract.buildDocumentUriUsingTree(treeUri, rootDocId);
     }
 
     public String getName() {
