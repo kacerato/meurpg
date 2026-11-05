@@ -25,13 +25,14 @@ const files = [];
 const walk = p => { const st = fs.statSync(p); if (st.isDirectory()) for (const n of fs.readdirSync(p)) walk(path.join(p, n)); else if (/\.(js|mjs|html)$/.test(p)) files.push(p); };
 targets.forEach(walk);
 // t("..."), t('...'), t(`...` sem ${}) ; também data-i18n="..."
-const rx = /(?<![\w$.])t\(\s*(?:"((?:[^"\]|\.)*)"|'((?:[^'\]|\.)*)'|`([^`$\]*)`)\s*(?:,\s*"([^"]*)")?|data-i18n(?:-title)?="([^"]*)"/g;
+const rx = /(?<![\w$.])t\(\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'|`([^`$\\]*)`)\s*(?:,\s*"([^"]*)")?|data-i18n(?:-title)?="([^"]*)"/g;
+const unescape = raw => raw.replace(/\\(u[0-9a-fA-F]{4}|.)/g, (m, c) => c.length > 1 ? String.fromCharCode(parseInt(c.slice(1), 16)) : ({ n: "\n", t: "\t" }[c] ?? c));
 let missing = 0, total = 0, badCtx = 0;
 for (const f of files) {
     const src = fs.readFileSync(f, "utf8");
     for (const m of src.matchAll(rx)) {
         const raw = m[1] ?? m[2] ?? m[3] ?? m[5];
-        let s; try { s = JSON.parse('"' + raw.replace(/\'/g, "'").replace(/"/g, '\\"').replace(/\\\\"/g, '\\"') + '"'); } catch { s = raw; }
+        const s = unescape(raw);
         total++;
         const line = src.slice(0, m.index).split("\n").length;
         if (!known.has(s)) { missing++; console.log(`${path.relative(root, f)}:${line}  ${JSON.stringify(s)}`); }
