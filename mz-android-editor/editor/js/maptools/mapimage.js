@@ -142,6 +142,13 @@ export function openSaveImageDialog(api, edit) {
         const note = document.createElement("p");
         note.className = "mtHint";
         note.textContent = t("Path inside the project folder.");
+        // fora do projeto: compartilhar (Android) ou baixar (navegador) depois de gravar
+        const share = document.createElement("input");
+        share.type = "checkbox";
+        share.checked = true;
+        const shareRow = document.createElement("label");
+        shareRow.className = "mtCheck";
+        shareRow.append(share, " " + (window.Android && window.Android.shareFile ? t("Share the image after saving") : t("Download the image after saving")));
         const dlg = api.openDialog({
             title: t("Save as Image", "Dialog_MapSaveAsImage"),
             width: "460px",
@@ -158,24 +165,36 @@ export function openSaveImageDialog(api, edit) {
                             api.status(t("Path name is too long.", "Dialog_MapSaveAsImage"));
                             return false;
                         }
-                        save(api, edit, /\.png$/i.test(p) ? p : p + ".png").then(resolve);
+                        save(api, edit, /\.png$/i.test(p) ? p : p + ".png", share.checked).then(resolve);
                         return true;
                     }
                 },
                 { label: t("Cancel", "BasicConstants"), onClick: () => resolve(false) }
             ]
         });
-        dlg.body.append(field(t("Output Location", "Dialog_MapSaveAsImage"), path, t("Location to save the map image.", "Dialog_MapSaveAsImage")), note);
+        dlg.body.append(field(t("Output Location", "Dialog_MapSaveAsImage"), path, t("Location to save the map image.", "Dialog_MapSaveAsImage")), note, shareRow);
     });
 }
 
-async function save(api, edit, relPath) {
+async function save(api, edit, relPath, share) {
     try {
         api.status(t("Generating image…"));
         const tilesets = await api.project.tilesets();
         const { canvas, scaled } = await renderMapCanvas(edit.map, tilesets[edit.map.tilesetId]);
         const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
         await api.project.writeBinary(relPath, blob, "image/png");
+        if (share) {
+            if (window.Android && window.Android.shareFile) {
+                window.Android.shareFile(relPath, "image/png");
+            } else {
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = relPath.split("/").pop();
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 10000);
+            }
+        }
         api.status(scaled ? t("Image saved: %1 (%2×%3, reduced)", null, relPath, canvas.width, canvas.height) : t("Image saved: %1 (%2×%3)", null, relPath, canvas.width, canvas.height));
         return true;
     } catch (err) {

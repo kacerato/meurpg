@@ -6,6 +6,7 @@
 //   GET  /api/file?path=data/X  -> conteúdo bruto do arquivo do projeto
 //   PUT  /api/file?path=data/X  -> grava o corpo no arquivo do projeto (cria pastas)
 //   GET  /api/list?dir=img/x    -> lista de nomes dentro de uma pasta do projeto
+//   POST /api/openFolder        -> Jogo > Abrir Pasta: abre a pasta do projeto no gerenciador de arquivos
 // Uso: node server.mjs --project <pasta do projeto> [--port 8765]
 
 import http from "node:http";
@@ -13,6 +14,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawn } from "node:child_process";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -127,6 +129,11 @@ const server = http.createServer(async (req, res) => {
                         return send(res, 404, "not found");
                     }
                 }
+            }
+            if (p === "/api/openFolder" && req.method === "POST") {
+                const cmd = process.platform === "win32" ? "explorer" : process.platform === "darwin" ? "open" : "xdg-open";
+                spawn(cmd, [PROJECT_DIR], { detached: true, stdio: "ignore" }).on("error", () => {}).unref();
+                return send(res, 200, JSON.stringify({ ok: true }), MIME[".json"]);
             }
             if (p === "/api/list" && req.method === "GET") {
                 const dir = safeJoin(PROJECT_DIR, url.searchParams.get("dir") || "");

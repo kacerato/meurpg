@@ -20,8 +20,9 @@ export function infos() {
     return ctx.api.project.mapInfos();
 }
 
+// Como no MZ, mudanças na lista ficam em memória até "Salvar projeto" (api.saveAll).
 async function saveInfos(list) {
-    await ctx.api.project.writeJson("data/MapInfos.json", list);
+    ctx.api.markDirty("data/MapInfos.json", list);
     await ctx.api.refreshMapTree();
     ctx.api.emit("maps:changed", { infos: await infos() });
 }
@@ -92,7 +93,7 @@ export async function createMap(parentId, source) {
         api.status(t("Cannot create any more maps.", "MapEditTreeBox"));
         return null;
     }
-    await api.project.writeJson(mapPath(info.id), map);
+    api.markDirty(mapPath(info.id), map); // também põe o mapa no cache do projeto
     await saveInfos(list);
     api.emit("map:changed", { id: info.id });
     await api.selectMap(info.id);
@@ -150,7 +151,7 @@ export async function deleteMap(id) {
     for (const d of ids) {
         list[d] = null;
         S.edits.delete(d);
-        await api.project.delete(mapPath(d));
+        api.markDirty(mapPath(d), null, { del: true }); // o arquivo some no próximo Salvar
     }
     // o MZ não deixa nulls sobrando no fim de MapInfos
     while (list.length > 1 && list[list.length - 1] === null) { list.pop(); }
@@ -173,6 +174,20 @@ async function openForEdit(id) {
     return ctx.S.cur && ctx.S.cur.id === id ? ctx.S.cur : null;
 }
 
+// Copiar / Colar mapa (menu de contexto e Editar da barra quando a lista tem o foco).
+export async function copyMapToClipboard(id) {
+    const { api, S } = ctx;
+    if (!id) { return; }
+    const list = await infos();
+    const map = await api.project.map(id);
+    S.mapClipboard = { map: JSON.parse(JSON.stringify(map)), info: { ...list[id] } };
+    api.status(t("Map copied"));
+}
+
+export function pasteMapFromClipboard(parentId) {
+    return ctx.S.mapClipboard ? createMap(parentId, ctx.S.mapClipboard) : Promise.resolve(null);
+}
+
 // ---------------- Menu de contexto ----------------
 
 function showTreeMenu(x, y, id) {
@@ -189,13 +204,8 @@ function showTreeMenu(x, y, id) {
             if (r) { await createMap(id, r); }
         }, false],
         null,
-        [t("Copy", "BasicConstants"), async () => {
-            const list = await infos();
-            const map = await api.project.map(id);
-            S.mapClipboard = { map: JSON.parse(JSON.stringify(map)), info: { ...list[id] } };
-            api.status(t("Map copied"));
-        }, !id],
-        [t("Paste", "BasicConstants"), () => createMap(id, S.mapClipboard), !S.mapClipboard],
+        [t("Copy", "BasicConstants"), () => copyMapToClipboard(id), !id],
+        [t("Paste", "BasicConstants"), () => pasteMapFromClipboard(id), !S.mapClipboard],
         [t("Delete", "BasicConstants"), () => deleteMap(id), !id],
         null,
         [t("Shift", "MainMenu") + "…", async () => {
@@ -225,6 +235,15 @@ function showTreeMenu(x, y, id) {
     menu.style.left = Math.max(4, Math.min(x, window.innerWidth - r.width - 4)) + "px";
     menu.style.top = Math.max(4, Math.min(y, window.innerHeight - r.height - 4)) + "px";
     setTimeout(() => document.addEventListener("pointerdown", closeOnOutside, true), 0);
+    document.addEventListener("keydown", closeOnEsc, true);
+}
+
+function closeOnEsc(e) {
+    if (e.key === "Escape" && $("mtTreeMenu")) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeTreeMenu();
+    }
 }
 
 function closeOnOutside(e) {
@@ -236,6 +255,7 @@ export function closeTreeMenu() {
     const m = $("mtTreeMenu");
     if (m) { m.remove(); }
     document.removeEventListener("pointerdown", closeOnOutside, true);
+    document.removeEventListener("keydown", closeOnEsc, true);
 }
 
 // ---------------- Arrastar para reagrupar ----------------
@@ -391,6 +411,8 @@ export function initMapTree(context) {
         const row = target.closest && target.closest("#mapTree div[data-id]");
         return row ? Number(row.dataset.id) : 0;
     };
+    // abrir qualquer diálogo fecha o menu de contexto (antes ele ficava por cima)
+    ctx.api.on("dialog:open", closeTreeMenu);
     sidebar.addEventListener("contextmenu", e => {
         e.preventDefault();
         showTreeMenu(e.clientX, e.clientY, idOf(e.target));

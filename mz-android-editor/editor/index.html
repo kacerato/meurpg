@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="css/editor.css">
 </head>
 <body>
+    <!-- Barra de menus do MZ (01_04): preenchida por js/menubar.js -->
+    <nav id="menubar"></nav>
     <!-- Barra de ferramentas na ordem do RPG Maker MZ, com os ícones originais -->
     <header id="toolbar">
         <button id="btnMaps" class="tb" title="Show/hide map list" data-i18n-title="Show/hide map list"><img src="img/tree-root.png" alt=""></button>
@@ -79,6 +81,9 @@
             <img src="img/toolbar/game-playtest.png" alt="" class="barIcon">
             <span data-i18n="Playtest" data-i18n-ctx="MainMenu">Playtest</span>
             <span class="spacer"></span>
+            <button id="btnPlayDebug" title="Debug (F9)" data-i18n-title="Debug (F9)"><span data-i18n="Debug (F9)">Debug (F9)</span></button>
+            <button id="btnPlayThrough" class="toggle" title="Through (Ctrl)" data-i18n-title="Through (Ctrl)"><span data-i18n="Through (Ctrl)">Through (Ctrl)</span></button>
+            <button id="btnPlayFull" title="Full screen" data-i18n-title="Full screen">⛶</button>
             <button id="btnPlayReload" title="Restart" data-i18n-title="Restart">↻</button>
             <button id="btnPlayClose" title="Close" data-i18n-title="Close" data-i18n-ctx="BasicConstants">✕ <span data-i18n="Close" data-i18n-ctx="BasicConstants">Close</span></button>
         </div>

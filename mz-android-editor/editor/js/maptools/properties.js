@@ -149,6 +149,9 @@ export function openImageDialog(api, title, folders, current) {
 }
 
 // ---------- Encontro ----------
+// Área de transferência de encontros (vale entre mapas, como no MZ).
+let encClipboard = null;
+
 function openEncounterDialog(api, troops, enc) {
     return new Promise(resolve => {
         const cur = enc ? JSON.parse(JSON.stringify(enc)) : { troopId: 1, weight: 10, regionSet: [] };
@@ -159,7 +162,7 @@ function openEncounterDialog(api, troops, enc) {
             }
         });
         troop.value = cur.troopId;
-        const weight = numberInput(cur.weight, 1, 100);
+        const weight = numberInput(cur.weight, 0, 100);
         const rangeAll = el("input", { type: "radio", name: "mtEncRange", checked: !cur.regionSet.length });
         const rangeReg = el("input", { type: "radio", name: "mtEncRange", checked: cur.regionSet.length > 0 });
         const regs = [0, 1, 2].map(i => numberInput(cur.regionSet[i] || 0, 0, 255));
@@ -175,7 +178,7 @@ function openEncounterDialog(api, troops, enc) {
                 {
                     label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                         const regionSet = rangeReg.checked ? regs.map(r => clampInt(r.value, 0, 255)).filter(v => v > 0) : [];
-                        resolve({ troopId: Number(troop.value) || 1, weight: clampInt(weight.value, 1, 100), regionSet });
+                        resolve({ troopId: Number(troop.value) || 1, weight: clampInt(weight.value, 0, 100), regionSet });
                     }
                 },
                 { label: t("Cancel", "BasicConstants"), onClick: () => resolve(null) }
@@ -222,8 +225,8 @@ export async function openMapProperties(api, { title, map, info }) {
             }
         });
         tileset.value = m.tilesetId;
-        const width = numberInput(m.width, 1, 256);
-        const height = numberInput(m.height, 1, 256);
+        const width = numberInput(m.width, 0, 256);
+        const height = numberInput(m.height, 0, 256);
         const scroll = el("select");
         [t("No Loop", "Dialog_MapProperties"), t("Loop Vertically", "Dialog_MapProperties"), t("Loop Horizontally", "Dialog_MapProperties"), t("Loop Both", "Dialog_MapProperties")].forEach((s, i) => scroll.append(el("option", { value: i, text: s })));
         scroll.value = m.scrollType || 0;
@@ -302,6 +305,15 @@ export async function openMapProperties(api, { title, map, info }) {
         const encButtons = el("div", { class: "mtRow" },
             el("button", { class: "mtBtn", text: t("New", "StandardPopupMenu"), onclick: () => editEnc(-1) }),
             el("button", { class: "mtBtn", text: t("Edit", "StandardPopupMenu"), onclick: () => { if (encSel >= 0) { editEnc(encSel); } } }),
+            el("button", { class: "mtBtn", text: t("Copy", "BasicConstants"), onclick: () => { if (encSel >= 0) { encClipboard = JSON.parse(JSON.stringify(encList[encSel])); } } }),
+            el("button", { class: "mtBtn", text: t("Paste", "BasicConstants"), onclick: () => {
+                if (!encClipboard) { return; }
+                // como no MZ, cola antes da linha selecionada (ou no fim, na linha vazia)
+                const at = encSel >= 0 ? encSel : encList.length;
+                encList.splice(at, 0, JSON.parse(JSON.stringify(encClipboard)));
+                encSel = at;
+                drawEnc();
+            } }),
             el("button", { class: "mtBtn", text: t("Delete", "BasicConstants"), onclick: () => { if (encSel >= 0) { encList.splice(encSel, 1); encSel = -1; drawEnc(); } } }));
 
         const dlg = api.openDialog({
@@ -329,8 +341,8 @@ export async function openMapProperties(api, { title, map, info }) {
                         resolve({
                             map: m,
                             name: name.value,
-                            width: clampInt(width.value, 1, 256),
-                            height: clampInt(height.value, 1, 256)
+                            width: clampInt(width.value, 0, 256),
+                            height: clampInt(height.value, 0, 256)
                         });
                     }
                 },

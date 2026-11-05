@@ -9,6 +9,9 @@ export class Project {
     constructor() {
         this.info = null;
         this.cache = new Map();
+        // api.js liga aqui: arquivo com alteração não salva? Uma leitura "fresh" de um arquivo
+        // modificado devolve o objeto em memória (é o estado do projeto, como no MZ).
+        this.isDirtyFile = null;
     }
 
     async open() {
@@ -26,7 +29,7 @@ export class Project {
     }
 
     async readJson(relPath, { fresh = false } = {}) {
-        if (!fresh && this.cache.has(relPath)) {
+        if (this.cache.has(relPath) && (!fresh || (this.isDirtyFile && this.isDirtyFile(relPath)))) {
             return this.cache.get(relPath);
         }
         const res = await fetch("/api/file?path=" + encodeURIComponent(relPath));

@@ -22,6 +22,7 @@
     --accent-bg: #cde0fb;
     --bar-h: 46px;
     --status-h: 24px;
+    --menu-h: 24px;
 }
 
 * { box-sizing: border-box; }
@@ -46,7 +47,7 @@ html, body {
     border-bottom: 1px solid var(--line);
 }
 
-#toolbar { height: var(--bar-h); padding-top: env(safe-area-inset-top); overflow-x: auto; overflow-y: hidden; white-space: nowrap; }
+#toolbar { height: var(--bar-h); overflow-x: auto; overflow-y: hidden; white-space: nowrap; }
 #toolbar::-webkit-scrollbar { height: 0; }
 #status {
     position: absolute; left: 0; right: 0; bottom: 0;
@@ -83,7 +84,7 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
 
 #main {
     position: absolute;
-    top: calc(var(--bar-h) + env(safe-area-inset-top));
+    top: calc(var(--menu-h) + var(--bar-h) + env(safe-area-inset-top));
     bottom: var(--status-h);
     left: 0; right: 0;
     display: flex;
@@ -118,6 +119,18 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#mapTree li > div > .treeArrow {
+    order: -1;
+    width: 14px; height: 16px; flex: none; margin-right: -4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+}
+#mapTree li > div > .treeArrow:not(.leaf)::after { content: "▸"; font-size: 13px; }
+#mapTree li > div > .treeArrow.open::after { content: "▾"; }
+#mapTree li > div.selected > .treeArrow { color: #fff; }
+#mapTree li > div > .treeLabel { overflow: hidden; text-overflow: ellipsis; }
+#mapTree li > div { padding-left: 4px; }
+#mapTree ul[hidden] { display: none; }
 #mapTree li > div::before {
     content: "";
     width: 16px; height: 16px; flex: none;
@@ -193,3 +206,47 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
 .mzDialogButtons { display: flex; justify-content: flex-end; gap: 6px; padding: 6px 10px; border-top: 1px solid var(--line2); }
 .mzDialogButtons button { min-width: 84px; border: 1px solid var(--line); background: var(--panel2); }
 .mzDialogButtons button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* Barra de menus (Arquivo, Editar, Modo...) — js/menubar.js */
+#menubar {
+    height: calc(var(--menu-h) + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 4px 0;
+    display: flex; align-items: stretch;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line2);
+    overflow: hidden; white-space: nowrap;
+}
+.mbHead {
+    height: var(--menu-h); min-width: 0;
+    padding: 0 9px; border: 0; border-radius: 0;
+    font-size: 13px;
+}
+.mbHead.open { background: var(--accent); color: #fff; }
+.mbDrop {
+    position: fixed; z-index: 120;
+    min-width: 230px; padding: 3px 0;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    box-shadow: 2px 3px 10px rgba(0,0,0,.25);
+    display: flex; flex-direction: column;
+}
+.mbItem {
+    display: flex; align-items: center; gap: 6px;
+    height: 30px; width: 100%;
+    padding: 0 12px 0 4px;
+    border: 0; border-radius: 0; text-align: left;
+    font-size: 13px;
+}
+.mbItem:hover:not(:disabled) { background: var(--accent); color: #fff; border-color: transparent; }
+.mbCheck { width: 18px; text-align: center; flex: none; }
+.mbLabel { flex: 1; }
+.mbKey { color: var(--muted); font-size: 12px; padding-left: 24px; }
+.mbItem:hover:not(:disabled) .mbKey { color: #e8eefa; }
+.mbSep { height: 1px; margin: 3px 6px; background: var(--line2); }
+
+/* Teste de jogo: botões de toque para F9 e Ctrl */
+#playBar button.toggle.on { background: #2d5fa8; color: #fff; border-color: #6da0ea; }
+
+/* Atualizar Corescript */
+.coreGrid { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; padding: 8px 4px; }
+.coreMsg { color: var(--muted); font-size: 12px; padding: 4px; }

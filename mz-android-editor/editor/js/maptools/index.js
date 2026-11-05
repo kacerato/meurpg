@@ -6,7 +6,7 @@ import * as T from "./autotile.js";
 import { MapEdit, LAYER_AUTO } from "./editops.js";
 import { Palette } from "./palette.js";
 import { regionColor } from "./render.js";
-import { initMapTree } from "./maptree.js";
+import { initMapTree, copyMapToClipboard, pasteMapFromClipboard, deleteMap } from "./maptree.js";
 import { t } from "../i18n.js";
 
 const TILE = 48;
@@ -26,6 +26,7 @@ const S = {
     clipboard: null,     // pincel "map"
     mapClipboard: null,  // {map, info}
     palette: null,
+    focus: "map",        // "map" | "tree": onde Editar (Recortar/Copiar/Colar/Excluir) age, como no MZ
     hover: null,
     gesture: null
 };
@@ -210,20 +211,27 @@ function updateButtons() {
     }
     // no modo evento os botões de edição pertencem ao módulo de eventos: ficam habilitados
     const ev = isEventMode();
-    const hasSel = !!S.selection;
+    const tree = !ev && treeFocused();
+    const hasSel = tree ? !!api.currentMapId : !!S.selection;
     for (const id of ["btnCut", "btnCopy", "btnDelete"]) {
         const b = $(id);
         if (b) { b.disabled = !ev && !hasSel; }
     }
     const paste = $("btnPaste");
-    if (paste) { paste.disabled = !ev && !S.clipboard; }
-    const mod = anyModified();
-    const save = $("btnSave");
-    if (save) { save.classList.toggle("mtModified", mod); }
-    const ind = $("mtModifiedFlag");
-    if (ind) {
-        ind.textContent = mod ? "● " + t("Modified") : "";
+    if (paste) { paste.disabled = !ev && !(tree ? S.mapClipboard : S.clipboard); }
+    const sb = $("sidebar");
+    if (sb) { sb.classList.toggle("mtTreeFocus", tree); }
+    // salvamento unificado (api.js): mapas com tiles alterados entram no "projeto modificado"
+    for (const e of S.edits.values()) {
+        if (e.modified && !api.isDirtyFile(mapPath(e.id))) {
+            api.markDirty(mapPath(e.id), e.map);
+        }
     }
+}
+
+function treeFocused() {
+    const sb = $("sidebar");
+    return S.focus === "tree" && !!sb && !sb.classList.contains("hidden");
 }
 
 // ---------------- Desfazer / refazer ----------------
@@ -261,6 +269,10 @@ function selRect() {
 }
 
 function doCopy() {
+    if (!isEventMode() && treeFocused()) {
+        if (api.currentMapId) { copyMapToClipboard(api.currentMapId).then(updateButtons); }
+        return false;
+    }
     const e = currentEdit();
     const r = selRect();
     if (!e || !r || isEventMode()) { return false; }
@@ -271,6 +283,10 @@ function doCopy() {
 }
 
 function doDelete(label = t("Delete", "BasicConstants")) {
+    if (!isEventMode() && treeFocused()) {
+        if (api.currentMapId) { deleteMap(api.currentMapId).then(updateButtons); }
+        return;
+    }
     const e = currentEdit();
     const r = selRect();
     if (!e || !r || isEventMode()) { return; }
@@ -282,12 +298,21 @@ function doDelete(label = t("Delete", "BasicConstants")) {
 }
 
 function doCut() {
+    if (!isEventMode() && treeFocused()) {
+        const id = api.currentMapId;
+        if (id) { copyMapToClipboard(id).then(() => deleteMap(id)).then(updateButtons); }
+        return;
+    }
     if (doCopy()) {
         doDelete(t("Cut", "BasicConstants"));
     }
 }
 
 function doPaste() {
+    if (!isEventMode() && treeFocused()) {
+        if (S.mapClipboard) { pasteMapFromClipboard(api.currentMapId || 0).then(updateButtons); }
+        return;
+    }
     if (!S.clipboard || isEventMode()) { return; }
     S.brush = S.clipboard;
     S.palette.clearSelectionMark();
@@ -300,21 +325,26 @@ function doPaste() {
 
 // ---------------- Gravação ----------------
 
+// Salvar projeto é da casca (api.saveAll, app.js). Aqui só: antes de gravar, garante que os mapas
+// modificados estão marcados; depois, limpa a flag "modified" dos que foram gravados.
 async function doSave() {
-    try {
-        let n = 0;
-        for (const e of S.edits.values()) {
-            if (e.modified) {
-                await api.project.writeJson(mapPath(e.id), e.map);
-                e.modified = false;
-                n++;
-                api.emit("map:changed", { id: e.id });
-            }
+    if (api.shell && api.shell.saveProject) {
+        await api.shell.saveProject();
+    } else {
+        await api.saveAll();
+    }
+}
+
+function onBeforeSave() {
+    updateButtons();
+}
+
+function onSaved({ files }) {
+    for (const e of S.edits.values()) {
+        if (e.modified && files.includes(mapPath(e.id))) {
+            e.modified = false;
+            api.emit("map:changed", { id: e.id });
         }
-        api.status(n > 1 ? t("Project saved (%1 maps)", null, n) : n ? t("Project saved (%1 map)", null, n) : t("Project saved"));
-    } catch (err) {
-        console.error(err);
-        api.status(t("Failed to save: %1", null, err.message || err));
     }
     updateButtons();
 }
@@ -760,7 +790,8 @@ function bindViewport() {
         if (g.mode === "pick") {
             S.selection = g.prevSel === undefined ? null : g.prevSel;
             if (e.type === "pointerup") {
-                eyedrop(g, g.t0, g.t1, g.exact || e.shiftKey);
+                // tile exato: Shift, ou o botão "A" (equivalente de toque do Shift)
+                eyedrop(g, g.t0, g.t1, g.exact || e.shiftKey || S.autotileOff);
             }
             refreshView();
             return;
@@ -781,17 +812,20 @@ function bindViewport() {
 
 function bindKeys() {
     document.addEventListener("keydown", e => {
-        if (dialogOpen() || isEventMode()) { return; }
+        if (dialogOpen() || isEventMode() || document.querySelector(".mbDrop")) { return; }
         const tag = (e.target && e.target.tagName) || "";
         if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") { return; }
         const ctrl = e.ctrlKey || e.metaKey;
         const k = e.key.toLowerCase();
         if (ctrl && k === "z" && !e.shiftKey) { e.preventDefault(); doUndo(); }
         else if (ctrl && (k === "y" || (k === "z" && e.shiftKey))) { e.preventDefault(); doRedo(); }
+        else if (treeFocused() && ctrl && k === "c") { e.preventDefault(); doCopy(); }
+        else if (treeFocused() && ctrl && k === "x") { e.preventDefault(); doCut(); }
+        else if (treeFocused() && ctrl && k === "v") { e.preventDefault(); doPaste(); }
+        else if (treeFocused() && k === "delete") { e.preventDefault(); doDelete(); }
         else if (ctrl && k === "c") { if (S.selection) { e.preventDefault(); doCopy(); } }
         else if (ctrl && k === "x") { if (S.selection) { e.preventDefault(); doCut(); } }
         else if (ctrl && k === "v") { if (S.clipboard) { e.preventDefault(); doPaste(); } }
-        else if (ctrl && k === "s") { e.preventDefault(); doSave(); }
         else if (k === "delete") { if (S.selection) { e.preventDefault(); doDelete(); } }
         else if (k === "escape") { if (S.selection) { S.selection = null; refreshView(); } }
     });
@@ -839,16 +873,17 @@ export async function register(theApi) {
     api.bindToolbar("btnCopy", doCopy, t("Copy", "BasicConstants"));
     api.bindToolbar("btnPaste", doPaste, t("Paste", "BasicConstants"));
     api.bindToolbar("btnDelete", () => doDelete(), t("Delete", "BasicConstants"));
-    api.bindToolbar("btnSave", doSave, t("Save Project", "MainMenu"));
-
-    // indicador de modificado na barra de status
-    const status = $("status");
-    const msg = $("statusMsg");
-    if (status && !$("mtModifiedFlag")) {
-        const flag = document.createElement("span");
-        flag.id = "mtModifiedFlag";
-        status.insertBefore(flag, msg || null);
-    }
+    // Salvar projeto: botão, Ctrl+S e indicador de modificado ficam na casca (app.js / api.saveAll)
+    api.on("save", onBeforeSave);
+    api.on("saved", onSaved);
+    // foco: lista de mapas x mapa/paleta (decide onde Editar age)
+    const setFocus = f => { if (S.focus !== f) { S.focus = f; updateButtons(); } };
+    const sb = $("sidebar");
+    if (sb) { sb.addEventListener("pointerdown", () => setFocus("tree"), true); }
+    $("viewport").addEventListener("pointerdown", () => setFocus("map"), true);
+    if (S.panel) { S.panel.addEventListener("pointerdown", () => setFocus("map"), true); }
+    const btnMaps = $("btnMaps");
+    if (btnMaps) { btnMaps.addEventListener("click", () => setTimeout(updateButtons, 0)); }
 
     bindViewport();
     bindKeys();
@@ -873,14 +908,8 @@ export async function register(theApi) {
             await reloadView(S.cur);
         }
     });
-    window.addEventListener("beforeunload", e => {
-        if (anyModified()) {
-            e.preventDefault();
-            e.returnValue = "";
-        }
-    });
     // ponto de inspeção para depuração/testes
-    window.mzMapTools = { state: S, setTool, save: doSave, undo: doUndo, redo: doRedo };
+    window.mzMapTools = { state: S, setTool, save: doSave, undo: doUndo, redo: doRedo, anyModified };
     setTool(null);
     updateButtons();
 }

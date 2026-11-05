@@ -231,3 +231,7 @@ button.tb.mtModified { box-shadow: inset 0 -3px 0 #e07020; }
     .mtSampleList { width: 100%; height: 40%; }
     .mtDgLeft { width: auto; }
 }
+
+/* Seleção da lista de mapas sem foco (Editar age no mapa): realce mais claro, como no Qt */
+#sidebar:not(.mtTreeFocus) #mapTree li > div.selected { background: #c9d9f2; color: var(--text); }
+#sidebar:not(.mtTreeFocus) #mapTree li > div.selected > .treeArrow { color: var(--muted); }

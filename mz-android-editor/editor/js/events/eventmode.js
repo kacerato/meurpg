@@ -67,10 +67,13 @@ export class EventMode {
     }
     get selectedEvent() { return this.map ? this.eventAt(this.cursor.x, this.cursor.y) : null; }
 
+    // Não grava na hora: marca o mapa como modificado; "Salvar projeto" (api.saveAll) grava junto
+    // com os tiles, como no MZ. (System.json da posição inicial continua gravado na hora, como o
+    // banco de dados, para não divergir do que o diálogo do banco lê do disco.)
     async save() {
         const evs = this.map.events;
         while (evs.length > 1 && !evs[evs.length - 1]) { evs.pop(); }
-        await this.api.project.writeJson(mapPath(this.mapId), this.map);
+        this.api.markDirty(mapPath(this.mapId), this.map);
         this.api.emit("map:changed", { id: this.mapId });
         if (this.api.view && this.api.view.redrawOverlay) { this.api.view.redrawOverlay(); }
         this.refresh();

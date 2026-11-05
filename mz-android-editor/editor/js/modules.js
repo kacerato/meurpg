@@ -12,12 +12,18 @@ export const MODULES = [
     "./deploy/index.js",
 ];
 
-export async function loadModules(api) {
+// Sem projeto aberto, só estes carregam (Novo projeto, Ajuda, Opções no primeiro uso).
+export const NO_PROJECT_MODULES = ["./tools/index.js"];
+
+export async function loadModules(api, { noProject = false } = {}) {
     // Desenvolvimento: ?modules=./database/index.js,./events/index.js liga módulos sem editar este arquivo;
     // ?modules=none desliga todos.
     const q = new URLSearchParams(location.search).get("modules");
     const extra = (q || "").split(",").map(s => s.trim()).filter(Boolean);
-    const list = q === "none" ? [] : (extra.length ? extra : MODULES);
+    let list = q === "none" ? [] : (extra.length ? extra : MODULES);
+    if (noProject) {
+        list = list.filter(p => NO_PROJECT_MODULES.includes(p));
+    }
     for (const path of list) {
         try {
             const mod = await import(path);
