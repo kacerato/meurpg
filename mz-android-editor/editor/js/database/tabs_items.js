@@ -1,6 +1,6 @@
 // Abas Skills, Items, Weapons, Armors.
 import { el, num, text, area, sel, fld, grp, grid, btn, changed, modal, radios } from "./ui.js";
-import { PARAMS, OCCASIONS, HIT_TYPES, DAMAGE_TYPES, ITEM_TYPES, idOptions, typeOptions, decodeScope, encodeScope } from "./common.js";
+import { PARAMS, OCCASIONS, HIT_TYPES, DAMAGE_TYPES, ITEM_TYPES, idOptions, typeOptions, decodeScope, encodeScope, asObjects } from "./common.js";
 import { traitsList, effectsList } from "./traits.js";
 import { pickIcon, iconCanvas } from "./pickers.js";
 import { cols, noteGroup } from "./tabs_actors.js";
@@ -43,7 +43,7 @@ export function scopeField(obj) {
 }
 
 function animationOptions(db, withNormal) {
-    return [...(withNormal ? [[-1, t("Normal Attack", "Group_Invocation")]] : []), ...idOptions(db.Animations, t("None", "Constants"))];
+    return asObjects([...(withNormal ? [[-1, t("Normal Attack", "Group_Invocation")]] : []), ...idOptions(db.Animations, t("None", "Constants"))], "Animations");
 }
 
 function invocationGroup(db, o, isSkill) {

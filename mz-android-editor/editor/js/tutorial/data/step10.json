@@ -1,0 +1,998 @@
+{
+"step": 10,
+"title": {
+"ja_JP": "ステップ10：イベント応用２：動く岩",
+"en": "Step 10: Event Application 2: Moving Rock",
+"zh_CN": "步骤 10：事件应用 2：移动岩石"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 9?",
+"ja_JP": "ステップ９を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 9 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 9 project.",
+"ja_JP": "ステップ９のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 9 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 9 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ９のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 9 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step10",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This time we're going to create a dungeon setup: rocks that move when pushed.",
+"ja_JP": "今回は、ダンジョンの仕掛け「押すと動く岩」を作ります。",
+"zh_CN": "这次我们将创建地牢的设定：被推动时会移开的岩石。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 168,
+"y": 91,
+"windowKey": "MapEditTreeBox",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Stone Cave\" from the tree view.",
+"ja_JP": "マップツリーから\"岩の洞窟\"をクリック。",
+"zh_CN": "在树形图单击“石洞”。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 705,
+"y": 216,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The stones you push to move will be\nplaced in the passage 3 tiles in width a bit above the entrance.",
+"ja_JP": "「押すと動く岩」は、入口から少し上にある\n横３マスの通路に並べて配置することにします。",
+"zh_CN": "你要推动的岩石将被放置在\n入口处稍微上方 3 格的通路上。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "The coordinates will be (21,21). \nAfter creating the event, we'll copy it to the coordinates on its left and right.",
+"ja_JP": "配置座標は(21,21)にします。\nそしてイベント作成後、左右の座標に複製します。",
+"zh_CN": "该坐标为（21,21）。 \n事件建成后，我们将把它复制到其左侧和右侧的位置。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll create the event. Double click (21,21).",
+"ja_JP": "イベントを作成します。(21,21)をダブルクリック。",
+"zh_CN": "我们先创建事件。双击（21,21）。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 138,
+"y": 41,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter the name as MovingRock.",
+"ja_JP": "名前に「動く岩」と入力してください。",
+"zh_CN": "输入名称为“移动岩石”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 72,
+"y": 443,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 143,
+"y": 174,
+"windowKey": "ImageSelector",
+"condition": "list,30",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll to the bottom of the list and click !Other1.",
+"ja_JP": "リストを下までスクロールして !Other1 をクリック。",
+"zh_CN": "滚动至列表底端，然后单击“!Other1”。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 290,
+"y": 27,
+"windowKey": "ImageSelector",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Among the rocks with upper halves, \nclick on the leftmost, uppermost (facing down) one in the middle.",
+"ja_JP": "上半分の岩のうち一番左の\n一番上（下向き）の真ん中をクリックして選択。",
+"zh_CN": "在岩石上半部分之间， \n单击最左上方（面朝下）的中间那个。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 569,
+"y": 432,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 33,
+"y": 608,
+"windowKey": "EventEditorMain",
+"condition": "checked,directionFix,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Direction Fix\".",
+"ja_JP": "「向き固定」にチェック。",
+"zh_CN": "勾选“固定朝向”。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 264,
+"y": 635,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,trigger,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the trigger to \"Player Touch\".",
+"ja_JP": "トリガーを「プレイヤーから接触」にします。",
+"zh_CN": "将触发条件设置为“玩家接触”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 537,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll set up the content. \nDouble click the first line.",
+"ja_JP": "続いて実行内容の設定です。\n最初の行をダブルクリック。",
+"zh_CN": "接着我们要设置其内容。 \n双击第一行。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 66,
+"y": 19,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the page 2 tab.",
+"ja_JP": "タブの２ページ目をクリック。",
+"zh_CN": "单击第 2 页的标签。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 135,
+"y": 181,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Set Movement Route\".",
+"ja_JP": "「移動ルートの設定…」をクリック。",
+"zh_CN": "单击“设置移动路线”。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 131,
+"y": 16,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the target to This Event. Now we'll set up the rock movement.",
+"ja_JP": "対象を「このイベント」にします。これで岩の動きの設定になります。",
+"zh_CN": "将目标设置为本事件。现在我们要设置岩石的移动。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 92,
+"y": 55,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the Movement Route as follows:\nDirection Fix OFF\nMove away from Player\nDirection Fix ON",
+"ja_JP": "次の順序でコマンドを選択してください。\n向き固定OFF\nプレイヤーから遠ざかる\n向き固定ON",
+"zh_CN": "设置以下的移动路线：\n固定朝向 关闭\n远离玩家\n固定朝向 开启"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 26,
+"y": 376,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Skip If Cannot Move\". \nOtherwise, if the rock can't be moved because of an obstacle, it'll freeze.",
+"ja_JP": "「移動できない場合は飛ばす」をチェック。\nチェックを付けなかった場合、岩が障害物により動かせない状況でフリーズが発生します。注意しましょう。",
+"zh_CN": "勾选“无法移动时跳过指令”。 \n否则，当岩石因受阻不能被移动时会冻结。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 26,
+"y": 397,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Remove the check from \"Wait for Completion\". \nThis so the next movement event will run concurrently.",
+"ja_JP": "「完了までウェイト」のチェックをはずします。\n次に続く移動イベントを並行して動かすためです。",
+"zh_CN": "取消勾选“等待完成”。 \n这样接下来的移动事件才能同时执行。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 725,
+"y": 439,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the movement route.",
+"ja_JP": "ＯＫをクリックして移動ルートを確定。",
+"zh_CN": "单击 OK 设置移动路线。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 513,
+"y": 215,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next is setup of player movement. Double click the next line.",
+"ja_JP": "次は、プレイヤーの動きの設定です。次の行をダブルクリック。",
+"zh_CN": "接着是设置玩家的移动。双击下一行。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 144,
+"y": 179,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Set Movement Route\".",
+"ja_JP": "「移動ルートの設定…」をクリック。",
+"zh_CN": "单击“设置移动路线”。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 89,
+"y": 20,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure the target is the Player.",
+"ja_JP": "対象が「プレイヤー」であるのを確認。",
+"zh_CN": "确保目标为玩家。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 173,
+"y": 62,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter the movement route as follows:\nChange Speed: 3\n1 Step Forward\nChange Speed: 4",
+"ja_JP": "次の順序でコマンドを選択してください。\n移動速度の変更：3\n一歩前進\n移動速度の変更：4",
+"zh_CN": "输入以下的移动路线：\n更改移动速度：3\n前进 1 步\n更改移动速度：4"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 173,
+"y": 62,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The player movement speed is usually 4. \nDuring the time the rock is moving, it will be the speed of the rock (3).",
+"ja_JP": "プレイヤーの移動速度は通常、「4」 です。\n岩移動間だけ、岩の速度と同じ「3」にしています。",
+"zh_CN": "玩家的移动速度一般是 4. \n移动岩石的时候其速度则与岩石的速度（3）相同。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 26,
+"y": 376,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Skip If Cannot Move\".",
+"ja_JP": "「移動できない場合は飛ばす」にチェック。",
+"zh_CN": "勾选“无法移动时跳过指令”。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 26,
+"y": 397,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Leave the check on for \"Wait for Completion\". \nThis is so that the event waits for both the rock and player movements to finish.",
+"ja_JP": "「完了までウェイト」のチェックはそのままにします。\n岩とプレイヤーの両方の動きが終わるまで待つためです。",
+"zh_CN": "继续勾选“等待完成”。 \n如此，该事件会等待岩石和玩家移动结束。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 722,
+"y": 436,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK, and set the player movement.",
+"ja_JP": "ＯＫをクリックして、プレイヤーの動きを確定。",
+"zh_CN": "单击 OK 设置玩家移动。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 780,
+"y": 686,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the rock event is complete. Click OK and set the event.",
+"ja_JP": "これで岩イベント完成です。ＯＫをクリックしイベントを確定。",
+"zh_CN": "现在岩石事件已完成。单击 OK 设置事件。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll copy the completed rock event to the left and right. \nClick the completed rock.",
+"ja_JP": "完成した岩を、左右に複製します。\n作成した岩をクリック。",
+"zh_CN": "我们将把已完成的岩石事件复制到左侧和右侧。 \n单击已完成的岩石。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "action,editCopy,close",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click the rock and select \"Copy\".",
+"ja_JP": "岩を右クリックし、「コピー」を選択。",
+"zh_CN": "右击岩石，选择“复制”。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "action,editPaste,close",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click on (20,21) to the left and select \"Paste\".",
+"ja_JP": "左の(20,21)で右クリックし「貼り付け」を選択。",
+"zh_CN": "右击左侧的（20,21），然后选择“粘贴”。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "action,editPaste,close",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "In the same way, right click on (22,21) to the right and select \"Paste\".",
+"ja_JP": "同様に右の(22,21)で右クリックし「貼り付け」を選択。",
+"zh_CN": "用同样的方法，右击右侧的（22,21），然后选择“粘贴”。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now three rocks have been placed. \nIn order to playtest, let's make the player starting position near the entrance.",
+"ja_JP": "これで岩が３つ配置されました。\nテストプレイのために、プレイヤーの初期位置を入り口付近にしましょう。",
+"zh_CN": "现在已放置好三个岩石。 \n为了测试游戏，先把玩家的初始位置设在靠近入口处吧。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Place the player below the rock at (21,22).",
+"ja_JP": "プレイヤーを岩の下(21,22)に設定します。",
+"zh_CN": "把玩家放置在岩石下方（21,22）。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 1050,
+"y": 280,
+"windowKey": "MainWindow",
+"condition": "action,eventSetStartingPosition_player",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click on (21,22)\nand select Set Starting Position > Player.",
+"ja_JP": "(21,22)の座標を右クリックし\n初期位置の設定→プレイヤーと選択。",
+"zh_CN": "右击（21,22），\n然后选择“设置初始位置”>“玩家”。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 102,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Save the project.",
+"ja_JP": "プロジェクトを保存。",
+"zh_CN": "保存项目。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 1050,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Start a playtest. \nCheck that the rocks move, and that everything is all right even if they're pushed where they can't be moved.",
+"ja_JP": "テストプレイを開始します。\n岩が動くか、動かせない場所に押しても大丈夫かをチェック。",
+"zh_CN": "开始测试游戏。 \n确认岩石是否移动，以及其他一切是否在岩石被移动时也原封不动。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Once you're done with the playtest there will be a short explanation.",
+"ja_JP": "テストプレイが終わったら短い解説を行います。",
+"zh_CN": "完成测试之后，还有个简短的说明。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Did the rocks move properly? If it didn't go well, let's do the step over again.",
+"ja_JP": "岩はきちんと動きましたか。うまくいかない場合、もう一度このステップを行ってください。",
+"zh_CN": "岩石是否正常移动？不顺利的话，我们重头开始执行此该步骤吧。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "If it went well, let's try thinking about why they moved. \nWell then, nicely done.",
+"ja_JP": "うまくいった方は、「なぜ動くのか」を考えてみてください。\nそれでは、お疲れ様でした。",
+"zh_CN": "顺利的话，尝试思考为什么它们会移动吧。 \n很好，做得漂亮。"
+}
+}
+]
+}

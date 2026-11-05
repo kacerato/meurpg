@@ -1,0 +1,2822 @@
+{
+"step": 17,
+"title": {
+"ja_JP": "ステップ17：敵キャラ（ボス）の設定",
+"en": "Step 17: Enemy Character (Boss) Settings",
+"zh_CN": "步骤 17：敌人角色（Boss）设定"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 16?",
+"ja_JP": "ステップ１６を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 16 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 16 project.",
+"ja_JP": "ステップ１６のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 16 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please select the step 16 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ１６のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 16 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step17",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step, we'll create the cave boss. \nWe'll configure the database and adjust it to have strength suitable for a boss.",
+"ja_JP": "本ステップでは、洞窟のボスを作成します。\nデータベースを設定し、\nボスらしい強さに調整も行います。",
+"zh_CN": "在这个步骤中，我们将创建洞窟中的 Boss。 \n我们要配置数据库，并将调整一个适合 Boss 的强大力量。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 768,
+"y": 29,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please open the database.",
+"ja_JP": "データベースを開いてください。",
+"zh_CN": "请打开数据库。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 72,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "list,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Enemies tab.",
+"ja_JP": "「敵キャラ」タブをクリック。",
+"zh_CN": "单击“敌人”标签。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 207,
+"y": 150,
+"windowKey": "DatabaseMain",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"0005 Hi_monster\". \nWe're going to make this enemy character the boss.",
+"ja_JP": "リストから「0005 魔獣」をクリック。\nこの敵キャラをボスにします。",
+"zh_CN": "单击“0005 魔兽”。 \n我们要把这个敌人角色作成 Boss。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Here's an example of how to adjust balance:\nConsider the player's assumed level and equipment\nto determine an initial strength, and after that make small adjustments with playtesting.",
+"ja_JP": "バランス調整方法の一例を挙げます：\nプレイヤーの到達想定レベルや装備を考え\n最初の強さを決定し、その後のテストプレイで\n少しずつ調節していきます。",
+"zh_CN": "以下是如何调整平衡的例子：\n考虑玩家的假设等级和装备\n来判断初始力量，之后，通过游戏测试做微调。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This time we'll assume a player level of 4. \nWe'll start our adjustments based on this.",
+"ja_JP": "今回想定レベルは４です。\nこれを踏まえ調整を始めます。",
+"zh_CN": "这次我们将假设玩家的等级是 4。 \n我们将以此为基础做调整。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 72,
+"y": 84,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's look at the regular attack combat formula. \nClick the Skills tab.",
+"ja_JP": "ここで、通常攻撃の戦闘計算式を見てみましょう。\n「スキル」タブをクリック。",
+"zh_CN": "看一看普通攻击的战斗计算公式。 \n单击技能标签。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 255,
+"y": 72,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure #1, \"Attack\", is selected.",
+"ja_JP": "「0001 攻撃」が選択されているのを確認してください。",
+"zh_CN": "确保 #1，“攻击”已被选择。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 933,
+"y": 135,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The damage formula is configured here. \nThis means \"Attack*4 - Defense*2\".",
+"ja_JP": "ダメージの計算式はここで設定されています。\nこれは「攻撃力×４－防御力×２」という意味です。",
+"zh_CN": "伤害计算公式可在这里配置。 \n这代表着“攻击*4 - 防御*2”。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 948,
+"y": 180,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "\"Critical Hits\" are set to \"Yes\". \nCritical hits deal 3 times the amount of damage. \nIt's very important to keep these in mind when setting your values, and to adjust\nusing playtesting.",
+"ja_JP": "「会心」が「あり」になっています。\n会心時はダメージが３倍になります。\nこれらを考慮し値を設定し、\nテストプレイで調整していくことが重要です。",
+"zh_CN": "“暴击”设置为“是”。 \n暴击能造成 3 倍伤害。 \n设置数值以及通过游戏测试做调整的时候这些东西都很重要，\n还请谨记。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 873,
+"y": 138,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Additionally, there's no need to always make enemy attacks skill #1. It's also possible to create enemy-exclusive attack skills with different formulas and other settings. \nWe'll be proceeding in this tutorial without any additional changes.",
+"ja_JP": "なお、敵の攻撃は、必ずしも１番のスキルにする必要はなく、計算式などの異なる「敵専用攻撃」スキルの作成も可能です。\nこのチュートリアルでは、このまま行きます。",
+"zh_CN": "此外，你无需总是将敌人攻击设置为技能 #1。你也可以使用不同的计算公式和其他设定，创建仅属于敌人的攻击技能。 \n我们将不做多余的更改，继续进行本教程。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 78,
+"y": 249,
+"windowKey": "DatabaseMain",
+"condition": "list,7",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Troops tab.",
+"ja_JP": "次は「敵グループ」タブをクリック。",
+"zh_CN": "单击“敌群”标签。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 939,
+"y": 81,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "You can check the party strength of a party\nwith an assumed level of 4 using battle testing. \nClick Battle Test.",
+"ja_JP": "「想定レベル４」の時のパーティの強さの確認は、\n戦闘テストで可能です。\n「戦闘テスト…」をクリック。",
+"zh_CN": "假设队伍的等级为 4，\n你可以使用战斗测试来确认队伍的力量。 \n单击“战斗测试”。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 261,
+"y": 77,
+"windowKey": "BattleTest",
+"condition": "spinBox,=,4",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "You can view the levels and abilities of \ndifferent actors here. \nFirst, set Reid's level to 4.",
+"ja_JP": "ここで、アクターのそれぞれのレベルでの能力値を\n見ることが出来ます。\nまずはリードのレベルを「4」にしてください。",
+"zh_CN": "你可以在此处查看各个角色的 \n等级和技能。 \n首先，把里德的等级设为4。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 423,
+"y": 107,
+"windowKey": "BattleTest",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Reid's level 4 status is shown.",
+"ja_JP": "リードのレベル４でのステータスが表示されます。",
+"zh_CN": "已显示里德的等级是4。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 57,
+"y": 17,
+"windowKey": "BattleTest",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make the other members level 4 in the same way. \nSwitch to the page 2 tab.",
+"ja_JP": "同様に、他のメンバーもレベル４にします。\nタブを２ページ目に。",
+"zh_CN": "用同样的方式，我们把其他成员的等级设为 4。 \n转到第 2 页的标签。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 246,
+"y": 74,
+"windowKey": "BattleTest",
+"condition": "spinBox,=,4",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change Michelle's level to 4.",
+"ja_JP": "ミシェルのレベルを「4」に変更。",
+"zh_CN": "把米歇尔的等级更改为4。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 93,
+"y": 23,
+"windowKey": "BattleTest",
+"condition": "tabView,tabview,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to the page 3 tab.",
+"ja_JP": "タブを３ページ目に。",
+"zh_CN": "转到第 3 页的标签。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 246,
+"y": 71,
+"windowKey": "BattleTest",
+"condition": "spinBox,=,4",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change Kasey's level to 4.",
+"ja_JP": "ケイシーのレベルを「4」に変更。",
+"zh_CN": "把凯西的等级更改为4。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 126,
+"y": 17,
+"windowKey": "BattleTest",
+"condition": "tabView,tabview,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to the page 4 tab.",
+"ja_JP": "タブを４ページ目に。",
+"zh_CN": "转到第 4 页的标签。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 243,
+"y": 74,
+"windowKey": "BattleTest",
+"condition": "spinBox,=,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change Eliot's level to 4.",
+"ja_JP": "エリオットのレベルを「4」に変更。",
+"zh_CN": "把埃利奥特的等级更改为4。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 108,
+"y": 275,
+"windowKey": "BattleTest",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Everyone's level 4 stats will be shown. \nWhile generally there would be a need to test equipment\nin addition to this, we won't be changing equipment this time so it's fine as-is.",
+"ja_JP": "全員のレベル４のステータスが示されました。\n本来は、これに加え装備を吟味する必要が\nありますが、今回は装備を変更しないので、そのままでＯＫです。",
+"zh_CN": "所有标签显示着群员等级 4 的属性。 \n一般上，除此之外你会需要测试装备，\n但是这次我们将不更改装备，所以这样就可以了。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 108,
+"y": 275,
+"windowKey": "BattleTest",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Additionally, we will configure the enemy's initial values\nwhile taking the skills that the actors can use into consideration.",
+"ja_JP": "加えて、アクターが使えるスキルを勘案しながら\n敵の初期値を設定します。",
+"zh_CN": "另外，我们将角色的技能纳入考量，\n以此为基础配置敌人的初始数值。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 360,
+"y": 341,
+"windowKey": "BattleTest",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "For now, click OK and conduct the battle test. \nYou can immediately end the battle test. \nNow the configured values are remembered,\nso next time we can conduct the battle test with all members at level 4.",
+"ja_JP": "一旦ＯＫをクリックし、戦闘テストを行います。\n戦闘テストはすぐ終了して結構です。\n今回設定した値が記憶され、\n次からは全員がレベル４で戦闘テストが行えます。",
+"zh_CN": "现在暂时单击 OK，然后进行战斗测试。 \n你可以快速地结束战斗测试。 \n现在已配置的数值会被记录下来，\n所以下一次我们能以全体成员等级 4 进行战斗测试。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 81,
+"y": 213,
+"windowKey": "DatabaseMain",
+"condition": "list,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now let's actually configure the boss parameters. \nClick the Enemies tab.",
+"ja_JP": "それでは実際にボスのパラメータの設定を行います。\n「敵キャラ」タブをクリック。",
+"zh_CN": "现在让我们来配置 Boss 的能力值吧。 \n单击“敌人”标签。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 246,
+"y": 112,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Ensure that \"0005 Hi_monster\" is selected. \nFor now, as an example, input the \nfollowing values.",
+"ja_JP": "「0005 魔獣」が選択されているのを確認。\n今回は、例として次から解説する値を\n入力してください。",
+"zh_CN": "确保“0005 魔兽”已被选择。 \n现在，作为一个示例， \n输入以下数值。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 624,
+"y": 82,
+"windowKey": "DatabaseMain",
+"condition": "spinBox,=,1200",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set Max HP to 1200.",
+"ja_JP": "最大HPを「1200」に変更。",
+"zh_CN": "把最大 HP 设置为 1200。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 615,
+"y": 234,
+"windowKey": "DatabaseMain",
+"condition": "spinBox,=,50",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set Agility to 50.",
+"ja_JP": "敏捷性を「50」に変更。",
+"zh_CN": "把敏捷设置为 50。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 486,
+"y": 421,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next, we'll edit his action patterns. \nWe'll set the actions that can be taken and their conditions.",
+"ja_JP": "次は、行動パターンを変更します。\n取ることが出来る行動と、その条件を設定します。",
+"zh_CN": "接下来，我们要编辑它的行动模式。 \n我们将设置它的行动以及行动的条件。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 660,
+"y": 460,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "You can set conditions such as use every X turns or use when HP is above or below a fixed amount. \nIf a condition is not set, the action can always occur. (Excluding cases such as insufficient MP)",
+"ja_JP": "条件には「数ターンごとに使う」や\n「ＨＰが一定以上（以下）の時」などが可能です。\n設定しない場合、常時対象になります。\n（ＭＰが足りない場合などは除く）",
+"zh_CN": "你可以设置条件，如每 X 回合或是当 HP 大于或小于某个固定数值。 \n如果未设置任何条件，该行动会一直出现。（MP 不足的情况除外）"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 729,
+"y": 454,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "R refers to rating, which pertains to the rate at which the action is taken. \nWhile you're still getting used to things, it's fine to leave them all at 5.",
+"ja_JP": "Ｒはレーティングで、\nその行動を取る確率に関係します。\n慣れないうちは、全て５のままで結構です。",
+"zh_CN": "R 代表评分，也就是行动被使用的几率。 \n当你还未熟悉这些事物之时，你可以把它们留设为 5。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 504,
+"y": 463,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Action,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First, we'll make him attack twice in one turn. \nDouble click the \"Attack\" line.",
+"ja_JP": "まずは、攻撃を１ターンに２回させるようにします。\n「攻撃」の行をダブルクリックしてください。",
+"zh_CN": "首先，我们将设置它每回合攻击两次。 \n双击“攻击”的那一行。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 125,
+"y": 59,
+"windowKey": "Action",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the skill from #1, \"Attack\", to #4, \"Double Attack\".",
+"ja_JP": "スキルを「0001 攻撃」から「0013 ２回攻撃」に変更。",
+"zh_CN": "把技能从 #1,“攻击”，改成 #4，“两次攻击”。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 203,
+"y": 368,
+"windowKey": "Action",
+"condition": "windowState,Action,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 483,
+"y": 481,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Action,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 119,
+"y": 65,
+"windowKey": "Action",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the skill to \"0052 Heal I\".",
+"ja_JP": "スキルを「0052 ヒールⅠ」に設定。",
+"zh_CN": "把技能设为“0052 治疗I”。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 23,
+"y": 200,
+"windowKey": "Action",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off the HP condition.",
+"ja_JP": "条件の「HP」をチェック。",
+"zh_CN": "勾选 HP 条件。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 263,
+"y": 200,
+"windowKey": "Action",
+"condition": "spinBox,=,35 %",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We want to make him use it when his max HP is between 0% and 35%,\nso change the 100 on the right to 35.",
+"ja_JP": "最大ＨＰの０～３５％の時に使わせたいので、\n右の「100」を「35」に書き換えてください。",
+"zh_CN": "我们要让它在最大 HP 在 0% 和 35% 之间时使用该技能，\n所以把右侧的 100 更改为 35。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 251,
+"y": 68,
+"windowKey": "Action",
+"condition": "spinBox,=,6",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the rating from 4 to 6. \nNow when his HP is low,\nthere's a higher chance of him using Heal instead of Double Attack.",
+"ja_JP": "レーティングを「4」から「6」に変更。\nこれで、体力の少ない時は、\n２回攻撃よりヒールを使う確率が高まります。",
+"zh_CN": "把评分从 4 改成 6。 \n现在，当它 HP 低下的时候，\n就有更高几率会使用治愈技能而非两次攻击。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 209,
+"y": 371,
+"windowKey": "Action",
+"condition": "windowState,Action,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 516,
+"y": 502,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Action,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double-click the third line.",
+"ja_JP": "３行目をダブルクリック。",
+"zh_CN": "双击第三行。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 110,
+"y": 68,
+"windowKey": "Action",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the skill to \"0119 Spark I\".",
+"ja_JP": "スキルを「0119 スパークⅠ」に設定。",
+"zh_CN": "把技能设为“0119 火花I”。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 29,
+"y": 203,
+"windowKey": "Action",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off HP under Conditions.",
+"ja_JP": "条件の「HP」をチェック。",
+"zh_CN": "勾选条件下方的 HP。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 263,
+"y": 197,
+"windowKey": "Action",
+"condition": "spinBox,=,50 %",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change 30 to 50.",
+"ja_JP": "「30」を「50」に書き換えてください。",
+"zh_CN": "把 30 更改为 50。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 248,
+"y": 68,
+"windowKey": "Action",
+"condition": "spinBox,=,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll change the rating from 5 to 6. \nNow when the condition is filled,\nthere's a higher chance of him choosing Spark instead of Double Attack.",
+"ja_JP": "レーティングを「5」から「6」に変更。\nこれで条件が成り立つときは、\n２回攻撃よりスパークを選ぶ確率が高まります。",
+"zh_CN": "把评分从 5 改成 6。 \n在条件被设置后，\n它就会有更高的几率选择使用火花而非两次攻击。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 218,
+"y": 368,
+"windowKey": "Action",
+"condition": "windowState,Action,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 879,
+"y": 142,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Traits,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll set his Traits. \nDouble click the next blank line.",
+"ja_JP": "次は特徴を設定します。\n次の空欄の行をダブルクリック。",
+"zh_CN": "接着我们要设置它的特性。 \n双击下一行空行。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 279,
+"y": 25,
+"windowKey": "Traits",
+"condition": "tabView,tabview,5",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Other tab.",
+"ja_JP": "「その他」タブをクリック。",
+"zh_CN": "单击“其他”标签。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 24,
+"y": 124,
+"windowKey": "Traits",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off Collapse Effect.",
+"ja_JP": "「消滅エフェクト」をチェック。",
+"zh_CN": "勾选“消失效果”。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 207,
+"y": 130,
+"windowKey": "Traits",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Boss. \nNow when he's defeated, his collapse animation will be more impressive.",
+"ja_JP": "「ボス」を選択。\n倒した時の消滅アニメーションが派手になります。",
+"zh_CN": "选择“Boss”。 \n现在当它被打败时，它倒下的动画效果会更加令人惊叹。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 280,
+"y": 300,
+"windowKey": "Traits",
+"condition": "action,closeButton",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Already configured, so click Cancel.",
+"ja_JP": "既に設定されていますのでキャンセルをクリックします。",
+"zh_CN": "已经配置好了，所以单击取消。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 69,
+"y": 249,
+"windowKey": "DatabaseMain",
+"condition": "list,7",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We've finished setting up the Hi_monster unit. \nNext, click on Enemy Group.",
+"ja_JP": "これで、魔獣単体の設定は完了です。\n次に　敵グループ　タブをクリック。",
+"zh_CN": "我们已设置好魔兽数量。 \n接着，单击敌群。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 249,
+"y": 160,
+"windowKey": "DatabaseMain",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select \"0005 Hi_monster\".",
+"ja_JP": "「0005 魔獣」を選択。",
+"zh_CN": "选择“0005 魔兽”。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 936,
+"y": 84,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the preparation is complete. Let's battle test.",
+"ja_JP": "これで、準備完了です。戦闘テストを行います。",
+"zh_CN": "一切已准备就绪。做个战斗测试吧。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 366,
+"y": 335,
+"windowKey": "BattleTest",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure each actor's level is 4\nand click OK.",
+"ja_JP": "各アクターのレベルが４になっているのを確認して\nＯＫをクリック。",
+"zh_CN": "确保每个角色的等级都是 4，\n然后单击 OK。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 468,
+"y": 303,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "How was it? It was a bit tough, wasn't it? \nWe'll go with this strength.",
+"ja_JP": "いかがでしたでしょうか。\n少し歯ごたえがあったのではないでしょうか。\nこの強さで行くことにします。",
+"zh_CN": "测试结果如何？是否有点困难？ \n我们将保持这个力量设定。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": 903,
+"y": 684,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's place the boss in the dungeon. \nClick OK and set the database changes.",
+"ja_JP": "ボスをダンジョンに配置します。\nＯＫをクリックし、データベースの変更を確定。",
+"zh_CN": "把 Boss 放置在地牢内。 \n单击 OK 设置数据库变更。"
+}
+},
+{
+"id": 75,
+"folder": false,
+"x": 123,
+"y": 90,
+"windowKey": "MapEditTreeBox",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Stone Cave\" from the tree view.",
+"ja_JP": "マップツリーから\"岩の洞窟\"をクリック。",
+"zh_CN": "在树形图单击“石洞”。"
+}
+},
+{
+"id": 76,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll to the top of the map.",
+"ja_JP": "マップを一番上にスクロール。",
+"zh_CN": "滚动至地图顶端。"
+}
+},
+{
+"id": 77,
+"folder": false,
+"x": 870,
+"y": 362,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Find the coordinates (16,8), \nas we'll be placing the boss there.",
+"ja_JP": "ボスの座標は(16,8)にします。\nその座標を見つけてください。",
+"zh_CN": "找到坐标（16,8）， \n我们要把 Boss 放在此处。"
+}
+},
+{
+"id": 78,
+"folder": false,
+"x": 870,
+"y": 359,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click on (16,8).",
+"ja_JP": "(16,8)でダブルクリック。",
+"zh_CN": "双击（16,8）。"
+}
+},
+{
+"id": 79,
+"folder": false,
+"x": 75,
+"y": 36,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter the name as Boss.",
+"ja_JP": "名前に「ボス」と入力してください。",
+"zh_CN": "输入名称为“Boss”。"
+}
+},
+{
+"id": 80,
+"folder": false,
+"x": 54,
+"y": 432,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 81,
+"folder": false,
+"x": 98,
+"y": 181,
+"windowKey": "ImageSelector",
+"condition": "list,22",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click !Flame from the list.",
+"ja_JP": "リストから !Flame をクリック。",
+"zh_CN": "从列表中单击“!Flame”。"
+}
+},
+{
+"id": 82,
+"folder": false,
+"x": 400,
+"y": 210,
+"windowKey": "ImageSelector",
+"condition": "list,64",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Among the rocks with lower halves, click on the center of the second left-facing one from the right.",
+"ja_JP": "下段右から2番目の左向きの中央をクリック。",
+"zh_CN": "在岩石下半部分之间，单击右边第二个面朝左那个的中间。"
+}
+},
+{
+"id": 83,
+"folder": false,
+"x": 566,
+"y": 427,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 84,
+"folder": false,
+"x": 495,
+"y": 138,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now let's set the contents. \nDouble click the first empty line.",
+"ja_JP": "次に実行内容を設定します。\n一番上の空欄をダブルクリック。",
+"zh_CN": "现在我们要设置执行内容。 \n双击第一行空行。"
+}
+},
+{
+"id": 85,
+"folder": false,
+"x": 120,
+"y": 86,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "『文章の表示…』をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 86,
+"folder": false,
+"x": 260,
+"y": 36,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter in two lines: \n\"You've come far, humans. \nBut your judgment is nigh!\"",
+"ja_JP": "『よくぞここまでたどり着いたな、人間ども。\nだが成敗してやる！』\nと、２行で入力してください。",
+"zh_CN": "用两行输入： \n“你已经来到这里了啊，人类。 \n这将是对你的最终审判！”"
+}
+},
+{
+"id": 87,
+"folder": false,
+"x": 404,
+"y": 204,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 88,
+"folder": false,
+"x": 561,
+"y": 195,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 89,
+"folder": false,
+"x": 93,
+"y": 20,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to the page 3 tab.",
+"ja_JP": "タブを３ページ目に。",
+"zh_CN": "转到第 3 页的标签。"
+}
+},
+{
+"id": 90,
+"folder": false,
+"x": 141,
+"y": 86,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Battle Processing.",
+"ja_JP": "戦闘の処理　をクリック。",
+"zh_CN": "单击“战斗处理”。"
+}
+},
+{
+"id": 91,
+"folder": false,
+"x": 113,
+"y": 71,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change to \"0005 Hi_monster\".",
+"ja_JP": "「0005 魔獣」に変更。",
+"zh_CN": "更改为“0005 魔兽”。"
+}
+},
+{
+"id": 92,
+"folder": false,
+"x": 41,
+"y": 197,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Since he's the boss, we won't check off \"Can Escape\".",
+"ja_JP": "ボスなので逃走可にはチェックを入れないままにします。",
+"zh_CN": "由于它是 Boss，我们不勾选“允许逃跑”。"
+}
+},
+{
+"id": 93,
+"folder": false,
+"x": 119,
+"y": 254,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 94,
+"folder": false,
+"x": 513,
+"y": 213,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we'll describe the processing for after the battle is won. \nDouble click the next line.",
+"ja_JP": "次は戦闘に勝利した後の処理を記述します。\n次の行をダブルクリック。",
+"zh_CN": "现在我们要说明战胜后的处理。 \n双击下一行。"
+}
+},
+{
+"id": 95,
+"folder": false,
+"x": 21,
+"y": 20,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the tab for the 1st page and open it.",
+"ja_JP": "タブをクリックして１ページ目を開きます。",
+"zh_CN": "单击第 1 页的标签，将其打开。"
+}
+},
+{
+"id": 96,
+"folder": false,
+"x": 96,
+"y": 77,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "『文章の表示…』をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 97,
+"folder": false,
+"x": 224,
+"y": 33,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter: Curses...\n These are the Boss's last words.",
+"ja_JP": "『無念……』\nと入力して下さい。敵の最期の言葉です。",
+"zh_CN": "输入：“我恨……”\n 这将是 Boss 的遗言。"
+}
+},
+{
+"id": 98,
+"folder": false,
+"x": 416,
+"y": 207,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the text.",
+"ja_JP": "ＯＫをクリックして、文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 99,
+"folder": false,
+"x": 459,
+"y": 258,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We will erase the Boss. \nDouble click the next line.",
+"ja_JP": "魔獣を消去します。\n次の行をダブルクリック。",
+"zh_CN": "我们要将 Boss 消除。 \n双击下一行。"
+}
+},
+{
+"id": 100,
+"folder": false,
+"x": 123,
+"y": 296,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Control Self Switch...\".",
+"ja_JP": "『セルフスイッチの操作…』をクリック。",
+"zh_CN": "单击“独立开关操作……”。"
+}
+},
+{
+"id": 101,
+"folder": false,
+"x": 104,
+"y": 147,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Self Switch is A, and that the Operation is set\nto ON, click OK and set it.",
+"ja_JP": "セルフスイッチ「A」、操作が「ON」なのを確認し\nＯＫをクリック。",
+"zh_CN": "确保独立开关设置为“A”，操作设置为“开启”，\n然后单击 OK 设置它。"
+}
+},
+{
+"id": 102,
+"folder": false,
+"x": 453,
+"y": 39,
+"windowKey": "EventEditorMain",
+"condition": "action,New Event Page,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done with setup for page 1. \nClick \"New Event Page\".",
+"ja_JP": "これで１ページ目は完了です。\n「EVページ作成」をクリック。",
+"zh_CN": "现在我们已经设置好第 1 页。 \n单击“新建事件页”。"
+}
+},
+{
+"id": 103,
+"folder": false,
+"x": 36,
+"y": 264,
+"windowKey": "EventEditorMain",
+"condition": "checked,conditions.selfSwitchValid,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll check off Self Switch as the Condition.",
+"ja_JP": "出現条件のセルフスイッチにチェックを入れます。",
+"zh_CN": "我们要勾选“独立开关”为出现条件。"
+}
+},
+{
+"id": 104,
+"folder": false,
+"x": 174,
+"y": 267,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure it is set to A.",
+"ja_JP": "Ａになっているのを確認します。",
+"zh_CN": "确保它被设置为“A”。"
+}
+},
+{
+"id": 105,
+"folder": false,
+"x": 780,
+"y": 687,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the boss event is complete. \nClick OK and set the event. \nWe'll make the ending in the next step.",
+"ja_JP": "これでボスのイベントは完了です。\nＯＫをクリックしてイベントを確定します。\nなお、エンディングは次のステップで作成します。",
+"zh_CN": "现在 Boss 事件已完成。 \n单击 OK 设置事件。 \n下一步骤中，我们将设置结局。"
+}
+},
+{
+"id": 106,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Run a playtest. For the sake of simplicity,\nwe'll start right in front of the boss.",
+"ja_JP": "テストプレイを行います。簡略化のため、\n一旦ボスの直前から開始するようにします。",
+"zh_CN": "测试一下游戏。为了简化测试，\n我们将直接在 Boss 跟前开始测试。"
+}
+},
+{
+"id": 107,
+"folder": false,
+"x": 830,
+"y": 360,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make the player's initial coordinates close to the boss, at (15,8). Find those coordinates.",
+"ja_JP": "プレイヤーの初期座標はボスの近く、\n(15,8)にします。その座標を見つけてください。",
+"zh_CN": "我们要把玩家初始位置设定在 Boss 的附近，就在（15,8）。找到这个坐标。"
+}
+},
+{
+"id": 108,
+"folder": false,
+"x": 830,
+"y": 360,
+"windowKey": "MainWindow",
+"condition": "action,eventSetStartingPosition_player",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click on (15,8)\nand select\nSet Starting Position > Player.",
+"ja_JP": "(15,8)で右クリックし、\n初期位置の設定 > プレイヤーと選択。",
+"zh_CN": "右击（15,8），\n然后选择\n“设置初始位置”>“玩家”。"
+}
+},
+{
+"id": 109,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "However, if we do it like this, the party's level will be at 1\nand they won't have any items. Thus we will make a\ntemporary event for playtesting.",
+"ja_JP": "しかしこのままだと、パーティのレベルは１のままで、\nアイテムもありません。このため、テストプレイ用の\nイベントを一時的に作りましょう。",
+"zh_CN": "但是如果我们这样做的话，队伍的等级会是 1，\n而且他们不会有任何物品。因此，我们将制作一个\n游戏测试用的临时事件。"
+}
+},
+{
+"id": 110,
+"folder": false,
+"x": 348,
+"y": 50,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll place the venue outside of the map, in a place like (1,0). \nFind (1,0).",
+"ja_JP": "画面の外、例えば(1,0)にイベントを配置します。\n(1,0)を見つけてください。",
+"zh_CN": "我们将把地点设置在地图外侧，像是（1,0）。 \n找到（1,0）。"
+}
+},
+{
+"id": 111,
+"folder": false,
+"x": 348,
+"y": 50,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click (1,0).",
+"ja_JP": "(1,0)をダブルクリック。",
+"zh_CN": "双击（1,0）。"
+}
+},
+{
+"id": 112,
+"folder": false,
+"x": 84,
+"y": 42,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Name it For Testing.",
+"ja_JP": "名前は「実験用」にしてください。",
+"zh_CN": "将其命名为“测试用”。"
+}
+},
+{
+"id": 113,
+"folder": false,
+"x": 240,
+"y": 630,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,trigger,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the Trigger to Autorun.",
+"ja_JP": "トリガーを「自動実行」にしてください。",
+"zh_CN": "把触发条件设置为“自动执行”。"
+}
+},
+{
+"id": 114,
+"folder": false,
+"x": 243,
+"y": 633,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "\"Autorun\" events will execute automatically\nno matter where they are on the map when their condition is met. \nThis time, it will be executed as soon as the map is loaded.",
+"ja_JP": "「自動実行」とは、条件が成り立つと、そのマップの\nどこにいても自動で実行されるイベントです。\n今回は、マップ読み込み後すぐに実行されます。",
+"zh_CN": "“自动执行”事件无论它们位于地图何处，\n只要它们的条件已满足就会自动执行。 \n这次，它将会在地图载入时就执行。"
+}
+},
+{
+"id": 115,
+"folder": false,
+"x": 552,
+"y": 135,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "The content will make the party the necessary strength to battle the boss. \nDouble click the first line.",
+"ja_JP": "実行内容は、ボスと戦うのに必要な戦力にします。\n最初の行をダブルクリック。",
+"zh_CN": "其执行内容能让队伍拥有与 Boss 对抗的必要的能力。 \n双击第一行。"
+}
+},
+{
+"id": 116,
+"folder": false,
+"x": 375,
+"y": 377,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Change EXP...\".",
+"ja_JP": "「経験値の増減…」をクリック。",
+"zh_CN": "单击“增减经验值……”。"
+}
+},
+{
+"id": 117,
+"folder": false,
+"x": 161,
+"y": 208,
+"windowKey": "EventCommand",
+"condition": "spinBox,=,400",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Actor is set to \"Entire Party\" and that the Operation is \"Increase\". \nSet the Operand to a Constant of 400.",
+"ja_JP": "アクターが「パーティ全体」、\n操作が「増やす」になっているのを確認してください。\nオペランドの定数を「400」に変更。",
+"zh_CN": "确保角色被设为“全体队友”，而操作设为“增加”。 \n将“操作数”设为“400”的常量。"
+}
+},
+{
+"id": 118,
+"folder": false,
+"x": 179,
+"y": 319,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 119,
+"folder": false,
+"x": 558,
+"y": 156,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 120,
+"folder": false,
+"x": 381,
+"y": 353,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Recover All...\".",
+"ja_JP": "「全回復…」をクリック。",
+"zh_CN": "单击“完全恢复……”。"
+}
+},
+{
+"id": 121,
+"folder": false,
+"x": 212,
+"y": 114,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Actor is set to \"Entire Party\"\nand click OK.",
+"ja_JP": "アクターが「パーティ全体」になっているのを確認して\nＯＫをクリック。",
+"zh_CN": "确保角色被设为“全体队友”，\n然后单击 OK。"
+}
+},
+{
+"id": 122,
+"folder": false,
+"x": 510,
+"y": 177,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 123,
+"folder": false,
+"x": 360,
+"y": 101,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Change Items...\".",
+"ja_JP": "「アイテムの増減…」をクリック。",
+"zh_CN": "单击“增减物品……”。"
+}
+},
+{
+"id": 124,
+"folder": false,
+"x": 95,
+"y": 38,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select item #11, \"Stimulant\".",
+"ja_JP": "アイテムは「0011 スティミュラント」を選択。",
+"zh_CN": "选择物品 #11，“兴奋剂”。"
+}
+},
+{
+"id": 125,
+"folder": false,
+"x": 161,
+"y": 161,
+"windowKey": "EventCommand",
+"condition": "spinBox,=,2",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Operation is \"Increase\",\nand set the Operand to 2.",
+"ja_JP": "操作が「増やす」にチェックされているのを確認し、\nオペランドの定数を「2」に。",
+"zh_CN": "确保操作设为“增加”，\n然后将“操作数”设为“2”。"
+}
+},
+{
+"id": 126,
+"folder": false,
+"x": 170,
+"y": 242,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 127,
+"folder": false,
+"x": 465,
+"y": 195,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 128,
+"folder": false,
+"x": 354,
+"y": 107,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Change Items...\".",
+"ja_JP": "「アイテムの増減…」をクリック。",
+"zh_CN": "单击“增减物品……”。"
+}
+},
+{
+"id": 129,
+"folder": false,
+"x": 80,
+"y": 41,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select the item \"0016 Mega Elixir\".",
+"ja_JP": "アイテムの「0016 ラストエリクサー」を選択。",
+"zh_CN": "选择物品“0016 超级圣水”。"
+}
+},
+{
+"id": 130,
+"folder": false,
+"x": 152,
+"y": 164,
+"windowKey": "EventCommand",
+"condition": "spinBox,=,2",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Operation is \"Increase\",\nand set the Operand to 2.",
+"ja_JP": "操作が「増やす」にチェックされているのを確認し、\nオペランドの定数を「2」に。",
+"zh_CN": "确保操作设为“增加”，\n然后将“操作数”设为“2”。"
+}
+},
+{
+"id": 131,
+"folder": false,
+"x": 173,
+"y": 239,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 132,
+"folder": false,
+"x": 489,
+"y": 213,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 133,
+"folder": false,
+"x": 384,
+"y": 104,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Change Items...\".",
+"ja_JP": "「アイテムの増減…」をクリック。",
+"zh_CN": "单击“增减物品……”。"
+}
+},
+{
+"id": 134,
+"folder": false,
+"x": 80,
+"y": 41,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select item #2, \"TP Charge\".",
+"ja_JP": "アイテムの「0002 ＴＰチャージ」を選択。",
+"zh_CN": "选择物品 #2，“TP 补充”。"
+}
+},
+{
+"id": 135,
+"folder": false,
+"x": 176,
+"y": 164,
+"windowKey": "EventCommand",
+"condition": "spinBox,=,5",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Operation is \"Increase\". \nSet the Operand to a Constant of 5.",
+"ja_JP": "操作が「増やす」にチェックされているのを確認し、\nオペランドの定数を「5」に変更。",
+"zh_CN": "确保操作设为“增加”。 \n将“操作数”设为“5”的常量。"
+}
+},
+{
+"id": 136,
+"folder": false,
+"x": 191,
+"y": 242,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set. \nNow we're all set for a boss battle.",
+"ja_JP": "ＯＫをクリックして確定。\nこれでボス戦に必要な状態になりました。",
+"zh_CN": "单击 OK 后就能完成设置。 \n现在我们已准备好与 Boss 对战。"
+}
+},
+{
+"id": 137,
+"folder": false,
+"x": 498,
+"y": 237,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "If left as-is, autorun will repeat the content of the event\nendlessly. Thus we need to switch pages\nafter it finishes executing. \nDouble click the next line.",
+"ja_JP": "自動実行は、そのままだと何度でも実行内容を\n繰り返します。このため実行終了後\nページを切り替える必要があります。\n次の行をダブルクリック。",
+"zh_CN": "如果保持当下的设定，自动执行将无限重复循环\n事件的执行内容。所以，我们必须在它完成执行内容后\n转换事件页。 \n双击下一行。"
+}
+},
+{
+"id": 138,
+"folder": false,
+"x": 117,
+"y": 299,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Control Self Switch...\".",
+"ja_JP": "『セルフスイッチの操作…』をクリック。",
+"zh_CN": "单击“独立开关操作……”。"
+}
+},
+{
+"id": 139,
+"folder": false,
+"x": 86,
+"y": 147,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Self Switch is A, and that the Operation is set\nto ON, click OK and set it.",
+"ja_JP": "セルフスイッチ「A」、操作が「ON」なのを確認し\nＯＫをクリック。",
+"zh_CN": "确保独立开关设置为“A”，操作设置为“开启”，\n然后单击 OK 设置它。"
+}
+},
+{
+"id": 140,
+"folder": false,
+"x": 471,
+"y": 30,
+"windowKey": "EventEditorMain",
+"condition": "action,New Event Page,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "With \"New Event Page\", create page 2. \nThis is the page that will be switched to when autorun is done.",
+"ja_JP": "「EVページ作成」で２ページ目を作成します。\n自動実行が終わった後に切り替わるページです。",
+"zh_CN": "使用“新建事件页”创建第 2 页。 \n这将是自动执行结束后会跳转到的事件页。"
+}
+},
+{
+"id": 141,
+"folder": false,
+"x": 33,
+"y": 261,
+"windowKey": "EventEditorMain",
+"condition": "checked,conditions.selfSwitchValid,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll check off Self Switch as the Condition.",
+"ja_JP": "出現条件のセルフスイッチにチェックを入れます。",
+"zh_CN": "我们要勾选“独立开关”为出现条件。"
+}
+},
+{
+"id": 142,
+"folder": false,
+"x": 171,
+"y": 261,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure the Self Switch is set to A.",
+"ja_JP": "セルフスイッチがＡになっているのを確認します。",
+"zh_CN": "确保独立开关设置为“A”。"
+}
+},
+{
+"id": 143,
+"folder": false,
+"x": 777,
+"y": 684,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Because nothing will happen on page 2, the configuration is done now. Click OK and set the event.",
+"ja_JP": "２ページ目は何も行わないため、設定はこれだけです。ＯＫをクリックして、イベントを確定。",
+"zh_CN": "第 2 页中不会发生任何事，所以配置到此便完成了。单击 OK 设置事件。"
+}
+},
+{
+"id": 144,
+"folder": false,
+"x": 102,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll run our playtest in these conditions. \nFirst, save the project.",
+"ja_JP": "この状態でテストプレイを行います。\nまずプロジェクトを保存。",
+"zh_CN": "我们将在这些条件下测试游戏。 \n首先得保存项目。"
+}
+},
+{
+"id": 145,
+"folder": false,
+"x": 1050,
+"y": 35,
+"windowKey": "MainWindow",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Start a playtest.",
+"ja_JP": "テストプレイを開始してください。",
+"zh_CN": "开始测试游戏。"
+}
+},
+{
+"id": 146,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "When you're done playtesting, we'll do postprocessing.",
+"ja_JP": "テストプレイが終わったら、事後処理を行います。",
+"zh_CN": "当你完成游戏测试后，我们将探讨后处理。"
+}
+},
+{
+"id": 147,
+"folder": false,
+"x": 348,
+"y": 50,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll stop our event for test use from launching during actual play. \nWhile deleting it is one solution,\nlet's make it so we can use it as necessary. \nDouble click the event for test use on (1,0).",
+"ja_JP": "実験用イベントは本番では起動しないようにします。\n削除するのもひとつの手ですが、\n必要に応じて呼びだせるやり方にします。\n(1,0)の実験用イベントをダブルクリック。",
+"zh_CN": "我们要阻止游戏测试用事件在实际游戏中执行。 \n其中一个方法是删除它，\n为了以后有必要时可以使用，我们要制作这个事件页。 \n双击位于（1,0）的游戏测试用事件。"
+}
+},
+{
+"id": 148,
+"folder": false,
+"x": 63,
+"y": 79,
+"windowKey": "EventEditorMain",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to the page 2 tab.",
+"ja_JP": "タブを２ページ目に。",
+"zh_CN": "转到第 2 页的标签。"
+}
+},
+{
+"id": 149,
+"folder": false,
+"x": 468,
+"y": 28,
+"windowKey": "EventEditorMain",
+"condition": "action,New Event Page,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"New Event Page\". \nPage 3 has been created.",
+"ja_JP": "「EVページ作成」をクリック。\n３ページ目が作成されます。",
+"zh_CN": "单击“新建事件页”。 \n第 3 页已建成。"
+}
+},
+{
+"id": 150,
+"folder": false,
+"x": 123,
+"y": 118,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We won't do any configuration on page 3. \nNow page 3 will always be shown,\nand it will no longer switch to pages 1 and 2.",
+"ja_JP": "３ページ目には一切の設定を行いません。\nこれで常に３ページ目が表示され、\n１、２ページ目に切り替わらなくなりました。",
+"zh_CN": "我们不对第 3 页做任何配置。 \n如此第 3 页将一直显示，\n并且不会转换到第 1 页和第 2 页。"
+}
+},
+{
+"id": 151,
+"folder": false,
+"x": 783,
+"y": 40,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "From now on, if you want to enable this event for testing,\nchange to the page 3 tab and use\n\"Delete Event Page\".",
+"ja_JP": "今後、この実験用イベントを有効にする時は\nタブを３ページ目に合わせ「EVページ削除」を\n行えばよいのです。",
+"zh_CN": "从现在起，当你想开启此事件来做测试时，\n就转到第 3 页的标签，\n然后使用“删除事件页”。"
+}
+},
+{
+"id": 152,
+"folder": false,
+"x": 780,
+"y": 688,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to reflect the changes.",
+"ja_JP": "ＯＫをクリックして、更新を反映します。",
+"zh_CN": "单击 OK 反映变更。"
+}
+},
+{
+"id": 153,
+"folder": false,
+"x": 105,
+"y": 18,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now, please save the project once more.",
+"ja_JP": "それでは、もう一度プロジェクトを保存してください。",
+"zh_CN": "现在，请再次保存项目。"
+}
+},
+{
+"id": 154,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. This is the end of Step 17. \nIn the next step we'll create\nand ending, so we'll leave the player starting position as it is.",
+"ja_JP": "お疲れ様でした。これでステップ１７は終了です。\n次のステップではエンディングを作成しますので、\nプレイヤーの初期位置はそのままにしておきます。",
+"zh_CN": "很好。步骤 17 到这里就结束了。 \n下一步骤中，我们将创建一个结局，\n所以我们不更改目前的玩家初始位置。"
+}
+}
+]
+}

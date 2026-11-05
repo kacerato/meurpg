@@ -1,6 +1,7 @@
 // Regras de equipamento e parâmetros do ator, iguais ao runtime (rmmz_objects.js):
 // Game_Actor.equipSlots / initEquips / releaseUnequippableItems / canEquip, Game_BattlerBase.param.
 // Usado pelo Equipamento inicial (Atores) e pelo Teste de batalha (Tropas).
+import { asObjects } from "./common.js";
 
 const W_TYPE = 51, A_TYPE = 52, E_SEAL = 54, SLOT_TYPE = 55, PARAM = 21;
 
@@ -36,8 +37,10 @@ export function canEquip(traits, item, isWeapon) {
 export function slotCandidates(db, traits, etypeId, current, options) {
     const isWeapon = etypeId === 1;
     const arr = isWeapon ? db.Weapons : db.Armors;
-    return options(arr).filter(([id]) => !id || id === current ||
+    const all = options(arr);
+    const out = all.filter(([id]) => !id || id === current ||
         (arr[id] && arr[id].etypeId === etypeId && canEquip(traits, arr[id], isWeapon)));
+    return all.objectKind ? asObjects(out, all.objectKind) : out;
 }
 
 // Game_Actor.initEquips(equips) + releaseUnequippableItems(true): devolve os objetos que

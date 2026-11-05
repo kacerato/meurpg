@@ -1,0 +1,29 @@
+/* Tutoriais (editor/js/tutorial): Seletor de Tutorial e balão guiado. */
+.mzDialogBody.tutSelectorBody { display: flex; flex-direction: column; padding: 8px; overflow: hidden; }
+.tutList { flex: 1; min-height: 0; overflow: auto; border: 1px solid #c8c8c8; background: #fff; }
+.tutItem { min-height: 38px; line-height: 38px; padding: 0 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; user-select: none; }
+.tutItem.sel { background: var(--accent, #3b78d8); color: #fff; }
+[data-theme="dark"] .tutList { background: #22252a; border-color: #444; }
+
+.tutLayer { position: fixed; inset: 0; z-index: 2147483000; pointer-events: none; }
+.tutBubble {
+    position: fixed; pointer-events: auto; box-sizing: border-box;
+    background: #fffbe6; color: #222; border: 2px solid #e0a800; border-radius: 8px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, .35); font-size: 15px; max-height: 60vh; display: flex; flex-direction: column;
+}
+.tutHead { display: flex; align-items: center; gap: 8px; padding: 6px 6px 4px 10px; border-bottom: 1px solid #f0d36b; cursor: move; touch-action: none; user-select: none; }
+.tutIcon { font-size: 18px; min-width: 22px; text-align: center; }
+.tutTitle { flex: 1; min-width: 0; font-weight: 600; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tutCount { font-size: 12px; color: #6a5a1a; }
+.tutStop { min-width: 36px; min-height: 32px; border: 0; background: transparent; font-size: 16px; cursor: pointer; color: #6a5a1a; }
+.tutText { padding: 8px 12px; white-space: pre-wrap; overflow: auto; line-height: 1.4; }
+.tutButtons { display: flex; justify-content: flex-end; gap: 8px; padding: 4px 10px 10px; }
+.tutBtn { min-height: 36px; min-width: 76px; padding: 0 12px; border: 1px solid #b89000; border-radius: 4px; background: #fff; font: inherit; cursor: pointer; }
+.tutBtn.primary { background: #e0a800; color: #222; font-weight: 600; }
+.tutArrow { position: fixed; width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 12px solid #e0a800; pointer-events: none; }
+.tutArrow.up { border-top: 0; border-bottom: 12px solid #e0a800; }
+.tutHighlight { outline: 3px solid #ff9800 !important; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(255, 152, 0, .35) !important; animation: tutPulse 1.2s ease-in-out infinite; position: relative; z-index: 1; }
+@keyframes tutPulse { 50% { box-shadow: 0 0 0 10px rgba(255, 152, 0, .12) !important; } }
+[data-theme="dark"] .tutBubble { background: #3a3420; color: #f2ecd6; border-color: #c99700; }
+[data-theme="dark"] .tutBtn { background: #2b2b2b; color: #eee; }
+[data-theme="dark"] .tutBtn.primary { background: #c99700; color: #111; }

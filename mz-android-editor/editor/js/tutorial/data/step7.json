@@ -1,0 +1,1378 @@
+{
+"step": 7,
+"title": {
+"ja_JP": "ステップ７：宝箱とセルフスイッチ",
+"en": "Step 7: Treasure and Self-Switches",
+"zh_CN": "步骤 7：宝箱和独立开关"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 6?",
+"ja_JP": "ステップ６を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 6 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 6 project.",
+"ja_JP": "ステップ６のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 6 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 6 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ６のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 6 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読み込み完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step7",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please wait for loading to finish.",
+"ja_JP": "読み込み完了まで、お待ちください。",
+"zh_CN": "至加载完成为止，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This time we're going to learn about self-switches.",
+"ja_JP": "今回はセルフスイッチについて学びます。",
+"zh_CN": "这回我们要了解关于独立开关的作用。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 165,
+"y": 55,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Normal Town.",
+"ja_JP": "\"普通の町\"をクリック。",
+"zh_CN": "单击“普通小镇”。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This time, we'll create two events around a wooden crate on the top-left of town. \nScroll to the top-left part of the map.",
+"ja_JP": "今回は町の左上の1つの木箱周辺に２つのイベントを作成します。\nマップを画面左上にスクロール。",
+"zh_CN": "这次我们要在位于小镇左上方的木箱周围创建两个事件。 \n滚动至地图的左上角。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "First, we'll create a treasure chest. \nSince players start with 0 money, let's make this treasure chest give some.",
+"ja_JP": "まずは宝箱を作ります。\n最初の所持金はゼロなので、お金の宝箱にします。",
+"zh_CN": "首先，我们要创建一个宝箱。 \n由于玩家初期拥有的金钱为 0，我们要制作这个宝箱来给予他们一些金钱。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 370,
+"y": 120,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Place the treasure chest to the right of the crate at (2,2). \nClick and find those coordinates.",
+"ja_JP": "宝箱は木箱の右(2,2)に置くことにします。\nクリックしながら、その場所を見つけてください。",
+"zh_CN": "把宝箱放置在木箱的右边（2,2）。 \n单击找到这个坐标。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "action,eventQuickCreation_treasure",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click to the right of the crate at (2,2), \nthen select Quick Event Creation > Treasure Chest.",
+"ja_JP": "木箱の右(2,2)で右クリックし、\nイベントの簡単作成 > 宝箱…と選択。",
+"zh_CN": "右击木箱的右边（2,2）， \n然后选择“快速创建事件”>“宝箱”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 228,
+"y": 34,
+"windowKey": "QuickTreasure",
+"condition": "spinBox,=,1000",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the \"Content\" is checked off as \"Gold\"\nand enter 1000 as the amount.",
+"ja_JP": "中身が「お金」にチェックされているのを確認して\n金額に「1000」と入力してください。",
+"zh_CN": "确保“内容”被勾选为“金钱”，\n然后输入 1000 为其数额。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "QuickBase",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK. A treasure chest will be created.",
+"ja_JP": "ＯＫをクリック。宝箱が作成されます。",
+"zh_CN": "单击 OK。宝箱将被创建。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the treasure chest.",
+"ja_JP": "宝箱をダブルクリックしてください。",
+"zh_CN": "双击宝箱。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 579,
+"y": 272,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Check for \"Control Self Switch: A\" in the content list.",
+"ja_JP": "実行内容に「セルフスイッチの操作 A」があるのを確認してください。",
+"zh_CN": "确认内容列表中有“独立开关操作：A”。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 60,
+"y": 59,
+"windowKey": "EventEditorMain",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the tab to go to page 2.",
+"ja_JP": "タブをクリックして２ページ目にしてください。",
+"zh_CN": "单击标签打开第 2 页。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 66,
+"y": 401,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "You can see from the image that this page is for the chest in an opened state.",
+"ja_JP": "画像から「開けられた状態」であると分かります。",
+"zh_CN": "你可以从图像看到该事件页用于宝箱打开后。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 75,
+"y": 266,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Check that the appearance condition is set to \"Self Switch A\".",
+"ja_JP": "出現条件が「セルフスイッチ A(が ON)」になっているのを確認。",
+"zh_CN": "确认出现条件被设置为“独立开关 A”。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 339,
+"y": 191,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "These settings are similar to the switch settings we learned in Step 5. \nSo now to explain how self switches and switches differ.",
+"ja_JP": "これらの設定は、ステップ５で学んだスイッチの設定に似ています。\nそこで、セルフスイッチはスイッチとどう違うのかを説明します。",
+"zh_CN": "这些设定与我们在步骤 5 中学习到的开关设定类似。 \n所以现在我们要说明独立开关与开关的不同点。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 339,
+"y": 191,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Like switches, self switches can be turned on and off. \nBut unlike switches, they cannot be referred to by other events.",
+"ja_JP": "セルフスイッチは、スイッチと同様、ON OFF を切り替えることができます。\nしかしスイッチとは異なり、他のイベントから参照出来ません。",
+"zh_CN": "与开关相同的是，独立开关也能被开启或关闭。 \n与开关不同的是，它们无法适用于其他事件。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 339,
+"y": 191,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Each event can have self switches from A to D. \nSince they're unaffected by other events, one benefit is that they're easy to understand.",
+"ja_JP": "セルフスイッチは、イベントごとにＡ～Ｄの４つを持っています。\n他のイベントに影響を与えないため、分かりやすいのが利点です。",
+"zh_CN": "各个事件都可拥有从 A 至 D 的独立开关。 \n由于它们不受其他事件所影响，容易理解是它们的其中一个好处。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 339,
+"y": 191,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "However, when you need to make references from other events, you will have to use regular switches.",
+"ja_JP": "一方、他のイベントから参照する必要がある場合、通常のスイッチにする必要があります。",
+"zh_CN": "但是，当你必须涉及其他事件时，你得使用普通开关。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 351,
+"y": 335,
+"windowKey": "EventEditorMain",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 26,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "That ends the explanation of self switches. \nWould you like to read the explanation again?",
+"ja_JP": "以上がセルフスイッチの説明です。\nもう一度説明しましょうか？",
+"zh_CN": "以上就是独立开关的说明。 \n是否要再看一遍说明？"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 864,
+"y": 674,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now, click Cancel.",
+"ja_JP": "それでは、キャンセルをクリック。",
+"zh_CN": "现在，单击“取消”。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Let's make an event that uses self switches. We'll create some flashing spots that gives money when someone investigates them.",
+"ja_JP": "実際にセルフスイッチを使ったイベントを作ります。光る所を調べるとお金が手に入るようにします。",
+"zh_CN": "我们制作一个使用自动开关的事件吧。我们要创建一个会闪烁的记号，查看它的人能获得金钱。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We'll make the event so that page 1 is for before you get the gold\nand page 2 is for after you get the gold.",
+"ja_JP": "イベントは入手前は１ページ目、\n入手後は２ページ目を表示するようにします。",
+"zh_CN": "我们要把事件的第 1 页设置为获得金钱之前，\n第 2 页为获得金钱之后。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 340,
+"y": 130,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Put the money in the wooden crate on (1,2). Double-click (1,2).",
+"ja_JP": "お金を置く場所は木箱(1,2)にします。(1,2)をダブルクリック。",
+"zh_CN": "把金钱放入位于（1,2）的木箱中。双击（1,2）。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 108,
+"y": 38,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Name the event. \nType in \"Dropped Gold\".",
+"ja_JP": "イベント名を付けます。\n「落ちているお金」と入力してください。",
+"zh_CN": "为事件命名。 \n输入“掉落的金钱”："
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 72,
+"y": 417,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 179,
+"y": 153,
+"windowKey": "ImageSelector",
+"condition": "list,29",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select !Flame from the list. \nIt's near the bottom, so scroll down to find it.",
+"ja_JP": "リストから !Flame を選択。\n下の方にあるので、スクロールして見つけてください。",
+"zh_CN": "从列表中选择“!Flame”。 \n它位于底端，所以请滚动到下方找寻。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 510,
+"y": 171,
+"windowKey": "ImageSelector",
+"condition": "list,55",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select the topmost sparkle in the bottom half, 5th column from the right. \nWe'll make this animate vertically.",
+"ja_JP": "下段の右から５列目の一番上をクリック。\nこれは縦にアニメーションさせます。",
+"zh_CN": "选择底端的右边第5列最上方的闪烁图像。 \n我们将制作垂直的动画。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 554,
+"y": 432,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 252,
+"y": 390,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,moveType,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll get things set up to animate the sparkle. \nSet the Autonomous Movement type to \"Custom\".",
+"ja_JP": "光を縦にアニメーションするための設定を行います。\n自律移動のタイプを「カスタム」にしてください。",
+"zh_CN": "我们将设置一些东西来为闪烁图像添加动画效果。 \n将自主移动类型设置为“自定义”。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 267,
+"y": 431,
+"windowKey": "EventEditorMain",
+"condition": "windowState,MovementRoute,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Route...\".",
+"ja_JP": "「ルート…」をクリック。",
+"zh_CN": "单击“路线……”。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 615,
+"y": 31,
+"windowKey": "MovementRoute",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the movement route as follows: \nTurn Left\nTurn Right\nTurn Up\nTurn Down",
+"ja_JP": "次の順序でコマンドを選択してください。\n左を向く\n右を向く\n上を向く\n下を向く",
+"zh_CN": "设置以下的移动路线： \n朝向左方\n朝向右方\n朝向上方\n朝向下方"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 714,
+"y": 450,
+"windowKey": "MovementRoute",
+"condition": "windowState,MovementRoute,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we've set the light to animate. \nClick OK to set the movement route.",
+"ja_JP": "これで光が縦にアニメーションするようになりました。\nＯＫをクリックし移動ルートを確定。",
+"zh_CN": "现在我们已设置好了动画效果的灯光。 \n单击 OK 设置移动路线。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 288,
+"y": 488,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,moveFrequency,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We will set the animation speed. \nSet the autonomous movement frequency to \"4: Higher\".",
+"ja_JP": "アニメーションの速度を設定します。\n自律移動の頻度を「4:高」に変更。",
+"zh_CN": "我们将设置动画的速度。 \n将自主移动的频率设置为“4：高”。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 249,
+"y": 630,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check that the Trigger is set to \"Action Button\".",
+"ja_JP": "トリガーが決定ボタンとなっている事を確認する。",
+"zh_CN": "确认“触发条件”已设置为“确定键”。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 129,
+"y": 359,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The condition to activate the event is when the player presses the action button on it.",
+"ja_JP": "イベントの起動条件が、「プレイヤーがイベントに対して決定ボタンを押す」となりました。",
+"zh_CN": "玩家按下确定键是该事件的触发条件。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 129,
+"y": 359,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next, let's make the contents.",
+"ja_JP": "続いて、実行内容を作成します。",
+"zh_CN": "然后是制作执行内容。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 555,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the first empty line.",
+"ja_JP": "一番上の空欄の行をダブルクリック。",
+"zh_CN": "双击第一行空行。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 144,
+"y": 301,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Control Self Switch...\".",
+"ja_JP": "「セルフスイッチの操作…」をクリック。",
+"zh_CN": "单击“独立开关操作……”。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 98,
+"y": 152,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check that the Self Switch is \"A\" and that Operation is set to \"ON\", then click OK.",
+"ja_JP": "セルフスイッチが「A」、操作が「ON」であることを確認して、ＯＫをクリック。",
+"zh_CN": "确认独立开关设置为“A”，操作设置为“开启”，然后单击 OK。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 546,
+"y": 161,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 384,
+"y": 79,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Change Gold...\".",
+"ja_JP": "「所持金の増減…」をクリック。",
+"zh_CN": "单击“增减金钱……”。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 167,
+"y": 105,
+"windowKey": "EventCommand",
+"condition": "spinBox,=,1000",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check that the Operation is set to \"Increase\", and that the Operand is \"Constant\".\nEnter the value as 1000.",
+"ja_JP": "操作が「増やす」、オペランドが「定数」なのを確認し\n値に「1000」を入力。",
+"zh_CN": "确认操作设置为“增加”，以及操作数为“常量”。\n输入 1000 为数值。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 194,
+"y": 177,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックし確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 531,
+"y": 180,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the blank line.",
+"ja_JP": "空欄をダブルクリック。",
+"zh_CN": "双击空行。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 135,
+"y": 83,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 314,
+"y": 30,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Found 1000\\G. \" \n\\G will be converted into the unit of currency.",
+"ja_JP": "『1000\\G拾った。』\nと入力。\\Gは通貨単位に変換されます。",
+"zh_CN": "输入“找到了 1000\\G。” \n\\G 会被转换成货币单位。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 416,
+"y": 207,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックし文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 462,
+"y": 36,
+"windowKey": "EventEditorMain",
+"condition": "action,New Event Page,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll make a second page. \nClick \"New Event Page\".",
+"ja_JP": "次は２ページ目を作ります。\n「EVページ作成」をクリック。",
+"zh_CN": "接下来要制作第二个事件页。 \n单击“新建事件页”。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 60,
+"y": 80,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure you're on page 2.",
+"ja_JP": "２ページ目になっているのを確認。",
+"zh_CN": "确保你打开的是第 2 页。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 30,
+"y": 263,
+"windowKey": "EventEditorMain",
+"condition": "checked,conditions.selfSwitchValid,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check \"Self Switch\" under Conditions.",
+"ja_JP": "出現条件の「セルフスイッチ」をチェック。",
+"zh_CN": "在出现条件之下勾选“独立开关”。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 189,
+"y": 260,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure that A is selected. \nThat's all for page 2. \nThis is because after you get the gold, there's nothing left.",
+"ja_JP": "対象が「A」になっているのを確認。\n２ページ目はこれで完了です。\nお金の入手後で、何もないからです。",
+"zh_CN": "确保 A 已被选择。 \n以上是第 2 页的设定。 \n这是因为在你拿到了金钱后，就没有剩下任何东西了。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 24,
+"y": 77,
+"windowKey": "EventEditorMain",
+"condition": "list,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now for a little more explanation. \nOpen page 1.",
+"ja_JP": "では、もう少し解説を行います。\n１ページ目を開きます。",
+"zh_CN": "现在，再细说一点点。 \n打开第 1 页。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 543,
+"y": 134,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The reason the self switch is controlled before the text is displayed\nis so that the image will change to the one on page 2.",
+"ja_JP": "文章表示の前にセルフスイッチを操作しているのは、\nここで画像を２ページ目のものにするためです。",
+"zh_CN": "独立开关被设置于文字出现前的理由是\n为了让图像能跳转到第 2 页上的图像。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 543,
+"y": 134,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The image will become the image of the relevant page the moment the switch is triggered. \nBasically, even if the content on page 1 is still being executed, this is where only the image is changed to that of page 2.",
+"ja_JP": "画像は、条件が切り替わった瞬間に該当ページのものとなります。\nつまり１ページ目が実行中でも、ここで画像だけ２ページ目になります。",
+"zh_CN": "当开关被触发时，该图像会变成其相符的事件页中的图像。 \n基本上，即使正在执行第 1 页的内容，只有该图像会被跳转执行第 2 页的内容。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 543,
+"y": 134,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Keep in mind this concept of an event that is still executing, while the image of another page is showing.",
+"ja_JP": "「イベント実行途中で、別ページの画像を表示」という方法は良く使われるので、覚えてください。",
+"zh_CN": "请记住这种事件仍在执行中时，另一个事件页的图像也同时显示的概念。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 591,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 63,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Would you like to read the explanation again?",
+"ja_JP": "もう一度説明しましょうか？",
+"zh_CN": "是否要再看一遍说明？"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 765,
+"y": 686,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the event.",
+"ja_JP": "ＯＫをクリックしてイベントを確定。",
+"zh_CN": "单击 OK 设置事件。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 330,
+"y": 190,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the player's default position before doing a playtest. \nWe'll put the player near the wooden crate at (1,3).",
+"ja_JP": "テストプレイのためにプレイヤーの初期位置を変更します。\n木箱の近く、(1,3)にします。",
+"zh_CN": "进行游戏测试之前，先更改玩家初始位置。 \n我们把玩家放置在木箱附近的位置（1,3）。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 330,
+"y": 190,
+"windowKey": "MainWindow",
+"condition": "action,eventSetStartingPosition_player",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click on (1,3),\nand select Set Starting Position > Player.",
+"ja_JP": "(1,3)で右クリックし、\n初期位置の設定 > プレイヤーと選びます。",
+"zh_CN": "右击（1,3），\n然后选择“设置初始位置”>“玩家”。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 99,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Save the project.",
+"ja_JP": "プロジェクトを保存。",
+"zh_CN": "保存项目。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 1050,
+"y": 29,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Run a playtest. \nInvestigate both events, and check the menu to see if your gold has increased.",
+"ja_JP": "テストプレイを行います。\n２つのイベントを調べ、メニューで所持金が増えたのを確認します。",
+"zh_CN": "测试一下游戏。 \n研究这两个事件，在菜单确认你的所持金钱是否有增加。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This is the end of Step 7. Well done. \nWe'll reuse the gold spot later, so don't forget about it.",
+"ja_JP": "これでステップ７は終了です。お疲れ様でした。\nお金の場所は、後で再利用しますので、忘れずに。",
+"zh_CN": "步骤 7 到这里就结束了。做得好。 \n我们将再利用金钱的位置，所以请记住它。"
+}
+}
+]
+}

@@ -63,6 +63,14 @@ export const animationsTab = {
     id: "animations", label: t("Animations", "DatabaseMain"), desc: t("Data used for various visual effects.", "DatabaseMain"), file: "Animations", max: 1000,
     form(ctx, a, host) {
         const [left, right] = cols(host);
+        if (Array.isArray(a.frames)) {
+            // Animação do RPG Maker MV (copiada de um projeto MV): o runtime do MZ a reproduz com
+            // Sprite_AnimationMV, mas o MZ não a edita (manual, "MV Data Conversion"). Só o nome muda.
+            left.appendChild(grp(t("General Settings", "Constants"),
+                fld(t("Name", "Constants") + ":", text(a, "name", { onInput: () => ctx.refreshRow() })),
+                el("div", { class: "dbHint", text: t("This is an RPG Maker MV animation. It plays in the game as it is, but it cannot be edited in RPG Maker MZ.") })));
+            return;
+        }
         if (!a.rotation) { a.rotation = { x: 0, y: 0, z: 0 }; }
         if (!a.soundTimings) { a.soundTimings = []; }
         if (!a.flashTimings) { a.flashTimings = []; }

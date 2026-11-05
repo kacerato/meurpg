@@ -1,0 +1,1625 @@
+{
+"step": 1,
+"title": {
+"ja_JP": "ステップ１：マップの基礎",
+"en": "Step 1: Map Basics",
+"zh_CN": "步骤 1：地图基础"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 26,
+"y": 22,
+"windowKey": "MainWindow",
+"condition": "windowState,NewProject,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 187,
+"y": 42,
+"windowKey": "NewProject",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Change the title name.",
+"ja_JP": "ゲームタイトルを変更します。",
+"zh_CN": "更改标题名称。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 335,
+"y": 127,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Wait for creating a new project.",
+"ja_JP": "プロジェクト作成が終わるまでしばらくおまちください。",
+"zh_CN": "等待新项目建成。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The right side of the screen is the map. \nOn the upper left is the tile palette for the map.\nOn the lower left is the map list.",
+"ja_JP": "画面の右側がマップです。\n左上はマップにおくタイルパレット、\n左下はマップのリストです。",
+"zh_CN": "画面右侧是地图。 \n左上角是地图的图块调色盘。\n左下角是地图列表。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 16,
+"y": 64,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This is the tileset palette. \nSelect a tile here and it will be drawn on the map.",
+"ja_JP": "これがタイルセットのパレットです。\nここからタイルを選択し、マップに描画します。",
+"zh_CN": "这是图块调色盘。 \n从此处选择一块图块，就能放到地图上。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 778,
+"y": 24,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now for a more detailed explanation on tilesets. \nClick Database.",
+"ja_JP": "タイルセットの詳しい説明を行います。\nデータベースをクリック。",
+"zh_CN": "现在为你说明关于图块设置的详细。 \n单击“数据库”。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 56,
+"y": 348,
+"windowKey": "DatabaseMain",
+"condition": "list,10",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Here is Tilesets, so click it.",
+"ja_JP": "タイルセットはここにあります。クリック。",
+"zh_CN": "这里显示着“图块”，单击它。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 563,
+"y": 140,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This is the tileset settings screen. \nThe mode is important. In Field, you can specify the field type\nor area type.",
+"ja_JP": "タイルセット設定画面です。\nモードが重要です。フィールドではフィールドタイプ、\nそれ以外ではエリアタイプを指定します。",
+"zh_CN": "这是图块设置画面。 \n该模式很重要。在场景，你可以指定场地类型\n或区域类型。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 912,
+"y": 684,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In Map Mode, you can draw your map,\nand in Event Mode you can place events.",
+"ja_JP": "マップモードではマップを描画、\nイベントモードではイベントを配置できます。",
+"zh_CN": "在地图模式中，你可以绘制地图；\n在事件模式中，你可以配置事件。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 339,
+"y": 32,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "You can zoom in and out on the map. \nGive it a try.",
+"ja_JP": "マップは拡大縮小が可能です。\n実際にやってみましょう。",
+"zh_CN": "你可以放大或缩小地图。 \n试一试吧。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 642,
+"y": 21,
+"windowKey": "MainWindow",
+"condition": "action,scaleZoomIn,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Zoom In to magnify the map.",
+"ja_JP": "拡大をクリックしてマップを拡大表示。",
+"zh_CN": "单击放大可将地图放大。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 684,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,scaleZoomOut,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Zoom Out to shrink the map.",
+"ja_JP": "縮小をクリックしてマップを縮小表示。",
+"zh_CN": "单击缩小可将地图缩小。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Pressing <windows>Ctrl</windows><mac>Command</mac> key, roll the center wheel of the mouse to magnify/shrink the map.",
+"ja_JP": "<windows>Ctrl</windows><mac>Command</mac>キーを押しながらマウスのセンターホイールを上下に回転させるとマップが拡大/縮小します。",
+"zh_CN": "按下 <windows>Ctrl</windows><mac>Command</mac> 按键，滚动鼠标滚轮可以放大或缩小地图。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Pressing the center wheel of the mouse, move the mouse to scroll the map when the entire map is not inside the window.",
+"ja_JP": "マップがウィンドウ内に収まらないとき、マウスのセンターホイールを押しながらマウスを動かすとマップをスクロールさせることができます。",
+"zh_CN": "当窗口无法显示完整的地图时，按住鼠标滚轮，移动鼠标可以滑动地图。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 724,
+"y": 24,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Click Actual Size to rest the map size.",
+"ja_JP": "原寸をクリックするとマップが等倍表示に戻ります。",
+"zh_CN": "单击原始大小可恢复地图原本的尺寸。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we're done with map zooming. \nNext is an explanation of the map tree on the lower left.",
+"ja_JP": "これでマップの拡大縮小は終了です。\n次は左下のマップツリーについて説明します。",
+"zh_CN": "现在我们知道如何放大和缩小地图了。 \n接下来为你说明左下方的树形图。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 53,
+"y": 28,
+"windowKey": "MapEditTreeBox",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click to change a map name.",
+"ja_JP": "右クリックしてマップ名を変更します。",
+"zh_CN": "右击更改地图名称。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 28,
+"y": 1,
+"windowKey": "Menu",
+"condition": "windowState,MapProperties,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Edit...",
+"ja_JP": "編集...をクリックします。",
+"zh_CN": "单击“编辑”……"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 192,
+"y": 67,
+"windowKey": "MapProperties",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the name to \"Field Map\".",
+"ja_JP": "\"フィールドマップ\"に変更します。",
+"zh_CN": "将名称改为“场景地图”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 685,
+"y": 580,
+"windowKey": "MapProperties",
+"condition": "windowState,MapProperties,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next we will place tiles on the map from the tile palette.",
+"ja_JP": "次はタイルパレットからマップにタイルを配置します。",
+"zh_CN": "接下来我们要把图块调色盘上的图块铺贴在地图上。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 340,
+"y": 19,
+"windowKey": "MainWindow",
+"condition": "action,modeMap",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Map",
+"ja_JP": "マップをクリックします。",
+"zh_CN": "单击“地图”"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 63,
+"y": -20,
+"windowKey": "MapEditTreeBox",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click tileset B.",
+"ja_JP": "タイルセットBをクリックします。",
+"zh_CN": "单击图块B。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 200,
+"y": 500,
+"windowKey": "MainWindow",
+"condition": "pressed,0,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Scroll down and click the town on square 1.",
+"ja_JP": "下にスクロールして、1マスの町のタイルをクリックします。",
+"zh_CN": "滚动至下方，并单击方格 1 的小镇。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 794,
+"y": 358,
+"windowKey": "MainWindow",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click to put a town.",
+"ja_JP": "クリックして街のタイルを置きます。",
+"zh_CN": "单击设置一个小镇。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 18,
+"y": 127,
+"windowKey": "MainWindow",
+"condition": "pressed,0,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll up and click on the cave tile.",
+"ja_JP": "上にスクロールして洞窟のタイルをクリックします。",
+"zh_CN": "滚动至上方，并单击洞窟图块。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 882,
+"y": 358,
+"windowKey": "MainWindow",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click to put a cave.",
+"ja_JP": "クリックして洞窟のタイルを置きます。",
+"zh_CN": "单击设置一个洞窟。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 168,
+"y": 9,
+"windowKey": "MapEditTreeBox",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next we will create town and cave maps. \nThis time we'll use a sample map.",
+"ja_JP": "次に配置した町と洞窟のマップを作成します。\n今回はサンプルマップを使用します。",
+"zh_CN": "接下来我们要设置小镇和洞窟的地图。 \n这次我们将使用一个地图范例。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 83,
+"y": 9,
+"windowKey": "MapEditTreeBox",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click to load a town map.",
+"ja_JP": "右クリックして街のマップをロードします。",
+"zh_CN": "右击载入小镇地图。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 13,
+"y": 2,
+"windowKey": "Menu",
+"condition": "windowState,MapLoader,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Load.",
+"ja_JP": "「ロード…」をクリックします。",
+"zh_CN": "单击“载入”。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 218,
+"y": 122,
+"windowKey": "MapLoader",
+"condition": "list,5",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Normal Town\".",
+"ja_JP": "\"普通の町\"をクリックします。",
+"zh_CN": "单击“普通小镇”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 533,
+"y": 470,
+"windowKey": "MapLoader",
+"condition": "windowState,MapLoader,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 54,
+"y": 10,
+"windowKey": "MapEditTreeBox",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click to load a cave map.",
+"ja_JP": "右クリックして洞窟のマップをロードします。",
+"zh_CN": "右击载入洞窟地图。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 13,
+"y": 2,
+"windowKey": "Menu",
+"condition": "windowState,MapLoader,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Load.",
+"ja_JP": "「ロード…」をクリックします。",
+"zh_CN": "单击“载入”。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 218,
+"y": 227,
+"windowKey": "MapLoader",
+"condition": "list,50",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Stone Cave\".",
+"ja_JP": "\"岩の洞窟\"をクリックします。",
+"zh_CN": "单击“石洞”。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 533,
+"y": 470,
+"windowKey": "MapLoader",
+"condition": "windowState,MapLoader,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next we'll link each map to the field using events\nso they can be entered and exited freely.",
+"ja_JP": "次はフィールドと各マップをイベントで繋ぎ\n自由に出入り可能にします。",
+"zh_CN": "接着我们要使用事件把各个地图与场景连接起来，\n这样才能自由进出它们。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 61,
+"y": 31,
+"windowKey": "MapEditTreeBox",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Map to edit the field map.",
+"ja_JP": "マップをクリックしてフィールドマップを編集します。",
+"zh_CN": "单击“地图”，编辑场景地图。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 380,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,modeEvent",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Event.",
+"ja_JP": "イベントをクリックします。",
+"zh_CN": "单击“事件”。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 783,
+"y": 354,
+"windowKey": "MainWindow",
+"condition": "popup,Map",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click the town.",
+"ja_JP": "街のタイルを右クリックします。",
+"zh_CN": "右击小镇。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 15,
+"y": 10,
+"windowKey": "Menu",
+"condition": "action,eventQuickCreation_transfer",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Quick Event Creation > Transfer...",
+"ja_JP": "イベントの簡単作成 > 移動…と選択します。",
+"zh_CN": "选择“快速创建事件”>“移动……”"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 116,
+"y": 40,
+"windowKey": "QuickTransfer",
+"condition": "windowState,Location,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Location.",
+"ja_JP": "場所をクリックします。",
+"zh_CN": "单击“位置”。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 101,
+"y": 58,
+"windowKey": "Location",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Normal Town\".",
+"ja_JP": "\"普通の町\"をクリックします。",
+"zh_CN": "单击“普通小镇”。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 700,
+"y": 50,
+"windowKey": "Location",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on the entrance of the town on top.",
+"ja_JP": "上の方にある町の入り口をクリックします。",
+"zh_CN": "单击上方小镇的入口。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 983,
+"y": 671,
+"windowKey": "Location",
+"condition": "windowState,Location,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 214,
+"y": 82,
+"windowKey": "QuickTransfer",
+"condition": "windowState,QuickTransfer,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 62,
+"y": 48,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"normal town\" from the map tree.",
+"ja_JP": "マップツリーから\"普通の町\"をクリックします。",
+"zh_CN": "在树形图单击“普通小镇”。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 1050,
+"y": 90,
+"windowKey": "MainWindow",
+"condition": "menuEvent,Map,click",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click on the entrance of the town on top.",
+"ja_JP": "上の方にある町の入口で右クリックします。",
+"zh_CN": "右击上方小镇的入口。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "Menu",
+"condition": "action,eventQuickCreation_transfer",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Select Quick Event Creation > Transfer...",
+"ja_JP": "イベントの簡単作成 > 移動…と選択します。",
+"zh_CN": "选择“快速创建事件”>“移动……”"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 116,
+"y": 40,
+"windowKey": "QuickTransfer",
+"condition": "windowState,Location,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Location.",
+"ja_JP": "場所をクリックします。",
+"zh_CN": "单击“位置”。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 74,
+"y": 41,
+"windowKey": "Location",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Field Map\".",
+"ja_JP": "\"フィールドマップ\"をクリックします。",
+"zh_CN": "单击“场景地图”。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 546,
+"y": 163,
+"windowKey": "Location",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the town.",
+"ja_JP": "街のタイルをクリックします。",
+"zh_CN": "单击小镇。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 983,
+"y": 671,
+"windowKey": "Location",
+"condition": "windowState,Location,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 214,
+"y": 82,
+"windowKey": "QuickTransfer",
+"condition": "windowState,QuickTransfer,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 1060,
+"y": 90,
+"windowKey": "MainWindow",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click the created event.",
+"ja_JP": "作成したイベントを右クリックします。",
+"zh_CN": "右击已创建的事件。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 32,
+"y": 3,
+"windowKey": "Menu",
+"condition": "action,editCopy,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Copy.",
+"ja_JP": "コピーをクリックします。",
+"zh_CN": "单击“复制”。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 1030,
+"y": 90,
+"windowKey": "MainWindow",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click a exit tile of the town to fill the exit.",
+"ja_JP": "出口を埋めるため街の出口タイルを右クリックします。",
+"zh_CN": "右击小镇的一个出口图块以设置出口。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 32,
+"y": 3,
+"windowKey": "Menu",
+"condition": "action,editPaste,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Paste.",
+"ja_JP": "貼り付けをクリックします。",
+"zh_CN": "单击“粘贴”。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 1100,
+"y": 90,
+"windowKey": "MainWindow",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click the remaining exit tile of the map.",
+"ja_JP": "マップの残りの出口タイルを右クリックします。",
+"zh_CN": "右击地图上剩余的出口图块。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 32,
+"y": 3,
+"windowKey": "Menu",
+"condition": "action,editPaste,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Paste.",
+"ja_JP": "貼り付けをクリックします。",
+"zh_CN": "单击“粘贴”。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 60,
+"y": 31,
+"windowKey": "MapEditTreeBox",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Field Map\".",
+"ja_JP": "\"フィールドマップ\"をクリックします。",
+"zh_CN": "单击“场景地图”。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 867,
+"y": 355,
+"windowKey": "MainWindow",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click the cave.",
+"ja_JP": "洞窟のタイルを右クリックします。",
+"zh_CN": "右击洞窟。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 15,
+"y": 10,
+"windowKey": "Menu",
+"condition": "windowState,QuickTransfer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Quick Event Creation > Transfer...",
+"ja_JP": "イベントの簡単作成 > 移動…と選択します。",
+"zh_CN": "选择“快速创建事件”>“移动……”"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 116,
+"y": 40,
+"windowKey": "QuickTransfer",
+"condition": "windowState,Location,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Location.",
+"ja_JP": "場所をクリックします。",
+"zh_CN": "单击“位置”。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 87,
+"y": 70,
+"windowKey": "Location",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Stone Cave\".",
+"ja_JP": "\"岩の洞窟\"をクリックします。",
+"zh_CN": "单击“石洞”。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 880,
+"y": 621,
+"windowKey": "Location",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the entrance of the cave below.",
+"ja_JP": "下方の洞窟の入り口をクリックします。",
+"zh_CN": "单击以下洞窟的入口。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 983,
+"y": 671,
+"windowKey": "Location",
+"condition": "windowState,Location,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 214,
+"y": 82,
+"windowKey": "QuickTransfer",
+"condition": "windowState,QuickTransfer,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 64,
+"y": 69,
+"windowKey": "MapEditTreeBox",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Stone Cave\".",
+"ja_JP": "\"岩の洞窟\"をクリックします。",
+"zh_CN": "单击“石洞”。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": 1450,
+"y": 900,
+"windowKey": "MainWindow",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click at the exit of the cave below.",
+"ja_JP": "下方の洞窟の出口を右クリックします。",
+"zh_CN": "在以下洞窟的出口右击。"
+}
+},
+{
+"id": 75,
+"folder": false,
+"x": 15,
+"y": 10,
+"windowKey": "Menu",
+"condition": "windowState,QuickTransfer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Quick Event Creation > Transfer...",
+"ja_JP": "イベントの簡単作成 > 移動…と選択します。",
+"zh_CN": "选择“快速创建事件”>“移动……”"
+}
+},
+{
+"id": 76,
+"folder": false,
+"x": 116,
+"y": 40,
+"windowKey": "QuickTransfer",
+"condition": "windowState,Location,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Location.",
+"ja_JP": "場所をクリックします。",
+"zh_CN": "单击“位置”。"
+}
+},
+{
+"id": 77,
+"folder": false,
+"x": 74,
+"y": 41,
+"windowKey": "Location",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Field Map\".",
+"ja_JP": "\"フィールドマップ\"をクリックします。",
+"zh_CN": "单击“场景地图”。"
+}
+},
+{
+"id": 78,
+"folder": false,
+"x": 585,
+"y": 168,
+"windowKey": "Location",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the cave.",
+"ja_JP": "洞窟のタイルをクリックします。",
+"zh_CN": "单击洞窟。"
+}
+},
+{
+"id": 79,
+"folder": false,
+"x": 983,
+"y": 671,
+"windowKey": "Location",
+"condition": "windowState,Location,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 80,
+"folder": false,
+"x": 214,
+"y": 82,
+"windowKey": "QuickTransfer",
+"condition": "windowState,QuickTransfer,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "OKをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 81,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we're done placing our transfer events. \nNext we will determine the player's initial position.",
+"ja_JP": "これで移動イベント配置は完了です。\n次はプレイヤーの初期位置を決めます。",
+"zh_CN": "现在我们已经完成事件移动。 \n接下来我们要决定的玩家初始位置。"
+}
+},
+{
+"id": 82,
+"folder": false,
+"x": 65,
+"y": 53,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Normal Town\".",
+"ja_JP": "\"普通の町\"をクリックします。",
+"zh_CN": "单击“普通小镇”。"
+}
+},
+{
+"id": 83,
+"folder": false,
+"x": 850,
+"y": 464,
+"windowKey": "MainWindow",
+"condition": "popup,MapPopup",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click a tile on the road.",
+"ja_JP": "プレイヤーの初期位置としたい場所を右クリックしてください。",
+"zh_CN": "右击道路上的一图块。"
+}
+},
+{
+"id": 84,
+"folder": false,
+"x": 15,
+"y": 10,
+"windowKey": "Menu",
+"condition": "action,eventSetStartingPosition_player",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Set Starting Position > Player.",
+"ja_JP": "初期位置の設定 > プレイヤーと選択します。",
+"zh_CN": "选择“设置初始位置”>“玩家”。"
+}
+},
+{
+"id": 85,
+"folder": false,
+"x": 104,
+"y": 25,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Save Project.",
+"ja_JP": "プロジェクトの保存をクリックします。",
+"zh_CN": "单击“保存项目”。"
+}
+},
+{
+"id": 86,
+"folder": false,
+"x": 1050,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "That's it! Click Playtest.",
+"ja_JP": "完成です！ テストプレイをクリックします。",
+"zh_CN": "完成！单击“测试游戏”。"
+}
+}
+]
+}

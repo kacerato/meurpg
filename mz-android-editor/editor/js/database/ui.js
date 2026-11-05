@@ -92,7 +92,13 @@ export function area(obj, key, o = {}) {
 }
 
 // options: [[valor, rótulo], ...]. Valores numéricos são preservados como número.
+// Listas de objetos do jogo (marcadas por common.js `idOptions`/`asObjects`) seguem
+// Opções → Seletor de objetos: "Dropdown" = <select>; "Extended" = campo + janela separada
+// (Dialog_GameObjectSelector); "Smart" = Dropdown abaixo de 100 objetos, Extended a partir daí.
 export function sel(obj, key, options, o = {}) {
+    if (options && options.objectKind && objectMode(options) === "extended") {
+        return extendedSel(obj, key, options, o);
+    }
     const s = el("select", { class: "dbSel" });
     const fill = opts => {
         s.innerHTML = "";
@@ -122,6 +128,127 @@ export function sel(obj, key, options, o = {}) {
     s.refresh = () => { s.value = String(obj[key]); };
     if (o.disabled) { s.disabled = true; }
     return s;
+}
+
+// ---------------------------------------------------------------- Seletor de objetos
+
+const KIND_TITLE = {
+    Actors: () => t("Actors", "Dialog_GameObjectSelector"),
+    Classes: () => t("Classes", "Dialog_GameObjectSelector"),
+    Skills: () => t("Skills", "Dialog_GameObjectSelector"),
+    Items: () => t("Items", "Dialog_GameObjectSelector"),
+    Weapons: () => t("Weapons", "Dialog_GameObjectSelector"),
+    Armors: () => t("Armors", "Dialog_GameObjectSelector"),
+    Enemies: () => t("Enemies", "Dialog_GameObjectSelector"),
+    Troops: () => t("Troops", "Dialog_GameObjectSelector"),
+    States: () => t("States", "Dialog_GameObjectSelector"),
+    Animations: () => t("Animations", "Dialog_GameObjectSelector"),
+    Tilesets: () => t("Tilesets", "Dialog_GameObjectSelector"),
+    CommonEvents: () => t("Common Events", "Dialog_GameObjectSelector"),
+    switches: () => t("Switch Selector", "Dialog_VariableSelector")
+};
+export const GROUP_SIZE = 20;
+
+function readObjectOption() {
+    try { return (JSON.parse(localStorage.getItem("mzEditor.options") || "{}") || {}).objectSelector || "smart"; }
+    catch (e) { return "smart"; }
+}
+// "dropdown" | "extended" para uma lista de objetos. Usa api.tools.objectSelectorMode (Opções) quando
+// o módulo tools está ligado; senão lê a mesma chave do localStorage. Interruptores abrem sempre o
+// Seletor de Switch, como os campos "..." de interruptor do MZ.
+export function objectMode(options) {
+    if (options.objectKind === "switches") { return "extended"; }
+    const count = options.filter(([v]) => Number(v) > 0).length;
+    const tools = apiRef && apiRef.tools;
+    if (tools && tools.objectSelectorMode) { return tools.objectSelectorMode(count); }
+    const m = readObjectOption();
+    if (m === "dropdown" || m === "extended") { return m; }
+    return count < 100 ? "dropdown" : "extended";
+}
+
+// Campo Extended: mostra o rótulo do valor atual + "…"; toque abre a janela de seleção.
+function extendedSel(obj, key, options, o) {
+    let opts = options;
+    const label = el("span", { class: "dbObjLabel" });
+    const b = el("button", { type: "button", class: "dbSel dbObjSel" }, label, el("span", { class: "dbObjDots", text: "…" }));
+    const show = () => {
+        const cur = opts.find(([v]) => String(v) === String(obj[key]));
+        label.textContent = cur ? cur[1] : (obj[key] !== undefined ? `(${obj[key]})` : "");
+    };
+    b.addEventListener("click", async () => {
+        const v = await pickObject(opts, obj[key], { title: o.title });
+        if (v === null || String(v) === String(obj[key])) { return; }
+        const nv = typeof obj[key] === "number" || o.number ? Number(v) : v;
+        obj[key] = nv;
+        show();
+        changed();
+        b.dispatchEvent(new Event("change"));
+        o.onChange && o.onChange(nv);
+    });
+    b.refill = n => { opts = n; show(); };
+    b.refresh = show;
+    if (o.disabled) { b.disabled = true; }
+    show();
+    return b;
+}
+
+// Janela "Seleção de Objeto" (Dialog_GameObjectSelector / Dialog_VariableSelector): Lista de Grupo
+// à esquerda (faixas de 20 IDs), Lista de Dados à direita. Toque duplo ou OK confirma.
+// Valores fora de 1..n (Nenhum = 0, Ataque normal = -1...) ficam num grupo próprio no topo.
+export function pickObject(options, value, o = {}) {
+    let cur = value;
+    const kind = options.objectKind;
+    const title = o.title || (KIND_TITLE[kind] ? KIND_TITLE[kind]() : t("Object Selection", "Dialog_GameObjectSelector"));
+    const special = options.filter(([v]) => !(Number(v) > 0));
+    const ids = options.filter(([v]) => Number(v) > 0);
+    const maxId = ids.reduce((m, [v]) => Math.max(m, Number(v)), 0);
+    const groups = [];
+    if (special.length) { groups.push({ label: special.map(s => s[1]).join(" / "), items: special }); }
+    for (let start = 1; start <= maxId; start += GROUP_SIZE) {
+        const end = start + GROUP_SIZE - 1;
+        const items = ids.filter(([v]) => v >= start && v <= end);
+        if (items.length) { groups.push({ label: `[ ${pad(start)} - ${pad(Math.min(end, maxId))} ]`, items }); }
+    }
+    let gi = Math.max(0, groups.findIndex(g => g.items.some(([v]) => String(v) === String(cur))));
+    return modal({
+        title, width: "640px", height: "min(86vh, 520px)",
+        build: (body, dlg) => {
+            body.classList.add("dbObjPick");
+            const gList = el("div", { class: "dbObjList dbObjGroups" });
+            const dList = el("div", { class: "dbObjList dbObjData" });
+            const renderData = () => {
+                dList.innerHTML = "";
+                for (const [v, lab] of (groups[gi] || { items: [] }).items) {
+                    const it = el("div", { class: "dbObjItem" + (String(v) === String(cur) ? " sel" : ""), text: lab });
+                    it.addEventListener("click", () => {
+                        cur = v;
+                        for (const s of dList.querySelectorAll(".sel")) { s.classList.remove("sel"); }
+                        it.classList.add("sel");
+                    });
+                    it.addEventListener("dblclick", () => { cur = v; dlg.root.querySelector(".mzDialogButtons .primary").click(); });
+                    dList.appendChild(it);
+                }
+                const s = dList.querySelector(".sel");
+                if (s) { s.scrollIntoView({ block: "nearest" }); }
+            };
+            groups.forEach((g, i) => {
+                const it = el("div", { class: "dbObjItem" + (i === gi ? " sel" : ""), text: g.label });
+                it.addEventListener("click", () => {
+                    gi = i;
+                    for (const s of gList.querySelectorAll(".sel")) { s.classList.remove("sel"); }
+                    it.classList.add("sel");
+                    renderData();
+                });
+                gList.appendChild(it);
+            });
+            const ctx = kind === "switches" ? "Dialog_VariableSelector" : "Dialog_GameObjectSelector";
+            body.append(
+                el("fieldset", { class: "dbGroup dbObjCol groups" }, el("legend", { text: t("Group List", ctx) }), gList),
+                el("fieldset", { class: "dbGroup dbObjCol data" }, el("legend", { text: t("Data List", ctx) }), dList));
+            renderData();
+            requestAnimationFrame(() => { const s = gList.querySelector(".sel"); if (s) { s.scrollIntoView({ block: "nearest" }); } });
+        }
+    }).then(ok => (ok ? cur : null));
 }
 
 export function chk(obj, key, label, o = {}) {

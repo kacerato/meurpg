@@ -1,0 +1,1321 @@
+{
+"step": 14,
+"title": {
+"ja_JP": "ステップ14：ダメージ床",
+"en": "Step 14: Damaging Floors",
+"zh_CN": "步骤 14：有害地形"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 13?",
+"ja_JP": "ステップ１３を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 13 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 13 project.",
+"ja_JP": "ステップ１３のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 13 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 13 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ１３のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 13 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step14",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This time, we'll make damage floors and a skill to avoid them.",
+"ja_JP": "今回は、ダンジョンのダメージ床を作り、\nそれを防ぐスキルも作成します。",
+"zh_CN": "这次，我们将制作有害地形，以及一个回避该地形的技能。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 771,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Firstly, there will be an explanation of damage floors. \nPlease open the database.",
+"ja_JP": "まずは「ダメージ床」について説明を行います。\nデータベースを開いてください。",
+"zh_CN": "首先，我们要先为有害地形作说明。 \n请打开数据库。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 72,
+"y": 341,
+"windowKey": "DatabaseMain",
+"condition": "list,10",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the \"Tileset\" tab.",
+"ja_JP": "「タイルセット」タブをクリック。",
+"zh_CN": "单击“图块组套”标签。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 255,
+"y": 129,
+"windowKey": "DatabaseMain",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click #4, \"Dungeon\".",
+"ja_JP": "「0004 ダンジョン」をクリック。",
+"zh_CN": "单击 #4，“地牢”。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 960,
+"y": 222,
+"windowKey": "DatabaseMain",
+"condition": "mouseEvent,5,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Damage Floors\".",
+"ja_JP": "「ダメージ床」をクリック。",
+"zh_CN": "单击“有害地形”。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 624,
+"y": 177,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The tiles with a double triangle mark are damage floors. \nYou can change them by clicking, but we won't be changing them this time.",
+"ja_JP": "▲▲マークが付いているのがダメージ床です。\nクリックで変更できますが、今回は変更しません。",
+"zh_CN": "这些拥有两个三角形记号的图块是有害地形。 \n你可以单击来更改它们，但是这次我们不做任何更改。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 849,
+"y": 201,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "When the party leader walks over \"damage floor\" tiles, all party members will lose 10 HP.",
+"ja_JP": "「ダメージ床」タイルの上を先頭アクターが歩くと、\n全員のＨＰが１０減ります。",
+"zh_CN": "当队长踏到“有害地形”图块时，所有队伍成员都会失去 10 点 HP。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 915,
+"y": 684,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and return to the map. \nWe will place damage floors on the dungeon map.",
+"ja_JP": "ＯＫをクリックしてマップに戻ります。\n実際にダンジョンマップに配置してみましょう。",
+"zh_CN": "单击 OK，然后回到地图。 \n我们把有害地形放置在地牢地图上。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 342,
+"y": 27,
+"windowKey": "MainWindow",
+"condition": "action,modeMap",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to Map mode.",
+"ja_JP": "マップ編集モードに切り替えます。",
+"zh_CN": "转换成地图模式。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 126,
+"y": 91,
+"windowKey": "MapEditTreeBox",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"Stone Cave\" from the map tree.",
+"ja_JP": "マップツリーの\"岩の洞窟\"をクリック。",
+"zh_CN": "在树形图单击“石洞”。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 240,
+"y": 227,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on a damage floor from the tile palette.",
+"ja_JP": "タイルパレットからダメージ床をクリック。",
+"zh_CN": "在图块调色盘单击一块有害地形。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 33,
+"y": 392,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Place the damage floor wherever you'd like. \nWhen you're done, we'll move on.",
+"ja_JP": "任意の場所にダメージ床を設置してください。\n完了したら次に進みます。",
+"zh_CN": "把该有害地形放置在你喜欢的地方。 \n在你放置完成后，我们便继续。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 381,
+"y": 26,
+"windowKey": "MainWindow",
+"condition": "action,modeEvent",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We will go back to event mode.",
+"ja_JP": "再びイベントモードに戻します。",
+"zh_CN": "我们要转回事件模式。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 777,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Because it would be nice to provide a skill that allows the player to negate the effects of a damage floor, we will be making that next. \nPlease open the database.",
+"ja_JP": "次は、ダメージ床の効果を受けずに済むスキルがあれば親切ですので、それを作成します。\nデータベースを開いてください。",
+"zh_CN": "因为能够提供玩家一个可以使有害地形效果无效的技能会比较好，所以接下来我们要制作该技能。 \n请打开数据库。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 60,
+"y": 282,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In order to do this, we will first create a state that invalidates damage floors,\nand then create a skill that applies that state when cast.",
+"ja_JP": "やり方は、まず「ダメージ床無効ステート」を作り、\n唱えるとそのステートを付加するスキルを作成することです。",
+"zh_CN": "我们得先创建一个使有害地形无效化的状态，\n然后创建一个技能，在释放时适用该状态。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 72,
+"y": 273,
+"windowKey": "DatabaseMain",
+"condition": "list,8",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "So let us first create the state. \nClick the \"States\" tab.",
+"ja_JP": "そこでまずはステートを作成します。\n「ステート」タブをクリック。",
+"zh_CN": "所以我们先来创建这个状态。 \n单击“状态”标签。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 225,
+"y": 275,
+"windowKey": "DatabaseMain",
+"condition": "list,10",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click and select #11.",
+"ja_JP": "「0011」の空欄をクリックして選択。",
+"zh_CN": "单击后选择 #11。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 423,
+"y": 86,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter the name as Floor \nDamage Immunity.",
+"ja_JP": "「ダメージ床無効」\nと名前を入力。",
+"zh_CN": "输入名称为 \n“地形伤害免疫”。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 681,
+"y": 74,
+"windowKey": "DatabaseMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We will set the icon. \nDouble click the image area.",
+"ja_JP": "アイコンを設定します。\n画像部分をダブルクリック。",
+"zh_CN": "我们将设置其图标。 \n双击图像区域。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 312,
+"y": 186,
+"windowKey": "ImageSelector",
+"condition": "list,-1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click and select an appropriate icon. \n(Here we will select a bronze star mark)",
+"ja_JP": "適切なアイコンをクリックして選択。\n（ここではブロンズの星マークを選択）",
+"zh_CN": "单击后选择适当的图标。 \n（在这里，我们选择青铜星标志）"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 393,
+"y": 429,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 825,
+"y": 75,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Traits,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the top line in Traits.",
+"ja_JP": "特徴の一番上の行をダブルクリック。",
+"zh_CN": "双击特性中的顶行。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 75,
+"y": 20,
+"windowKey": "Traits",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Parameter tab.",
+"ja_JP": "「能力値」タブをクリック。",
+"zh_CN": "单击“参数”标签。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 24,
+"y": 186,
+"windowKey": "Traits",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Sp-Parameter\".",
+"ja_JP": "「特殊能力値」をチェック。",
+"zh_CN": "勾选“特殊能力值”。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 198,
+"y": 186,
+"windowKey": "Traits",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Floor Damage from the special parameter list.",
+"ja_JP": "特殊能力値のリストから、「床ダメージ率」を選択。",
+"zh_CN": "在特殊能力值列表中选择有害地形。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 186,
+"y": 219,
+"windowKey": "Traits",
+"condition": "spinBox,=,0 %",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change 100% to 0%.",
+"ja_JP": "「100％」を「0％」に書き換えてください。",
+"zh_CN": "把 100% 改成 0%。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 183,
+"y": 303,
+"windowKey": "Traits",
+"condition": "windowState,Traits,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done setting the traits for \"Floor Damage Immunity\". \nClick OK and it will be set.",
+"ja_JP": "これで「ダメージ床無効」の特徴設定完了です。\nＯＫをクリックして確定。",
+"zh_CN": "现在我们已经设置好“地形伤害免疫”的特性了。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 396,
+"y": 384,
+"windowKey": "DatabaseMain",
+"condition": "checked,removeByWalking,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Remove by Walking\" under Removal Conditions.",
+"ja_JP": "解除条件の「歩数で解除」をチェック。",
+"zh_CN": "在接触条件下勾选“按步数解除”。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 597,
+"y": 381,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure it is set to 100 steps.",
+"ja_JP": "100歩になっているのを確認します。",
+"zh_CN": "确保其设定为 100 步。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 510,
+"y": 600,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Under \"If the state is removed\", input \n\"%1's floor damage mitigation effect has worn off. \" \n ",
+"ja_JP": "メッセージ「この状態が解除されたとき」の項目に\n『%1の床ダメージ無効効果が切れた。』\nと入力。",
+"zh_CN": "在“状态解除时”下方，输入 \n“%1 的地形伤害免疫效果已消失。” \n "
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 69,
+"y": 83,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done configuring the state. \nNext, click the \"Skill\" tab.",
+"ja_JP": "これでステートの設定は完了です。\n次は「スキル」タブをクリック。",
+"zh_CN": "状态的配置这样就完成了。 \n接下来，单击“技能”标签。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 228,
+"y": 150,
+"windowKey": "DatabaseMain",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "This time we don't have any similar skills, so we'll start from scratch. \nClick on blank #5.",
+"ja_JP": "今回は似たスキルがないため、\nいちから設定を行います。\n「0005」の空欄をクリック。",
+"zh_CN": "这次我们没有类似的技能，所以只能从零开始。 \n单击空白 #5。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 438,
+"y": 74,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's give it a skill name. \nEnter:\nCancel Floor Damage",
+"ja_JP": "スキル名を付けます。\n「キャンセルフローダメージ」\nと入力。",
+"zh_CN": "给它一个技能名吧。 \n输入：\n“地形伤害解除”"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 522,
+"y": 134,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter Grants immunity to floor damage for 100 steps\n in the description.",
+"ja_JP": "『１００歩の間、床ダメージを受けなくなる』\nと説明に書いてください。",
+"zh_CN": "在说明中输入\n “在 100 步之内对地形伤害免疫”。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 681,
+"y": 74,
+"windowKey": "DatabaseMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the icon image.",
+"ja_JP": "アイコン画像をダブルクリック。",
+"zh_CN": "双击图标的图像。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 309,
+"y": 189,
+"windowKey": "ImageSelector",
+"condition": "list,-1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Choose an icon to your liking.",
+"ja_JP": "任意のアイコンを選びます。",
+"zh_CN": "选择你喜欢的图标。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 390,
+"y": 426,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and the icon will be set.",
+"ja_JP": "ＯＫをクリックしてアイコンを確定。",
+"zh_CN": "单击 OK 后就能设置该图标。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 471,
+"y": 266,
+"windowKey": "DatabaseMain",
+"condition": "windowState,ItemScope,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Range.",
+"ja_JP": "範囲をクリック。",
+"zh_CN": "单击范围。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the settings to \"Side: Ally\", \"Number: All\", and \"Status: Alive\", \nthen click OK.  ",
+"ja_JP": "「陣営：味方」「数：全体」「状態：生存」に\n変更して、OKをクリック。",
+"zh_CN": "把设定更改为“对象：队友”，“人数：全体”，及“状态：存活”， \n然后单击 OK。  "
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 648,
+"y": 263,
+"windowKey": "DatabaseMain",
+"condition": "comboBox,occasion,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the Occasion to the Menu Screen.",
+"ja_JP": "使用可能時を「メニュー画面」に。",
+"zh_CN": "把使用场合改成菜单画面。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 639,
+"y": 186,
+"windowKey": "DatabaseMain",
+"condition": "spinBox,=,5",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the MP cost to 5.",
+"ja_JP": "消費MPを「5」に。",
+"zh_CN": "把 MP 消耗改成 5。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 468,
+"y": 531,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"casts *!\" as the message.",
+"ja_JP": "メッセージは「～を唱えた」をクリック。",
+"zh_CN": "单击“释放 *!”为信息。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 864,
+"y": 267,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Effects,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the blank line at the top of Effects.",
+"ja_JP": "使用効果の一番上の空欄をダブルクリック。",
+"zh_CN": "双击“效果”顶端的空行。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 75,
+"y": 21,
+"windowKey": "Effects",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the \"State\" tab.",
+"ja_JP": "「ステート」タブをクリック。",
+"zh_CN": "单击“状态”标签。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 24,
+"y": 54,
+"windowKey": "Effects",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Add State\".",
+"ja_JP": "ステート付加　をチェック。",
+"zh_CN": "勾选“附加状态”。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 204,
+"y": 57,
+"windowKey": "Effects",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select \"Floor Damage Immunity\" from the states.",
+"ja_JP": "ステートの中から「0011 ダメージ床無効」を選択。",
+"zh_CN": "在状态中选择“地形伤害免疫”。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 192,
+"y": 267,
+"windowKey": "Effects",
+"condition": "windowState,Effects,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure it's set to 100%,\nclick OK and set it.",
+"ja_JP": "「100%」になっているのを確認してから\nＯＫをクリックして確定。",
+"zh_CN": "确保其设定为 100 步，\n然后单击 OK 设置它。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 72,
+"y": 51,
+"windowKey": "DatabaseMain",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the skill is complete. We'll make someone learn it. \nClick the \"Classes\" tab.",
+"ja_JP": "これでスキル完成です。誰かに覚えさせます。\n「職業」タブをクリック。",
+"zh_CN": "现在技能已设置完毕。我们要让谁来习得该技能。 \n单击“职业”标签。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 237,
+"y": 115,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click #3, \"Priest\".",
+"ja_JP": "「0003 僧侶」をクリック。",
+"zh_CN": "单击 #3，“祭司”。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 462,
+"y": 371,
+"windowKey": "DatabaseMain",
+"condition": "windowState,SkillsToLearn,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll down the Skills to Learn list and double-click on the empty frame right at the bottom.  ",
+"ja_JP": "習得するスキルをスクロールして、一番下の空欄をダブルクリック。",
+"zh_CN": "滚动至要习得的技能列表下方，双击底端的空框。  "
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 203,
+"y": 62,
+"windowKey": "SkillsToLearn",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "With the level at 1, click the skill\nand select #5, Cancel Floor Damage.",
+"ja_JP": "レベルは１のままで、スキルをクリックし、\n「0005 キャンセルフローダメージ」を選択。",
+"zh_CN": "保持等级为 1，单击技能，\n然后选择 #5，地形伤害解除。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 170,
+"y": 158,
+"windowKey": "SkillsToLearn",
+"condition": "windowState,SkillsToLearn,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 66,
+"y": 404,
+"windowKey": "DatabaseMain",
+"condition": "tabView,tabview,12",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now Eliot has learned a spell that negates floor damage. \nSomething else needs to be done. \nClick on \"System 1\".",
+"ja_JP": "これでエリオットが床ダメージを無効化する魔法を覚えました。\nここでもうひとつ解説です。\n「システム1」タブをクリック。",
+"zh_CN": "现在埃利奥特已习得地形伤害免疫的魔咒。 \n还有几件事需要我们去做。 \n单击“系统 1”。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 650,
+"y": 550,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "If the option \"Knockout by Floor Damage\"\nis not checked off, the HP of the actors will not go below 1 even if they are hit by a damage floor. \nThis time we will leave it unchecked.",
+"ja_JP": "「床ダメージで戦闘不能」というオプションに\nチェックが付いていない場合、\nダメージ床でＨＰが１より少なくなりません。\n今回はチェックしない方針です。",
+"zh_CN": "如果“地形伤害可导致无法战斗”的选项未被勾选，\n即使被有害地形所伤害，角色的 HP 也不会跌至低于 1。 \n这次我们就不勾选它了。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 915,
+"y": 692,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done configuring the database. \nClick OK and it will be set.",
+"ja_JP": "以上でデータベースの設定は完了です。\nＯＫをクリックして確定。",
+"zh_CN": "现在我们已配置好数据库。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 114,
+"y": 26,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Save the project.",
+"ja_JP": "プロジェクトを保存。",
+"zh_CN": "保存项目。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 1050,
+"y": 29,
+"windowKey": "MainWindow",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Start a playtest. \nPlease try everything,\nsuch as taking damage and using the floor damage immunity skill.",
+"ja_JP": "テストプレイを開始してください。\nダメージを受けたり、ダメージ床無効のスキルを使ったり\nいろいろ試してみてください。",
+"zh_CN": "开始测试游戏。 \n请尝试所有设定，\n如接受伤害及使用地形伤害免疫机能。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. This is the end of Step 14. \nIn the next step we will continue to deal with dungeon setup.",
+"ja_JP": "お疲れ様でした。これでステップ１４は終了です。\n次のステップでも、ダンジョンの仕掛けを扱います。",
+"zh_CN": "做得好。步骤 14 到这里就结束了。 \n下一个步骤中，我们将继续介绍地牢的设定。"
+}
+}
+]
+}

@@ -1,0 +1,8 @@
+/* Conversão de dados do MV (editor/js/mvconvert) */
+.mzDialogBody.mvcBody { padding: 10px 14px; line-height: 1.45; }
+.mvcBody p { margin: 0 0 8px; }
+.mvcBody ul { margin: 0 0 8px; padding-left: 22px; }
+.mvcBody ul.mvcWarn li { color: #8a5a00; }
+.mvcBody .mvcNote { font-size: 13px; color: #666; }
+[data-theme="dark"] .mvcBody ul.mvcWarn li { color: #e5b65a; }
+[data-theme="dark"] .mvcBody .mvcNote { color: #aaa; }

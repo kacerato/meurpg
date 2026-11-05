@@ -1,6 +1,6 @@
 // Traits (Game_BattlerBase.TRAIT_*) e Effects (Game_Action.EFFECT_*): listas e diálogos.
 import { el, num, sel, tabs, tableList, modal } from "./ui.js";
-import { PARAMS, XPARAMS, SPARAMS, SPECIAL_FLAGS, COLLAPSE, PARTY_ABILITY, idOptions, typeOptions, nameOf } from "./common.js";
+import { PARAMS, XPARAMS, SPARAMS, SPECIAL_FLAGS, COLLAPSE, PARTY_ABILITY, idOptions, typeOptions, nameOf, asObjects } from "./common.js";
 import { t } from "../i18n.js";
 
 const pct = v => Math.round(v * 100 * 100) / 100;
@@ -25,7 +25,7 @@ function optionLists(db) {
         party: () => PARTY_ABILITY.map((n, i) => [i, n]),
         commons: () => idOptions(db.CommonEvents),
         escape: () => [[0, t("Escape", "Constants")]],
-        statesAtk: () => [[0, t("Normal Attack", "Dialog_Effects")], ...idOptions(db.States)]
+        statesAtk: () => asObjects([[0, t("Normal Attack", "Dialog_Effects")], ...idOptions(db.States)], "States")
     };
 }
 

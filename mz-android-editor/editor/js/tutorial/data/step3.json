@@ -1,0 +1,1150 @@
+{
+"step": 3,
+"title": {
+"ja_JP": "ステップ３：イベントの移動１",
+"en": "Step 3: Event Transfer 1",
+"zh_CN": "步骤 3：事件场所移动 1"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 2?",
+"ja_JP": "ステップ２を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 2 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 2 project.",
+"ja_JP": "ステップ２のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 2 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 2 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ２のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 2 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読み込みが終わりました。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step3",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then press OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKを押してください。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project loads.",
+"ja_JP": "プロジェクトの読み込みが終わるまで、しばらくお待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": 192,
+"y": 58,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Normal Town from the map tree.",
+"ja_JP": "マップツリーから、\"普通の町\"をクリックしてください。",
+"zh_CN": "从树形图选择“普通小镇”。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step we will learn how to move NPC events.",
+"ja_JP": "このステップでは人物イベントを動かすことを学びます。",
+"zh_CN": "在这个步骤中，我们将学习如何移动NPC事件。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "There are two ways to move an event:\nyou can set \"Autonomous Movement\" or use the event command \"Set Movement Route\". \nWe'll deal with the former this time.",
+"ja_JP": "イベントを動かすには「自律移動」を設定する方法と\nイベントコマンド「移動ルートの設定」を実行する方法があります。\n今回は前者を扱います。",
+"zh_CN": "移动事件的方法有两种：\n你可以设置“自主移动”，或是使用事件指令“设置移动路线”。 \n这次我们将使用前者。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Let's set \"Autonomous Movement\" for the character we created in Step 2. To do this, we will first find where the character is placed.　",
+"ja_JP": "ステップ２で作成した人物に「自律移動」を設定します。そのため、まずはその人物の置かれた場所を探します。",
+"zh_CN": "为步骤 2 中创建的角色设置“自主移动”。但是我们得先找到角色的所在位置。　"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 894,
+"y": 27,
+"windowKey": "MainWindow",
+"condition": "windowState,EventSearcher,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Event Searcher\". \nHere you can search for various events.",
+"ja_JP": "「イベント検索」をクリック。\nここでは様々なイベントを検索できます。",
+"zh_CN": "单击“搜索事件”。 \n你可以使用这个来搜索各种事件。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 25,
+"y": 116,
+"windowKey": "EventSearcher",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "The character we want to look for was called \"Villager1\". \nClick Event Name.",
+"ja_JP": "検索対象の人物は「村人１」という名前でした。\nイベント名をクリック。",
+"zh_CN": "我们要搜索的角色是“小村民 1”。 \n单击“事件名称”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 238,
+"y": 104,
+"windowKey": "EventSearcher",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter \"Villager1\".",
+"ja_JP": "村人１　と入力。",
+"zh_CN": "输入“小村民 1”。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 70,
+"y": 155,
+"windowKey": "EventSearcher",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "When you're done, click Search. \nTheir position will be shown.",
+"ja_JP": "入力が終わったら、検索をクリックしてください。\n位置が出ます。",
+"zh_CN": "输入完毕后，单击“搜索”。 \n事件的位置便会显示。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 523,
+"y": 593,
+"windowKey": "EventSearcher",
+"condition": "windowState,EventSearcher,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "As you can see, a benefit of naming your events\nis that you can easily search for them. \nClick \"Close\".",
+"ja_JP": "これでイベントに名前を付けた方が良いのは、\n検索しやすいからだと分かりました。\n「閉じる」をクリック。",
+"zh_CN": "如你所见，为事件命名\n可以方便你搜索它们。 \n单击“关闭”。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Double click Villager1 on (17,16)\nand open the event.",
+"ja_JP": "(17,16)にある村人１をダブルクリックして\nイベントを開いてください。",
+"zh_CN": "双击小村民 1 的坐标（17,16）\n然后打开事件。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 255,
+"y": 375,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Here we'll set the autonomous movement. \nYou can specify frequency and speed, but we'll leave those how they are for now.",
+"ja_JP": "「自律移動」の設定はここで行います。\n頻度や速度も指定できますが、それらは今の設定のままにします。",
+"zh_CN": "我们再这里设置自主移动。 \n你可以指定频率和速度，但是我们暂且不为它们做更改。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 243,
+"y": 393,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,moveType,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select \"Random\" from \"Type\".",
+"ja_JP": "「タイプ」を「ランダム」にします。",
+"zh_CN": "从“类型”中选择“随机”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 777,
+"y": 666,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the settings are complete. \nClick OK and it will be set.",
+"ja_JP": "これで設定は完了です。\nＯＫをクリックして確定。",
+"zh_CN": "现在所有设定都完成了。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 111,
+"y": 26,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's playtest here. \nSave the project.",
+"ja_JP": "まずここでテストプレイを行いましょう。\nプロジェクトを保存します。",
+"zh_CN": "现在测试一下游戏。 \n保存项目。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 1050,
+"y": 26,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Start a playtest. \nCheck that Villager1 is moving randomly.",
+"ja_JP": "テストプレイを開始してください。\n村人１がランダムに動いているのを確認します。",
+"zh_CN": "开始测试游戏。 \n确认小村民 1 的移动是随机的。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "When the playtest is over, let's move on.",
+"ja_JP": "テストプレイが終わったら次に進みます。",
+"zh_CN": "测试结束后，进入下一步。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next, we'll create a character that moves around in the same place. As an example, we'll create someone who moves around the town center.",
+"ja_JP": "次は同じ所を繰り返し動く人物を作ります。例として、町の中央の周囲を回る人を作ります。",
+"zh_CN": "接着，我们要创建一个绕着一个地方行走的角色。作为示例，我们将创建一个在小镇中心走来走去的人。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Click slightly below the town center, \nat the coordinates (17,21).",
+"ja_JP": "街の中央のやや下をクリックします。\n座標が(17,21)になっていることを確認してください。",
+"zh_CN": "单击小镇中心稍微下方的位置， \n坐标（17,21）。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click (17,21) and open an event.",
+"ja_JP": "(17,21)をダブルクリックして、イベントを開きます。",
+"zh_CN": "双击（17,21）然后打开事件。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 66,
+"y": 405,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll do the various basic settings for the event. \nDouble click Image.",
+"ja_JP": "イベントの諸々の基本設定を行います。\nまずは画像をダブルクリック。",
+"zh_CN": "我们将为事件调整各种基础设定。 \n双击“图像”。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 107,
+"y": 61,
+"windowKey": "ImageSelector",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Actor2.",
+"ja_JP": "Actor2 を選択。",
+"zh_CN": "选择“Actor2”。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 620,
+"y": 180,
+"windowKey": "ImageSelector",
+"condition": "list,58",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Pick the image of the woman facing to the right at the bottom right.",
+"ja_JP": "一番右下の女性の右向き画像を選択。",
+"zh_CN": "选择在右下方，面朝右的女人的图像。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 575,
+"y": 427,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 108,
+"y": 21,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Name her \"Town Center Villager\".",
+"ja_JP": "名前は「中心を回る村人」などにしてください。",
+"zh_CN": "把她命名为“小镇中心村民”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 519,
+"y": 135,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the first line in \"Contents\".",
+"ja_JP": "実行内容の一番上をダブルクリック。",
+"zh_CN": "双击“执行内容”中的第一行。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 177,
+"y": 80,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 341,
+"y": 23,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input something clear and concise, for example, \n\"Patrolling.\" \"Patrolling.\"",
+"ja_JP": "『パトロールしています。』\nなど簡潔な文章を入力。など簡潔な文章を入力。",
+"zh_CN": "输入易理解的话语，如： \n“巡逻。” “巡逻。”"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 410,
+"y": 204,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 255,
+"y": 372,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now let's configure the autonomous movement settings for this event.",
+"ja_JP": "このイベントに周囲を歩かせる「自律移動」の設定を行います。",
+"zh_CN": "现在，我们要配置该事件的自主移动设定。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 240,
+"y": 462,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,moveSpeed,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First let's change the movement speed and frequency. \nSet the speed to \"4: Normal\".",
+"ja_JP": "まずは移動速度と頻度を変更します。\n速度を「4:標準速」に変更してください。",
+"zh_CN": "首先，更改移动速度和频率。 \n将速度设置为“4：普通”。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 240,
+"y": 492,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,moveFrequency,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the freq to \"5: Highest\".",
+"ja_JP": "頻度を「5:最高」に変更してください。",
+"zh_CN": "将频率设置为“5：最高”。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 240,
+"y": 405,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,moveType,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we'll set her to walk around the statue. \nSet the \"Type\" to \"Custom\".",
+"ja_JP": "次に像の周りを歩かせる設定を行います。\n「タイプ」を「カスタム」に変更してください。",
+"zh_CN": "现在我们要设置成让她围绕着雕像走动。 \n将“类型”设为“自定义”。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 306,
+"y": 423,
+"windowKey": "EventEditorMain",
+"condition": "windowState,MovementRoute,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Route...\" and you can set the movement route.",
+"ja_JP": "「ルート…」をクリックすると移動ルートが設定出来ます。",
+"zh_CN": "单击“路线……”后，你可以设置移动路线。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 459,
+"y": 14,
+"windowKey": "MovementRoute",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "If you click a \"Movement Command\" on the right\nit will be added to the list on the left.",
+"ja_JP": "右の「移動コマンド」から任意のボタンをクリックすると\n左のリストに選択した移動コマンドが追加されます。",
+"zh_CN": "单击右侧的“移动指令”，\n它就会被添加到左侧的列表中。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 114,
+"y": 56,
+"windowKey": "MovementRoute",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The events entered are added here. \nRight click when you want to delete or insert an event.",
+"ja_JP": "ここに選択した移動コマンドが追加されていきます。\nコマンドを削除や挿入したい場合右クリックします。",
+"zh_CN": "已输入的事件会被添加至此处。 \n右击后可以删除或插入事件。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 351,
+"y": 40,
+"windowKey": "MovementRoute",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Select the commands below in the following order: \nMove Right x2 \nMove Up x4 \nMove Left x4 \nMove Down x4 \nMove Right x2",
+"ja_JP": "次の順序でコマンドを選択してください。\n右に移動×2\n上に移動×4\n左に移動×4\n下に移動×4\n右に移動×2",
+"zh_CN": "根据以下的顺序选择指令： \n向右移动 2 次 \n向上移动 4 次 \n向左移动 4 次 \n向下移动 4 次 \n向右移动 2 次"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 135,
+"y": 337,
+"windowKey": "MovementRoute",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Ensure the \"Repeat Movements\" option is checked off. \nNow the character will repeat her movements.",
+"ja_JP": "「動作を繰り返す」にチェックが入っているのを確認してください。\nこれでまわる動作を繰り返します。",
+"zh_CN": "确保“循环执行”已被勾选。 \n现在该角色会一直重复她的动作。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 144,
+"y": 376,
+"windowKey": "MovementRoute",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do not check off \"Skip If Cannot Move\". We don't want her route to change on us.",
+"ja_JP": "「移動できない場合は飛ばす」にはチェックを入れません。今回は移動ルートが変わってしまうと不都合だからです。",
+"zh_CN": "不要勾选“无法移动时跳过指令”。我们不希望她的路线被擅自更改。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 100,
+"y": 300,
+"windowKey": "MovementRoute",
+"condition": "windowState,MovementPreview,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on preview.",
+"ja_JP": "プレビューをクリックしてください。",
+"zh_CN": "单击预览。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MovementPreview",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check if the movement route is correct.",
+"ja_JP": "移動ルートが正しいことを確認します。",
+"zh_CN": "确认移动路线是否正确。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 800,
+"y": 650,
+"windowKey": "MovementPreview",
+"condition": "windowState,MovementPreview,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click close.",
+"ja_JP": "閉じるをクリック。",
+"zh_CN": "单击关闭。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 717,
+"y": 430,
+"windowKey": "MovementRoute",
+"condition": "windowState,MovementRoute,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the movement route.",
+"ja_JP": "ＯＫをクリックして、移動ルートを確定。",
+"zh_CN": "单击 OK 设置移动路线。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 777,
+"y": 671,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the event.",
+"ja_JP": "ＯＫをクリックして、イベントを確定。",
+"zh_CN": "单击 OK 设置事件。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 111,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Run a playtest. \nSave the project.",
+"ja_JP": "テストプレイを行います。\nプロジェクトを保存してください。",
+"zh_CN": "测试一下游戏。 \n保存项目。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 1050,
+"y": 32,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Run the test and check to see if the woman is circling the statue properly.",
+"ja_JP": "テストプレイを開始し、女性が像の周りをきちんと回っているか、確認してください。",
+"zh_CN": "测试游戏并确认女人是否好好地围绕着雕像走。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 57,
+"jumpNo": 55,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Is the event working properly in the playtest?",
+"ja_JP": "テストプレイでイベントはきちんと動きましたか？",
+"zh_CN": "测试中事件是否按预期正常操作？"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Then let's review the event. \nDouble click the event under the statue.",
+"ja_JP": "それでは、イベントを見直しましょう。\n像の下のイベントをダブルクリック。",
+"zh_CN": "接着，我们回顾一下事件吧。 \n双击雕像下方的事件。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 240,
+"y": 369,
+"windowKey": "EventEditorMain",
+"condition": "click",
+"icon": "eye",
+"jump": 44,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Double check the movement route settings.",
+"ja_JP": "移動ルートの設定を再確認します。",
+"zh_CN": "仔细检查移动路线设定。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. This is the end of Step 3.",
+"ja_JP": "お疲れ様でした。これでステップ３は終了です。",
+"zh_CN": "做得好。步骤 3 到这里就结束了。"
+}
+}
+]
+}

@@ -1,0 +1,1720 @@
+{
+"step": 12,
+"title": {
+"ja_JP": "ステップ12：データベースの基礎１",
+"en": "Step 12: Database Basics 1",
+"zh_CN": "步骤 12：数据库基础 1"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 11?",
+"ja_JP": "ステップ１１を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 11 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 11 project.",
+"ja_JP": "ステップ１１のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 11 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 11 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ１１のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 11 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step12",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "From this step onward we'll be handling a \"database\". \nWithin the database there are a very large number of items for the configuration of various things in the game,\n so we will explain them in order.",
+"ja_JP": "このステップからは「データベース」を扱います。\nデータベースではゲームの様々な項目を設定するため\n非常に項目が多いですが、順を追って説明します。",
+"zh_CN": "从这个步骤开始，我们要操作的是“数据库”。 \n数据库内含有庞大的资料，用于配置游戏中的各种事物，\n 我们稍后会依次说明。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 774,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "In this step we will focus on getting acquainted with the main character and enemies,\nas well as battle. \nFirst, we'll open the database.",
+"ja_JP": "このステップでは主人公や敵キャラを中心に紹介し、\n戦闘についても扱います。\nまずは、データベースを開きます。",
+"zh_CN": "在这个步骤中，我们注重的是了解主要角色和敌人，\n还有战斗。 \n首先我们要打开数据库。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 69,
+"y": 26,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The first tab is \"Actors\". \nActors refers to the main character and his allies,\nand is a very important term in RPG Maker MZ.",
+"ja_JP": "一番上のタブは「アクター」となっています。\nアクターとは、主人公とその仲間のことで、\nツクールMZの重要な用語のひとつです。",
+"zh_CN": "第一个标签是“角色”。 \n角色指的是主角和他的同盟，\n这是 RPG Maker MZ 中非常重要的一个术语。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 69,
+"y": 26,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this tutorial, we'll use\nthe word \"actor\" to describe these.",
+"ja_JP": "以降、チュートリアルでは\n「アクター」という言葉を使うようにします。",
+"zh_CN": "在本教程中，我们将使用\n“角色”这一术语来形容他们。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 288,
+"y": 74,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We'll also call the collection of actors the \"party\". \nNow for the explanation of actors.",
+"ja_JP": "また、アクター達の集まりを「パーティ」と呼びます。\nそれではアクターの説明に入ります。",
+"zh_CN": "我们也称呼这些角色的群集为“队伍”。 \n现在为你说明角色。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 465,
+"y": 140,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Notice that there is a \"Class\" section in settings. \nThis is where you can configure abilities. \nFor example, Reid's class is \"Swordsman\".",
+"ja_JP": "設定に「職業」があるのに注目してください。\n「職業」で、様々な能力を設定します。\n例えばリードは「剣士」です。",
+"zh_CN": "留意设定中“职业”的部分。 \n这是配置技能的地方。 \n例如，里德的职业是“剑客”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 66,
+"y": 53,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the \"Classes\" tab.",
+"ja_JP": "「職業」タブをクリック。",
+"zh_CN": "单击“职业”标签。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 249,
+"y": 71,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This is where you define details for abilities. \nReid's ability values are being shown since \nthe Swordsman class is currently being selected.",
+"ja_JP": "ここで、細かい能力が設定可能です。\n現在はリストで「剣士」が選択されているので\nリードの能力値を表示中です。",
+"zh_CN": "你可以在此处输入技能的详细介绍。 \n因为已选的职业是剑客， \n所以现在显示的是里德的技能值。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 459,
+"y": 131,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In \"Parameter Curves\", you can set how a value\nwill grow with each level up.",
+"ja_JP": "「能力値曲線」では、レベルが上がると\n各値がどう伸びてくるのかを設定します。",
+"zh_CN": "在“参数曲线”中，你可以设置\n让数值随各等级提升。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 810,
+"y": 44,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "What's important here is \"Traits\". \nThis is a setting peculiar to RPG Maker MZ so there will be a detailed explanation.",
+"ja_JP": "重要なのが、「特徴」です。\nツクールMZ特有の設定なので詳しく説明します。",
+"zh_CN": "在这里，重要的是“特性”。 \n这是 RPG Maker MZ 独特的设定，所以我们会做详细解说。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 828,
+"y": 404,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In \"Traits\", you can configure various components such as\nbasic hit and evasion rate values in addition to types of equipment that can be used,\nusable skill types, and more.",
+"ja_JP": "「特徴」では、命中率や回避率など基本的な値の他に、装備可能な装備タイプや、\n使用可能なスキルタイプなど、\n様々な要素を設定することが可能です。",
+"zh_CN": "在“特性”里，你可以配置各种元件，\n如基础的命中率和回避率之外，还有可使用的装备类型、\n可使用的技能类型等等。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 828,
+"y": 404,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In short, you can list various factors in \"Traits\" and by setting them, those traits will be the actor's traits.",
+"ja_JP": "つまり「特徴」で様々な要素を列挙し、設定することで、それらの「特徴」がそのアクターの特徴になります。",
+"zh_CN": "总之，你可以在“特性”中列出多种因素并设置它们，所设置的特性就会成为角色的特性。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 966,
+"y": 107,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Hit rate is determined by traits,\nand if you accidentally delete it, the hit rate will be 0%\nand no attacks will land, so be careful.",
+"ja_JP": "「命中率」も特徴で設定されており、\n間違って削除すると、命中率が０％になり\n通常攻撃が全く当たらなくなるため注意しましょう。",
+"zh_CN": "命中率受特性影响，\n如果你不小心删除了它，命中率就会变成 0%，\n而且攻击也不会产生，所以还请多加留意。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 66,
+"y": 152,
+"windowKey": "DatabaseMain",
+"condition": "list,4",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Traits can also be added to weapons and armor, as well as states. Click on the \"Weapons\" tab to give it a try.",
+"ja_JP": "なお、「特徴」は、武器や防具、ステートにも付加が可能です。試しに「武器」タブをクリック。",
+"zh_CN": "特性也可以被添加到武器、护甲以及状态上。单击“武器”标签，尝试一下。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 840,
+"y": 35,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "There is a trait list for equipment as well. \nThey will be appended to an actor only when they have the equipment on.",
+"ja_JP": "装備にも「特徴」のリストがあります。\nアクターがこの装備を装備中にだけ付加されます。",
+"zh_CN": "也有适用于装备的特性列表。 \n只有在角色佩戴上该装备的时候才能附加。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 978,
+"y": 104,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "For example, while the trait here is \"Hit Rate +0%\",\nthe hit rate for the actor's class is 95%,\nso in total, hit rate will be 95%.",
+"ja_JP": "例えば、「命中率+0%」とありますが、\nアクターの職業での命中率が95%なので、\n合計して95%の命中率になります。",
+"zh_CN": "举个例子，当这里的特性是“命中率 +0%”时，\n角色的职业命中率为 95%，\n所以命中率的总计是 95%。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 78,
+"y": 275,
+"windowKey": "DatabaseMain",
+"condition": "list,8",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please click the \"States\" tab.",
+"ja_JP": "同様に、「ステート」タブをクリックしてください。",
+"zh_CN": "单击“状态”标签。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 291,
+"y": 173,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "\"States\" are temporary status changes such as \"Poison\" or \"Paralyze\".",
+"ja_JP": "「ステート」とは、「毒」や「麻痺」など一時的な状態変化のことです。",
+"zh_CN": "“状态”是临时的状态变动，如“中毒”或“麻痹”。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 846,
+"y": 38,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "These traits appear only while an actor is in that state.",
+"ja_JP": "この特徴も、アクターがそのステートの間だけ現れます。",
+"zh_CN": "这类特性只会在角色陷入该状态时出现。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 63,
+"y": 59,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now let's go back to \"Classes\" for a moment.",
+"ja_JP": "それでは一旦「職業」タブに戻りましょう。",
+"zh_CN": "现在，让我们暂时回到“职业”的说明。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 432,
+"y": 311,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next, take a look at \"Skills to Learn\". \n\"Skills\" are a general name for \"Magic\" or \"Special Moves\".",
+"ja_JP": "次は「習得するスキル」を見てください。\n「スキル」とは、「魔法」や「必殺技」などの総称です。",
+"zh_CN": "接下来，看一看“要习得的技能”。 \n“技能”是“魔法”或“必杀技”的统称。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 63,
+"y": 83,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Learned skills can be created/configured in the \"Skills\" tab. Click the \"Skills\" tab.",
+"ja_JP": "習得するスキルは、「スキル」タブで作成/設定が可能です。「スキル」タブをクリックしてください。",
+"zh_CN": "已习得的技能可以通过“技能”标签创建或配置。单击“技能”标签。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 285,
+"y": 83,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "\"Attack\" and \"Guard\" are configured as skills,\nbut there's no need to worry about those right now.",
+"ja_JP": "「攻撃」や「防御」もスキルとして設定されていますが、\nここは現時点では意識する必要はありません。",
+"zh_CN": "“攻击”和“防御”都被配置为技能，\n但是目前暂时不用管它们。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 261,
+"y": 236,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Magic is configured in numbers 52 through 157.",
+"ja_JP": "0052番から0157番に、魔法が設定されています。",
+"zh_CN": "魔法被配置在编号 52 到 157 中。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 261,
+"y": 236,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now let's change some descriptions.",
+"ja_JP": "説明を書き加えたいと思います。",
+"zh_CN": "现在我们更改一些说明吧。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 255,
+"y": 215,
+"windowKey": "DatabaseMain",
+"condition": "list,51",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0052 Heal I\" \nto display the settings for \"Heal I\".",
+"ja_JP": "「0052 ヒールⅠ」をクリック。\n「ヒールⅠ」の設定が表示されます。",
+"zh_CN": "单击“0052 治疗I”， \n显示出“治疗I”的设定。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 429,
+"y": 116,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the description to \"Recovers \n500 or more HP for 1 ally.\"",
+"ja_JP": "『味方単体のＨＰを５００以上回復する。』\nと説明を変更。",
+"zh_CN": "把说明更改为 \n“为一名队友恢复 500 点或以上的 HP。”"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 240,
+"y": 232,
+"windowKey": "DatabaseMain",
+"condition": "list,98",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0099 Fire I\".",
+"ja_JP": "「0099 ファイアⅠ」をクリック。",
+"zh_CN": "单击“0099 炎I”。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 474,
+"y": 124,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Deals about 100 fire damage to 1 enemy.\" \nas the description.",
+"ja_JP": "『敵単体に１００前後の炎属性ダメージを与える。』\nと説明に記入。",
+"zh_CN": "输入说明为 \n“对一体敌人造成大约 100 点炎伤害。”"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 234,
+"y": 253,
+"windowKey": "DatabaseMain",
+"condition": "list,118",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0119 Spark I\".",
+"ja_JP": "「0119 スパークⅠ」をクリック。",
+"zh_CN": "单击“0119 火花I”。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 489,
+"y": 124,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Deals about 100 lightning damage to all enemies.\"  \nas the description.",
+"ja_JP": "『敵全体に１００前後の雷属性ダメージ』\nと説明に記入。",
+"zh_CN": "输入说明为  \n“对一体敌人造成大约 100 点闪电伤害。”"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 66,
+"y": 118,
+"windowKey": "DatabaseMain",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "These skill descriptions will now appear in game. \nNext, click the Item tab.",
+"ja_JP": "これでゲーム中、スキルに説明が出るようになります。\n次は「アイテム」タブをクリック。",
+"zh_CN": "现在这些技能的说明会显示在游戏中。 \n接下来，单击“物品”标签。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 255,
+"y": 67,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Let's add descriptions like we did for the skills.\nSelect \"0007 Potion\".",
+"ja_JP": "スキルと同様、説明を追記します。\n「0007 ポーション」を選択します。",
+"zh_CN": "让我们像为技能添加说明一样，也为物品做详述吧。\n选择“0007 药水”。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 492,
+"y": 116,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Recovers 500 HP for 1 unit.\" \nas the description.",
+"ja_JP": "『味方単体のＨＰを５００ポイント回復する』\nと説明に記入。",
+"zh_CN": "输入说明为 \n“恢复单体 500 点 HP。”"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 249,
+"y": 255,
+"windowKey": "DatabaseMain",
+"condition": "list,9",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0010 Magic Water\".",
+"ja_JP": "「0010 マジックウォーター」をクリック。",
+"zh_CN": "单击“0010 魔力水”。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 513,
+"y": 119,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Recovers 300 MP for 1 unit. \" \nas the description.",
+"ja_JP": "『味方単体のＭＰを３００ポイント回復する。』\nと説明に記入。",
+"zh_CN": "输入说明为 \n“恢复单体 300 点 MP。”"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 261,
+"y": 290,
+"windowKey": "DatabaseMain",
+"condition": "list,11",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0012 Dispel Herb\".",
+"ja_JP": "「0012 ディスペルハーブ」をクリック。",
+"zh_CN": "单击“0012 驱除草本”。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 531,
+"y": 119,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Cures all status ailments on 1 ally, except Dead. \"\nas the description.",
+"ja_JP": "『味方単体の戦闘不能以外の状態異常を回復する。』\nと説明に記入。",
+"zh_CN": "输入说明为\n“为一名队友治愈所有除死亡外的负面状态。”"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 255,
+"y": 280,
+"windowKey": "DatabaseMain",
+"condition": "list,10",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0011 Stimulant\".",
+"ja_JP": "「0011 スティミュラント」をクリック。",
+"zh_CN": "单击“0011 兴奋剂”。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 486,
+"y": 119,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input \"Raises an ally from the Dead (and recovers 50% HP.\" \nas the description.",
+"ja_JP": "『味方単体を戦闘不能から復活させる。（ＨＰ半分回復）』\nと説明に記入。",
+"zh_CN": "输入说明为 \n“复活一名队友，并恢复 50% HP。”"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 75,
+"y": 218,
+"windowKey": "DatabaseMain",
+"condition": "list,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Item descriptions will now appear. \nNext up, an explanation of enemies the party will fight. \nClick the \"Enemies\" tab.",
+"ja_JP": "これでアイテムの説明が出るようになります。\n次はパーティが戦う敵キャラについて説明を行います。\n「敵キャラ」タブをクリック。",
+"zh_CN": "现在，物品的说明会显示。 \n接着，与队伍战斗的敌人的说明。 \n单击“敌人”标签。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 258,
+"y": 109,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "There are currently 5 enemies registered in the list.",
+"ja_JP": "敵キャラのリストには現在５体が登録されています。",
+"zh_CN": "目前列表中已登录了 5 个敌人。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 786,
+"y": 115,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We can see that \nyou can set ability values and traits, like with Actors.",
+"ja_JP": "アクターと同様、能力値や特徴を\n設定できるのが分かります。",
+"zh_CN": "如你所见， \n如同设置角色一般，你也可以设置敌人的能力值和特性。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 462,
+"y": 424,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "When you change the \"Action Pattern\",\nyou can make them use skills, and set the skills\nthey can use depending on a condition.",
+"ja_JP": "「行動パターン」を変更すると、\nスキルを使わせたり、条件によって使えるスキルを\n設定したりできます。",
+"zh_CN": "当你更改“行动模式”时，\n你可以让他门使用技能，\n并设置它们可以使用技能的条件。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 69,
+"y": 247,
+"windowKey": "DatabaseMain",
+"condition": "list,7",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now, just making an enemy isn't enough for them to show up in battle. You'll need to make \"Troops\", and add them there. Click the \"Troops\" tab.",
+"ja_JP": "さて。敵キャラを作っただけでは戦闘には参加できません。「敵グループ」を作り、そこに入れる必要があります。「敵グループ」タブをクリックしてください。",
+"zh_CN": "现在的敌人不仅仅是在战斗中登场就够了。你得制作“敌群”，并把它们添加到战斗中。单击“敌群”标签。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 297,
+"y": 103,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "There are 5 enemy troops registered in the list. \nEnemies are added alone, or in groups.",
+"ja_JP": "リストには５つの敵グループが登録されています。\n敵キャラを１体、または複数組み合わせた形で登録します。",
+"zh_CN": "列表中已登录了 5 个敌人。 \n你可以添加一个或是一群敌人。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 303,
+"y": 115,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "These \"troops\" are the groups of enemies the party will actually battle.",
+"ja_JP": "この「敵グループ」が、実際にパーティと戦闘する敵キャラの集まりになります。",
+"zh_CN": "这些“敌群”会是队伍与之实际战斗的敌群。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 723,
+"y": 142,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "You can add and remove enemies from troops here. In the second half of this step, we'll actually create a troop.",
+"ja_JP": "敵グループへの敵キャラの追加や削除は、ここで行います。このステップの後半で、実際に敵グループを作成します。",
+"zh_CN": "你可以在这里添加或撤除敌人。在这个步骤的后半部分，我们将实际创建一个敌群。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 960,
+"y": 85,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Also, it is possible to test battles here without actually launching the game. \nClick \"Battle Test...\".",
+"ja_JP": "なお、実際にゲームを起動しなくても、\nここから戦闘テストを行うことが可能です。\n「戦闘テスト…」をクリック。",
+"zh_CN": "另外，即使不实际启动游戏，你也可以在这里进行战斗测试。 \n单击“战斗测试……”。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 195,
+"y": 33,
+"windowKey": "BattleTest",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "A window where you can configure each actor has appeared. \nHere, you can set your hypothetical level and equipment, and run a test where you battle the troop. \nThis time, there's no need to change anything.",
+"ja_JP": "各アクターの設定を行うウィンドウが出ました。\nここで、その敵グループと戦う想定レベルや装備を設定してテストが行えます。\n今回は、変更する必要はありません。",
+"zh_CN": "出现了一个窗口，你可以在这里配置各个角色。 \n在这里，你可以设置假设等级和装备，然后通过与敌群战斗进行测试。 \n这次你不需要更改任何设定。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 363,
+"y": 336,
+"windowKey": "BattleTest",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and start the battle test. \nMake use of magic and items and battle. \nAdditionally, you will be given the max amount of items\nso you can check item effects.",
+"ja_JP": "ＯＫをクリックして戦闘テストを始めてください。\n「魔法」や「アイテム」をうまく駆使して、戦ってください。\nなお、「アイテム」は最大数所持していますので、\nアイテムの効果のチェックも出来ます。",
+"zh_CN": "单击 OK，开始战斗测试。 \n利用魔法和物品来战斗。 \n此外，你将获得最大数量的物品，\n所以你可以查看物品的效果。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 315,
+"y": 3,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "You likely noticed a few things in battle. \nFor example, there is an unfamiliar value called \"TP\", but that will be explained in the next step.",
+"ja_JP": "戦闘でいくつか気づいたことがあると思います。\n例えば「ＴＰ」という見慣れない値がありますが、これは次のステップで説明します。",
+"zh_CN": "或许你已经留意到战斗中的一些事物。 \n例如，有个称为“TP”的你不熟悉的数值。我们会在下一步骤中介绍它。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 315,
+"y": 3,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Also, if you choose \"Escape\", even if you fail, the success rate\nwill increase slightly with each turn.",
+"ja_JP": "また「逃げる」を選び、失敗しても、ターン毎に\n少しずつ確率がアップしていきます。",
+"zh_CN": "另外，如果你选择“逃跑”，即使失败了，\n其成功率也会随着每个回合稍微增加。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 591,
+"y": 199,
+"windowKey": "DatabaseMain",
+"condition": "yesNo",
+"icon": "click",
+"jump": 66,
+"jumpNo": 68,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "How was it? Want to try again?",
+"ja_JP": "いかがでしたか。もう一度試してみますか？",
+"zh_CN": "你觉得如何？是否再尝试一次？"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 951,
+"y": 88,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Battle Test\".",
+"ja_JP": "戦闘テストをクリックしてください。",
+"zh_CN": "单击“战斗测试”。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 207,
+"y": 150,
+"windowKey": "BattleTest",
+"condition": "click",
+"icon": "eye",
+"jump": 62,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "No need to change the actors this time either.",
+"ja_JP": "今回もアクターの変更の必要はありません。",
+"zh_CN": "这次亦不需要更改角色。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 627,
+"y": 205,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Like this, in \"Battle Test\" you can playtest battles in an almost identical environment as an actual battle.",
+"ja_JP": "このように、「戦闘テスト」は実際の戦闘とほぼ同じ環境でテストプレイが出来ます。",
+"zh_CN": "如此，在“战斗测试”中，你可以用与实际战斗几乎一样的环境中进行战斗测试。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 78,
+"y": 404,
+"windowKey": "DatabaseMain",
+"condition": "list,12",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Alright. Until now the battles have been front-view,\nbut you can also make them side-view. \nClick the \"System1\" tab.",
+"ja_JP": "さて。これまでの戦闘はフロントビューでしたが、\nサイドビューにすることも可能です。\n「システム1」タブをクリックしてください。",
+"zh_CN": "很好。目前为止都是正视图的战斗，\n你也可以把它改成侧面图。 \n单击“系统 1”标签。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 500,
+"y": 250,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check \"Use Side-view Battle\".",
+"ja_JP": "「サイドビュー戦闘を使用」をチェックしてください。",
+"zh_CN": "勾选“使用侧面图战斗”。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 75,
+"y": 246,
+"windowKey": "DatabaseMain",
+"condition": "list,7",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's try a battle test under these conditions. \nClick the Troops tab.",
+"ja_JP": "この状態で戦闘テストを行いましょう。\n「敵グループ」タブをクリック。",
+"zh_CN": "用这些条件来进行战斗测试吧。 \n单击“敌群”标签。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 936,
+"y": 85,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Battle Test.",
+"ja_JP": "「戦闘テスト…」をクリック。",
+"zh_CN": "单击“测试战斗”。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 369,
+"y": 342,
+"windowKey": "BattleTest",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and start the battle test.",
+"ja_JP": "ＯＫをクリックして戦闘テストを開始してください。",
+"zh_CN": "单击 OK，开始战斗测试。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": 609,
+"y": 226,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "You probably noticed the change in appearance. \nFrom now on in this tutorial, it will be assumed that side-view battle is being used.",
+"ja_JP": "見た目の変化に気づいたでしょうか。\n以降、チュートリアルでは、サイドビュー戦闘を行う\n前提で行きます。",
+"zh_CN": "你应该发现了画面的改变。 \n现在开始，本教程使用的设定将假设为侧面图战斗。"
+}
+},
+{
+"id": 75,
+"folder": false,
+"x": 237,
+"y": 646,
+"windowKey": "DatabaseMain",
+"condition": "windowState,ChangeMaximum,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now then, let's try making a new troop. \nClick \"Change Maximum...\".",
+"ja_JP": "それでは新しい敵グループを作成してみます。\n「最大数の変更…」をクリック。",
+"zh_CN": "那么，创建一个新敌群吧。 \n单击“更改最大值……”。"
+}
+},
+{
+"id": 76,
+"folder": false,
+"x": 51,
+"y": 38,
+"windowKey": "ChangeMaximum",
+"condition": "spinBox,=,6",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the maximum from 5 to 6.",
+"ja_JP": "最大数を「5」から「6」に変更。",
+"zh_CN": "把最大值从 5 改成 6。"
+}
+},
+{
+"id": 77,
+"folder": false,
+"x": 54,
+"y": 77,
+"windowKey": "ChangeMaximum",
+"condition": "windowState,ChangeMaximum,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the maximum value.",
+"ja_JP": "ＯＫをクリックして最大値を確定。",
+"zh_CN": "单击 OK 设置最大值。"
+}
+},
+{
+"id": 78,
+"folder": false,
+"x": 225,
+"y": 170,
+"windowKey": "DatabaseMain",
+"condition": "list,5",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the newly created troop #6.",
+"ja_JP": "新たに作られた敵グループの「0006」をクリック。",
+"zh_CN": "单击新建敌群 #6。"
+}
+},
+{
+"id": 79,
+"folder": false,
+"x": 885,
+"y": 136,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make a \"Gnome x2, Crow x2\" enemy group. \nClick on Item. First, click on \"0002 Gnome\".",
+"ja_JP": "「ノーム×２、クロウ×２」の敵グループを作ります。\nまずは「0002 ノーム」をクリック。",
+"zh_CN": "我们将制作含“2 个侏儒、2 只乌鸦”的敌群。 \n单击“物品”。首先，单击“0002 侏儒”。"
+}
+},
+{
+"id": 80,
+"folder": false,
+"x": 732,
+"y": 142,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"< Add\" twice. Two slimes will be added.",
+"ja_JP": "「＜追加」を２回クリック。２体追加されます。",
+"zh_CN": "单击“<增加”两次。就能添加两个史莱姆。"
+}
+},
+{
+"id": 81,
+"folder": false,
+"x": 861,
+"y": 151,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0003 Crow\".",
+"ja_JP": "「0003 クロウ」をクリック。",
+"zh_CN": "单击“0003 乌鸦”。"
+}
+},
+{
+"id": 82,
+"folder": false,
+"x": 729,
+"y": 142,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"< Add\" twice. Two bats will be added.",
+"ja_JP": "「＜追加」を２回クリック。２体追加されます。",
+"zh_CN": "单击“<增加”两次。就能添加两只蝙蝠。"
+}
+},
+{
+"id": 83,
+"folder": false,
+"x": 525,
+"y": 157,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Since the actors are displayed on the right in side-view,\nit would be ideal if we could move the enemies slightly to the left.",
+"ja_JP": "サイドビューだとアクターが右に表示されるため\n敵キャラを少し左にずらしたいですね。",
+"zh_CN": "由于角色将显示在侧面图的右侧，\n如果我们可以把敌人稍微往左移会比较理想。"
+}
+},
+{
+"id": 84,
+"folder": false,
+"x": 519,
+"y": 157,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "If you drag the enemies to the left, you can change their position\nso let's slide them all over.",
+"ja_JP": "敵をドラッグで左に動かすと、位置を変更できるので\nそれぞれ左にずらしましょう。",
+"zh_CN": "把敌人拖到左侧，就能改变它们的位置，\n所以我们把它们滑过去吧。"
+}
+},
+{
+"id": 85,
+"folder": false,
+"x": 663,
+"y": 88,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll name the troop. Click \"Auto-name\". \nAn appropriate name will be generated.",
+"ja_JP": "次は敵グループに名前を付けます。\n「名前の自動作成」をクリック。\n適切な名前が生成されます。",
+"zh_CN": "接下来，我们要为敌群命名。单击“自动生成名称”。 \n就能生成一个适当的名称。"
+}
+},
+{
+"id": 86,
+"folder": false,
+"x": 948,
+"y": 79,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now let's run a battle test.",
+"ja_JP": "それでは、戦闘テストを行いましょう。",
+"zh_CN": "现在，来进行战斗测试吧。"
+}
+},
+{
+"id": 87,
+"folder": false,
+"x": 357,
+"y": 339,
+"windowKey": "BattleTest",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and start the battle test. ",
+"ja_JP": "ＯＫをクリックして戦闘テストを開始してください。\n敵の数が多いのでハロルドの「スパーク」をうまく使ってください。",
+"zh_CN": "单击 OK，开始战斗测试。 \n敌人数量庞大，明智地使用哈罗德的“火花”。"
+}
+},
+{
+"id": 88,
+"folder": false,
+"x": 912,
+"y": 694,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "When you're done with the battle test, this step is complete. \nClick OK and set the database.",
+"ja_JP": "戦闘テストが終わったら、今回のステップは完了です。\nＯＫをクリックしてデータベースを確定。",
+"zh_CN": "当你完成战斗测试后，此步骤便完成了。 \n单击 OK 设置数据库。"
+}
+},
+{
+"id": 89,
+"folder": false,
+"x": 105,
+"y": 24,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Save\".",
+"ja_JP": "プロジェクトの「保存」をクリック。",
+"zh_CN": "单击“存档”。"
+}
+},
+{
+"id": 90,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we're done with this step. \nWell done. \nNext time we'll handle the database again.",
+"ja_JP": "これでこのステップは終了です。\nお疲れ様でした。\n次回もデータベースについて扱います。",
+"zh_CN": "这个步骤到这里就结束了。 \n做得好。 \n我们下一个要操作的还是数据库。"
+}
+}
+]
+}

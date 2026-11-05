@@ -1,0 +1,884 @@
+{
+"step": 9,
+"title": {
+"ja_JP": "ステップ９：イベント応用１：立て札",
+"en": "Step 9: Event Application 1: Notice Board",
+"zh_CN": "步骤 9：事件应用 1：布告栏"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 8?",
+"ja_JP": "ステップ８を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 8 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 8 project.",
+"ja_JP": "ステップ８のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 8 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 8 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ８のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 8 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読み込み完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step9",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project loads.",
+"ja_JP": "プロジェクトの読み込みが終わるまで、しばらくお待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next, we'll take several steps and using event commands,\ncreate a somewhat elaborate setup.",
+"ja_JP": "今回から数ステップは、イベントコマンドを使い、\n少し凝った仕掛けを作っていきます。",
+"zh_CN": "接下来我们要分开几个步骤，并使用事件指令\n来创建一个稍微复杂的设定。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step we're going to make a noticeboard in the town.",
+"ja_JP": "このステップでは、町に立て札を作ります。",
+"zh_CN": "在这个步骤中，我们将制作小镇内的布告栏。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 138,
+"y": 52,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select \"Normal Town\" from the map tree.",
+"ja_JP": "マップツリーから\"普通の町\"を選択。",
+"zh_CN": "从树形图，选择“普通小镇”。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll place the noticeboard on the first crossroad in front of \nthe town entrance at (18,14).",
+"ja_JP": "立て札の位置は町の入口最初の交差点の上、\n座標(18,14)にします。",
+"zh_CN": "我们要在小镇入口前面（18,14）的十字路口 \n设立布告栏。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click coordinates (18,14).",
+"ja_JP": "座標(18,14)でダブルクリック。",
+"zh_CN": "双击坐标（18,14）。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 75,
+"y": 44,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter \"Noticeboard\" as the event name.",
+"ja_JP": "イベントの名前に「立て札」と入力。",
+"zh_CN": "输入“布告栏”做事件名称。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 66,
+"y": 425,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 146,
+"y": 384,
+"windowKey": "ImageSelector",
+"condition": "list,46",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Tileset B, second from the bottom of the list.",
+"ja_JP": "リスト一番下近くの[タイルセット B]をクリック。",
+"zh_CN": "选择列表从底端算起第二个，图块组套B。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 470,
+"y": 50,
+"windowKey": "ImageSelector",
+"condition": "list,25",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the tile with the noticeboard.",
+"ja_JP": "立て札のタイルをクリック。",
+"zh_CN": "单击带有布告栏的图块。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 560,
+"y": 439,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 81,
+"y": 429,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "This way we can also set tiles on the layers above the event image (B-E).",
+"ja_JP": "このようにイベントの画像には上層タイル（Ｂ～Ｅ）も設定可能です。",
+"zh_CN": "我们也能够以此方式在事件的图像上层设置图块（B 至 E）。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 225,
+"y": 564,
+"windowKey": "EventEditorMain",
+"condition": "comboBox,priorityType,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the priority to \"Same as characters\".",
+"ja_JP": "プライオリティを「通常キャラと同じ」に設定。",
+"zh_CN": "将优先度设置为“与人物相同”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 495,
+"y": 138,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll set up the content. Double click the first line.",
+"ja_JP": "次は実行内容の設定です。最初の行をダブルクリック。",
+"zh_CN": "然后我们要设置其内容。双击第一行。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 126,
+"y": 394,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First we want to determine which way the character is facing when they investigate the board. Click \"Conditional Branch...\"",
+"ja_JP": "まず調べた向きの判定を行います。「条件分岐…」をクリック。",
+"zh_CN": "首先，我们得判断角色查看布告栏时面朝哪个方向。单击“分支条件……”。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 99,
+"y": 20,
+"windowKey": "EventCommand",
+"condition": "tabView,tabview,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "What we want to know for branching is which way the player is facing. \nClick the page 3 tab.",
+"ja_JP": "分岐の為に知りたいのは「プレイヤーの向き」です。\nタブの３ページ目をクリック。",
+"zh_CN": "为了分支，我们得知道玩家会面朝何处。 \n单击第 3 页的标签。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 27,
+"y": 155,
+"windowKey": "EventCommand",
+"condition": "radioButton,RadioButton,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Character\".",
+"ja_JP": "「キャラクター」をチェック。",
+"zh_CN": "勾选“人物”。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 234,
+"y": 171,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure that the \"Player\" is facing \"Down\".",
+"ja_JP": "「プレイヤー」の向きが「下」であるのを確認。",
+"zh_CN": "确保“玩家”面朝“下”。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 15,
+"y": 329,
+"windowKey": "EventCommand",
+"condition": "checked,CheckBox,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Create Else Branch\".",
+"ja_JP": "「条件を満たさない時の分岐を作成」をチェック。",
+"zh_CN": "勾选“创建条件不满足时的分支”。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 333,
+"y": 359,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 600,
+"y": 135,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Since you can't read a noticeboard from the back, we'll set it up so that it can't be read when the player is facing down, but it will be read in all other cases.",
+"ja_JP": "裏側からは読めないのでプレイヤーの向きが下の時、読めない旨の処理、「それ以外のとき」に立て札を読む処理を行います。",
+"zh_CN": "从布告栏后方应无法查看布告栏，我们要将它设置成当玩家面朝下时无法查看，其他时候则可以。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 540,
+"y": 194,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the blank line under \"Else\",",
+"ja_JP": "「それ以外のとき」の下の空白行をダブルクリック。",
+"zh_CN": "双击“不满足的时候”下方空行。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 162,
+"y": 85,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 272,
+"y": 41,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter: \n\"\\>Someone, get rid of the monsters in the eastern cave.\"",
+"ja_JP": "『\\>東の洞窟の魔物を誰か退治してください。』\nと入力。",
+"zh_CN": "输入： \n“\\>谁来铲除掉东方山洞窟中的怪物。”"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 137,
+"y": 41,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "\\> is a control character that will instantly display all the text of the line. This is appropriate for the text display on a noticeboard.",
+"ja_JP": "この \\> とは、その行の文章を一瞬で表示する制御文字です。立て札の文字表示と相性がいいです。",
+"zh_CN": "\\> 是让文本即时出现的文字显示控制。它适用于布告栏上的文本。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 416,
+"y": 206,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 579,
+"y": 159,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, we'll enter the text for when the noticeboard is read from behind. Double click the line under \"If: Player is facing Down\".",
+"ja_JP": "次は、裏側から読んだときの文章を入力します。「プレイヤーが下を向いている」の次の行をダブルクリック。",
+"zh_CN": "接下来，我们要输入从后方查看布告栏时的文本。双击“如果：玩家面朝下”的下一行。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 135,
+"y": 83,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 239,
+"y": 45,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter: \n\"\\>You can't read it from the back.\"",
+"ja_JP": "『\\>裏側なので文章が読めない。』\nと入力。",
+"zh_CN": "输入： \n“\\>无法从布告栏后侧查看。”"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 422,
+"y": 206,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 774,
+"y": 686,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done creating the noticeboard event. \nClick OK and set the event.",
+"ja_JP": "これで立て札イベントの作成は完了です。\nＯＫをクリックしてイベントを確定。",
+"zh_CN": "现在我们已完成布告栏事件的创建。 \n单击 OK 设置事件。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 105,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now let's run a playtest. \nFirst, save the project.",
+"ja_JP": "それではテストプレイを行います。\nまず、プロジェクトを保存。",
+"zh_CN": "做个测试吧。 \n首先得保存项目。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 1050,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Start your playtest,\nand read the noticeboard from the top, sides, and bottom.",
+"ja_JP": "テストプレイを開始し、\n上、横、下から立て札を読んでください。",
+"zh_CN": "开始测试游戏，\n并尝试从布告栏的上面、侧面以及下面查看布告栏。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "When you're done, there will be a short explanation.",
+"ja_JP": "テストプレイ終了後、短い解説を行います。",
+"zh_CN": "完成之后，还有个简短的说明。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We've set up a noticeboard as the event image,\nbut you can place the noticeboard on the map, and then place\nan event with no image above that as well.",
+"ja_JP": "今回イベントの画像に立て札を設定しましたが、\nマップに立て札を置き、その上に画像のないイベントを\n置いても実現可能です。",
+"zh_CN": "这里我们将布告栏设置成了事件的图像，\n但是你也可以在地图上设置布告栏，\n然后设置不含图像的事件。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "A noticeboard event has various applications. \nThat's the end of the explanation of Step 9.",
+"ja_JP": "立て札のイベントは、いろいろ応用が出来ます。\n以上でステップ９の解説を終わります。",
+"zh_CN": "布告栏事件有多种用途。 \n步骤 9 到这里就结束了。"
+}
+}
+]
+}

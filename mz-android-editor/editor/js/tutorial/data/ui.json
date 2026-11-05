@@ -1,0 +1,347 @@
+{
+ "AlertDialog": {
+  "Warning": {
+   "ja_JP": "警告",
+   "en": "Warning",
+   "zh_CN": "警告"
+  }
+ },
+ "TutorialManager": {
+  "Failed to MakeStringPatch": {
+   "ja_JP": "MakeStringPatchの実行に失敗しました"
+  },
+  "Failed to open: ": {
+   "ja_JP": "開けませんでした: "
+  },
+  "Failed to read: %1": {
+   "ja_JP": "読み込みに失敗しました: %1"
+  },
+  "Failed to save translation.": {
+   "ja_JP": "翻訳のセーブに失敗しました。",
+   "en": "Failed to save translation.",
+   "zh_CN": "无法保存翻译。"
+  },
+  "Failed to setContents": {
+   "ja_JP": "setContents関数の実行に失敗しました"
+  },
+  "Failed to write: %1": {
+   "ja_JP": "書き込みに失敗しました: %1"
+  },
+  "Finished": {
+   "ja_JP": "完了しました"
+  },
+  "No CR/NF found: %1": {
+   "ja_JP": "CR/NFが見つかりませんでした。(%1)",
+   "en": "Could not find CR/NF. (%1)",
+   "zh_CN": "无法找到CR/NF。(%1)"
+  },
+  "No close \" found: %1": {
+   "ja_JP": "閉じる\"が見つかりませんでした。(%1)",
+   "en": "Could not find closing \". (%1)",
+   "zh_CN": "无法找到closing \"。(%1)"
+  },
+  "Translation files not found like ja_JP.ts: %1": {
+   "ja_JP": "ja_JP.tsという翻訳ファイルが見つかりませんでした: %1"
+  },
+  "Tutorial": {
+   "ja_JP": "チュートリアル"
+  },
+  "closeMarker(%1) not found (l:%3): %2": {
+   "ja_JP": "閉じるマーカー(%1)が見つかりませんでした。(l: %3, %2)",
+   "en": "Could not find closing marker (%1). (l: %3, %2)",
+   "zh_CN": "无法找到closing marker (%1)。(l: %3, %2)。"
+  },
+  "domDocument not found: %1": {
+   "ja_JP": "domDocumentが見つかりませんでした: %1"
+  },
+  "folder": {
+   "ja_JP": "フォルダー",
+   "en": "Folder",
+   "zh_CN": "文件夹"
+  },
+  "not closed %1: ": {
+   "ja_JP": "%1が閉じていません:",
+   "en": "%1 is not closed: ",
+   "zh_CN": "未关闭 %1："
+  },
+  "not found %1 or %2: ": {
+   "ja_JP": "%1か%2が見つかりませんでした:",
+   "en": "Could not find %1 or %2: ",
+   "zh_CN": "无法找到 %1 或 %2："
+  },
+  "not matched %1...%2: ": {
+   "ja_JP": "マッチしていません: %1...%2:",
+   "en": "Mismatch: %1...%2: ",
+   "zh_CN": "不匹配： %1...%2："
+  },
+  "qsTr/QT_TRANSLATE_NOOP not closed: %1": {
+   "ja_JP": "qsTr/QT_TRANSLATE_NOOPが閉じていません。(%1)",
+   "en": "qsTr/QT_TRANSLATE_NOOP not closed. (%1)",
+   "zh_CN": "未关闭qsTr/QT_TRANSLATE_NOOP 。(%1)"
+  },
+  "unable to parse as string: ": {
+   "ja_JP": "文字列として解析できませんでした:",
+   "en": "Could not parse as text string: ",
+   "zh_CN": "无法作为字符串解析："
+  },
+  "unterminated \"...\": ": {
+   "ja_JP": "\"...\"が終了していません:",
+   "en": "\"...\" does not end: ",
+   "zh_CN": "\"...\"不结束："
+  }
+ },
+ "TutorialSettingItem": {
+  "(Next)": {
+   "ja_JP": "（次へ）",
+   "en": "(Next)",
+   "zh_CN": "（下一步）"
+  },
+  "<=": {
+   "ja_JP": "←",
+   "en": "←",
+   "zh_CN": "←"
+  },
+  "Add folder": {
+   "ja_JP": "フォルダーを追加",
+   "en": "Add Folder",
+   "zh_CN": "添加文件夹"
+  },
+  "Add item": {
+   "ja_JP": "項目を追加",
+   "en": "Add Item",
+   "zh_CN": "添加项目"
+  },
+  "Command:": {
+   "ja_JP": "コマンド:",
+   "en": "Command: ",
+   "zh_CN": "指令："
+  },
+  "Condition:": {
+   "ja_JP": "条件:",
+   "en": "Condition: ",
+   "zh_CN": "条件："
+  },
+  "Copy": {
+   "ja_JP": "コピー",
+   "en": "Copy",
+   "zh_CN": "复制"
+  },
+  "Cut": {
+   "ja_JP": "切り取り",
+   "en": "Cut",
+   "zh_CN": "剪切"
+  },
+  "Delete": {
+   "ja_JP": "削除",
+   "en": "Delete",
+   "zh_CN": "删除"
+  },
+  "Hint:": {
+   "ja_JP": "ヒント:",
+   "en": "Hint: ",
+   "zh_CN": "提示："
+  },
+  "Icon:": {
+   "ja_JP": "アイコン:",
+   "en": "Icon: ",
+   "zh_CN": "图标："
+  },
+  "Jump(No):": {
+   "ja_JP": "ジャンプ(いいえ）：",
+   "en": "Jump (No): ",
+   "zh_CN": "跳过（否）："
+  },
+  "Jump:": {
+   "ja_JP": "ジャンプ：",
+   "en": "Jump: ",
+   "zh_CN": "跳跃："
+  },
+  "Paste": {
+   "ja_JP": "貼り付け",
+   "en": "Paste",
+   "zh_CN": "粘贴"
+  },
+  "Save": {
+   "ja_JP": "保存",
+   "en": "Save",
+   "zh_CN": "保存"
+  },
+  "Settings": {
+   "ja_JP": "設定",
+   "en": "Settings",
+   "zh_CN": "设置"
+  },
+  "Show arrow": {
+   "ja_JP": "矢印を表示:",
+   "en": "Display Arrow: ",
+   "zh_CN": "显示箭头："
+  },
+  "The tutorial is needed to be reloaded to apply the translation.\nDo you save tutorial?": {
+   "ja_JP": "翻訳を適用するにはチュートリアルを読み込みなおす必要があります。\nセーブしてもよろしいですか？",
+   "en": "The tutorial needs to be reloaded in order to apply the translation.\nSave the tutorial?",
+   "zh_CN": "为了应用翻译，教程需要重新加载。是否保存教程？"
+  },
+  "Track:": {
+   "ja_JP": "トラック：",
+   "en": "Track: ",
+   "zh_CN": "追踪："
+  },
+  "Translation:": {
+   "ja_JP": "翻訳：",
+   "en": "Translation: ",
+   "zh_CN": "翻译："
+  },
+  "Tutorial item list": {
+   "ja_JP": "チュートリアル一覧",
+   "en": "Tutorial List",
+   "zh_CN": "教程列表"
+  },
+  "Tutorial item menu": {
+   "ja_JP": "チュートリアル項目メニュー",
+   "en": "Tutorial Item Menu",
+   "zh_CN": "教程项目菜单"
+  }
+ },
+ "main": {
+  "&Add folder": {
+   "ja_JP": "フォルダーを追加",
+   "en": "Add Folder",
+   "zh_CN": "添加文件夹"
+  },
+  "&Edit": {
+   "ja_JP": "編集",
+   "en": "Edit",
+   "zh_CN": "编辑"
+  },
+  "&File": {
+   "ja_JP": "ファイル",
+   "en": "File",
+   "zh_CN": "文件"
+  },
+  "&Help": {
+   "ja_JP": "ヘルプ",
+   "en": "Help",
+   "zh_CN": "帮助"
+  },
+  "&License": {
+   "ja_JP": "ライセンス"
+  },
+  "&Open tutorial": {
+   "ja_JP": "チュートリアルを開く",
+   "en": "Open Tutorial",
+   "zh_CN": "打开教程"
+  },
+  "&Redo": {
+   "ja_JP": "１段階進む",
+   "en": "Redo",
+   "zh_CN": "恢复"
+  },
+  "&Undo": {
+   "ja_JP": "１段階戻る",
+   "en": "Undo",
+   "zh_CN": "撤销"
+  },
+  "&Version": {
+   "ja_JP": "バージョン",
+   "en": "Version",
+   "zh_CN": "版本"
+  },
+  "Close tutorial": {
+   "ja_JP": "チュートリアルを閉じる",
+   "en": "Close Tutorial",
+   "zh_CN": "关闭教程"
+  },
+  "Convert ja_JP preset to multi-language patch...(takes a lot of time)": {
+   "ja_JP": "日本語プリセットプロジェクトを多言語パッチに変換（処理に時間が掛かります）"
+  },
+  "Copy": {
+   "ja_JP": "コピー",
+   "en": "Copy",
+   "zh_CN": "复制"
+  },
+  "Create &item": {
+   "ja_JP": "項目を新規作成",
+   "en": "Create New Item",
+   "zh_CN": "创建新项目"
+  },
+  "Cut": {
+   "ja_JP": "切り取り",
+   "en": "Cut",
+   "zh_CN": "剪切"
+  },
+  "Delete": {
+   "ja_JP": "削除",
+   "en": "Delete",
+   "zh_CN": "删除"
+  },
+  "Edit Tutorial Translation": {
+   "ja_JP": "チュートリアル翻訳を編集"
+  },
+  "Exit": {
+   "ja_JP": "終了",
+   "en": "End",
+   "zh_CN": "结束"
+  },
+  "Failed to open new project": {
+   "ja_JP": "新規プロジェクトを開けませんでした。",
+   "en": "Unable to open new project.",
+   "zh_CN": "无法打开新项目。"
+  },
+  "Failed to save project.": {
+   "ja_JP": "プロジェクトのセーブに失敗しました。",
+   "en": "Failed to save project.",
+   "zh_CN": "保存项目失败。"
+  },
+  "Info": {
+   "ja_JP": "情報"
+  },
+  "Open tutorial folder": {
+   "ja_JP": "チュートリアルフォルダーを開く",
+   "en": "Open Tutorial Folder",
+   "zh_CN": "打开教程文件夹"
+  },
+  "Paste": {
+   "ja_JP": "貼り付け",
+   "en": "Paste",
+   "zh_CN": "粘贴"
+  },
+  "Save change?": {
+   "ja_JP": "変更内容を保存しますか？",
+   "en": "Save changes?",
+   "zh_CN": "保存更改？"
+  },
+  "Save tutorial": {
+   "ja_JP": "チュートリアルを保存",
+   "en": "Save Tutorial",
+   "zh_CN": "保存教程"
+  },
+  "Start current": {
+   "ja_JP": "現在位置から開始",
+   "en": "Start from Current Position",
+   "zh_CN": "从当前位置开始"
+  },
+  "Start tutorial": {
+   "ja_JP": "チュートリアルを開始",
+   "en": "Start Tutorial",
+   "zh_CN": "开始教程"
+  },
+  "Tutorial Editor": {
+   "ja_JP": "チュートリアルエディター",
+   "en": "Tutorial Editor",
+   "zh_CN": "教程编辑器"
+  },
+  "Tutorial Translation": {
+   "ja_JP": "チュートリアル翻訳"
+  },
+  "Tutorial editor": {
+   "ja_JP": "チュートリアルエディター",
+   "en": "Tutorial Editor",
+   "zh_CN": "教程编辑器"
+  },
+  "Version:": {
+   "ja_JP": "バージョン：",
+   "en": "Version: ",
+   "zh_CN": "版本："
+  }
+ }
+}

@@ -1,0 +1,1701 @@
+{
+"step": 13,
+"title": {
+"ja_JP": "ステップ13：データベースの基礎２",
+"en": "Step 13: Database Basics 2",
+"zh_CN": "步骤 13：数据库基础 2"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 12?",
+"ja_JP": "ステップ１２を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 12 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 12 project.",
+"ja_JP": "ステップ１２のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 12 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 12 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ１２のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 12 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step13",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step, items and skills will be explained and created.",
+"ja_JP": "このステップでは、アイテムやスキルの説明を行い、作成も行います。",
+"zh_CN": "在这个步骤中，我们将说明和创建物品和技能。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 780,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click and open the database.",
+"ja_JP": "クリックしてデータベースを開きます。",
+"zh_CN": "单击并打开数据库。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 69,
+"y": 122,
+"windowKey": "DatabaseMain",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Item tab.",
+"ja_JP": "「アイテム」タブをクリック。",
+"zh_CN": "单击“物品”标签。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 237,
+"y": 155,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We'll create a \"Mega Elixir\" \nthat fully restores the HP and MP of all allies. \nWe'll do this by modifying the settings \nof the potion, an existing item.",
+"ja_JP": "「ラストエリクサー」を作成します。\n全員のＨＰとＭＰを最大値まで回復する効果です。\n既存のアイテム「ポーション」の設定を\n改変しながら作ることにします。",
+"zh_CN": "我们要创建“超级圣水”， \n作用是完全恢复全体队友的 HP 和 MP。 \n我们将通过修改现有的物品， \n药水的设定，来制作此物。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 234,
+"y": 200,
+"windowKey": "DatabaseMain",
+"condition": "list,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Left click on #7, \"Potion\".",
+"ja_JP": "「0007 ポーション」を左クリックして選択。",
+"zh_CN": "左击 #7，“药水”。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 232,
+"y": 200,
+"windowKey": "DatabaseMain",
+"condition": "action,menuCopy",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select \"Copy\".",
+"ja_JP": "右クリックして「コピー」を選択。",
+"zh_CN": "右击后选择“复制”。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 213,
+"y": 380,
+"windowKey": "DatabaseMain",
+"condition": "list,15",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Left click to select the blank #16.",
+"ja_JP": "「0016」の空欄を左クリックして選択。",
+"zh_CN": "左击选择空白的 #16。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 234,
+"y": 380,
+"windowKey": "DatabaseMain",
+"condition": "action,menuPaste",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select \"Paste\". \nNow the configuration for the potion is copied to #7.",
+"ja_JP": "右クリックし、「貼り付け」を選択。\nこれで、「0007 ポーション」の設定が、\n「0016」の空欄にコピーされます。",
+"zh_CN": "右击后选择“粘贴”。 \n现在药水的配置已经复制到#7了。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 459,
+"y": 81,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the name to \"Mega Elixir\".",
+"ja_JP": "名前を「ラストエリクサー」と書き換えてください。",
+"zh_CN": "把名字更改为“超级圣水”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 537,
+"y": 125,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the description to \"\nFully restores HP and MP of all allies.\"",
+"ja_JP": "『味方全体のＨＰとＭＰを完全に回復する。』\nと説明を上書き更新。",
+"zh_CN": "把说明更改为\n“完全恢复全体队友的 HP 和 MP。”"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 618,
+"y": 209,
+"windowKey": "DatabaseMain",
+"condition": "spinBox,=,500",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the price to 500.",
+"ja_JP": "価格を「500」に変更。",
+"zh_CN": "把价格更改为 500。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 846,
+"y": 272,
+"windowKey": "DatabaseMain",
+"condition": "list,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we will set up the effect. \nClick \"Recover HP 500\"",
+"ja_JP": "次は使用効果を設定します。\n「タイプ：HP回復、内容：500」の行をクリック。",
+"zh_CN": "接着，我们要设置效果。 \n单击“恢复 500 点 HP”"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 882,
+"y": 272,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Effects,open",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select \"Edit...\".",
+"ja_JP": "右クリックして「編集…」を選択。",
+"zh_CN": "右击后选择“编辑……”。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 180,
+"y": 50,
+"windowKey": "Effects",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change \"0%\" to \"100%\".",
+"ja_JP": "HP回復の割合値を「0％」から「100％」に更新。",
+"zh_CN": "把“0%”改成“100%”。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 195,
+"y": 80,
+"windowKey": "Effects",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change \"500\" to \"0\".",
+"ja_JP": "HP回復の一定値を「500」を「0」に更新。",
+"zh_CN": "把“500”改成“0”。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 192,
+"y": 272,
+"windowKey": "Effects",
+"condition": "windowState,Effects,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done configuring it to restore HP to its max. Click OK to set the effect.",
+"ja_JP": "これで「HP最大値まで回復」設定完了。\nＯＫをクリックで効果確定。",
+"zh_CN": "现在我们已把 HP 恢复设置为其最大值。单击 OK 设置效果。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 864,
+"y": 293,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Effects,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We're also going to set up the full MP recovery. \nDouble click the next line.",
+"ja_JP": "ＭＰの全回復も設定します。\n次の行をダブルクリック。",
+"zh_CN": "我们也要设置 MP 完全恢复。 \n双击下一行。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 27,
+"y": 122,
+"windowKey": "Effects",
+"condition": "radioButton,RadioButton,12",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Recover MP\".",
+"ja_JP": "「MP回復」をチェック。",
+"zh_CN": "勾选“MP 恢复”。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 192,
+"y": 272,
+"windowKey": "Effects",
+"condition": "windowState,Effects,close",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure the effect is \"100%\"+\"0\"\nand click OK.",
+"ja_JP": "効果が「100%」+「0」になっているのを確認し\nＯＫをクリック。",
+"zh_CN": "确保效果是“100%”+“0”，\n然后单击 OK。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 651,
+"y": 398,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We're also going to change the animation when it is used in battle.",
+"ja_JP": "戦闘中使用時のアニメーションも変更します。",
+"zh_CN": "我们还要更改它在战斗中被使用时的动画效果。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 654,
+"y": 395,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Open the Animation menu, and change it to #42 \"Heal One 2\".",
+"ja_JP": "アニメーションの選択肢から、\n「0042 回復/単体2」に変更。",
+"zh_CN": "打开动画菜单，然后把它改成 #42 “治疗/单体 2”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 429,
+"y": 326,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now the Mega Elixir is complete and can be put into treasure chests \nor added to shops. \nOf course, it can also be used in battle tests.",
+"ja_JP": "これでラストエリクサーの完成です。宝箱に入れたり、\nお店に追加したりすることが可能になりました。\n戦闘テストで使用することももちろん可能です。",
+"zh_CN": "现在超级圣水已制成，我们可以把它放入宝箱， \n或是添加到商店中。 \n当然，也可以在战斗测试中使用它。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 66,
+"y": 81,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, we'll create a new skill \nand make it Kasey's special move. \nClick on the Skills tab.",
+"ja_JP": "次は、新スキル作成です。\nケイシーの必殺技にします。\n「スキル」タブをクリック。",
+"zh_CN": "接下来，我们要创建一个新技能， \n并将它做成凯西的必杀技。 \n单击“技能”标签。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 252,
+"y": 335,
+"windowKey": "DatabaseMain",
+"condition": "list,13",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make it a skill called Triple Strike. Once again we will transform an existing skill to create it. \nClick #14, \"Triple Attack\".",
+"ja_JP": "トリプルアタックという技にします。\n今回も既存のスキル改変で作成します。\n「0014 ３回攻撃」をクリック。",
+"zh_CN": "我们把此技能称为“三连击”。再一次地，我们转换现有的技能创建该技能。 \n单击 #14，“三次攻击”。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 261,
+"y": 335,
+"windowKey": "DatabaseMain",
+"condition": "action,menuCopy",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select copy.",
+"ja_JP": "右クリックして「コピー」を選択。",
+"zh_CN": "右击后选择“复制”。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 213,
+"y": 130,
+"windowKey": "DatabaseMain",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on blank #4.",
+"ja_JP": "「0004」の空欄をクリック。",
+"zh_CN": "单击空白 #4。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 255,
+"y": 130,
+"windowKey": "DatabaseMain",
+"condition": "action,menuPaste",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select \"Paste\". \nIt's been copied to #4.",
+"ja_JP": "右クリックして「貼り付け」を選択。\n「0004」にコピーされます。",
+"zh_CN": "右击后选择“粘贴”。 \n它就被复制到 #4 了。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 456,
+"y": 80,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the name to Triple Strike.",
+"ja_JP": "名前を「トリプルアタック」に変更。",
+"zh_CN": "把名字改成“三连击”。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 579,
+"y": 540,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We will change the message when the skill is used. \nClick \"uses!\".",
+"ja_JP": "スキル使用時メッセージを変更します。\n「～を放った」をクリック。",
+"zh_CN": "我们将更改技能被使用时的信息。 \n单击“释放！”。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 447,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Ensure that skill type is \"Special\".",
+"ja_JP": "スキルタイプが「必殺技」であることを確認。",
+"zh_CN": "确保技能类型是“必杀技”。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 447,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Let's go into more detail about skill types.",
+"ja_JP": "スキルタイプについて、詳しい説明を行います。",
+"zh_CN": "让我们更详细地介绍技能类型。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 447,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The only skill types that actors may use\nare skills of the type listed in their \"traits\".",
+"ja_JP": "アクターが使用可能なのは、そのアクターの「特徴」で\n追加されたスキルタイプのスキルのみです。",
+"zh_CN": "角色唯一可能使用的技能类型\n是列在他们的“特性”中的技能类型。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 447,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In short, for a \"Special\" skill type, if\n\"special\" is not set as a skill type in the actor's traits,\nthey cannot use the skill even if they've learned it. \nAlso, if their skill type is \"None\", the actor would be unable to use it.",
+"ja_JP": "つまりスキルタイプが「必殺技」の場合、仮に\nアクターの特徴にスキルタイプ「必殺技」がなければ\n覚えてもそのスキルは使えません。\nまた、スキルタイプが「なし」の場合、アクターは使えません。",
+"zh_CN": "简言之，比如“必杀技”技能类型，\n如果“必杀技”并未被设于角色特性中的技能类型中，\n则即便已习得，他们亦无法释放该技能。 \n另外，如果他们的技能类型为“无”，该角色亦无法释放技能。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 447,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Thus, when having actors learn skills, please be sure to check their\nskill type. \nAdditionally, enemies can use skills regardless of skill type.",
+"ja_JP": "よって、アクターにスキルを覚えさせるときは\nスキルタイプを必ず確認してください。\nなお、敵キャラはスキルタイプに関係なくどのスキルでも使えます。",
+"zh_CN": "所以让角色习得技能时，请先确认他们的\n技能类型。 \n另外，敌人能够使用任何技能，无关技能类型。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 447,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 50,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "That's all. Would you like to read the explanation again?",
+"ja_JP": "以上です。もう一度説明しましょうか？",
+"zh_CN": "以上。是否要再看一遍说明？"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 66,
+"y": 27,
+"windowKey": "DatabaseMain",
+"condition": "list,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's continue then. Kasey has no \"Special\" in skill type, \nso we need to fix that. Click on the Actors tab.",
+"ja_JP": "それでは説明を続けます。ケイシーは、スキルタイプに「必殺技」がないため、\n対処が必要です。「アクター」タブをクリック。",
+"zh_CN": "我们继续吧。凯西的技能类型中没有“必杀技”， \n所以我们必须修改它。单击“角色”标签。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 258,
+"y": 164,
+"windowKey": "DatabaseMain",
+"condition": "list,5",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on \"0006 Kasey\".",
+"ja_JP": "「0006 ケイシー」をクリック。",
+"zh_CN": "单击“0006 凯西”。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 471,
+"y": 138,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Kasey's class is \"0002 Sorcerer\". \nWe'll change the traits of a sorcerer.",
+"ja_JP": "ケイシーの職業は「0002 魔法使い」です。\nそこで「魔法使い」の「特徴」を変更します。",
+"zh_CN": "凯西的职业是“0002 巫师”。 \n我们要更改巫师的特性。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 57,
+"y": 54,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Classes tab.",
+"ja_JP": "「職業」タブをクリック。",
+"zh_CN": "单击“职业”标签。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 234,
+"y": 90,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"0002 Sorcerer\" from the list.",
+"ja_JP": "リストから「0002 魔法使い」をクリック。",
+"zh_CN": "单击列表中的“0002 巫师”。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 915,
+"y": 261,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Traits,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double-click the bottommost trait.",
+"ja_JP": "特徴の一番下をダブルクリック。",
+"zh_CN": "双击最下方的特性。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 180,
+"y": 30,
+"windowKey": "Traits",
+"condition": "tabView,tabview,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Skill tab.",
+"ja_JP": "スキルタブをクリック。",
+"zh_CN": "单击“技能”标签。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 210,
+"y": 62,
+"windowKey": "Traits",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off Add Skill Type \nand add \"Special\".",
+"ja_JP": "スキルタイプ追加にチェックを入れ\n「必殺技」を追加。",
+"zh_CN": "勾选“添加技能类型”， \n并添加“必杀技”。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 198,
+"y": 300,
+"windowKey": "Traits",
+"condition": "windowState,Traits,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the changes.",
+"ja_JP": "ＯＫをクリックし変更を確定。",
+"zh_CN": "单击 OK 设置变更。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 66,
+"y": 93,
+"windowKey": "DatabaseMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Kasey is now able to use special moves. Let's return to modifying the skill. \nClick on the Skills tab.",
+"ja_JP": "これでケイシーは必殺技を使えるようになりました。スキル編集に戻ります。\n「スキル」タブをクリック。",
+"zh_CN": "现在凯西可以使用必杀技了。我们继续刚才的技能修改吧。 \n单击技能标签。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 741,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "spinBox,=,5",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Triple Strike is a special move, so\nwe will make it consume TP instead MP. \nSet the TP Cost to 5.",
+"ja_JP": "トリプルアタックは必殺技なので、MPではなく\nTPを消費する技にします。\n消費TPを「5」に設定。",
+"zh_CN": "三连击是个必杀技，\n所以我们要让它消耗 TP 而非 MP。 \n把“TP 消耗”设为“5”。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 729,
+"y": 351,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Since it costs TP, we'll set the TP Gain to 0. \nThe TP Gain is how much TP is gained when a skill/item is used.",
+"ja_JP": "TP消費技なので、得TP を「0」にします。\n得TPとは、そのスキル/アイテムを使用した時に増加するTPです。",
+"zh_CN": "既然它消耗的是 TP，我们把“TP 增加”设为“0”。 \n“TP 增加”是当技能或物品被使用时获得的 TP 数值。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 738,
+"y": 207,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we're done creating the skill. \nHere we'll give an explanation of TP.",
+"ja_JP": "これで技は作成完了です。\nここでTPについて説明します。",
+"zh_CN": "现在我们已创建好技能。 \n此时，我们要说明 TP 是什么。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 738,
+"y": 207,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "TP is a value that shifts between 0 and 100.\nIt is gained when damage is taken in battle\nand when specific actions are taken.",
+"ja_JP": "TPとは、戦闘中にダメージを受けたり\n特定の行動を取ったりしたときに増加する\n0～100の間で変動する値です。",
+"zh_CN": "TP 是一个在 0 至 100 之间变动的数值。\n在战斗中受伤害或作出特定的行动时\n它的数值会增加。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 735,
+"y": 210,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The value at the start of battle will be from 0 to 25,\nbut if the actor has the \"Preserve TP\" trait,\nthe TP value at the end of the battle will be carried over.",
+"ja_JP": "戦闘開始時に0～25の間の値になりますが、\n特徴「TP持ち越し」を持っていると、\n前の戦闘終了時の値が持ち越されます。",
+"zh_CN": "战斗开始的时候数值为 0 至 25 之间，\n但是当角色拥有“保留 TP”的特性时，\n至战斗结束为止的 TP 值将被保留下来。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 738,
+"y": 203,
+"windowKey": "DatabaseMain",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 67,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The primary use is for creating powerful skills that cost TP. \nThat's all. Would you like to hear the explanation again?",
+"ja_JP": "主な使い方は、TPを消費する強力な技の作成です。\n以上ですが、もう一度説明しましょうか？",
+"zh_CN": "它的基本用途是用来创建消耗 TP 的强大技能。 \n以上。是否要再看一遍说明？"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 72,
+"y": 59,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Then let's move on. \nWe'll make Kasey learn the skill. \nClick on the Class tab.",
+"ja_JP": "それでは次に進みます。\n技を、ケイシーに覚えさせます。\n「職業」タブをクリック。",
+"zh_CN": "继续下一步。 \n我们要让凯西习得该技能。 \n单击职业标签。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 231,
+"y": 92,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Ensure that \"0002 Sorcerer\" is selected.",
+"ja_JP": "「0002 魔法使い」が選択されていることを確認。",
+"zh_CN": "确保“0002 巫师”已被选择。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 450,
+"y": 630,
+"windowKey": "DatabaseMain",
+"condition": "windowState,SkillsToLearn,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double-click the bottom line of \"Skills to Learn\".",
+"ja_JP": "「習得するスキル」の一番下の行をダブルクリック。",
+"zh_CN": "双击“要习得的技能”的最下面一行。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 185,
+"y": 80,
+"windowKey": "SkillsToLearn",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We won't change the level or the note. \nClick on the Skill and select #4, \"Triple Strike\".",
+"ja_JP": "レベルやメモは変更しません。\nスキルをクリックし、「0004 トリプルアタック」を選択。",
+"zh_CN": "我们不更改等级或备注。 \n单击“技能”，然后选择 #4 ，“三连击”。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": 167,
+"y": 158,
+"windowKey": "SkillsToLearn",
+"condition": "windowState,SkillsToLearn,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to confirm. \nThis makes Kasey learn \"Triple Strike\".",
+"ja_JP": "ＯＫをクリックして確定。\nケイシーが「トリプルアタック」を覚えました。",
+"zh_CN": "单击 OK 确认。 \n这让凯西习得“三连击”。"
+}
+},
+{
+"id": 75,
+"folder": false,
+"x": 72,
+"y": 119,
+"windowKey": "DatabaseMain",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, we'll make an item that boosts TP. \nClick the Item tab.",
+"ja_JP": "それでは次は、ＴＰを上げるアイテムを作ります。\n「アイテム」タブをクリック。",
+"zh_CN": "接下来，我们要制作提高 TP 的物品。 \n单击“物品”标签。"
+}
+},
+{
+"id": 76,
+"folder": false,
+"x": 237,
+"y": 190,
+"windowKey": "DatabaseMain",
+"condition": "list,6",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make item #2 based on #7, the potion. \nClick Potion.",
+"ja_JP": "アイテム「0002」の空欄に、\n「0007 ポーション」をコピーしましょう。\n「0007 ポーション」をクリック。",
+"zh_CN": "我们要基于 #7 制作 #2，药水。 \n单击“药水”。"
+}
+},
+{
+"id": 77,
+"folder": false,
+"x": 270,
+"y": 190,
+"windowKey": "DatabaseMain",
+"condition": "action,menuCopy",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select \"Copy\".",
+"ja_JP": "右クリックして「コピー」を選択。",
+"zh_CN": "右击后选择“复制”。"
+}
+},
+{
+"id": 78,
+"folder": false,
+"x": 207,
+"y": 90,
+"windowKey": "DatabaseMain",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on blank #2.",
+"ja_JP": "「0002」の空欄をクリック。",
+"zh_CN": "单击空白 #2。"
+}
+},
+{
+"id": 79,
+"folder": false,
+"x": 240,
+"y": 90,
+"windowKey": "DatabaseMain",
+"condition": "action,menuPaste",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click and select \"Paste\". \nNow the configuration for the potion is copied to #2.",
+"ja_JP": "右クリックして「貼り付け」を選択。\nこれでポーションの設定が「0002」の空欄にコピーされます。",
+"zh_CN": "右击后选择“粘贴”。 \n现在药水的配置已经复制到 #2 了。"
+}
+},
+{
+"id": 80,
+"folder": false,
+"x": 465,
+"y": 77,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the name to TP Charge.",
+"ja_JP": "名前を『ＴＰチャージ』に変更。",
+"zh_CN": "把名字改成“TP 补充”。"
+}
+},
+{
+"id": 81,
+"folder": false,
+"x": 579,
+"y": 134,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the description to\n\"Increases an ally's TP by 50.\"",
+"ja_JP": "『味方単体のＴＰを５０ポイントアップする』\nと説明を書き換え。",
+"zh_CN": "把说明更改为\n“增加一名队友 50 点 TP。”"
+}
+},
+{
+"id": 82,
+"folder": false,
+"x": 678,
+"y": 254,
+"windowKey": "DatabaseMain",
+"condition": "comboBox,occasion,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the occasion from \"Always\" to \"Battle Screen\".",
+"ja_JP": "使用可能時を「常時」から「バトル画面」に変更。",
+"zh_CN": "把使用场合从“总是”改成“战斗画面”。"
+}
+},
+{
+"id": 83,
+"folder": false,
+"x": 879,
+"y": 272,
+"windowKey": "DatabaseMain",
+"condition": "windowState,Effects,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the line under Effects that says \"Recover HP 500\".",
+"ja_JP": "使用効果の「HP回復 500」の行をダブルクリック。",
+"zh_CN": "双击效果下方写着“恢复 500 点 HP”的一行。"
+}
+},
+{
+"id": 84,
+"folder": false,
+"x": 24,
+"y": 188,
+"windowKey": "Effects",
+"condition": "radioButton,RadioButton,13",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off Gain TP.",
+"ja_JP": "「TP増加」をチェック。",
+"zh_CN": "勾选“TP 增加”。"
+}
+},
+{
+"id": 85,
+"folder": false,
+"x": 186,
+"y": 182,
+"windowKey": "Effects",
+"condition": "spinBox,=,50",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change the value gained to 50.",
+"ja_JP": "増加値に「50」を入力。",
+"zh_CN": "把增加值改为 50。"
+}
+},
+{
+"id": 86,
+"folder": false,
+"x": 186,
+"y": 275,
+"windowKey": "Effects",
+"condition": "windowState,Effects,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the effect. \nWith this, we've created the TP Charge.",
+"ja_JP": "ＯＫをクリックして効果を確定。\nこれで、ＴＰチャージの完成です。",
+"zh_CN": "单击 OK 设置效果。 \n这样，TP 补充就创建好了。"
+}
+},
+{
+"id": 87,
+"folder": false,
+"x": 900,
+"y": 683,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "In these steps, we've finished creating items and a skill. \nClick OK and set the database update.",
+"ja_JP": "以上で、アイテムとスキルの作成は完了です。\nＯＫをクリックしてデータベース更新を確定。",
+"zh_CN": "通过这些步骤，我们已创建了物品和一个技能。 \n单击 OK 设置数据库的更新。"
+}
+},
+{
+"id": 88,
+"folder": false,
+"x": 108,
+"y": 21,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Save the project.",
+"ja_JP": "プロジェクトを保存。",
+"zh_CN": "保存项目。"
+}
+},
+{
+"id": 89,
+"folder": false,
+"x": 777,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Lastly, in order to test the effects of the items and skill we created, let's run a battle test. \nPlease open the database once more.",
+"ja_JP": "最後に、今回作成したアイテムやスキルの効果を試すため、戦闘テストを行いましょう。\n再びデータベースを開いてください。",
+"zh_CN": "最后，为了测试我们创建的物品和技能的效果，进行战斗测试吧。 \n再次打开数据库。"
+}
+},
+{
+"id": 90,
+"folder": false,
+"x": 66,
+"y": 248,
+"windowKey": "DatabaseMain",
+"condition": "list,7",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the Troops tab.",
+"ja_JP": "「敵グループ」タブをクリック。",
+"zh_CN": "单击“敌群”标签。"
+}
+},
+{
+"id": 91,
+"folder": false,
+"x": 288,
+"y": 152,
+"windowKey": "DatabaseMain",
+"condition": "list,-1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select your opponent from the Troops.",
+"ja_JP": "敵グループから、任意の敵グループを選択。\n(ステップ12で作成した「0005」推奨)",
+"zh_CN": "从敌群中选择你的对手。"
+}
+},
+{
+"id": 92,
+"folder": false,
+"x": 933,
+"y": 83,
+"windowKey": "DatabaseMain",
+"condition": "windowState,BattleTest,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Battle Test.",
+"ja_JP": "「戦闘テスト…」をクリック。",
+"zh_CN": "单击“测试战斗”。"
+}
+},
+{
+"id": 93,
+"folder": false,
+"x": 366,
+"y": 334,
+"windowKey": "BattleTest",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to start the battle test. \nTry out Kasey's new special move and the effects of the new items.",
+"ja_JP": "ＯＫをクリックして、戦闘テストを行います。\nケイシーの必殺技や、新しいアイテムの効果を試してください。",
+"zh_CN": "单击 OK，开始战斗测试。 \n尝试凯西的新必杀技和新物品的效果。"
+}
+},
+{
+"id": 94,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "DatabaseMain",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 92,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you want to battle test again?",
+"ja_JP": "もう一度戦闘テストを行いますか？",
+"zh_CN": "是否再次进行战斗测试？"
+}
+},
+{
+"id": 95,
+"folder": false,
+"x": 1005,
+"y": 689,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Then we will close the database. \nThere were no changes, so click \"Cancel\".",
+"ja_JP": "それではデータベースを閉じます。\n変更がないので「キャンセル」をクリック。",
+"zh_CN": "那么我们就关闭数据库。 \n没有任何更改，所以单击“取消”。"
+}
+},
+{
+"id": 96,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. In these 2 steps you've been\nintroduced to the database. There are still unexplained settings,\nbut please familiarize yourself with them bit by bit.",
+"ja_JP": "お疲れ様でした。ステップ１２と１３でデータベースを\n紹介しました。説明しきれなかった設定はありますが\n少しずつ慣れて行ってください。",
+"zh_CN": "做得好。我们通过这两个步骤\n为你介绍了数据库。其中还有尚未解说的设定，\n还请你一点点地去熟悉它们。"
+}
+}
+]
+}

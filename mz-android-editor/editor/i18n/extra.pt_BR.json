@@ -266,6 +266,22 @@
   "is present": "está presente",
   "max. %1": "máx. %1",
   "min. %1": "mín. %1",
-  "warning: could not read %1: %2": "aviso: não foi possível ler %1: %2"
+  "warning: could not read %1: %2": "aviso: não foi possível ler %1: %2",
+  "Next": "Próximo",
+  "Convert": "Converter",
+  "MV data converted: %1. Save the project to keep the changes.": "Dados do MV convertidos: %1. Salve o projeto para manter as alterações.",
+  "This project contains data in the RPG Maker MV format. Convert it to the RPG Maker MZ format?": "Este projeto contém dados no formato do RPG Maker MV. Converter para o formato do RPG Maker MZ?",
+  "This project contains files from RPG Maker MV.": "Este projeto contém arquivos do RPG Maker MV.",
+  "System: add the RPG Maker MZ settings (Advanced Settings, game ID, new terms).": "Sistema: adicionar as configurações do RPG Maker MZ (Configurações avançadas, ID do jogo, termos novos).",
+  "Animations: %1 MV animations are kept as they are (they play in the game but cannot be edited in RPG Maker MZ).": "Animações: %1 animações do MV ficam como estão (funcionam no jogo, mas não podem ser editadas no RPG Maker MZ).",
+  "js: MV core scripts found (%1); the game uses rmmz_*.js.": "js: scripts principais do MV encontrados (%1); o jogo usa rmmz_*.js.",
+  "img/system: %1 are MV images and are not needed.": "img/system: %1 são imagens do MV e não são necessárias.",
+  "fonts: gamefont.css is not used; choose the fonts in Database → System 2 → Advanced Settings.": "fonts: gamefont.css não é usado; escolha as fontes em Banco de dados → Sistema 2 → Configurações avançadas.",
+  "Plugins for RPG Maker MV (%1) are not guaranteed to work.": "Não há garantia de que os plugins do RPG Maker MV (%1) funcionem.",
+  "Make a backup of the project before saving.": "Faça um backup do projeto antes de salvar.",
+  "The sample data for this step is not available in this editor; continue with your own project.": "Os dados de exemplo desta etapa não estão disponíveis neste editor; continue com o seu próprio projeto.",
+  "Skills: convert the battle messages of %1 skills to the RPG Maker MZ format.": "Habilidades: converter as mensagens de batalha de %1 habilidades para o formato do RPG Maker MZ.",
+  "States: convert the messages of %1 states to the RPG Maker MZ format.": "Status: converter as mensagens de %1 status para o formato do RPG Maker MZ.",
+  "This is an RPG Maker MV animation. It plays in the game as it is, but it cannot be edited in RPG Maker MZ.": "Esta é uma animação do RPG Maker MV. Ela funciona no jogo como está, mas não pode ser editada no RPG Maker MZ."
  }
 }

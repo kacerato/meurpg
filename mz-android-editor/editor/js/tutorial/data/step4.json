@@ -1,0 +1,1340 @@
+{
+"step": 4,
+"title": {
+"ja_JP": "ステップ４：イベントの移動２",
+"en": "Step 4: Event Transfer 2",
+"zh_CN": "步骤 4：事件场所移动 2"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 3?",
+"ja_JP": "ステップ３を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 3 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 3 project.",
+"ja_JP": "ステップ３のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 3 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 3 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ３のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 3 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読み込みが終わりました。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step4",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project loads.",
+"ja_JP": "プロジェクトの読み込みが終わるまで、しばらくお待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step we will learn how to make an event move\nusing the event command \"Set Movement Route\".",
+"ja_JP": "このステップではイベントコマンド「移動ルートの設定」\nでイベントを動かす方法を学びます。",
+"zh_CN": "在这个步骤中，我们将教你如何使用事件指令\n“设置移动路线”来让事件移动。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First, we'll create a new character event. \nLocate the coordinates (17,29) in the middle of the long road that stretches to the left and right south of town.",
+"ja_JP": "まず新しい人物イベントを作成します。\n町の南、左右に長く道が続く場所の真ん中の座標(17,29)を見つけてください。",
+"zh_CN": "首先，我们将新建一个角色事件。 \n找到从小镇南部左边延伸到右边的道路的中间，坐标（17,29）。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Find (17,29) and double click it. \nOpen the event window.",
+"ja_JP": "(17,29)をダブルクリック。\nイベントウィンドウを開きます。",
+"zh_CN": "寻到（17,29）然后双击它。 \n打开事件窗口。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 57,
+"y": 414,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the image. Double click.",
+"ja_JP": "画像を設定します。ダブルクリック。",
+"zh_CN": "设置图像。双击。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 92,
+"y": 223,
+"windowKey": "ImageSelector",
+"condition": "list,10",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click People1.",
+"ja_JP": "People1をクリック。",
+"zh_CN": "单击“People1”。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 400,
+"y": 235,
+"windowKey": "ImageSelector",
+"condition": "list,76",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the right-facing woman, second from the left in the bottom row.",
+"ja_JP": "下段の左から2番目の女性の右向きを選択。",
+"zh_CN": "单击在底端行左边第二个，面朝右的女人。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 584,
+"y": 424,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 87,
+"y": 30,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set her name to MovingLady.",
+"ja_JP": "名前を「動く女性」にします。",
+"zh_CN": "将她的名字设置为“移动女人”。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 837,
+"y": 139,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the first blank line in \"Contents\".",
+"ja_JP": "実行内容の一番上の空欄をダブルクリック。",
+"zh_CN": "双击“执行内容”中的第一行空行。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 141,
+"y": 77,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First she'll talk about where she's going to move. \nClick \"Show Text...\".",
+"ja_JP": "まずは移動する旨を話します。\n「文章の表示…」をクリック。",
+"zh_CN": "首先，她将说出她的移动目的地。 \n单击“显示文字……”。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 296,
+"y": 42,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Type in: \n\"I'm moving 4 steps to the right now.\"",
+"ja_JP": "『今から右に４歩移動します。』\nと打ち込んでください。",
+"zh_CN": "输入： \n“现在我会往右移动 4 步。”"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 410,
+"y": 189,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 582,
+"y": 177,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Up until now has just been a review. Now we're going to \"Set Movement Route\". Double click the blank line.",
+"ja_JP": "ここまでは復習でした。\nここから「移動ルートの設定」に入ります。\n空欄をダブルクリック。",
+"zh_CN": "目前的设定都只是复习。现在我们将“设置移动路线”。双击空行。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 57,
+"y": 11,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to Page 2.",
+"ja_JP": "２ページ目に切り替えます。",
+"zh_CN": "转换到第 2 页。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 150,
+"y": 185,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Set Movement Route\".",
+"ja_JP": "「移動ルートの設定…」をクリック。",
+"zh_CN": "单击“设置移动路线”。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 95,
+"y": 11,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "The movement target is currently set to \"Player\". \nPlease change it to \"This Event\".",
+"ja_JP": "動作対象が「プレイヤー」になっています。\n「このイベント」に変更してください。",
+"zh_CN": "移动目标目前设置为“玩家”。 \n请将它改设为“本事件”。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 77,
+"y": 374,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Skip If Cannot Move\".",
+"ja_JP": "「移動できない場合は飛ばす」にチェック。",
+"zh_CN": "勾选“无法移动时跳过指令”。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 71,
+"y": 407,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Remove the check from \"Wait for Completion\".",
+"ja_JP": "「完了までウェイト」のチェックをはずしてください。",
+"zh_CN": "取消勾选“等待完成”。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 377,
+"y": 98,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set the movement route as follows: \nMove Right\nMove Right\nMove Right\nMove Right",
+"ja_JP": "次の順序でコマンドを選択してください。\n右に移動\n右に移動\n右に移動\n右に移動",
+"zh_CN": "设置以下的移动路线： \n向右移动\n向右移动\n向右移动\n向右移动"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 137,
+"y": 62,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure that there are four instances of \"Move Right\" in the list.",
+"ja_JP": "リストに「右に移動」が４つ並んでいるのを確認します。",
+"zh_CN": "确保列表中有四个“向右移动”的文本。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 722,
+"y": 426,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the movement route.",
+"ja_JP": "ＯＫをクリックし、移動ルートを確定。",
+"zh_CN": "单击 OK 设置移动路线。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 780,
+"y": 685,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the event.",
+"ja_JP": "ＯＫをクリックし、イベントを確定。",
+"zh_CN": "单击 OK 设置事件。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "popup,ContextMenu",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the event preparation is ready. Let's change the player's initial position to make playtesting easier. \nAfter clicking a few squares away from the event, right click.",
+"ja_JP": "これでイベントの準備が整いました。テストプレイがしやすいように、プレイヤーの初期位置を変更します。\nイベントの数歩近くをクリックした後、右クリック。",
+"zh_CN": "现在事件已准备就绪。为了方便测试游戏，我们要更改玩家的初始位置。 \n单击距离事件数个方格处之后，右击。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "action,eventSetStartingPosition_player",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select Set Starting Position > Player.",
+"ja_JP": "初期位置の設定 > プレイヤーと選択。",
+"zh_CN": "选择“设置初始位置”>“玩家”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 108,
+"y": 30,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First we'll save the project.",
+"ja_JP": "先にプロジェクトの保存を実行。",
+"zh_CN": "首先我们得保存项目。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 1050,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now conduct a playtest. \nTalk to the NPC a few times and check the movement.",
+"ja_JP": "テストプレイを行ってください。\n何度も話しかけ、動作を確かめてください。",
+"zh_CN": "然后测试游戏。 \n与 NPC 对话数次，确认其行动。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Once you're done, there's some more explanation.",
+"ja_JP": "テストプレイが終了したら、解説を行います。",
+"zh_CN": "测试完后，还有一些说明。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "If the player character talks to her from their right or the path is blocked, her movement will be stopped. \nThis is the effect of \"Skip If Cannot Move\".",
+"ja_JP": "主人公が右から話しかけた場合や道を遮った時は移動を停止します。\nこれが「移動できない場合は飛ばす」の効果です。",
+"zh_CN": "若玩家从她右侧与她对话，或是她的路线被阻挡，她的行动将会停止。 \n这是“无法移动时跳过指令”的效果。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 37,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Could you playtest again to check that this is working?",
+"ja_JP": "これの確認のため、もう一度テストプレイを行いますか？",
+"zh_CN": "再测试一下看看该指令是否正常操作吧？"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Next, we'll make two events move simultaneously.",
+"ja_JP": "それでは、次は、２つのイベントを同時に動かします。",
+"zh_CN": "接下来，我们要制作同时运行的两个事件。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll create an event of a man walking side by side with the woman. \nDouble click the coordinates (17,28) above MovingLady.",
+"ja_JP": "女性と並走する男性イベントを作成します。\n「動く女性」の上の座標(17,28)をダブルクリック。",
+"zh_CN": "我们将创建一个与女人同行的男人。 \n双击移动女人上方的坐标（17,28）。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 138,
+"y": 21,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Set his name to MovingDude.",
+"ja_JP": "名前を「動く男性」にします。",
+"zh_CN": "将他的名字设置为“移动男人”。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 60,
+"y": 417,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 110,
+"y": 226,
+"windowKey": "ImageSelector",
+"condition": "list,10",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select People1.",
+"ja_JP": "People1を選択。",
+"zh_CN": "选择“People1”。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 300,
+"y": 235,
+"windowKey": "ImageSelector",
+"condition": "list,73",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Choose the man facing right on the left in the bottom row.",
+"ja_JP": "下段左の男性の右向きを選択。",
+"zh_CN": "单击在底端行左边，面朝右的男人。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 578,
+"y": 427,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 768,
+"y": 138,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the first blank line in \"Contents\".",
+"ja_JP": "実行内容の一番上の空欄をダブルクリック。",
+"zh_CN": "双击“执行内容”中的第一行空行。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 27,
+"y": 23,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Switch to Page 1.",
+"ja_JP": "１ページ目に切り替えます。",
+"zh_CN": "转换到第 1 页。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 180,
+"y": 77,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 350,
+"y": 27,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Type in: \n\"I'm going to move with that lady.\"",
+"ja_JP": "『私はそこの女性と連動して動きます。』\nと入力してください。",
+"zh_CN": "输入： \n“我将随那个女人移动。”"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 413,
+"y": 186,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 774,
+"y": 678,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the event.",
+"ja_JP": "ＯＫをクリックしてイベントを確定。",
+"zh_CN": "单击 OK 设置事件。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we'll make it so the man moves with the lady when you talk to her. \nDouble click MovingLady.",
+"ja_JP": "女性に話しかけたら、男性も一緒に動くようにします。\n動く女性のイベントをダブルクリック。",
+"zh_CN": "现在我们要设置当你与女人说话时，男人会跟着她一起移动。 \n双击移动女人。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 693,
+"y": 279,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "If we add an event to make the man move in the same way as the lady after her event, it'll look like they're walking together.",
+"ja_JP": "女性のイベントの後に男性を同じように動かすイベントを入れると２人が並んで歩いているように見えます。",
+"zh_CN": "当我们在女人的事件之后添加让男人跟着她做同样行动的事件，他们看起来就会像是在一起走动。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 693,
+"y": 279,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "But it's a pain to do the setup all over again. Here we will take advantage of copying & pasting.",
+"ja_JP": "しかし、もう一度同じような設定は面倒です。そこでコピー＆ペーストを利用します。",
+"zh_CN": "但是重头设置很麻烦。所以我们将善用复制黏贴。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 639,
+"y": 180,
+"windowKey": "EventEditorMain",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Set Movement Route...\" so it's selected.",
+"ja_JP": "「移動ルートの設定」をクリックし、選択状態にします。",
+"zh_CN": "单击“设置移动路线”确保它已被选中。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 621,
+"y": 171,
+"windowKey": "EventEditorMain",
+"condition": "action,menuCopy",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "While it's selected, right click and choose \"Copy\".",
+"ja_JP": "この状態で右クリックし、「コピー」を選択。",
+"zh_CN": "它被选中时，右击并选择“复制”。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 525,
+"y": 276,
+"windowKey": "EventEditorMain",
+"condition": "popup,ContextMenu",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now right click the last empty line.",
+"ja_JP": "次に一番下の空欄の行を右クリック。",
+"zh_CN": "现在，右击最后一行空行。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 525,
+"y": 276,
+"windowKey": "EventEditorMain",
+"condition": "action,menuPaste",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Choose \"Paste\".",
+"ja_JP": "「貼り付け」を選択。",
+"zh_CN": "选择“粘贴”。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 525,
+"y": 276,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommand,open",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll edit the event command you just pasted. \nRight click and select \"Edit...\".",
+"ja_JP": "コピーしたイベントコマンドを編集します。\n右クリックで「編集…」を選択。",
+"zh_CN": "我们将编辑你刚粘贴的事件。 \n右击后选择“编辑……”。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 117,
+"y": 22,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change \"This Event\" to \"MovingDude\".",
+"ja_JP": "「このイベント」を「動く男性」に変更。",
+"zh_CN": "将“本事件”改成“移动男人”。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 720,
+"y": 433,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 768,
+"y": 684,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the event changes.",
+"ja_JP": "ＯＫをクリックしてイベントの更新を確定。",
+"zh_CN": "单击 OK 设置事件变更。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 108,
+"y": 14,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "The preparation is complete. Save the project.",
+"ja_JP": "準備完了です。プロジェクトを保存します。",
+"zh_CN": "一切已准备就绪。保存项目。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 1050,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Run a playtest, and make sure the man moves with the woman when you talk to her. \nAlso, check to see that if you block one of their paths that they will no longer be lined up.",
+"ja_JP": "テストプレイを行い、女性に話しかけると男性も一緒に動くのを確認します。\nまた、片方の道を遮ると、２人が横並びでなくなるのを確認します。",
+"zh_CN": "测试游戏，确保男人会在你跟女人对话的时候跟着她一起移动。 \n另外，当你阻挡他们其中一方的路线时，确认他们的行动是否会不一致。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Once you're done with the playtest we have a quick note.",
+"ja_JP": "テストプレイが終わったら簡単な解説を行います。",
+"zh_CN": "完成测试后我们有个简明解说。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Although this time we removed the check from \"Wait for Completion\", when you want one to move after the other, check it off.",
+"ja_JP": "今回は「完了までウェイト」のチェックをはずしましたが、片方の動きが終わってから次を動かしたい場合はチェックを入れてください。",
+"zh_CN": "这次我们取消勾选“等待完成”，若你想要他们依次移动，请勾选该选项。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "However, sometimes when you use \"Wait for Completion\" and the path is blocked by an obstacle, you may no longer be able to progress in the game, so be careful.",
+"ja_JP": "ただし「完了までウェイト」は、障害物などで道が遮られるとゲームが進行不可能になる場合があります。注意してください。",
+"zh_CN": "但是有时候当“等待完成”选项被勾选，而路线被阻碍时，你可能将无法继续游戏。还请多加留意。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "That's it for this explanation. Well done.",
+"ja_JP": "解説は以上です。お疲れ様でした。",
+"zh_CN": "此次介绍到这里就结束了。做得好。"
+}
+}
+]
+}
