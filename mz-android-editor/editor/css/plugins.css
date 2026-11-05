@@ -1,0 +1,186 @@
+/* Módulo plugins: Gerenciador de plugins, diálogo Plugin e editores de parâmetro. */
+
+.pgDialog .mzDialog { max-height: calc(100% - 4px); }
+.pgDialog .mzDialogButtons button { height: 40px; min-width: 96px; }
+.pgDialog input, .pgDialog textarea, .pgDialog select, .pgRO { user-select: text; }
+
+.pgCol { display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+.pgCol > * { flex: none; }
+
+.pgBtn {
+    height: 40px; min-width: 40px; padding: 0 12px;
+    border: 1px solid var(--line); background: var(--panel2);
+}
+.pgBtn:disabled { opacity: .4; }
+.pgBar { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.pgBar .sep { height: 30px; }
+
+.pgInput, .pgSelect, .pgTextarea {
+    font: inherit; font-size: 15px; color: var(--text);
+    border: 1px solid var(--line); border-radius: 3px; background: var(--panel2);
+}
+.pgInput, .pgSelect { height: 40px; padding: 0 8px; width: 100%; }
+.pgTextarea {
+    flex: 1 1 auto !important; min-height: 160px; width: 100%; padding: 6px 8px;
+    font-family: "M+ 1c", ui-monospace, monospace; resize: none; white-space: pre; overflow: auto;
+}
+.pgInput:focus, .pgSelect:focus, .pgTextarea:focus { outline: 2px solid var(--accent-bg); border-color: var(--accent); }
+
+.pgDesc {
+    min-height: 40px; padding: 6px 8px; white-space: pre-wrap;
+    background: var(--panel2); border: 1px solid var(--line2); border-radius: 3px; color: var(--muted);
+}
+.pgDesc:empty { visibility: hidden; }
+.pgHint { color: var(--muted); font-size: 12px; }
+.pgMessage { padding: 12px 6px; white-space: pre-wrap; }
+.pgEmpty { padding: 12px; color: var(--muted); }
+.pgWarn {
+    padding: 6px 8px; border: 1px solid #d9a400; background: #fff6d5; border-radius: 3px;
+}
+
+/* Lista de toque */
+.pgList {
+    flex: 1 1 auto !important; min-height: 120px; overflow: auto;
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 3px; outline: none;
+}
+.pgListRow {
+    display: flex; align-items: center; gap: 8px;
+    min-height: 38px; padding: 0 10px; border-bottom: 1px solid #eee; cursor: pointer;
+}
+.pgListRow.selected { background: var(--accent); color: #fff; }
+.pgListLabel { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pgListSub { color: var(--muted); font-size: 12px; min-width: 2em; text-align: right; order: -1; }
+.pgListRow.selected .pgListSub { color: #e8f0ff; }
+.pgDirRow .pgListLabel { font-weight: 500; }
+.pgUnknown { font-style: italic; }
+.pgValueRow { display: flex; align-items: center; gap: 8px; }
+.pgValueRow label { flex: none; color: var(--muted); }
+
+/* Tabela de parâmetros */
+.pgTable {
+    flex: 1 1 auto !important; display: flex; flex-direction: column; min-height: 0;
+    border: 1px solid var(--line); border-radius: 3px; background: var(--panel2); overflow: hidden;
+}
+.pgTHead, .pgTRow { display: flex; align-items: stretch; }
+.pgTHead { background: #e8e8e8; border-bottom: 1px solid var(--line); font-weight: 500; }
+.pgTHead > span { padding: 6px 8px; line-height: 1.4 !important; }
+.pgTBody { flex: 1; overflow: auto; }
+.pgTRow { min-height: 38px; border-bottom: 1px solid #eee; cursor: pointer; }
+.pgTRow > span { display: flex; align-items: center; overflow: hidden; }
+.pgTRow.selected { background: var(--accent); color: #fff; }
+.pgCName { width: 42%; flex: none; border-right: 1px solid #eee; white-space: nowrap; }
+.pgCName > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.pgCValue { flex: 1; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block !important; line-height: 38px; }
+.pgToggle { width: 30px; height: 38px; flex: none; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; }
+.pgToggle.none { width: 12px; }
+
+/* Número */
+.pgSpinRow { display: flex; gap: 6px; align-items: center; }
+.pgSpin { width: 52px; font-size: 20px; }
+.pgNumber { text-align: right; font-size: 18px; }
+
+/* Booleano / opções */
+.pgRadioRow { display: flex; gap: 8px; }
+.pgRadio {
+    flex: 1; height: 48px; border: 1px solid var(--line); background: var(--panel2); font-size: 15px;
+}
+.pgRadio.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pgRadioRow.small .pgRadio { flex: none; width: 90px; height: 38px; }
+
+/* Arquivo */
+.pgCrumb { color: var(--muted); font-family: ui-monospace, monospace; }
+.pgSplit { display: flex; gap: 8px; flex: 1 1 auto !important; min-height: 0; }
+.pgSplit .pgList { flex: 1 1 50% !important; }
+.pgPreview {
+    flex: 1 1 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    border: 1px solid var(--line); border-radius: 3px; overflow: auto; padding: 6px;
+    background: repeating-conic-gradient(#ddd 0 25%, #fff 0 50%) 0 0 / 16px 16px;
+}
+.pgPreview img { max-width: 100%; max-height: 100%; object-fit: contain; image-rendering: pixelated; }
+.pgPreviewName { background: rgba(255,255,255,.85); padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+.pgAudio { display: flex; gap: 8px; }
+
+/* Cor / ícone */
+.pgSwatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+.pgSwatch {
+    height: 48px; border: 2px solid #fff; outline: 1px solid var(--line); border-radius: 3px; position: relative;
+}
+.pgSwatch span { position: absolute; left: 3px; bottom: 1px; font-size: 11px; color: #fff; text-shadow: 0 0 2px #000, 0 0 2px #000; }
+.pgSwatch.selected { outline: 3px solid var(--accent); }
+.pgIconScroll { flex: 1 1 auto !important; min-height: 0; overflow: auto; border: 1px solid var(--line); background: #333; }
+.pgIconSheet { position: relative; }
+.pgIconSheet img { display: block; image-rendering: pixelated; }
+.pgIconMark { position: absolute; border: 2px solid #fff; outline: 2px solid var(--accent); pointer-events: none; box-sizing: border-box; }
+
+/* Diálogo Plugin */
+.pgPluginDlg { display: flex; gap: 10px; min-height: 0; overflow: hidden !important; }
+.pgLeft { width: 44%; flex: none; display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+.pgRight { flex: 1; display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.pgFormRow { display: flex; align-items: center; gap: 8px; }
+.pgFormRow[hidden], .pgWarn[hidden] { display: none; }
+.pgFormRow > label { width: 84px; flex: none; color: var(--muted); }
+.pgFormRow > :not(label) { flex: 1; min-width: 0; }
+.pgField { min-height: 34px; padding: 6px 8px; background: var(--panel2); border: 1px solid var(--line2); border-radius: 3px; }
+.pgUrl { word-break: break-all; }
+.pgHelpLabel { color: var(--muted); }
+.pgHelp {
+    flex: 1; min-height: 0; overflow: auto; padding: 6px 8px; white-space: pre-wrap;
+    background: var(--panel2); border: 1px solid var(--line2); border-radius: 3px; font-size: 12.5px;
+}
+.pgTabs { display: flex; gap: 2px; }
+.pgTabs button {
+    height: 38px; padding: 0 16px; border: 1px solid var(--line); border-bottom: none;
+    border-radius: 4px 4px 0 0; background: #e2e2e2;
+}
+.pgTabs button.on { background: var(--panel2); font-weight: 500; }
+.pgPane { flex: 1; display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+.pgPane[hidden] { display: none; }
+.pgParamDesc { flex: none; height: 66px; overflow: auto; }
+
+/* Comandos (somente leitura) */
+.pgCommands { flex: 1; overflow: auto; border: 1px solid var(--line); background: var(--panel2); border-radius: 3px; }
+.pgCmd { border-bottom: 1px solid var(--line2); }
+.pgCmdHead { display: flex; align-items: center; gap: 4px; min-height: 40px; padding-right: 8px; cursor: pointer; }
+.pgCmdHead small, .pgArgRow small { color: var(--muted); }
+.pgCmdDesc { padding: 0 10px 6px 34px; color: var(--muted); white-space: pre-wrap; }
+.pgCmd .pgArgs { display: none; padding: 0 8px 8px 34px; }
+.pgCmd.open .pgArgs { display: block; }
+.pgArgRow { display: grid; grid-template-columns: 26% 20% 14% 1fr; gap: 6px; padding: 4px 0; border-top: 1px solid #eee; }
+.pgArgRow > span { overflow-wrap: anywhere; }
+.pgArgHead { font-weight: 500; color: var(--muted); }
+
+/* Gerenciador */
+.pmMain { overflow: hidden !important; }
+.pmTable {
+    flex: 1 1 auto !important; display: flex; flex-direction: column; min-height: 0;
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+}
+.pmBody { flex: 1; overflow: auto; }
+.pmRow { display: flex; align-items: center; min-height: 40px; border-bottom: 1px solid #eee; cursor: pointer; }
+.pmRow > span { padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmHead { background: #e8e8e8; border-bottom: 1px solid var(--line); font-weight: 500; min-height: 32px; cursor: default; }
+.pmHandle {
+    width: 44px; flex: none; text-align: center; font-size: 20px; color: var(--muted);
+    touch-action: none; align-self: stretch; display: flex; align-items: center; justify-content: center; padding: 0 !important;
+}
+.pmRow[data-i] .pmHandle { cursor: grab; }
+.pmName { width: 260px; flex: none; }
+.pmStatusCell { width: 86px; flex: none; text-align: center; }
+.pmDesc { flex: 1; }
+.pmHint { color: var(--muted); font-style: italic; }
+.pmStatus { width: 64px; height: 32px; border: 1px solid var(--line); background: #eee; font-weight: 500; }
+.pmStatus.on { background: #2e9a4d; border-color: #24803f; color: #fff; }
+.pmRow.selected { background: var(--accent); color: #fff; }
+.pmRow.selected .pmHandle, .pmRow.selected .pmHint { color: #e8f0ff; }
+.pmRow.warn .pmName { color: #b06d00; }
+.pmRow.warn .pmName::before { content: "⚠ "; }
+.pmRow.selected.warn .pmName { color: #ffe08a; }
+.pmRow.dragging { opacity: .5; }
+.pmRow.dropBefore { box-shadow: inset 0 3px 0 var(--accent); }
+.pmRow.dropAfter { box-shadow: inset 0 -3px 0 var(--accent); }
+.pmWarnings {
+    max-height: 110px; overflow: auto; border: 1px solid #d9a400; background: #fff6d5; border-radius: 3px;
+}
+.pmWarnings[hidden] { display: none; }
+.pmWarnLine { display: flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 8px; cursor: pointer; }
+.pmWarnLine img { width: 16px; height: 16px; }
