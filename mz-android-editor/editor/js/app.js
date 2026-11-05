@@ -601,11 +601,24 @@ async function boot() {
             location.replace(location.pathname);
             return;
         }
-        if (typeof Tilemap === "undefined" || typeof ImageManager === "undefined") {
-            // o runtime do projeto não carregou (página aberta antes do projeto): recarrega
-            location.reload();
+        if (typeof Tilemap === "undefined" || typeof ImageManager === "undefined" || typeof PIXI === "undefined") {
+            // o runtime do projeto não carregou (página aberta antes do projeto): recarrega UMA vez;
+            // se ainda faltar (projeto sem js/libs/pixi.js ou js/rmmz_*.js), avisa em vez de entrar em laço
+            let tried = false;
+            try { tried = sessionStorage.getItem("mzRuntimeReload") === info.name; } catch (_) { /* sem storage */ }
+            if (!tried) {
+                try { sessionStorage.setItem("mzRuntimeReload", info.name); } catch (_) { /* sem storage */ }
+                location.reload();
+                return;
+            }
+            try { sessionStorage.removeItem("mzRuntimeReload"); } catch (_) { /* sem storage */ }
+            $("emptyHint").textContent = t("Unable to read file %1.", "ProjectManager", "js/libs/pixi.js, js/rmmz_core.js") + " " + t("Unexpected file format.", "ProjectManager");
+            await loadModules(api, { noProject: true });
+            disableProjectButtons();
+            $("projectName").textContent = info.name;
             return;
         }
+        try { sessionStorage.removeItem("mzRuntimeReload"); } catch (_) { /* sem storage */ }
         createView();
         api.project = project;
         api.view = view;

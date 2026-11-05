@@ -56,3 +56,8 @@ em "Abrir projeto" e escolha a pasta do projeto MZ.
 
 2. banco de dados e editor de eventos; 3. pintura de mapas com autotile,
 plugins, gerador de personagens; 4. exportação de APK no aparelho.
+
+## Implantação: plataformas
+
+Windows e macOS ficam fora por decisão de plataforma: exigem o runtime NW.js do editor de PC.
+O diálogo de Implantação mostra as duas opções desabilitadas, com essa explicação. Web (pasta ou .zip) e APK Android funcionam.

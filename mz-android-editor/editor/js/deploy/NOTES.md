@@ -85,3 +85,13 @@ Aparelho: `gradle assembleDebug`, instalar, Implantação > Android APK > OK. Te
 - Versão do app (versionCode/Name) fixa em 1 / "1.0"; plataformas Windows/macOS do MZ não se aplicam.
 - Sem ZIP64 (pacotes > 4 GB ou > 65535 arquivos dão erro claro).
 - Pedido de promoção à API: `api.deploy` já expõe `open()`, `md5`, `encryptAsset`, `decryptAsset`.
+
+## Atualização (mz-shell, 2026-11-05)
+- Salva o projeto (`api.saveAll`) antes de montar o pacote, como o MZ.
+- .zip (JS e `Deployer.java`) com `index.html` na raiz, sem `www/` (estrutura do MZ).
+- Formato "pasta" pode sair fora do projeto: botão "Escolher…" → SAF (`Android.pickDeployFolder`,
+  job `kind:"folder"` com `outTree`, `Deployer.writeFolder`) ou `showDirectoryPicker` no PC (`runFolderHandle`).
+- Senha de criptografia lembrada por projeto (`localStorage["mzDeploy:<projeto>"].password`).
+- Windows/macOS aparecem desabilitados (precisam do runtime NW.js do editor de PC).
+- `scan.js`: `@type file` + `@require 1` mantém `<@dir>/<valor>`; `@noteParam`/`@noteDir`(/`@noteType file`/`@noteData`)
+  mantém `<@noteDir>/<valor>` das notas indicadas (`pluginAssetSpecs`).

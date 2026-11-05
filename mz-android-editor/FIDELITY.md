@@ -41,7 +41,7 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
   - A lista de mapas fica à esquerda e a paleta (abas A–E/R, Selecionar, Desfazer/Refazer, "A" sem autotile, Camada, −/+) no meio.
     No MZ as duas ficam empilhadas na coluna esquerda.
 - **Lista de mapas:** o menu de contexto tem Editar, Novo, Carregar, Copiar, Colar, Excluir, Deslocar, Gerar masmorra e Salvar como imagem.
-  - **Bug visto:** o menu de contexto não fecha com Esc e continua por cima do diálogo que se abre em seguida (aconteceu com o Gerador).
+  - **Bug visto:** o menu de contexto não fecha com Esc e continua por cima do diálogo que se abre em seguida (aconteceu com o Gerador). — **OK (mz-shell)** (`maptree.js`: Esc e `dialog:open`).
 - **Banco de dados:** as 16 abas existem, com OK/Cancelar/Aplicar e os botões Alterar máximo, Multi, Copiar, Colar e Limpar.
   - Em Sistema 1, as caixas de **Imagens de veículos aparecem vazias** no testproject. Precisa conferir se o projeto não tem os gráficos ou se é bug de exibição.
   - A Cor da janela aparece como texto "0, 0, 0", sem a amostra de janela.
@@ -55,14 +55,14 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 ## Observações transversais (afetam várias áreas)
 
 1. **Sem projeto aberto, nenhum módulo carrega:** `app.js:152-161` retorna antes de `loadModules` (`app.js:197`).
-   No primeiro uso do Android só "Abrir projeto" funciona; Novo projeto, Ajuda e Opções ficam inacessíveis.
+   No primeiro uso do Android só "Abrir projeto" funciona; Novo projeto, Ajuda e Opções ficam inacessíveis. — **OK (mz-shell)**
 2. **WebView sem `onShowFileChooser`** (`android/.../MainActivity.java:62-68`): nenhum `<input type=file>` funciona no aparelho.
-   Isso afeta Importar e DLC do Gerenciador de recursos, "Importar recursos padrão" e `pickResource → Importar…`.
-3. **Modelo de gravação diferente do MZ:** o MZ mantém tudo em memória até "Salvar projeto". Aqui:
+   Isso afeta Importar e DLC do Gerenciador de recursos, "Importar recursos padrão" e `pickResource → Importar…`. — **OK (mz-shell)**
+3. **Modelo de gravação diferente do MZ** — **parcialmente resolvido (mz-shell):** `api.saveAll`/`api.markDirty` (contrato em `api.js`); mapas, MapInfos e eventos só gravam no Salvar. Banco de dados e plugins ainda gravam no OK/Aplicar: o MZ mantém tudo em memória até "Salvar projeto". Aqui:
    - Banco de dados, Plugins e eventos gravam na hora (OK/Aplicar);
    - só os tiles esperam o Salvar;
    - `events/eventmode.js:72` grava o `MapXXX.json` inteiro e provavelmente leva junto edições de tiles ainda não salvas (confirmar).
-4. **Teste de jogo** (`app.js:93-98`): roda sem `?test` e sem salvar antes. Isso vale também para `?btest` e `?etest`.
+4. **Teste de jogo** (`app.js:93-98`): roda sem `?test` e sem salvar antes. Isso vale também para `?btest` e `?etest`. — **OK (mz-shell)**
 
 ## Tabelas por área
 
@@ -72,30 +72,30 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Novo Projeto | 01_04 | OK | `btnNew` ligado em `tools/index.js:75` → `openNewProject`; também no menu ☰ (`tools/index.js:35`); criação via `?newProject` (`app.js:163-179`) | Atalho de teclado; não pergunta se quer salvar o projeto aberto |
-| Abrir Projeto | 01_04 | Parcial | `app.js:129-135` (`android.pickProject()` só na casca Android; no PC o botão fica desabilitado) | Atalho; no PC/navegador não há seletor; não confirma alterações não salvas antes de trocar |
-| Fechar Projeto | 01_04 | Ausente | — | Item inexistente; sem confirmação "salvar antes de fechar?" (só o `beforeunload` genérico em `maptools/index.js:875-880`) |
-| Salvar Projeto | 01_04 | Parcial | `btnSave` → `doSave` (`maptools/index.js:302-319, 841`); Ctrl+S em `maptools/index.js:793` | Grava só os mapas editados pelo maptools. O banco de dados grava no próprio diálogo (`database/index.js:63`) e os eventos gravam na hora (`events/eventmode.js:72`). Não há "salvar tudo" unificado; Ctrl+S é ignorado em modo evento e com diálogo aberto (`maptools/index.js:783`) |
+| Novo Projeto | 01_04 | OK | `btnNew` (`tools/index.js`); menu Arquivo (`menubar.js`); Ctrl+N (`app.js` `bindShortcuts`) | No Android, pergunta "Salvar as alterações no jogo?" antes de trocar (`window.mzConfirmLeave` ← `MainActivity.newProject`) (mz-shell) |
+| Abrir Projeto | 01_04 | OK (Android) | `openProjectFlow` em `app.js` (confirma e chama `Android.pickProject`); menu Arquivo; Ctrl+O | No PC continua só via `--project`. Escolhe pasta, não o .rmmzproject (mz-shell) |
+| Fechar Projeto | 01_04 | OK | `closeProjectFlow` em `app.js`; `MainActivity.closeProject` (volta ao estado sem projeto) | No PC recarrega com `?closed` (mz-shell) |
+| Salvar Projeto | 01_04 | OK | `api.saveAll` (`api.js`, contrato no topo); botão, menu e Ctrl+S em `app.js` (também no modo evento) | Mapas, MapInfos e eventos gravam juntos. Banco de dados e plugins ainda gravam no OK/Aplicar (ver Divergências) (mz-shell) |
 | Implantação (Deployment) | 01_04 | OK (existência) | `btnDeploy` criado em `deploy/index.js:42-51` | Detalhe auditado por outra frente |
-| Fechar RPG Maker MZ | 01_04 | Ausente | Só o botão Voltar do Android (`window.mzBack`, `app.js:137-150`), que fecha diálogos e o overlay | Sem item "Sair" nem confirmação de dados não salvos |
+| Fechar RPG Maker MZ | 01_04 | OK | Arquivo → Sair (`exitFlow`, `Android.exitApp`); Voltar com alterações pergunta antes | Fechar pela lista de recentes do Android não pergunta (limitação do sistema) (mz-shell) |
 
 #### Detalhe
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Novo projeto: botão na barra / menu Arquivo | 01_02 (1), 01_04 | Parcial | `index.html:15` (`btnNew`); `tools/index.js:75` (`bindToolbar`), `:35` (item do menu ☰) | Só fica ativo **com um projeto já aberto** (ver observação transversal). No primeiro uso não há como criar projeto. Não existe menu "Arquivo" (só a barra e o ☰). |
+| Novo projeto: botão na barra / menu Arquivo | 01_02 (1), 01_04 | OK | Carrega sem projeto (`modules.js` `NO_PROJECT_MODULES`); menu Arquivo | (mz-shell) |
 | Novo projeto: campo Nome (pasta) | 01_02 (2) | OK | `tools/newproject.js:153`, validação `:146`/`:193` | Não mostra a recomendação de usar caracteres alfanuméricos. |
 | Novo projeto: campo Título | 01_02 (2) | OK | `newproject.js:154`; aplicado a `System.json.gameTitle` e ao `<title>` em `:117-125` | — |
 | Novo projeto: Local + botão "Escolher…" | 01_02 (2) | Parcial | `newproject.js:155-175`. Android: `MainActivity.java:262-273` (SAF) e `:135-163` | No Android o local só é escolhido **depois** do OK (não aparece no diálogo). No PC depende de `showDirectoryPicker`; sem ele, baixa um .zip. |
 | Novo projeto: criar "projeto de exemplo" com todos os recursos | 01_02 (2) | Parcial | `newproject.js:109-133` (template mínimo em `editor/template/`); `app.js:162-179` (`?newProject`) | O template não traz img/characters, tilesets, titles e áudio, então o projeto novo **não roda** até usar "Importar recursos padrão", que por sua vez não funciona no Android (sem file chooser). Se a pasta já existir, o SAF cria "Nome (1)" sem avisar (`MainActivity.java:148`). |
-| Novo projeto fecha o projeto atual | 01_04 | Parcial | Android: `MainActivity.java:157-158` (`loadUrl` com o novo projeto) | Não pergunta se deseja salvar: as alterações de mapa não salvas são perdidas sem aviso (`beforeunload` não dispara em `loadUrl` no WebView). |
+| Novo projeto fecha o projeto atual | 01_04 | OK | `window.mzConfirmLeave` + `Bridge.leaveConfirmed` em `MainActivity.java` | Pergunta Sim/Não/Cancelar antes de trocar (mz-shell) |
 | Gera `game.rmmzproject` | 01_02 | OK | `newproject.js:130` ("RPGMZ 1.1.1") | — |
-| Abrir projeto | 01_02, 01_04 | Parcial | `app.js:129-135` → `Android.pickProject()` → `MainActivity.java:111-131` (SAF de pasta, persistido em `:45-48`) | No PC fica desabilitado (só via `--project` em `server.mjs:25`). Escolhe uma **pasta**, não o arquivo `game.rmmzproject`, e não valida se a pasta é um projeto MZ (`project.js:12-20`). Não confirma o descarte de alterações não salvas antes de trocar de projeto. |
-| Salvar projeto | 01_02, 01_04 | Parcial | `maptools/index.js:302-319` (`doSave`), `:841` (bind), `:793` (Ctrl+S) | Grava **só os mapas modificados**. Banco de dados, plugins etc. gravam por conta própria ao confirmar o diálogo, então funciona na prática, mas "Salvar" não é um salvamento global. Não há cópia de segurança. |
-| Fechar projeto (com "Salvar? Sim/Não") | 01_04 | Ausente | — | Não existe ação de fechar o projeto nem volta ao estado "sem projeto". |
+| Abrir projeto | 01_02, 01_04 | OK (Android) | `app.js` `openProjectFlow` (confirma) → `Android.pickProject()` | Não valida se a pasta é projeto MZ (mz-shell) |
+| Salvar projeto | 01_02, 01_04 | OK | `api.saveAll` (`api.js`) | Sem cópia de segurança (mz-shell) |
+| Fechar projeto (com "Salvar? Sim/Não") | 01_04 | OK | Arquivo → Fechar projeto (`app.js` `closeProjectFlow`) | (mz-shell) |
 | Implantação (Deployment) | 01_04, 01_11_03 | Parcial | `deploy/index.js:41-58` (botão `btnDeploy` após Testar jogo) | Ver a tabela de Implantação abaixo. |
-| Sair do RPG Maker MZ (com confirmação) | 01_04 | Parcial | `maptools/index.js:875-880` e `options.js:63-65,71` (`beforeunload`) | No Android, o botão Voltar com `mzBack()` falso fecha a Activity (`MainActivity.java:196-…`) **sem** perguntar sobre alterações não salvas. Não há item "Sair". |
-| Abrir pasta (Jogo → Abrir pasta) | 01_04 | Ausente | — | Sem equivalente; nem um "Compartilhar/abrir no gerenciador de arquivos" pelo SAF. |
+| Sair do RPG Maker MZ (com confirmação) | 01_04 | OK | Arquivo → Sair; Voltar com alterações → confirmação (`window.mzBack` → `exitFlow`); `beforeunload` em `app.js` | (mz-shell) |
+| Abrir pasta (Jogo → Abrir pasta) | 01_04 | OK | Jogo → Abrir pasta: `Android.openFolder` (ACTION_VIEW na pasta SAF); PC: `POST /api/openFolder` no devserver | Depende do app de arquivos do aparelho aceitar a pasta (mz-shell) |
 | Conversão de dados MV | 01_01_01_02 | Ausente | Nenhuma ocorrência em `editor/js` | No MZ a conversão roda ao abrir um projeto com dados MV copiados. Aqui não há detecção nem conversão. Um JSON de MV aberto passa sem aviso. Prioridade baixa. |
 
 ### Editar
@@ -105,10 +105,10 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 |---|---|---|---|---|
 | Desfazer | 01_04 | OK | `btnUndo` → `doUndo` (`maptools/index.js:243-247, 836`); Ctrl+Z em `maptools/index.js:788`; no modo evento: `events/eventmode.js:51-53, 336, 488` | O manual fala em até 20 ações; aqui são 200 por mapa (`editops.js:99`) |
 | Refazer | — (não existe no MZ 1.1.1) | Extra | Botão na faixa (`maptools/index.js:72`); Ctrl+Y / Ctrl+Shift+Z (`maptools/index.js:789`) | — |
-| Recortar | 01_04 | Parcial | `btnCut` → `doCut` (`maptools/index.js:283-287, 837`) | Em modo mapa age só na área de tiles selecionada (ferramenta Selecionar). Não recorta **dados de mapa** da lista, como o manual descreve |
-| Copiar | 01_04 | Parcial | `btnCopy` → `doCopy` (`maptools/index.js:262-270, 838`); copiar mapa só pelo menu de contexto (`maptree.js:191-196`) | O botão e o atalho não copiam o mapa selecionado na lista |
-| Colar | 01_04 | Parcial | `btnPaste` → `doPaste` (`maptools/index.js:289-298, 839`) transforma a área copiada em pincel; colar mapa só pelo menu de contexto (`maptree.js:197`) | Não cola dados de mapa pela barra |
-| Excluir | 01_04 | Parcial | `btnDelete` → `doDelete` (`maptools/index.js:272-281, 840`); tecla Del em `maptools/index.js:794` | Não exclui mapa pela barra nem pela tecla (só pelo menu de contexto, `maptree.js:198`) |
+| Recortar | 01_04 | OK | `maptools/index.js` (`treeFocused`): com a lista de mapas em foco age no mapa selecionado (`maptree.js` `copyMapToClipboard`/`pasteMapFromClipboard`/`deleteMap`) | No mapa continua agindo na área de tiles selecionada (mz-shell) |
+| Copiar | 01_04 | OK | `maptools/index.js` (`treeFocused`): com a lista de mapas em foco age no mapa selecionado (`maptree.js` `copyMapToClipboard`/`pasteMapFromClipboard`/`deleteMap`) | No mapa continua agindo na área de tiles selecionada (mz-shell) |
+| Colar | 01_04 | OK | `maptools/index.js` (`treeFocused`): com a lista de mapas em foco age no mapa selecionado (`maptree.js` `copyMapToClipboard`/`pasteMapFromClipboard`/`deleteMap`) | No mapa continua agindo na área de tiles selecionada (mz-shell) |
+| Excluir | 01_04 | OK | `maptools/index.js` (`treeFocused`): com a lista de mapas em foco age no mapa selecionado (`maptree.js` `copyMapToClipboard`/`pasteMapFromClipboard`/`deleteMap`) | No mapa continua agindo na área de tiles selecionada (mz-shell) |
 | Selecionar área | — | Extra | Ferramenta "Selecionar" na faixa (`maptools/index.js:70`) | Necessária no toque. No MZ a área vem do arrastar com botão direito, que também funciona aqui (`maptools/index.js:690-697`) |
 
 ### Modo
@@ -187,7 +187,7 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 | Opções: Tema | 01_05 | OK | `options.js:10,39,111` (claro/escuro) | — |
 | Opções: Seletor de objetos (Dropdown/Extended/Smart) | 01_05 | Parcial | `options.js:11,112` | Apenas guardado: nenhum módulo lê o valor (confirmado em NOTES.md e por busca). |
 | (extras) Ícones, Idioma, Confirmar ao sair, Salvar automaticamente | — | Extra | `options.js:12-15,113-117,50-60` | O idioma não traduz nada. O salvamento automático clica `btnSave` (só mapas). |
-| Tutoriais | 01_04, 01_05 | Ausente | — | Não implementado (declarado em NOTES.md). |
+| Tutoriais | 01_04, 01_05 | Parcial | Ajuda → Tutorial abre a ajuda (01_02) (`menubar.js`) | Tutoriais interativos não existem (mz-shell) |
 | Gerar masmorra | 01_05 | Fora do escopo | (maptools / `afterBulkEdit`) | Coberto pela auditoria de mapas. |
 
 ### Jogo
@@ -196,24 +196,24 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Testar jogo (Playtest) | 01_04 | Parcial | `btnPlay` → `openPlay` (`app.js:93-103, 124`), iframe com `/project/index.html` | **Não salva antes de testar** (o MZ salva sozinho): mapas com tiles não salvos rodam desatualizados. Sem atalho; não passa `?test` (modo de teste/depuração) |
-| Abrir pasta | 01_04 | Ausente | — | Poderia usar a ponte Android (abrir no gerenciador de arquivos) |
-| Atualizar script principal (Update Core Script) | 01_04 | Ausente | — | — |
+| Testar jogo (Playtest) | 01_04 | OK | `openPlay` em `app.js`: `api.saveAll()` e `index.html?test`; Ctrl+R | (mz-shell) |
+| Abrir pasta | 01_04 | OK | Ver Arquivo → Abrir pasta | (mz-shell) |
+| Atualizar script principal (Update Core Script) | 01_04 | OK | `updateCorescript` em `app.js` (diálogo com versões; copia `js/rmmz_*.js`, `main.js` e `js/libs` do template) | (mz-shell) |
 
 #### Detalhe
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Teste de jogo (botão) | 01_04, 01_05 | Parcial | `index.html:45,67-76`; `app.js:93-103,124-126` (iframe `/project/index.html` em sobreposição, ↻ reinicia, ✕ fecha; Voltar do Android fecha em `app.js:141-144`) | **Abre sem `?test`** (`app.js:95`), então `$gameTemp.isPlaytest()` é falso no runtime. Isso desativa F9/depuração, Ctrl para atravessar obstáculos e os demais recursos de playtest. **Não salva antes**: mapas modificados e não salvos não aparecem no teste (no MZ, o teste de jogo salva o projeto antes). |
-| Depuração F9 (switches/variáveis) | 01_05, 01_06 | Ausente | — | Depende de `?test`, e além disso o Android não tem tecla F9. Falta um botão "Depurar" na `#playBar` que chame `SceneManager.push(Scene_Debug)` no iframe. |
-| Ctrl + direção atravessa obstáculos | 01_05, 01_06 | Ausente | — | Mesmo motivo (`?test`). No toque, falta um botão de alternância. |
+| Teste de jogo (botão) | 01_04, 01_05 | OK | `app.js` `openPlay` (salva e abre `?test`) | (mz-shell) |
+| Depuração F9 (switches/variáveis) | 01_05, 01_06 | OK | Botão "Depurar (F9)" na `#playBar` (`pressGameKey("debug")`); testado no aparelho (abre Scene_Debug) | (mz-shell) |
+| Ctrl + direção atravessa obstáculos | 01_05, 01_06 | OK | Botão "Atravessar (Ctrl)" (alterna `Input._currentState.control`, `app.js` `setThrough`) | (mz-shell) |
 | F8 Ferramentas de desenvolvedor | 01_05, 01_06 | Ausente (N/A) | — | Específico do NW.js. No Android poderia usar `WebView.setWebContentsDebuggingEnabled`; no PC há o DevTools do navegador. |
-| F2/F3/F4/F5 (FPS, esticar, tela cheia, recarregar) | 01_06 | Parcial | ↻ = F5 (`app.js:126`) | F2–F4 só funcionam com teclado físico. Não há botão de tela cheia: o iframe permite `fullscreen` (`index.html:75`), mas falta o controle. |
+| F2/F3/F4/F5 (FPS, esticar, tela cheia, recarregar) | 01_06 | Parcial | ↻ = F5; botão ⛶ tela cheia (`btnPlayFull`) | F2 (FPS) só com teclado (mz-shell) |
 | Sair do teste (X da janela) | 01_05 | OK | `app.js:100-103,125` | — |
-| Teste de batalha (Banco de dados → Tropas) | 01_08 (outra área) | OK | `database/tabs_battle.js:301-326` (grava `Test_*.json` e `System.testBattlers/testTroopId`, abre `?btest`) | Não remove os `Test_*.json` ao fechar (o `etest` remove). Não passa `test`, então sem depuração. |
-| Teste de evento (lista de comandos → Test) | — | OK | `events/etest.js:13-53` (`?etest`, limpeza ao fechar) | Sem `test` (sem depuração). |
-| Abrir pasta | 01_04 | Ausente | — | Ver Arquivo. |
-| Atualizar core script | 01_04 | Ausente | — | Não há como copiar `js/rmmz_*.js`/`libs` da versão do editor para o projeto (o template em `editor/template/js/` poderia servir de fonte). |
+| Teste de batalha (Banco de dados → Tropas) | 01_08 (outra área) | OK | `database/tabs_battle.js` abre `?btest`; `app.js` `watchPlayFrame` acrescenta `&test` | Não remove os `Test_*.json` ao fechar (mz-shell) |
+| Teste de evento (lista de comandos → Test) | — | OK | `events/etest.js` (`?etest`) + `&test` por `watchPlayFrame` | (mz-shell) |
+| Abrir pasta | 01_04 | OK | Ver Arquivo | (mz-shell) |
+| Atualizar core script | 01_04 | OK | `app.js` `updateCorescript` | (mz-shell) |
 | Console / Exibir console | — | N/A | — | Não existe no MZ 1.1.1. |
 
 ### Ajuda
@@ -224,8 +224,8 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 |---|---|---|---|---|
 | Conteúdo (abre o manual) | 01_04 | OK | `btnHelpContents` → `openHelp` (`tools/help.js:9-30`, `tools/index.js:29`); manual em `editor/help/en/` | Atalho de teclado |
 | Sobre | — (janela "Sobre" do MZ) | OK | `btnHelpAbout` → `openAbout` (`tools/index.js:31`) | — |
-| Site do RPG Maker | 01_04 | Ausente | — | Não há link externo |
-| Tutoriais | 01_04 | Ausente | — | — |
+| Site do RPG Maker | 01_04 | OK | Ajuda → Site do RPG Maker (https://tkool.jp/, `Android.openUrl`) | (mz-shell) |
+| Tutoriais | 01_04 | Parcial | Ajuda → Tutorial (link para a ajuda) | (mz-shell) |
 
 #### Detalhe
 
@@ -233,9 +233,9 @@ Devserver em `127.0.0.1:8788` com o `testproject`, tela de 1280×800. Todos os d
 |---|---|---|---|---|
 | Ajuda → Conteúdo (manual) | 01_04 ("About = Help window") | OK | `tools/help.js:9-34` (iframe `editor/help/en/`, voltar/avançar/início, tópicos); botão `tools/index.js:29`, menu `:41` | Só inglês. A lista rápida de tópicos (`help.js:19-22`) não inclui 01_06 (Jogar), 01_11_03 (Formatos de saída) nem 01_01_*; chega-se a eles pela navegação. Sem atalho F1. |
 | Sobre | 01_04 | OK | `help.js:36-56` | Mostra a versão do port (0.4.0) e a do core script do projeto. |
-| Site do RPG Maker | 01_04 | Ausente | — | Falta um link (trivial). |
-| Tutoriais | 01_04 | Ausente | — | — |
-| Menu "Ajuda" como menu | 01_04 | Parcial | Botões soltos + menu ☰ (`tools/index.js:26-65`) | Não há barra de menus (Arquivo/Editar/Modo/…/Ajuda). É uma escolha consciente para o celular, mas os itens só de menu (Fechar, Abrir pasta, Atualizar core script, Sair) ficaram sem lugar. |
+| Site do RPG Maker | 01_04 | OK | `menubar.js` | (mz-shell) |
+| Tutoriais | 01_04 | Parcial | `menubar.js` (abre a ajuda) | Sem tutorial interativo (mz-shell) |
+| Menu "Ajuda" como menu | 01_04 | OK | Barra de menus completa (`menubar.js`, `#menubar` em `index.html`) | (mz-shell) |
 
 ---
 
@@ -247,13 +247,13 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
 | Ctrl+Z (desfazer) | 01_04 | OK | `maptools/index.js:788`; `events/eventmode.js:488` | — |
-| Ctrl+X / Ctrl+C / Ctrl+V | 01_04 | Parcial | `maptools/index.js:790-792` (só com área selecionada ou tiles copiados); `events/eventmode.js:485-487` | Não atuam na lista de mapas |
-| Delete | 01_04 | Parcial | `maptools/index.js:794`; `events/eventmode.js:484` | idem |
-| Ctrl+S (salvar) | 01_04 | Parcial | `maptools/index.js:793` | Bloqueado em modo evento e com diálogo aberto (`maptools/index.js:783`) |
-| Ctrl+N / Ctrl+O | 01_04 | Ausente | — | — |
-| Teclas de modo (Mapa/Evento), das ferramentas de desenho, das Ferramentas (BD, plugins…), do Playtest e da Ajuda | 01_04 | Ausente | Não há `keydown` global além de `maptools/index.js:782` e `events/eventmode.js:474`. F4/F5 do banco de dados só navegam na lista interna (`database/index.js:103`) | Mapear os atalhos do MZ |
+| Ctrl+X / Ctrl+C / Ctrl+V | 01_04 | OK | `maptools/index.js` `bindKeys` (também na lista de mapas em foco); `events/eventmode.js` | (mz-shell) |
+| Delete | 01_04 | OK | idem | (mz-shell) |
+| Ctrl+S (salvar) | 01_04 | OK | `app.js` `bindShortcuts` (também no modo evento) | (mz-shell) |
+| Ctrl+N / Ctrl+O | 01_04 | OK | `app.js` `bindShortcuts` | (mz-shell) |
+| Teclas de modo (Mapa/Evento), das ferramentas de desenho, das Ferramentas (BD, plugins…), do Playtest e da Ajuda | 01_04 | Parcial | `app.js`: F1 Ajuda, F5/F6 Mapa/Evento, F9 Banco, F10 Plugins, F11 Teste de som, Ctrl+R Teste | Teclas das ferramentas de desenho não confirmadas no MZ; não mapeadas (mz-shell) |
 | Shift ao desenhar = sem autotile | 01_07_01 | OK | `strokeStart` em `maptools/index.js:549`; no toque, botão "A" (`maptools/index.js:73-76`) | — |
-| Shift + conta-gotas = tile exato | 01_07_01 | OK | `maptools/index.js:695, 762`; `editops.js:437-460` | Sem equivalente de toque: o toque longo não consulta o botão "A" |
+| Shift + conta-gotas = tile exato | 01_07_01 | OK | `maptools/index.js` `eyedrop`; no toque, o botão "A" também vale para o conta-gotas | (mz-shell) |
 | Esc limpa a seleção | — | Extra | `maptools/index.js:795` | — |
 | Ctrl+Y / Ctrl+Shift+Z (refazer) | — | Extra | `maptools/index.js:789` | — |
 
@@ -264,7 +264,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
 | Layout: barra, paleta, lista de mapas, vista e status | 01_03 | Parcial | `index.html:22-75`; a paleta é inserida após a lista (`maptools/index.js:94-96`) | No MZ a paleta fica em cima e a lista embaixo, na coluna esquerda. Aqui são painéis lado a lado que se ocultam (`btnMaps`, `mtBtnPalette`) |
-| Barra de status: função, nome do mapa, coordenadas | 01_03, 01_07 | Parcial | `app.js:75-79` (`Mapa 001 · L×A · tileset · n eventos`); coordenadas em `app.js:108-110` | Mostra o ID e não o **nome** do mapa; não descreve a ferramenta sob o cursor |
+| Barra de status: função, nome do mapa, coordenadas | 01_03, 01_07 | OK | `app.js` `updateMapStatus` (`Mapa 001: Nome · L×A · tileset · n eventos`) | Não descreve a ferramenta sob o cursor (dicas dos menus aparecem na barra) (mz-shell) |
 | Abas A–E e R | 01_07_01, 01_03 | OK | `palette.js:10, 74-97`; abas sem folha ficam desabilitadas | — |
 | Aba A com A1–A5 | 01_07_01 | OK | `palette.js:108-133` | — |
 | Seleção múltipla na paleta (arrastar) | 01_07_01 | OK | `palette.js:240-305` (mouse: arrastar; toque: toque longo de 350 ms + arrastar) | — |
@@ -296,7 +296,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 |---|---|---|---|---|
 | Árvore com raiz = nome do projeto | 01_07_02 | OK | `app.js:16-46, 198`; `index.html:62` | — |
 | Clique seleciona e abre o mapa | 01_07_01 | OK | `app.js:34, 48-73` | — |
-| Expandir/recolher nós | (MZ) | Ausente | `buildTree` ignora `info.expanded` e sempre mostra todos os filhos (`app.js:26-41`) | Setas de expandir/recolher; `moveInfo` grava `expanded`, mas a interface não usa |
+| Expandir/recolher nós | (MZ) | OK | `app.js` `buildTree`/`setExpanded` (seta ▸/▾, duplo clique); estado em `MapInfos.expanded`, gravado no Salvar; abre os pais do mapa selecionado | (mz-shell) |
 | Menu de contexto (clique direito / toque longo de 550 ms) | 01_07_02 | OK | `maptree.js:177-238, 330-343, 393-396` | — |
 | Editar… | 01_07_02 | OK | `editMapProperties` em `maptree.js:102-128` (desfazível via `recordFull`) | Renomear não entra no desfazer |
 | Novo… | 01_07_02 | OK | `createMap` em `maptree.js:66-100` (abre Propriedades; padrão 17×13, `properties.js:374-387`) | — |
@@ -318,7 +318,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Nome | 01_07_03 | OK | `properties.js:212, 339` → `MapInfos.name` (`maptree.js:118-121`) | — |
 | Nome exibido | 01_07_03 | OK | `properties.js:213, 310` | — |
 | Tileset | 01_07_03 | OK | `properties.js:214-220, 311`; a vista é recarregada em `maptree.js:122-125` | — |
-| Largura / Altura (0–256) | 01_07_03 | Parcial | `properties.js:221-222, 328-329` limita a **1–256**; `resizeMapData` corta o excedente e anula eventos fora da área (`editops.js:463-481`) | O manual permite 0 |
+| Largura / Altura (0–256) | 01_07_03 | OK | `properties.js` (0–256) | (mz-shell) |
 | Tipo de rolagem (sem loop / vertical / horizontal / ambos) | 01_07_03 | OK | `properties.js:223-225, 312` | — |
 | Definir fundo de batalha (2 imagens) | 01_07_03 | OK | `properties.js:232-239, 316` + `openImageDialog` (`properties.js:106-145`) | — |
 | Passos de encontro (1–999) | 01_07_03 | OK | `properties.js:226, 313` | — |
@@ -331,9 +331,9 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Notas (Memo) | 01_07_03 | OK | `properties.js:266-267, 323` | — |
 | Encontros: lista; duplo clique na linha vazia adiciona | 01_07_03 | OK | `properties.js:270-297` | — |
 | Encontros: tropa | 01_07_03 | OK | `openEncounterDialog` em `properties.js:148-190` | — |
-| Encontros: peso (0–100) | 01_07_03 | Parcial | `properties.js:158, 174` limita a **1–100** | O manual permite 0 |
+| Encontros: peso (0–100) | 01_07_03 | OK | `properties.js` (0–100) | (mz-shell) |
 | Encontros: área (mapa inteiro / até 3 IDs de região) | 01_07_03 | OK | `properties.js:159-173` | — |
-| Encontros: menu de contexto Copiar/Excluir | 01_07_03 | Parcial | Botões Novo/Editar/Excluir (`properties.js:298-301`) | Faltam **Copiar/Colar** de encontro e o menu de contexto (toque longo) |
+| Encontros: menu de contexto Copiar/Excluir | 01_07_03 | OK | Botões Copiar/Colar (`encClipboard`, vale entre mapas) | Sem menu de contexto por toque longo (mz-shell) |
 | OK / Cancelar | 01_03 | OK | `properties.js:303-335` | Sem "Aplicar" (o diálogo do MZ também não tem) |
 
 #### Gerar masmorra
@@ -358,7 +358,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Salvar como imagem (PNG) | 01_07_02 | Parcial | `openSaveImageDialog/save` em `mapimage.js:136-185`; desenho em `mapimage.js:95-134` | Grava num caminho **dentro da pasta do projeto**, sem seletor de arquivo e sem compartilhar via `Android.shareFile` (a ponte existe, ver `tools/resources.js:158`). Reduz mapas maiores que 4096² px. Não desenha parallax nem eventos. A1 animado sai só no quadro 0 |
+| Salvar como imagem (PNG) | 01_07_02 | OK | `mapimage.js`: grava no projeto e compartilha (`Android.shareFile`) ou baixa (PC) | Não desenha parallax nem eventos (mz-shell) |
 
 ### Eventos
 
@@ -1109,7 +1109,7 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | `select` + `@option` / `@value` | spec / ParameterEditorSelect | OK | `params.js:442`, `parser.js:73-79` | Valor desconhecido é mantido (`params.js:244-247`). Não há digitação livre |
 | `combo` (texto livre + opções) | spec | OK | `params.js:289-309` | Grava o texto da opção, como no MZ |
 | `file` + `@dir` | spec / ParameterEditorFile | OK | `pickers.js:73-207` (subpastas, prévia de imagem e áudio, "(Nenhum)" = "") | Padrão `img` quando falta `@dir` (confirmar no MZ) |
-| `@require` | spec | Parcial | Lido em `parser.js:67`, mas nunca usado | Não marca o arquivo como obrigatório no "Excluir arquivos não utilizados" (`deploy/scan.js` usa outra heurística: valores e `@requiredAssets`) |
+| `@require` | spec | OK | `deploy/scan.js` `pluginAssetSpecs` (`@type file` + `@require 1` → `<@dir>/<valor>` mantido) | (mz-shell) |
 | `actor`, `class`, `skill`, `item`, `weapon`, `armor`, `enemy`, `troop`, `state`, `tileset`, `common_event` | spec / ParameterEditorObject | OK | `parser.js:190-203`, `pickers.js:21-59` (`0001 Nome`, "(Nenhum)" = "0") | — |
 | `animation` | spec / ParameterEditorAnimation | Parcial | Tratado como lista de banco (`pickers.js`) | O QML próprio sugere um seletor com prévia da animação |
 | `switch` / `variable` | spec / ParameterEditorSwitch/Variable | OK | `params.js:447-449`, `pickers.js:22-26` | Não é possível renomear switches/variáveis nesse seletor (o seletor de eventos do MZ permite; aqui não verificado) |
@@ -1119,7 +1119,7 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | `@parent` (árvore, inclusive dentro de struct e de args) | spec | OK | `params.js:28-53` | — |
 | `@base` / `@orderAfter` / `@orderBefore` | spec | OK | `parser.js:7, 107-108`; `manager.js:33-51` | — |
 | `@command` / `@arg` (+ `@text`, `@desc`, `@type` nos args) | spec | OK | `parser.js:95-112` | — |
-| `@noteParam` / `@noteDir` / `@noteType` / `@noteData` / `@noteRequire` | spec (distribuição) | Ausente | NOTES.md:110-111 (ignorados) | Afeta só "Excluir arquivos não utilizados" do deploy |
+| `@noteParam` / `@noteDir` / `@noteType` / `@noteData` / `@noteRequire` | spec (distribuição) | OK | `deploy/scan.js` (`<noteParam:valor>` nas notas de `@noteData` mantém `<@noteDir>/<valor>`) | (mz-shell) |
 | Coluna Valor | Dialog_PluginParameter | Parcial | `params.js:20-23` `displayValue` mostra o texto cru | Ver Divergências (rótulos de `select`/`boolean`/banco) |
 
 #### Comando de plugin (357) e MV (356)
@@ -1144,18 +1144,18 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
 | Diálogo Implantação (OK/Cancelar, progresso, log) | 01_04, 01_11_03 | OK+ | `deploy/index.js:157-330` | Cancelar no meio do processo funciona (`:176,446-447,525-527`). |
-| Plataforma Windows | 01_11_03 | Ausente (N/A) | `deploy/index.js:119-122` | Não oferecida: exigiria o runtime NW.js. Não há nem um aviso no diálogo explicando isso. |
+| Plataforma Windows | 01_11_03 | Ausente (N/A) | `deploy/index.js` `PLATFORMS`: aparece desabilitado, com dica | Requer o runtime NW.js (mz-shell) |
 | Plataforma macOS | 01_11_03 | Ausente (N/A) | idem | idem |
-| Plataforma Navegadores web (Android/iOS) | 01_11_03 | OK | `deploy/index.js:120`; pasta `:458-482`; .zip em JS `:484-503`; .zip no Android `Deployer.java:162-167` | O .zip coloca tudo sob `www/` (`index.js:491`, `Deployer.java:167`). O MZ exporta a pasta do jogo com `index.html` na raiz; para web é preciso extrair e subir o conteúdo de `www/`. |
+| Plataforma Navegadores web (Android/iOS) | 01_11_03 | OK | `deploy/index.js`; .zip com `index.html` na raiz (sem `www/`) em JS e em `Deployer.java` | (mz-shell) |
 | (extra) Android APK instalável | — | Extra | `deploy/index.js:121,506-553`; `Deployer`/`ApkBuilder`/`Signer` | Versão fixa em 1/"1.0" (NOTES). Só funciona dentro do app. |
-| Local de saída (Escolher…) | 01_11_03 | Parcial | `deploy/index.js:198-199,233-237,259-267` | Pasta **dentro do projeto** (`deploy/`) ou Download/MZEditor; não se escolhe um destino arbitrário. |
+| Local de saída (Escolher…) | 01_11_03 | OK | "Escolher…": SAF no Android (`Android.pickDeployFolder`, job `folder` em `Deployer.writeFolder`), `showDirectoryPicker` no PC | Sem escolha, continua dentro do projeto (`deploy/`) (mz-shell) |
 | Nome de saída | pedido | OK | `deploy/index.js:130,199,304` | — |
 | Excluir arquivos não utilizados | 01_11_03 | OK | `deploy/index.js:204,371-379`; `deploy/scan.js:97-186` (só img/, audio/, effects/; mantém img/system; plugins ativos; `@requiredAssets`) | Não lê `movies/` (é mantido inteiro, o que é seguro). A exclusão configurável via plugin "MaterialBase" é coberta indiretamente pelos parâmetros dos plugins ativos. |
 | Criptografar arquivos de imagem | 01_11_03 | OK | `deploy/index.js:205,392,406`; `crypto.js:69-78,96-105` (.png_ com cabeçalho RPGMV) | — |
 | Criptografar arquivos de áudio | 01_11_03 | OK | idem (.ogg_/.m4a_) | — |
-| Chave de criptografia | 01_11_03 | OK | `deploy/index.js:207-209,253,333-335,381,395` (MD5 da senha → `System.json.encryptionKey` só do pacote) | A senha não é lembrada entre sessões (o MZ guarda). |
+| Chave de criptografia | 01_11_03 | OK | `deploy/index.js` (senha lembrada por projeto em `localStorage`) | (mz-shell) |
 | Exclui save/, .rmmzproject, saída anterior | — | OK | `deploy/index.js:110-114,362-367` | — |
-| Salvar antes de implantar | (comportamento do MZ) | Ausente | — | Mapas não salvos ficam fora do pacote sem aviso. |
+| Salvar antes de implantar | (comportamento do MZ) | OK | `deploy/index.js` `start()` chama `api.saveAll()` | (mz-shell) |
 | Testar o pacote | — | Extra | `deploy/index.js:469-480` (abre o pacote no overlay de teste) | — |
 
 ### Opções
@@ -1170,21 +1170,27 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Casca e app (`app.js`, `api.js`, `android/`)
 
-1. **P0** — Carregar os módulos sem projeto aberto, para que Novo projeto, Ajuda e Opções funcionem no primeiro uso.
+1. ✅ **P0** — Carregar os módulos sem projeto aberto, para que Novo projeto, Ajuda e Opções funcionem no primeiro uso.
    Hoje `app.js:152-161` retorna antes de `loadModules`.
-2. **P0** — Implementar `WebChromeClient.onShowFileChooser` (e `webkitdirectory` ou SAF de pasta) em `MainActivity.java`.
+2. ✅ **P0** — Implementar `WebChromeClient.onShowFileChooser` (e `webkitdirectory` ou SAF de pasta) em `MainActivity.java`.
    Sem isso, nenhum Importar funciona no Android.
-3. **P0** — Testar jogo deve salvar tudo antes e abrir `index.html?test` (também `?btest&test` e `?etest&test`).
+3. ✅ **P0** — Testar jogo deve salvar tudo antes e abrir `index.html?test` (também `?btest&test` e `?etest&test`).
    Na `#playBar`, pôr equivalentes de toque para F9 (Depurar) e Ctrl (atravessar).
-4. **P0** — Unificar o salvamento num "projeto modificado" único:
+4. ✅ **P0** — Unificar o salvamento num "projeto modificado" único:
    - Salvar grava mapas, banco, plugins e eventos;
    - confirmar ao abrir ou criar outro projeto (`MainActivity.java:128,158`) e ao sair pelo Voltar.
    - Decidir se o modelo "grava na hora" fica; se ficar, documentar. Ver Divergências.
-5. **P1** — Corrigir a gravação imediata de eventos (`events/eventmode.js:72`), que leva junto tiles não salvos e não limpa a flag `modified` do maptools.
-6. **P1** — Barra de menus em texto (Arquivo/Editar/Modo/Desenhar/Escala/Ferramentas/Jogo/Ajuda) ou um menu ☰ completo com todos os itens de `01_04`.
+5. ✅ **P1** — Corrigir a gravação imediata de eventos (`events/eventmode.js:72`), que leva junto tiles não salvos e não limpa a flag `modified` do maptools.
+6. ✅ **P1** — Barra de menus em texto (Arquivo/Editar/Modo/Desenhar/Escala/Ferramentas/Jogo/Ajuda) ou um menu ☰ completo com todos os itens de `01_04`.
    Incluir Fechar projeto, Abrir pasta (compartilhar/mostrar caminho), Atualizar core script, Sair, Site e Tutoriais.
-7. **P1** — Atalhos de teclado do `01_04` para teclado físico/DeX: Ctrl+N/O, F1, F5–F8 (modos), ferramentas de desenho, F9–F11 (Ferramentas) e Ctrl+R (teste).
-8. **P2** — Barra de status com o nome do mapa (`app.js:78`). Menu de contexto da lista de mapas deve fechar com Esc e com a abertura de diálogos (bug visto).
+7. ✅ **P1** — Atalhos de teclado do `01_04` para teclado físico/DeX: Ctrl+N/O, F1, F5–F8 (modos), ferramentas de desenho, F9–F11 (Ferramentas) e Ctrl+R (teste).
+8. ✅ **P2** — Barra de status com o nome do mapa (`app.js:78`). Menu de contexto da lista de mapas deve fechar com Esc e com a abertura de diálogos (bug visto).
+
+**Estado (mz-shell, 2026-11-05):** 1–8 feitos. Observações: no item 4, banco de dados e plugins (arquivos de outras sessões)
+continuam gravando no OK/Aplicar, mas já têm `api.markDirty`/`api.on("save")` para migrar; a posição inicial (System.json) do modo
+evento também grava na hora, para não divergir do diálogo do banco. No item 2, a escolha de pasta (`webkitdirectory`) abre o SAF de
+pasta e devolve a árvore ao WebView; o seletor de arquivos (múltiplos, filtrado por tipo) foi conferido no aparelho, a pasta não
+(o aparelho estava em uso por outra sessão). Teclas das ferramentas de desenho não mapeadas (não confirmadas no MZ).
 
 ### Novo projeto e recursos (`tools/`)
 
@@ -1198,11 +1204,11 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Mapa (`maptools/`)
 
-1. **P1** — Expandir/recolher nós na lista de mapas (`app.js:26-41`). Em projeto grande, a árvore fica inviável no celular.
-2. **P1** — Botões Editar (Recortar/Copiar/Colar/Excluir) devem agir no mapa selecionado na lista quando o foco está nela, como no MZ.
-3. **P2** — Limites das Propriedades do mapa iguais ao manual: largura/altura a partir de 0 e peso de encontro a partir de 0. Copiar/Colar nos encontros.
-4. **P2** — Salvar como imagem com compartilhar (`Android.shareFile`) ou escolha do destino.
-5. **P3** — Conta-gotas "exato" (Shift) por toque. O botão "A" poderia valer também para ele.
+1. ✅ **P1** — Expandir/recolher nós na lista de mapas (`app.js:26-41`). Em projeto grande, a árvore fica inviável no celular.
+2. ✅ **P1** — Botões Editar (Recortar/Copiar/Colar/Excluir) devem agir no mapa selecionado na lista quando o foco está nela, como no MZ.
+3. ✅ **P2** — Limites das Propriedades do mapa iguais ao manual: largura/altura a partir de 0 e peso de encontro a partir de 0. Copiar/Colar nos encontros.
+4. ✅ **P2** — Salvar como imagem com compartilhar (`Android.shareFile`) ou escolha do destino.
+5. ✅ **P3** — Conta-gotas "exato" (Shift) por toque. O botão "A" poderia valer também para ele.
 
 ### Eventos (`events/`)
 
@@ -1253,7 +1259,7 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
    Os plugins oficiais PluginCommonBase, ExtraWindow e ExtraImage dependem disso.
 2. **P1** — "Inserir número de ícone" nos editores de texto de parâmetro (`params.js:173`).
 3. **P2** — Comando de plugin deve listar só plugins ativados (`events/commands.js:1383`); coluna Valor com rótulos amigáveis (`params.js:20-23`).
-4. **P2** — `@require` e `@noteParam`/`@noteDir` no "Excluir arquivos não utilizados" da Implantação, para não apagar arquivos que plugins usam.
+4. ✅ **P2** — `@require` e `@noteParam`/`@noteDir` no "Excluir arquivos não utilizados" da Implantação, para não apagar arquivos que plugins usam.
 5. **P3** — Atualizar vários plugins de uma vez, menu de contexto do gerenciador, seletor próprio para `@type animation` e bloco de idioma pela interface.
 
 ### Gerador (`generator/`)
@@ -1264,9 +1270,9 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Implantação (`deploy/`)
 
-1. **P1** — Salvar o projeto antes de implantar.
-2. **P2** — .zip web com a mesma estrutura do MZ (sem a pasta `www/` na raiz); saída fora do projeto via SAF.
-3. **P3** — Lembrar a senha de criptografia. Windows/macOS ficam fora por decisão de plataforma (registrar no README).
+1. ✅ **P1** — Salvar o projeto antes de implantar.
+2. ✅ **P2** — .zip web com a mesma estrutura do MZ (sem a pasta `www/` na raiz); saída fora do projeto via SAF.
+3. ✅ **P3** — Lembrar a senha de criptografia. Windows/macOS ficam fora por decisão de plataforma (registrar no README).
 
 ## Divergências de comportamento
 
@@ -1278,11 +1284,11 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
   - toque longo = clique direito (lista 550 ms, mapa 500 ms);
   - pinça = zoom;
   - botão "A" = Shift.
-- **Gravação:** Banco, Plugins (`plugins.js` no OK/Aplicar, `manager.js:312-323`) e Eventos gravam na hora.
+- **Gravação:** Banco e Plugins (`plugins.js` no OK/Aplicar, `manager.js:312-323`) gravam na hora. Mapas, lista de mapas e eventos agora esperam o Salvar (mz-shell).
   No MZ, tudo fica em memória até "Salvar projeto"; aqui, "não salvar" não desfaz essas mudanças.
 - **Abrir projeto** escolhe uma pasta (SAF), e não o `game.rmmzproject`. Não valida se é projeto MZ nem a versão.
 - **Novo projeto** gera um template mínimo (49 arquivos). No Android, a pasta-mãe é escolhida depois do OK, e um nome repetido vira "Nome (1)" sem aviso.
-- **Teste de jogo** roda em iframe sem `test`, então o jogo se comporta como versão final.
+- ~~**Teste de jogo** roda em iframe sem `test`~~ — corrigido (mz-shell): salva antes e abre `?test`.
 - **Layout:** lista de mapas e paleta em colunas separadas e ocultáveis; no celular (≤ 700 px) as duas começam ocultas.
 
 ### Mapa
@@ -1357,8 +1363,8 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
 - Recursos criptografados (`.png_`/`.ogg_`) não aparecem no Gerenciador de recursos, o que é coerente com 01_11_03.
 - **Implantação:**
   - sem Windows/macOS; APK extra;
-  - saída dentro do projeto ou em Download/MZEditor;
-  - .zip sob `www/`;
-  - senha não guardada;
+  - saída dentro do projeto, em Download/MZEditor (.zip/APK) ou numa pasta escolhida (Escolher…);
+  - ~~.zip sob `www/`~~ (corrigido: `index.html` na raiz);
+  - ~~senha não guardada~~ (lembrada por projeto);
   - chave = MD5 da senha, compatível com o runtime (autoteste em `deploy/index.js:382-390`).
 - Teste de batalha não limpa os `data/Test_*.json`.

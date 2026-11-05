@@ -152,3 +152,15 @@ Rodada 2 (1280×600): destaque da Camada 4, Carregar "Cidade Normal", Salvar com
 Labirinto com margens e passagens largas), Deslocar X=5 com desfazer, arrastar para
 dentro de outro mapa e para antes de um irmão (MapInfos conferido), Excluir com os
 arquivos apagados (404).
+
+## Atualização (mz-shell, 2026-11-05)
+- Salvamento unificado: o maptools não grava mais. `updateButtons` marca `api.markDirty(MapXXX, map)` para mapas
+  modificados; `api.on("saved")` limpa `MapEdit.modified`. Novo/Colar/Excluir mapa e mudanças em MapInfos
+  (renomear, arrastar) ficam em memória até Salvar (exclusão = `markDirty(path, null, {del:true})`).
+- Editar da barra (Recortar/Copiar/Colar/Excluir e Ctrl+X/C/V/Del) age no mapa selecionado quando a lista tem o foco
+  (`S.focus`, classe `#sidebar.mtTreeFocus`).
+- Menu de contexto da lista fecha com Esc e quando um diálogo abre (`api` emite `dialog:open`).
+- Propriedades: largura/altura 0–256, peso de encontro 0–100, Copiar/Colar de encontros.
+- Salvar como imagem: opção de compartilhar (Android) ou baixar (PC) depois de gravar.
+- Conta-gotas exato também com o botão "A".
+- A árvore (expandir/recolher, `MapInfos.expanded`) é desenhada em `app.js`.
