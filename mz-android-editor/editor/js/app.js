@@ -508,6 +508,19 @@ async function boot() {
     });
     $("btnPlayDebug").addEventListener("click", () => pressGameKey("debug"));
     $("btnPlayThrough").addEventListener("click", () => setThrough(!throughTimer));
+    // Tela cheia (extensão do port): resolução ajustada à proporção da tela, lembrada; ver /fitscreen.js
+    const fitKey = "mzEditor.fitScreen";
+    // padrão: ligado no Android (pedido do usuário), desligado no PC (fiel ao MZ)
+    try { if (localStorage.getItem(fitKey) === null) { localStorage.setItem(fitKey, android ? "1" : "0"); } } catch (_) { /* sem storage */ }
+    const fitOn = () => { try { return localStorage.getItem(fitKey) === "1"; } catch (_) { return false; } };
+    $("btnPlayFit").classList.toggle("on", fitOn());
+    $("btnPlayFit").addEventListener("click", () => {
+        const on = !fitOn();
+        try { localStorage.setItem(fitKey, on ? "1" : "0"); } catch (_) { /* sem storage */ }
+        $("btnPlayFit").classList.toggle("on", on);
+        setThrough(false);
+        try { $("playFrame").contentWindow.location.reload(); } catch (_) { /* outra origem */ }
+    });
     $("btnPlayFull").addEventListener("click", () => {
         const f = $("playFrame");
         if (document.fullscreenElement) { document.exitFullscreen(); } else if (f.requestFullscreen) { f.requestFullscreen().catch(() => {}); }

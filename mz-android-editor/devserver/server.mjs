@@ -147,7 +147,26 @@ const server = http.createServer(async (req, res) => {
             return send(res, 404, "unknown api");
         }
         if (p.startsWith("/project/")) {
-            return serveStatic(res, PROJECT_DIR, p.slice("/project/".length) || "index.html");
+            const rel = p.slice("/project/".length) || "index.html";
+            if (rel === "index.html" || rel.endsWith("/index.html")) {
+                // teste de jogo: injeta /fitscreen.js (tela cheia opcional) antes do main.js
+                const file = safeJoin(PROJECT_DIR, rel);
+                try {
+                    let html = await fsp.readFile(file, "utf8");
+                    if (!html.includes("/fitscreen.js")) {
+                        const m = html.indexOf("main.js");
+                        let at = m >= 0 ? html.lastIndexOf("<script", m) : -1;
+                        if (at < 0) { at = html.lastIndexOf("</body>"); }
+                        if (at >= 0) {
+                            html = html.slice(0, at) + '<script type="text/javascript" src="/fitscreen.js"></script>\n' + html.slice(at);
+                        }
+                    }
+                    return send(res, 200, html, MIME[".html"]);
+                } catch {
+                    return send(res, 404, "not found");
+                }
+            }
+            return serveStatic(res, PROJECT_DIR, rel);
         }
         if (p === "/project") {
             res.writeHead(302, { Location: "/project/index.html" });

@@ -41,6 +41,8 @@ public class PlayerActivity extends Activity {
 
     private WebView web;
     private AssetManager assets;
+    /** app.json "fit": resolução ajustada à tela (mz_fitscreen.js injetado no index.html). */
+    private boolean fitScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class PlayerActivity extends Activity {
     private void applyAppJson() {
         try (InputStream in = assets.open("www/app.json")) {
             JSONObject o = new JSONObject(new String(readAll(in), StandardCharsets.UTF_8));
+            fitScreen = o.optBoolean("fit", false);
             String title = o.optString("title", "");
             if (!title.isEmpty()) {
                 setTitle(title);
@@ -105,6 +108,23 @@ public class PlayerActivity extends Activity {
         }
         String rel = "www" + path;
         String type = mime(path);
+        if (fitScreen && path.equals("/index.html")) {
+            try (InputStream in = assets.open(rel)) {
+                String html = new String(readAll(in), StandardCharsets.UTF_8);
+                String tag = "<script>window.MZ_FIT=true;</script><script type=\"text/javascript\" src=\"mz_fitscreen.js\"></script>\n";
+                int m = html.indexOf("main.js");
+                int at = m >= 0 ? html.lastIndexOf("<script", m) : html.lastIndexOf("</body>");
+                if (at >= 0) {
+                    html = html.substring(0, at) + tag + html.substring(at);
+                }
+                Map<String, String> h = new HashMap<>();
+                h.put("Cache-Control", "no-cache");
+                return new WebResourceResponse("text/html", "utf-8", 200, "OK", h,
+                    new ByteArrayInputStream(html.getBytes(StandardCharsets.UTF_8)));
+            } catch (IOException e) {
+                return error(404, "Not Found");
+            }
+        }
         Map<String, String> headers = new HashMap<>();
         headers.put("Access-Control-Allow-Origin", "*");
         headers.put("Cache-Control", "no-cache");

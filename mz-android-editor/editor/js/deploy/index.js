@@ -137,7 +137,8 @@ function loadSettings(api, system) {
         encAudio: false,
         appName: (system && system.gameTitle) || name,
         packageName: "br.mz.game." + slug,
-        install: true
+        install: true,
+        fitScreen: true
     };
     try {
         const saved = JSON.parse(localStorage.getItem("mzDeploy:" + name) || "{}");
@@ -241,6 +242,8 @@ export async function openDeployDialog(api) {
     const appName = input(s.appName);
     const pkg = input(s.packageName, { spellcheck: "false" });
     const install = check(s.install, t("Offer to install when finished"));
+    // extensão do port: resolução ajustada à proporção da tela do aparelho (sem barras pretas)
+    const fit = check(s.fitScreen !== false, t("Full screen (fit the resolution to the screen)"));
 
     const bar = el("div", { class: "dpBar" }, el("div", { class: "dpBarFill" }));
     const barText = el("span", { class: "dpBarText", text: "" });
@@ -255,6 +258,7 @@ export async function openDeployDialog(api) {
             el("span", { text: t("App name") }), appName,
             el("span", { text: t("Package name") }), pkg),
         install.row,
+        fit.row,
         el("div", { class: "dpHint", id: "dpApkHint" }));
 
     const encKeyRow = el("div", { class: "dpGrid" }, el("span", { text: t("Encryption key", "Layout_DeploymentOptions") }), el("div", { class: "dpKey" }, key, showKey));
@@ -352,7 +356,8 @@ export async function openDeployDialog(api) {
             encAudio: encAud.box.checked,
             appName: appName.value.trim(),
             packageName: pkg.value.trim(),
-            install: install.box.checked
+            install: install.box.checked,
+            fitScreen: fit.box.checked
         });
         logBox.textContent = "";
         result.textContent = "";
@@ -463,6 +468,10 @@ async function buildPlan(api, s, password, ui) {
         plan.push({ src: f, dst: e ? f + "_" : f, enc: !!e });
     }
     const inline = [{ dst: "data/System.json", text: JSON.stringify(system) }];
+    if (s.platform === "apk" && s.fitScreen) {
+        const r = await fetch("fitscreen.js", { cache: "no-store" });
+        if (r.ok) { inline.push({ dst: "mz_fitscreen.js", text: await r.text() }); }
+    }
     log(t("%1 file(s) in the package, %2 encrypted.", null, plan.length + 1, nEnc));
     return { plan, inline, keyHex };
 }
@@ -610,6 +619,7 @@ async function runJavaJob(api, kind, s, plan, inline, keyHex, ui) {
         keyHex,
         icon: "icon/icon.png",
         outTree: kind === "folder" ? s.outTree : undefined,
+        fitScreen: kind === "apk" ? !!s.fitScreen : undefined,
         files: plan,
         inline
     };

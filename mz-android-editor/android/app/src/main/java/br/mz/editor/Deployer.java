@@ -361,6 +361,7 @@ final class Deployer {
                 JSONObject app = new JSONObject();
                 app.put("title", appName);
                 app.put("packageName", pkg);
+                app.put("fit", req.optBoolean("fitScreen", false)); // tela cheia: o player injeta mz_fitscreen.js
                 zip.add("assets/www/app.json", app.toString().getBytes(StandardCharsets.UTF_8), true);
                 job.done++;
                 addGameFiles(job, prj, zip, "assets/www/", files, inline, key);

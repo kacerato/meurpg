@@ -288,6 +288,15 @@ public class LocalServer implements Runnable {
             return;
         }
         String type = Mime.of(rel);
+        if (rel.equals("index.html") || rel.endsWith("/index.html")) {
+            // teste de jogo: injeta /fitscreen.js (tela cheia opcional) antes do main.js
+            byte[] html;
+            try (InputStream in = prj.open(entry)) {
+                html = readAll(in);
+            }
+            bytes(out, 200, "text/html; charset=utf-8", injectFitScreen(html), req);
+            return;
+        }
         long size = entry.size;
         String rangeHeader = req.headers.get("range");
         long start = 0;
@@ -374,6 +383,24 @@ public class LocalServer implements Runnable {
     private static void redirect(OutputStream out, String location) throws IOException {
         String head = "HTTP/1.1 302 Found\r\nLocation: " + location + "\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
         out.write(head.getBytes(StandardCharsets.ISO_8859_1));
+    }
+
+    /** Põe <script src="/fitscreen.js"> antes do <script ... main.js> (ou antes de </body>). */
+    static byte[] injectFitScreen(byte[] html) {
+        String s = new String(html, StandardCharsets.UTF_8);
+        if (s.contains("/fitscreen.js")) {
+            return html;
+        }
+        String tag = "<script type=\"text/javascript\" src=\"/fitscreen.js\"></script>\n";
+        int m = s.indexOf("main.js");
+        int at = m >= 0 ? s.lastIndexOf("<script", m) : -1;
+        if (at < 0) {
+            at = s.lastIndexOf("</body>");
+        }
+        if (at < 0) {
+            return html;
+        }
+        return (s.substring(0, at) + tag + s.substring(at)).getBytes(StandardCharsets.UTF_8);
     }
 
     static byte[] readAll(InputStream in) throws IOException {
