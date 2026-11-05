@@ -7,6 +7,7 @@ import { MapEdit, LAYER_AUTO } from "./editops.js";
 import { Palette } from "./palette.js";
 import { regionColor } from "./render.js";
 import { initMapTree } from "./maptree.js";
+import { t } from "../i18n.js";
 
 const TILE = 48;
 const TOOLS = { btnPencil: "pencil", btnRect: "rect", btnEllipse: "ellipse", btnFill: "fill", btnShadow: "shadow" };
@@ -67,27 +68,27 @@ function buildPanel() {
         return b;
     };
     S.ui = {};
-    S.ui.select = mk("toggle", "Selecionar área (para Recortar/Copiar/Excluir)", '<span class="mtMarquee"></span>', () => setTool(S.tool === "select" ? null : "select"));
-    S.ui.undo = mk("", "Desfazer (Ctrl+Z)", '<img src="img/toolbar/edit-undo.png" alt="">', () => doUndo());
-    S.ui.redo = mk("", "Refazer (Ctrl+Y)", '<img src="img/toolbar/edit-redo.png" alt="">', () => doRedo());
-    S.ui.auto = mk("toggle", "Sem autotile (o mesmo que segurar Shift)", '<span class="mtNoAuto">A</span>', () => {
+    S.ui.select = mk("toggle", t("Select area (for Cut/Copy/Delete)"), '<span class="mtMarquee"></span>', () => setTool(S.tool === "select" ? null : "select"));
+    S.ui.undo = mk("", t("Undo", "BasicConstants") + " (Ctrl+Z)", '<img src="img/toolbar/edit-undo.png" alt="">', () => doUndo());
+    S.ui.redo = mk("", t("Redo", "BasicConstants") + " (Ctrl+Y)", '<img src="img/toolbar/edit-redo.png" alt="">', () => doRedo());
+    S.ui.auto = mk("toggle", t("No autotile (same as holding Shift)"), '<span class="mtNoAuto">A</span>', () => {
         S.autotileOff = !S.autotileOff;
         S.ui.auto.classList.toggle("on", S.autotileOff);
     });
     const layer = document.createElement("select");
     layer.className = "mtLayer";
-    layer.title = "Camada";
-    [["-1", "Automático"], ["0", "Camada 1"], ["1", "Camada 2"], ["2", "Camada 3"], ["3", "Camada 4"]].forEach(([v, t]) => {
+    layer.title = t("Layer", "MainMenu");
+    [["-1", t("Automatic", "MainMenu")], ...[0, 1, 2, 3].map(z => [String(z), t("Layer %1", "MainMenu", z + 1)])].forEach(([v, text]) => {
         const o = document.createElement("option");
         o.value = v;
-        o.textContent = t;
+        o.textContent = text;
         layer.appendChild(o);
     });
     layer.addEventListener("change", () => { S.layer = Number(layer.value); rebuildLayerView(); drawOverlay(); });
     strip.appendChild(layer);
     S.ui.layer = layer;
-    mk("", "Tiles menores", "−", () => S.palette.setCellSize(Math.max(16, S.palette.cell - 8)));
-    mk("", "Tiles maiores", "+", () => S.palette.setCellSize(Math.min(48, S.palette.cell + 8)));
+    mk("", t("Smaller tiles"), "−", () => S.palette.setCellSize(Math.max(16, S.palette.cell - 8)));
+    mk("", t("Larger tiles"), "+", () => S.palette.setCellSize(Math.min(48, S.palette.cell + 8)));
 
     const pal = document.createElement("div");
     panel.append(strip, pal);
@@ -107,7 +108,7 @@ function buildPanel() {
     const toggle = document.createElement("button");
     toggle.id = "mtBtnPalette";
     toggle.className = "tb toggle on";
-    toggle.title = "Mostrar/ocultar paleta de tiles";
+    toggle.title = t("Show/hide tile palette");
     toggle.innerHTML = '<span class="mtPalIcon"></span>';
     toggle.addEventListener("click", () => {
         panel.classList.toggle("hidden");
@@ -126,9 +127,9 @@ function buildPanel() {
 
 function setTool(tool) {
     S.tool = tool;
-    for (const [id, t] of Object.entries(TOOLS)) {
+    for (const [id, name] of Object.entries(TOOLS)) {
         const b = $(id);
-        if (b) { b.classList.toggle("on", t === tool); }
+        if (b) { b.classList.toggle("on", name === tool); }
     }
     if (S.ui) { S.ui.select.classList.toggle("on", tool === "select"); }
     if (tool !== "select") {
@@ -221,7 +222,7 @@ function updateButtons() {
     if (save) { save.classList.toggle("mtModified", mod); }
     const ind = $("mtModifiedFlag");
     if (ind) {
-        ind.textContent = mod ? "● Modificado" : "";
+        ind.textContent = mod ? "● " + t("Modified") : "";
     }
 }
 
@@ -236,7 +237,7 @@ function afterHistory(rec, edit) {
     } else {
         refreshView();
     }
-    api.status((rec === edit.redoStack[edit.redoStack.length - 1] ? "Desfazer: " : "Refazer: ") + (rec.label || ""));
+    api.status((rec === edit.redoStack[edit.redoStack.length - 1] ? t("Undo", "BasicConstants") : t("Redo", "BasicConstants")) + ": " + (rec.label || ""));
     updateButtons();
 }
 
@@ -264,12 +265,12 @@ function doCopy() {
     const r = selRect();
     if (!e || !r || isEventMode()) { return false; }
     S.clipboard = e.copyArea(...r);
-    api.status(`Copiado ${S.clipboard.w}×${S.clipboard.h}`);
+    api.status(t("Copied %1×%2", null, S.clipboard.w, S.clipboard.h));
     updateButtons();
     return true;
 }
 
-function doDelete(label = "Excluir") {
+function doDelete(label = t("Delete", "BasicConstants")) {
     const e = currentEdit();
     const r = selRect();
     if (!e || !r || isEventMode()) { return; }
@@ -282,7 +283,7 @@ function doDelete(label = "Excluir") {
 
 function doCut() {
     if (doCopy()) {
-        doDelete("Recortar");
+        doDelete(t("Cut", "BasicConstants"));
     }
 }
 
@@ -293,7 +294,7 @@ function doPaste() {
     if (S.tool !== "pencil") {
         setTool("pencil");
     }
-    api.status("Colar: toque no mapa para posicionar");
+    api.status(t("Paste: tap the map to place it"));
     drawOverlay();
 }
 
@@ -310,10 +311,10 @@ async function doSave() {
                 api.emit("map:changed", { id: e.id });
             }
         }
-        api.status(n ? `Projeto salvo (${n} mapa${n > 1 ? "s" : ""})` : "Projeto salvo");
+        api.status(n ? t(n > 1 ? "Project saved (%1 maps)" : "Project saved (%1 map)", null, n) : t("Project saved"));
     } catch (err) {
         console.error(err);
-        api.status("Falha ao salvar: " + (err.message || err));
+        api.status(t("Failed to save: %1", null, err.message || err));
     }
     updateButtons();
 }
@@ -543,37 +544,37 @@ function linePoints(x0, y0, x1, y1) {
     return pts;
 }
 
-function strokeStart(g, t, shift) {
+function strokeStart(g, tile, shift) {
     const e = g.edit;
     const region = S.palette.isRegion;
     g.auto = !(shift || S.autotileOff) && !region;
-    g.last = t;
-    g.anchor = t;
+    g.last = tile;
+    g.anchor = tile;
     const brush = S.brush;
     switch (g.tool) {
         case "pencil":
-            e.begin("Lápis");
-            e.stamp(brush, t.x, t.y, t.x, t.y, S.layer, region);
+            e.begin(t("Pencil", "MainMenu"));
+            e.stamp(brush, tile.x, tile.y, tile.x, tile.y, S.layer, region);
             break;
         case "rect":
         case "ellipse":
-            e.begin(g.tool === "rect" ? "Retângulo" : "Elipse");
-            e.fillRect(brush, t.x, t.y, t.x, t.y, S.layer, region, g.tool === "ellipse");
+            e.begin(g.tool === "rect" ? t("Rectangle", "MainMenu") : t("Ellipse", "MainMenu"));
+            e.fillRect(brush, tile.x, tile.y, tile.x, tile.y, S.layer, region, g.tool === "ellipse");
             break;
         case "fill":
-            e.begin("Preenchimento");
-            e.floodFill(brush, t.x, t.y, S.layer, region);
+            e.begin(t("Flood Fill", "MainMenu"));
+            e.floodFill(brush, tile.x, tile.y, S.layer, region);
             break;
         case "shadow": {
-            e.begin("Sombra");
-            const bit = 1 << (t.qy * 2 + t.qx);
-            g.shadowOn = !(e.get(t.x, t.y, 4) & bit);
-            e.shadowQuarter(t.x, t.y, bit, g.shadowOn);
-            g.lastQ = `${t.x},${t.y},${bit}`;
+            e.begin(t("Shadow Pen", "MainMenu"));
+            const bit = 1 << (tile.qy * 2 + tile.qx);
+            g.shadowOn = !(e.get(tile.x, tile.y, 4) & bit);
+            e.shadowQuarter(tile.x, tile.y, bit, g.shadowOn);
+            g.lastQ = `${tile.x},${tile.y},${bit}`;
             break;
         }
         case "select":
-            S.selection = { x0: t.x, y0: t.y, x1: t.x, y1: t.y };
+            S.selection = { x0: tile.x, y0: tile.y, x1: tile.x, y1: tile.y };
             break;
     }
     if (g.tool !== "select" && g.tool !== "shadow") {
@@ -582,14 +583,14 @@ function strokeStart(g, t, shift) {
     refreshView();
 }
 
-function strokeMove(g, t) {
+function strokeMove(g, tile) {
     const e = g.edit;
     const region = S.palette.isRegion;
     const brush = S.brush;
     switch (g.tool) {
         case "pencil": {
-            if (t.x === g.last.x && t.y === g.last.y) { return; }
-            for (const [x, y] of linePoints(g.last.x, g.last.y, t.x, t.y).slice(1)) {
+            if (tile.x === g.last.x && tile.y === g.last.y) { return; }
+            for (const [x, y] of linePoints(g.last.x, g.last.y, tile.x, tile.y).slice(1)) {
                 e.stamp(brush, g.anchor.x, g.anchor.y, x, y, S.layer, region);
             }
             e.fixup(g.auto);
@@ -597,27 +598,27 @@ function strokeMove(g, t) {
         }
         case "rect":
         case "ellipse":
-            if (t.x === g.last.x && t.y === g.last.y) { return; }
+            if (tile.x === g.last.x && tile.y === g.last.y) { return; }
             e.rollback();
-            e.fillRect(brush, g.anchor.x, g.anchor.y, t.x, t.y, S.layer, region, g.tool === "ellipse");
+            e.fillRect(brush, g.anchor.x, g.anchor.y, tile.x, tile.y, S.layer, region, g.tool === "ellipse");
             e.fixup(g.auto);
             break;
         case "shadow": {
-            const bit = 1 << (t.qy * 2 + t.qx);
-            const k = `${t.x},${t.y},${bit}`;
+            const bit = 1 << (tile.qy * 2 + tile.qx);
+            const k = `${tile.x},${tile.y},${bit}`;
             if (k === g.lastQ) { return; }
             g.lastQ = k;
-            e.shadowQuarter(t.x, t.y, bit, g.shadowOn);
+            e.shadowQuarter(tile.x, tile.y, bit, g.shadowOn);
             break;
         }
         case "select":
-            S.selection.x1 = Math.max(0, Math.min(e.w - 1, t.x));
-            S.selection.y1 = Math.max(0, Math.min(e.h - 1, t.y));
+            S.selection.x1 = Math.max(0, Math.min(e.w - 1, tile.x));
+            S.selection.y1 = Math.max(0, Math.min(e.h - 1, tile.y));
             break;
         default:
             return;
     }
-    g.last = t;
+    g.last = tile;
     refreshView();
 }
 
@@ -645,7 +646,7 @@ function eyedrop(g, t0, t1, exact) {
         const b = e.copyArea(t0.x, t0.y, t1.x, t1.y);
         S.brush = b;
         S.palette.clearSelectionMark();
-        api.status(`Pincel ${b.w}×${b.h} copiado do mapa`);
+        api.status(t("Brush %1×%2 copied from the map", null, b.w, b.h));
     } else {
         const p = e.pick(t0.x, t0.y, S.layer, region, exact);
         if (!p) { return; }
@@ -685,29 +686,29 @@ function bindViewport() {
             return; // este evento segue para o visualizador (pinça)
         }
         if (!edit || isEventMode() || dialogOpen()) { return; }
-        const t = tileFromEvent(e);
+        const tile = tileFromEvent(e);
         const isMouse = e.pointerType === "mouse";
         if (isMouse && e.button === 2) {
             // conta-gotas / cópia de área com o botão direito
             e.stopPropagation();
             e.preventDefault();
             vp.setPointerCapture(e.pointerId);
-            S.gesture = { pointerId: e.pointerId, edit, mode: "pick", t0: t, t1: t, exact: e.shiftKey, lastX: e.clientX, lastY: e.clientY };
+            S.gesture = { pointerId: e.pointerId, edit, mode: "pick", t0: tile, t1: tile, exact: e.shiftKey, lastX: e.clientX, lastY: e.clientY };
             return;
         }
         if (isMouse && e.button !== 0) { return; }
         if (!S.tool) { return; } // sem ferramenta: o visualizador rola/arrasta
-        if (!edit.grid.inside(t.x, t.y) && S.tool !== "select") { return; }
+        if (!edit.grid.inside(tile.x, tile.y) && S.tool !== "select") { return; }
         e.stopPropagation();
         e.preventDefault();
         if (isMouse) { vp.setPointerCapture(e.pointerId); }
         const gg = {
             pointerId: e.pointerId, edit, tool: S.tool, mode: "draw", tapOnly: true,
-            startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, t0: t,
+            startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, t0: tile,
             prevSel: S.selection
         };
         S.gesture = gg;
-        strokeStart(gg, t, e.shiftKey);
+        strokeStart(gg, tile, e.shiftKey);
         if (!isMouse) {
             // toque longo parado = conta-gotas (desfaz o que o toque desenhou)
             gg.longTimer = setTimeout(() => {
@@ -718,7 +719,7 @@ function bindViewport() {
                 gg.t1 = gg.t0;
                 if (navigator.vibrate) { navigator.vibrate(20); }
                 refreshView();
-                api.status("Conta-gotas: solte para pegar o tile, arraste para copiar uma área");
+                api.status(t("Eyedropper: release to pick the tile, drag to copy an area"));
             }, LONG_MS);
         }
     }, { capture: true });
@@ -726,10 +727,10 @@ function bindViewport() {
     vp.addEventListener("pointermove", e => {
         const edit = currentEdit();
         if (edit && S.tool && !isEventMode()) {
-            const t = tileFromEvent(e);
+            const tile = tileFromEvent(e);
             const h = S.hover;
-            if (!h || h.x !== t.x || h.y !== t.y || h.qx !== t.qx || h.qy !== t.qy) {
-                S.hover = t;
+            if (!h || h.x !== tile.x || h.y !== tile.y || h.qx !== tile.qx || h.qy !== tile.qy) {
+                S.hover = tile;
                 drawOverlay();
             }
         }
@@ -737,10 +738,10 @@ function bindViewport() {
         if (!g || e.pointerId !== g.pointerId) { return; }
         g.lastX = e.clientX;
         g.lastY = e.clientY;
-        const t = tileFromEvent(e);
+        const tile = tileFromEvent(e);
         if (g.mode === "pick") {
-            g.t1 = t;
-            S.selection = { x0: g.t0.x, y0: g.t0.y, x1: t.x, y1: t.y };
+            g.t1 = tile;
+            S.selection = { x0: g.t0.x, y0: g.t0.y, x1: tile.x, y1: tile.y };
             drawOverlay();
             return;
         }
@@ -748,7 +749,7 @@ function bindViewport() {
             g.tapOnly = false;
             clearTimeout(g.longTimer);
         }
-        strokeMove(g, t);
+        strokeMove(g, tile);
     }, { capture: true });
 
     const up = e => {
@@ -830,15 +831,15 @@ export async function register(theApi) {
     buildPanel();
 
     for (const [id, tool] of Object.entries(TOOLS)) {
-        const title = { pencil: "Lápis", rect: "Retângulo", ellipse: "Elipse", fill: "Preenchimento", shadow: "Sombra" }[tool];
+        const title = { pencil: t("Pencil", "MainMenu"), rect: t("Rectangle", "MainMenu"), ellipse: t("Ellipse", "MainMenu"), fill: t("Flood Fill", "MainMenu"), shadow: t("Shadow Pen", "MainMenu") }[tool];
         api.bindToolbar(id, () => setTool(S.tool === tool ? null : tool), title);
     }
-    api.bindToolbar("btnUndo", doUndo, "Desfazer");
-    api.bindToolbar("btnCut", doCut, "Recortar");
-    api.bindToolbar("btnCopy", doCopy, "Copiar");
-    api.bindToolbar("btnPaste", doPaste, "Colar");
-    api.bindToolbar("btnDelete", () => doDelete(), "Excluir");
-    api.bindToolbar("btnSave", doSave, "Salvar Projeto");
+    api.bindToolbar("btnUndo", doUndo, t("Undo", "BasicConstants"));
+    api.bindToolbar("btnCut", doCut, t("Cut", "BasicConstants"));
+    api.bindToolbar("btnCopy", doCopy, t("Copy", "BasicConstants"));
+    api.bindToolbar("btnPaste", doPaste, t("Paste", "BasicConstants"));
+    api.bindToolbar("btnDelete", () => doDelete(), t("Delete", "BasicConstants"));
+    api.bindToolbar("btnSave", doSave, t("Save Project", "MainMenu"));
 
     // indicador de modificado na barra de status
     const status = $("status");
