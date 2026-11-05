@@ -10,10 +10,12 @@ export const MODULES = [
     "./generator/index.js",
     "./tools/index.js",
     "./deploy/index.js",
+    "./mvconvert/index.js",
+    "./tutorial/index.js",
 ];
 
 // Sem projeto aberto, só estes carregam (Novo projeto, Ajuda, Opções no primeiro uso).
-export const NO_PROJECT_MODULES = ["./tools/index.js"];
+export const NO_PROJECT_MODULES = ["./tools/index.js", "./tutorial/index.js"];
 
 export async function loadModules(api, { noProject = false } = {}) {
     // Desenvolvimento: ?modules=./database/index.js,./events/index.js liga módulos sem editar este arquivo;

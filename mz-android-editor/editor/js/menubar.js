@@ -91,7 +91,8 @@ function spec(api, shell) {
             { label: t("Contents", "MainMenu"), key: "F1", tip: t("Opens the help.", "MainMenu"), enabled: () => !!tools().openHelp, run: () => tools().openHelp() },
             null,
             { label: t("RPG Maker Website"), tip: "https://tkool.jp/", run: () => shell.openUrl("https://tkool.jp/") },
-            { label: t("Tutorial", "MainMenu") + "…", tip: t("Start the tutorial.", "MainMenu"), enabled: () => !!tools().openHelp, run: () => tools().openHelp("01_02.html") },
+            { label: t("Tutorial", "MainMenu") + "…", tip: t("Start the tutorial.", "MainMenu"), enabled: () => !!(api.tutorial || tools().openHelp), run: () => (api.tutorial ? api.tutorial.open() : tools().openHelp("01_02.html")) },
+            { label: t("Stop tutorial", "MainMenu"), enabled: () => !!(api.tutorial && api.tutorial.isRunning()), run: () => api.tutorial.stop() },
             null,
             { label: t("About", "MainMenu") + "…", tip: t("Displays the version number and copyrights.", "MainMenu"), enabled: () => !!tools().openAbout, run: () => tools().openAbout() }
         ] }
