@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Player mínimo para jogos RPG Maker MZ exportados pelo editor no aparelho.
+// O editor copia o APK release NÃO assinado como "player-template.apk", injeta assets/www/**,
+// troca os marcadores abaixo diretamente nos pools de strings binários (mesmo tamanho ou menor)
+// e assina com apksig. Por isso os marcadores precisam ser longos e únicos.
+// MANTENHA em sincronia com br.mz.editor.ApkBuilder.PKG_PLACEHOLDER / LABEL_PLACEHOLDER.
+def PKG_PLACEHOLDER = 'br.mzgame.' + ('z' * 90)          // 100 caracteres
+def LABEL_PLACEHOLDER = 'MZGAMELABEL' + ('_' * 89)       // 100 caracteres
+
+android {
+    namespace 'br.mz.player'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId PKG_PLACEHOLDER
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+        resValue 'string', 'app_name', LABEL_PLACEHOLDER
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    buildFeatures {
+        buildConfig false
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

@@ -37,6 +37,8 @@ public class MainActivity extends Activity {
             return;
         }
 
+        server.setDeployer(new Deployer(this, server));
+
         String saved = prefs().getString(PREF_PROJECT, null);
         if (saved != null) {
             openProject(Uri.parse(saved));
@@ -142,6 +144,25 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
+    /** Implantação: instala um APK exportado (pede a permissão de fontes desconhecidas se faltar). */
+    private void installApk(String fileName) {
+        try {
+            if (!getPackageManager().canRequestPackageInstalls()) {
+                Toast.makeText(this, "Permita instalar apps do MZ Editor e toque em Instalar de novo", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                    Uri.parse("package:" + getPackageName())));
+                return;
+            }
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setDataAndType(ApkProvider.uriFor(fileName), "application/vnd.android.package-archive");
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+        } catch (Exception e) {
+            Log.e(TAG, "installApk", e);
+            Toast.makeText(this, "Não foi possível abrir o instalador: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     /** Ponte exposta ao editor como window.Android. */
     private final class Bridge {
         @JavascriptInterface
@@ -152,6 +173,18 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public String platform() {
             return "android";
+        }
+
+        /** Presença da Implantação em Java (rotas /api/deploy/*). */
+        @JavascriptInterface
+        public int deployVersion() {
+            return 1;
+        }
+
+        /** Abre o instalador para filesDir/deploy/<fileName> (APK exportado). */
+        @JavascriptInterface
+        public void installApk(String fileName) {
+            runOnUiThread(() -> MainActivity.this.installApk(fileName));
         }
 
         @JavascriptInterface

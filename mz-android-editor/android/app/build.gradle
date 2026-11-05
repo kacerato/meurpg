@@ -28,6 +28,7 @@ android {
     sourceSets {
         main {
             assets.srcDirs += "$buildDir/editorAssets"
+            assets.srcDirs += "$buildDir/playerAssets"
         }
     }
 }
@@ -39,4 +40,21 @@ tasks.register('copyEditorAssets', Copy) {
 }
 tasks.named('preBuild') {
     dependsOn 'copyEditorAssets'
+}
+
+// Implantação (Deployment): o APK do player (release, NÃO assinado) vira assets/player-template.apk.
+// No aparelho o editor injeta assets/www/** do jogo, troca nome/pacote e assina com apksig.
+dependencies {
+    implementation 'com.android.tools.build:apksig:8.7.3'
+}
+tasks.register('copyPlayerTemplate', Copy) {
+    dependsOn ':player:assembleRelease'
+    from(project(':player').layout.buildDirectory.dir('outputs/apk/release')) {
+        include '*-unsigned.apk'
+        rename { 'player-template.apk' }
+    }
+    into layout.buildDirectory.dir('playerAssets')
+}
+tasks.named('preBuild') {
+    dependsOn 'copyPlayerTemplate'
 }
