@@ -27,3 +27,4 @@
     white-space: pre-wrap; word-break: break-all;
 }
 .deployDialog .dpLog:empty { display: none; }
+.deployDialog .dpRow.dpOff { opacity: .55; }

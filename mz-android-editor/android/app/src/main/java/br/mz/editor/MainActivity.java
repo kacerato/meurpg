@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.provider.DocumentsContract;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,12 +22,18 @@ public class MainActivity extends Activity {
     private static final String TAG = "MZ.Main";
     private static final int REQ_PICK_PROJECT = 1;
     private static final int REQ_NEW_PROJECT_PARENT = 2;
+    private static final int REQ_FILE_CHOOSER = 3;
+    private static final int REQ_FOLDER_CHOOSER = 4;
+    private static final int REQ_DEPLOY_FOLDER = 5;
+    /** FileChooserParams.MODE_OPEN_FOLDER (constante oculta do SDK): <input webkitdirectory>. */
+    private static final int MODE_OPEN_FOLDER = 2;
     private static final String PREF_PROJECT = "projectTreeUri";
 
     private LocalServer server;
     private WebView web;
     private String pendingNewName;
     private String pendingNewTitle;
+    private ValueCallback<Uri[]> fileCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,12 @@ public class MainActivity extends Activity {
             public boolean onConsoleMessage(ConsoleMessage m) {
                 Log.d(TAG, "[web] " + m.message() + " (" + m.sourceId() + ":" + m.lineNumber() + ")");
                 return true;
+            }
+
+            /** <input type=file> (Importar, DLC, Importar recursos padrão...): seletor do sistema. */
+            @Override
+            public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback, FileChooserParams params) {
+                return showFileChooser(callback, params);
             }
         });
         web.addJavascriptInterface(new Bridge(), "Android");
@@ -116,9 +130,103 @@ public class MainActivity extends Activity {
         startActivityForResult(i, REQ_PICK_PROJECT);
     }
 
+    private boolean showFileChooser(ValueCallback<Uri[]> callback, WebChromeClient.FileChooserParams params) {
+        if (fileCallback != null) {
+            fileCallback.onReceiveValue(null);
+        }
+        fileCallback = callback;
+        try {
+            Log.d(TAG, "fileChooser mode=" + params.getMode() + " accept=" + java.util.Arrays.toString(params.getAcceptTypes()));
+            if (params.getMode() == MODE_OPEN_FOLDER) {
+                // pasta inteira (webkitdirectory): SAF de pasta; o WebView lista o conteúdo da árvore
+                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivityForResult(i, REQ_FOLDER_CHOOSER);
+                return true;
+            }
+            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            String[] mimes = mimeTypes(params.getAcceptTypes());
+            i.setType(mimes.length == 1 ? mimes[0] : "*/*");
+            if (mimes.length > 1) {
+                i.putExtra(Intent.EXTRA_MIME_TYPES, mimes);
+            }
+            if (params.getMode() == WebChromeClient.FileChooserParams.MODE_OPEN_MULTIPLE) {
+                i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+            startActivityForResult(i, REQ_FILE_CHOOSER);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "fileChooser", e);
+            fileCallback = null;
+            return false;
+        }
+    }
+
+    /** accept="image/png,.ogg" → tipos MIME para o seletor (extensões viram MIME; desconhecido = qualquer). */
+    private static String[] mimeTypes(String[] accept) {
+        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
+        if (accept != null) {
+            for (String a : accept) {
+                for (String part : a.split(",")) {
+                    String t = part.trim().toLowerCase(java.util.Locale.ROOT);
+                    if (t.isEmpty()) {
+                        continue;
+                    }
+                    if (t.startsWith(".")) {
+                        String m = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(t.substring(1));
+                        if (m == null) {
+                            return new String[]{"*/*"};
+                        }
+                        out.add(m);
+                    } else {
+                        out.add(t);
+                    }
+                }
+            }
+        }
+        return out.isEmpty() ? new String[]{"*/*"} : out.toArray(new String[0]);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_FILE_CHOOSER || requestCode == REQ_FOLDER_CHOOSER) {
+            ValueCallback<Uri[]> cb = fileCallback;
+            fileCallback = null;
+            if (cb == null) {
+                return;
+            }
+            Uri[] result = null;
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getClipData() != null) {
+                    result = new Uri[data.getClipData().getItemCount()];
+                    for (int k = 0; k < result.length; k++) {
+                        result[k] = data.getClipData().getItemAt(k).getUri();
+                    }
+                } else if (data.getData() != null) {
+                    result = new Uri[]{data.getData()};
+                }
+            }
+            cb.onReceiveValue(result);
+            return;
+        }
+        if (requestCode == REQ_DEPLOY_FOLDER) {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                Uri tree = data.getData();
+                getContentResolver().takePersistableUriPermission(tree,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                String label = tree.getLastPathSegment();
+                try {
+                    label = new SafProject(getContentResolver(), tree).getName();
+                } catch (Exception ignored) {
+                    // fica o último segmento da URI
+                }
+                web.evaluateJavascript("window.mzDeployFolderPicked && window.mzDeployFolderPicked("
+                    + LocalServer.Json.str(tree.toString()) + "," + LocalServer.Json.str(label) + ")", null);
+            }
+            return;
+        }
         if (requestCode == REQ_PICK_PROJECT && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri tree = data.getData();
             getContentResolver().takePersistableUriPermission(tree,
@@ -192,6 +300,50 @@ public class MainActivity extends Activity {
         }
     }
 
+    /** Arquivo > Fechar projeto: volta ao estado "sem projeto". */
+    private void closeProject() {
+        prefs().edit().remove(PREF_PROJECT).apply();
+        server.setProject(null);
+        web.loadUrl("http://127.0.0.1:" + server.getPort() + "/");
+    }
+
+    /** Jogo > Abrir pasta: abre a pasta do projeto no app de arquivos (SAF). */
+    private void openProjectFolder() {
+        SafProject prj = server.getProject();
+        if (prj == null) {
+            return;
+        }
+        Uri tree = prj.getRootUri();
+        try {
+            Uri doc = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree));
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setDataAndType(doc, DocumentsContract.Document.MIME_TYPE_DIR);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            startActivity(i);
+        } catch (Exception e) {
+            Log.w(TAG, "openFolder", e);
+            Toast.makeText(this, Uri.decode(String.valueOf(tree.getLastPathSegment())), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void openUrl(String url) {
+        try {
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, url, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void launchNewProjectPicker() {
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        startActivityForResult(i, REQ_NEW_PROJECT_PARENT);
+    }
+
     @Override
     public void onBackPressed() {
         // o editor trata o botão voltar (fecha o teste de jogo, etc.)
@@ -258,17 +410,61 @@ public class MainActivity extends Activity {
             runOnUiThread(() -> Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show());
         }
 
-        /** Novo projeto: pede a pasta-mãe (SAF); o editor copia o template depois (?newProject=). */
+        /** Novo projeto: pede a pasta-mãe (SAF); o editor copia o template depois (?newProject=).
+         *  Antes, o editor pergunta "Salvar as alterações no jogo?" (window.mzConfirmLeave → leaveConfirmed). */
         @JavascriptInterface
         public void newProject(String name, String title) {
             runOnUiThread(() -> {
                 pendingNewName = name;
                 pendingNewTitle = title;
+                web.evaluateJavascript("(window.mzConfirmLeave ? (window.mzConfirmLeave('new'), true) : false)", r -> {
+                    if (!"true".equals(r)) {
+                        launchNewProjectPicker();
+                    }
+                });
+            });
+        }
+
+        /** O editor confirmou que pode trocar de projeto (salvou ou descartou). */
+        @JavascriptInterface
+        public void leaveConfirmed(String kind) {
+            runOnUiThread(() -> {
+                if ("new".equals(kind) && pendingNewName != null) {
+                    launchNewProjectPicker();
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void closeProject() {
+            runOnUiThread(MainActivity.this::closeProject);
+        }
+
+        /** Arquivo > Sair (o editor já perguntou se quer salvar). */
+        @JavascriptInterface
+        public void exitApp() {
+            runOnUiThread(MainActivity.this::finishAndRemoveTask);
+        }
+
+        @JavascriptInterface
+        public void openFolder() {
+            runOnUiThread(MainActivity.this::openProjectFolder);
+        }
+
+        @JavascriptInterface
+        public void openUrl(String url) {
+            runOnUiThread(() -> MainActivity.this.openUrl(url));
+        }
+
+        /** Implantação: pasta de saída fora do projeto (SAF); responde em window.mzDeployFolderPicked(uri, nome). */
+        @JavascriptInterface
+        public void pickDeployFolder() {
+            runOnUiThread(() -> {
                 Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                 i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
                     | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                startActivityForResult(i, REQ_NEW_PROJECT_PARENT);
+                startActivityForResult(i, REQ_DEPLOY_FOLDER);
             });
         }
 

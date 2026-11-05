@@ -118,7 +118,9 @@ function isExcludedTop(name, outRoot) {
 // Configurações
 
 const PLATFORMS = [
-    { id: "web", label: t("Web browsers", "Dialog_Deployment") + " / Android / iOS (HTML5)" },
+    { id: "win", label: t("Windows", "Dialog_Deployment"), tip: t("Creates a package for Windows.", "Dialog_Deployment"), off: true },
+    { id: "mac", label: t("macOS", "Dialog_Deployment"), tip: t("Creates a package for macOS.", "Dialog_Deployment"), off: true },
+    { id: "web", label: t("Web browsers", "Dialog_Deployment") + " / Android / iOS (HTML5)", tip: t("Creates a package for web browsers.", "Dialog_Deployment") },
     { id: "apk", label: t("Android (installable APK, built on the device)") }
 ];
 
@@ -139,7 +141,9 @@ function loadSettings(api, system) {
     };
     try {
         const saved = JSON.parse(localStorage.getItem("mzDeploy:" + name) || "{}");
-        return { ...defaults, ...saved };
+        const out = { ...defaults, ...saved };
+        if (out.platform === "win" || out.platform === "mac") { out.platform = defaults.platform; }
+        return out;
     } catch (_) {
         return defaults;
     }
@@ -182,8 +186,11 @@ export async function openDeployDialog(api) {
     const radios = PLATFORMS.map(p => {
         const r = el("input", { type: "radio", name: "deployPlatform", value: p.id });
         r.checked = s.platform === p.id;
+        r.disabled = !!p.off;
         r.addEventListener("change", () => { s.platform = p.id; refresh(); });
-        return el("label", { class: "dpRow" }, r, p.label);
+        // Windows/macOS precisam do runtime NW.js do editor de PC: aparecem, mas desabilitados
+        const tip = p.off ? (p.tip + " " + t("Not available on this platform: it requires the NW.js runtime of the PC editor.")) : p.tip;
+        return el("label", { class: "dpRow" + (p.off ? " dpOff" : ""), title: tip || null }, r, p.label);
     });
 
     const input = (value, attrs = {}) => {
@@ -197,6 +204,28 @@ export async function openDeployDialog(api) {
     };
 
     const outDir = input(s.outDir, { spellcheck: "false" });
+    // Local de saída fora do projeto: pasta escolhida (SAF no Android, showDirectoryPicker no PC)
+    let external = null; // { kind: "saf", uri, label } | { kind: "handle", handle, label }
+    if (s.outTree && isAndroid()) { external = { kind: "saf", uri: s.outTree, label: s.outTreeLabel || s.outTree }; }
+    const chooseBtn = el("button", { class: "dpSmall", type: "button", text: t("Choose", "Layout_DirectoryChooser") + "…", title: t("Chooses the location.", "Layout_DirectoryChooser") });
+    const clearBtn = el("button", { class: "dpSmall", type: "button", text: "✕", title: t("Folder (in the project)") });
+    const canChoose = () => (isAndroid() && typeof window.Android.pickDeployFolder === "function") || typeof window.showDirectoryPicker === "function";
+    chooseBtn.addEventListener("click", async () => {
+        if (isAndroid() && window.Android.pickDeployFolder) {
+            window.mzDeployFolderPicked = (uri, label) => {
+                external = { kind: "saf", uri, label: label || uri };
+                refresh();
+            };
+            window.Android.pickDeployFolder();
+        } else if (window.showDirectoryPicker) {
+            try {
+                const handle = await window.showDirectoryPicker({ id: "mzDeploy", mode: "readwrite" });
+                external = { kind: "handle", handle, label: handle.name };
+                refresh();
+            } catch (_) { /* cancelado */ }
+        }
+    });
+    clearBtn.addEventListener("click", () => { external = null; outDir.value = s.outDir; refresh(); });
     const outName = input(s.outName, { spellcheck: "false" });
     const fmtFolder = el("input", { type: "radio", name: "deployFmt", value: "folder" });
     const fmtZip = el("input", { type: "radio", name: "deployFmt", value: "zip" });
@@ -206,6 +235,7 @@ export async function openDeployDialog(api) {
     const encImg = check(s.encImages, t("Image files", "Layout_DeploymentOptions"));
     const encAud = check(s.encAudio, t("Audio files", "Layout_DeploymentOptions"));
     const key = el("input", { type: "password", placeholder: t("Encryption key", "Layout_DeploymentOptions"), autocomplete: "off" });
+    key.value = s.password || ""; // o MZ lembra a chave de criptografia do projeto
     const showKey = el("button", { class: "dpSmall", type: "button", text: "👁" });
     showKey.addEventListener("click", () => { key.type = key.type === "password" ? "text" : "password"; });
     const appName = input(s.appName);
@@ -218,7 +248,7 @@ export async function openDeployDialog(api) {
     const result = el("div", { class: "dpResult" });
 
     const webBox = el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Format (web)") }),
-        el("label", { class: "dpRow" }, fmtFolder, t("Folder inside the project (can be opened in the playtest)")),
+        el("label", { class: "dpRow" }, fmtFolder, t("Folder")),
         el("label", { class: "dpRow" }, fmtZip, isAndroid() ? t(".zip file (saved to %1)", null, "Download/MZEditor") : t(".zip file (browser download)")));
     const apkBox = el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Android", "Dialog_Deployment") + " (APK)" }),
         el("div", { class: "dpGrid" },
@@ -233,7 +263,7 @@ export async function openDeployDialog(api) {
         el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Platform", "Dialog_Deployment") }), radios),
         el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Output Location", "Dialog_Deployment") }),
             el("div", { class: "dpGrid" },
-                el("span", { text: t("Folder (in the project)") }), outDir,
+                el("span", { id: "dpOutLabel", text: t("Folder (in the project)") }), el("div", { class: "dpKey" }, outDir, chooseBtn, clearBtn),
                 el("span", { text: t("Name", "Constants") }), outName),
             el("div", { class: "dpHint", id: "dpOutHint" })),
         webBox,
@@ -259,10 +289,20 @@ export async function openDeployDialog(api) {
             : t("APK export only works inside the Android app (MZ Editor). On a PC, use \"%1\".", null, t("Web browsers", "Dialog_Deployment"));
         const out = dlg.body.querySelector("#dpOutHint");
         const name = outName.value.trim() || "Game";
+        const folderOut = !apk && !fmtZip.checked;
+        chooseBtn.hidden = !folderOut || !canChoose();
+        clearBtn.hidden = !folderOut || !external;
+        outDir.readOnly = !!(folderOut && external);
+        if (folderOut && external) {
+            outDir.value = external.label;
+        }
+        dlg.body.querySelector("#dpOutLabel").textContent = folderOut && external ? t("Output Location", "Dialog_Deployment") : t("Folder (in the project)");
         if (apk) {
             out.textContent = t("Output: %1", null, `Download/MZEditor/${name}.apk`);
         } else if (fmtZip.checked) {
-            out.textContent = t("Output: %1 (with the www/ folder)", null, `${name}.zip`);
+            out.textContent = t("Output: %1", null, isAndroid() ? `Download/MZEditor/${name}.zip` : `${name}.zip`);
+        } else if (external) {
+            out.textContent = t("Output: %1", null, `${external.label}/${name}/`);
         } else {
             out.textContent = t("Output: %1 (inside the project)", null, `${(outDir.value.trim() || "deploy")}/${name}/`);
         }
@@ -301,7 +341,10 @@ export async function openDeployDialog(api) {
             return;
         }
         Object.assign(s, {
-            outDir: outDir.value.trim().replace(/^\/+|\/+$/g, "") || "deploy",
+            outDir: external ? s.outDir : (outDir.value.trim().replace(/^\/+|\/+$/g, "") || "deploy"),
+            outTree: external && external.kind === "saf" ? external.uri : "",
+            outTreeLabel: external && external.kind === "saf" ? external.label : "",
+            password: key.value,
             outName: outName.value.trim().replace(/[\\/:*?"<>|]+/g, "_") || "Game",
             webFormat: fmtZip.checked ? "zip" : "folder",
             excludeUnused: excl.box.checked,
@@ -318,7 +361,16 @@ export async function openDeployDialog(api) {
             validate(s, key.value);
             saveSettings(api, s);
             setBusy(true);
-            await runDeploy(api, s, key.value, { log, progress, isCancelled: () => cancelled, result, dlg });
+            // como o MZ, salva o projeto antes de criar o pacote (mapas não salvos ficariam de fora)
+            if (api.isDirty && api.isDirty()) {
+                progress(0, 0, t("Saving…"));
+                if (!(await api.saveAll())) {
+                    throw new Error(t("Failed to save the project."));
+                }
+                log(t("Project saved"));
+            }
+            const ext = s.platform === "web" && s.webFormat === "folder" ? external : null;
+            await runDeploy(api, s, key.value, { log, progress, isCancelled: () => cancelled, result, dlg, external: ext });
         } catch (e) {
             console.error(e);
             log(t("ERROR: %1", null, e.message || e));
@@ -426,6 +478,10 @@ async function runDeploy(api, s, password, ui) {
         } else {
             await runZipJs(s, plan, inline, keyHex, ui);
         }
+    } else if (ui.external && ui.external.kind === "saf") {
+        await runJavaJob(api, "folder", s, plan, inline, keyHex, ui);
+    } else if (ui.external && ui.external.kind === "handle") {
+        await runFolderHandle(ui.external.handle, s, plan, inline, keyHex, ui);
     } else {
         await runFolder(api, s, plan, inline, keyHex, ui);
     }
@@ -482,6 +538,47 @@ async function runFolder(api, s, plan, inline, keyHex, ui) {
     ui.result.replaceChildren(el("span", { text: t("Web package in %1", null, base + "/") + "  " }), play);
 }
 
+// PC: pasta fora do projeto escolhida com showDirectoryPicker (File System Access API).
+async function runFolderHandle(root, s, plan, inline, keyHex, ui) {
+    if (root.requestPermission && (await root.requestPermission({ mode: "readwrite" })) !== "granted") {
+        throw new Error(t("Location is invalid.", "Dialog_Deployment"));
+    }
+    const base = await root.getDirectoryHandle(s.outName, { create: true });
+    const dirs = new Map([["", base]]);
+    const dirOf = async rel => {
+        const parts = rel.split("/").slice(0, -1);
+        let cur = "";
+        let h = base;
+        for (const p of parts) {
+            cur = cur ? cur + "/" + p : p;
+            if (!dirs.has(cur)) { dirs.set(cur, await h.getDirectoryHandle(p, { create: true })); }
+            h = dirs.get(cur);
+        }
+        return h;
+    };
+    const write = async (rel, data) => {
+        const dir = await dirOf(rel);
+        const fh = await dir.getFileHandle(rel.split("/").pop(), { create: true });
+        const w = await fh.createWritable();
+        await w.write(data);
+        await w.close();
+    };
+    ui.log(t("Writing to %1 ...", null, `${root.name}/${s.outName}/`));
+    let done = 0;
+    for (const it of plan) {
+        if (ui.isCancelled()) {
+            throw new Error(t("Cancelled by the user."));
+        }
+        await write(it.dst, await transformed(it, keyHex));
+        ui.progress(++done, plan.length);
+    }
+    for (const f of inline) {
+        await write(f.dst, new TextEncoder().encode(f.text));
+    }
+    ui.progress(1, 1, t("Finished"));
+    ui.result.replaceChildren(el("span", { text: t("Web package in %1", null, `${root.name}/${s.outName}/`) }));
+}
+
 async function runZipJs(s, plan, inline, keyHex, ui) {
     const zip = new ZipWriter();
     let done = 0;
@@ -489,11 +586,11 @@ async function runZipJs(s, plan, inline, keyHex, ui) {
         if (ui.isCancelled()) {
             throw new Error(t("Cancelled by the user."));
         }
-        await zip.add("www/" + it.dst, await transformed(it, keyHex));
+        await zip.add(it.dst, await transformed(it, keyHex));
         ui.progress(++done, plan.length);
     }
     for (const f of inline) {
-        await zip.add("www/" + f.dst, new TextEncoder().encode(f.text));
+        await zip.add(f.dst, new TextEncoder().encode(f.text));
     }
     const blob = zip.finish();
     const a = el("a", { href: URL.createObjectURL(blob), download: s.outName + ".zip", text: t("Download %1 (%2 MB)", null, s.outName + ".zip", (blob.size / 1048576).toFixed(1)) });
@@ -512,6 +609,7 @@ async function runJavaJob(api, kind, s, plan, inline, keyHex, ui) {
         packageName: s.packageName,
         keyHex,
         icon: "icon/icon.png",
+        outTree: kind === "folder" ? s.outTree : undefined,
         files: plan,
         inline
     };
@@ -538,7 +636,9 @@ async function runJavaJob(api, kind, s, plan, inline, keyHex, ui) {
         if (st.state === "done") {
             const r = st.result || {};
             ui.progress(1, 1, t("Finished"));
-            const parts = [el("span", { text: t("%1 (%2 MB) saved to %3", null, r.name, (r.size / 1048576).toFixed(1), r.location) + "  " })];
+            const parts = [el("span", { text: kind === "folder"
+                ? t("Web package in %1", null, r.location + "/")
+                : t("%1 (%2 MB) saved to %3", null, r.name, (r.size / 1048576).toFixed(1), r.location) + "  " })];
             if (kind === "apk") {
                 const inst = el("button", { class: "primary", text: t("Install") });
                 inst.addEventListener("click", () => window.Android.installApk(r.file));

@@ -7,6 +7,9 @@
 //  - valores de tags <tag:valor> nas notas (convenção de @noteParam/@noteDir);
 //  - parâmetros dos plugins ATIVOS em js/plugins.js;
 //  - anotações @requiredAssets dos plugins ativos (caminhos mantidos como estão);
+//  - parâmetros "@type file" com "@require 1" dos plugins ativos (<@dir>/<valor>, como o MZ);
+//  - "@noteParam"/"@noteDir" (+ @noteType file, @noteData, @noteRequire) dos plugins ativos:
+//    <noteParam:valor> nas notas dos dados indicados mantém <noteDir>/<valor>;
 //  - literais de string do runtime (js/rmmz_*.js) e dos plugins ativos: cobre os nomes fixos
 //    no código, como fundos de batalha automáticos ("Grassland", "Ship"...), "IconSet" etc.;
 //  - para efeitos .efkefc usados, as texturas/modelos que o arquivo referencia (UTF-16).
@@ -95,6 +98,60 @@ export function efkefcResources(bytes) {
 
 const stripExt = p => p.replace(/\.[^./]+$/, "");
 
+// Lê do cabeçalho de um plugin os parâmetros de arquivo (@param/@type file/@dir/@require/@default)
+// e as anotações de nota (@noteParam/@noteDir/@noteType/@noteData/@noteRequire).
+export function pluginAssetSpecs(code) {
+    const params = new Map();
+    const notes = [];
+    let curP = null;
+    let curN = null;
+    const yes = v => v === "1" || v.toLowerCase() === "true";
+    for (const line of code.split(/\r?\n/)) {
+        const m = /^\s*\*?\s*@(\w+)\s*(.*?)\s*$/.exec(line);
+        if (!m) {
+            continue;
+        }
+        const [, tag, val] = m;
+        if (tag === "param") {
+            curN = null;
+            curP = params.get(val) || { name: val, type: "", dir: "", require: false, def: "" };
+            params.set(val, curP);
+        } else if (tag === "command" || tag === "arg" || tag === "help" || tag === "plugindesc") {
+            curP = null;
+            curN = null;
+        } else if (tag === "noteParam") {
+            curP = null;
+            curN = { name: val, dir: "", type: "", data: "", require: false };
+            notes.push(curN);
+        } else if (curN && tag === "noteDir") { curN.dir = val; }
+        else if (curN && tag === "noteType") { curN.type = val; }
+        else if (curN && tag === "noteData") { curN.data = val; }
+        else if (curN && tag === "noteRequire") { curN.require = yes(val); }
+        else if (curP && tag === "type") { curP.type = val; }
+        else if (curP && tag === "dir") { curP.dir = val; }
+        else if (curP && tag === "require") { curP.require = yes(val); }
+        else if (curP && tag === "default") { curP.def = val; }
+    }
+    return { params: [...params.values()], notes };
+}
+
+const joinDir = (dir, name) => (dir.replace(/\\/g, "/").replace(/^\/+|\/+$/g, "") + "/" + String(name).replace(/^\/+/, "")).replace(/^\/+/, "");
+
+// @noteData → arquivos de data/ cujas notas valem ("maps" = mapas, "events" = eventos dos mapas).
+const NOTE_DATA = {
+    actors: ["Actors"], classes: ["Classes"], skills: ["Skills"], items: ["Items"], weapons: ["Weapons"],
+    armors: ["Armors"], enemies: ["Enemies"], states: ["States"], tilesets: ["Tilesets"]
+};
+
+function collectNotes(value, out) {
+    if (Array.isArray(value)) {
+        for (const v of value) { collectNotes(v, out); }
+    } else if (value && typeof value === "object") {
+        if (typeof value.note === "string") { out.push(value.note); }
+        if (Array.isArray(value.events)) { collectNotes(value.events, out); }
+    }
+}
+
 // files: caminhos relativos do projeto. readText/readBytes: leitores do projeto.
 // Devolve { keep: Set<caminho>, removed: [caminhos] }.
 export async function findUsedFiles(files, { readText, readBytes, log }) {
@@ -102,9 +159,12 @@ export async function findUsedFiles(files, { readText, readBytes, log }) {
     const required = new Set();
     // 1) dados
     const dataFiles = files.filter(f => f.startsWith("data/") && f.toLowerCase().endsWith(".json"));
+    const parsed = new Map();
     for (const f of dataFiles) {
         try {
-            addValue(refs, JSON.parse(await readText(f)));
+            const v = JSON.parse(await readText(f));
+            parsed.set(f, v);
+            addValue(refs, v);
         } catch (e) {
             log(t("warning: could not read %1: %2", null, f, e.message));
         }
@@ -123,6 +183,39 @@ export async function findUsedFiles(files, { readText, readBytes, log }) {
         const code = await readText(src);
         for (const m of code.matchAll(/@requiredAssets\s+(\S+)/g)) {
             required.add(m[1].replace(/^\/+/, ""));
+        }
+        const specs = pluginAssetSpecs(code);
+        for (const prm of specs.params) {
+            if (prm.type !== "file" || !prm.require || !prm.dir) {
+                continue;
+            }
+            const params = p.parameters || {};
+            const v = Object.prototype.hasOwnProperty.call(params, prm.name) ? params[prm.name] : prm.def;
+            if (v) {
+                required.add(joinDir(prm.dir, v));
+            }
+        }
+        for (const n of specs.notes) {
+            if (!n.name || !n.dir || (n.type && n.type !== "file")) {
+                continue;
+            }
+            const kinds = n.data ? n.data.split(/[,\s]+/).filter(Boolean) : null;
+            const targets = dataFiles.filter(f => {
+                const base = f.slice(5, -5);
+                if (!kinds) { return true; }
+                return kinds.some(k => (NOTE_DATA[k.toLowerCase()] || []).includes(base)
+                    || ((k === "maps" || k === "events") && /^Map\d+$/.test(base)));
+            });
+            const tag = new RegExp("<" + n.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*:\\s*([^<>\\n]+?)\\s*>", "g");
+            for (const f of targets) {
+                const notes = [];
+                collectNotes(parsed.get(f), notes);
+                for (const note of notes) {
+                    for (const m of note.matchAll(tag)) {
+                        required.add(joinDir(n.dir, m[1]));
+                    }
+                }
+            }
         }
         addSourceLiterals(refs, code);
     }

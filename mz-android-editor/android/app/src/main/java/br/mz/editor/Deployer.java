@@ -33,7 +33,8 @@ import java.util.zip.ZipFile;
 
 /**
  * Implantação no aparelho (rotas /api/deploy/*). O editor web manda o plano
- * {kind:"apk"|"zip", outputName, appName, packageName, keyHex, icon, files:[{src,dst,enc}], inline:[{dst,text}]};
+ * {kind:"apk"|"zip"|"folder", outputName, appName, packageName, keyHex, icon, outTree, files:[{src,dst,enc}], inline:[{dst,text}]};
+ * "folder" grava a pasta do jogo dentro de outTree (pasta escolhida pelo SAF, fora do projeto).
  * aqui os arquivos são lidos do projeto via SAF, criptografados (formato RPGMV do rmmz_core.js),
  * empacotados e, para APK, injetados no player-template.apk e assinados com apksig.
  * O progresso é consultado por GET /api/deploy/status?id=.
@@ -164,12 +165,15 @@ final class Deployer {
                 try {
                     job.message = "Compactando";
                     try (ZipOut zip = new ZipOut(new BufferedOutputStream(new FileOutputStream(tmp), 256 * 1024))) {
-                        addGameFiles(job, prj, zip, "www/", files, inline, key);
+                        // como o MZ: index.html na raiz do pacote (sem a pasta www/)
+                        addGameFiles(job, prj, zip, "", files, inline, key);
                     }
                     publish(job, tmp, name + ".zip", "application/zip", null);
                 } finally {
                     tmp.delete();
                 }
+            } else if ("folder".equals(kind)) {
+                writeFolder(job, prj, req.getString("outTree"), name, files, inline, key);
             } else {
                 buildApk(job, prj, req, name, files, inline, key);
             }
@@ -221,6 +225,56 @@ final class Deployer {
             }
         }
         job.log(files.length() + (inline != null ? inline.length() : 0) + " arquivo(s) do jogo empacotados (" + nEnc + " criptografados).");
+    }
+
+    /** Pasta do jogo em <outTree>/<name>/ (SAF), para o formato "pasta" fora do projeto. */
+    private void writeFolder(Job job, SafProject prj, String outTree, String name, JSONArray files, JSONArray inline, byte[] key) throws Exception {
+        SafProject out = new SafProject(ctx.getContentResolver(), Uri.parse(outTree));
+        String base = name + "/";
+        job.message = "Gravando";
+        int nEnc = 0;
+        for (int i = 0; i < files.length(); i++) {
+            job.check();
+            JSONObject f = files.getJSONObject(i);
+            String src = f.getString("src");
+            String dst = f.optString("dst", src);
+            if (src.contains("..") || dst.contains("..")) {
+                throw new IOException("caminho inválido: " + src);
+            }
+            SafProject.Entry e = prj.resolve(src);
+            if (e == null || e.isDir) {
+                job.log("aviso: arquivo não encontrado, ignorado: " + src);
+                job.done++;
+                continue;
+            }
+            byte[] data;
+            try (InputStream in = prj.open(e)) {
+                data = LocalServer.readAll(in);
+            }
+            if (f.optBoolean("enc", false)) {
+                if (key == null) {
+                    throw new IOException("criptografia pedida sem chave");
+                }
+                data = encrypt(data, key);
+                nEnc++;
+            }
+            out.write(base + dst, data);
+            job.done++;
+        }
+        if (inline != null) {
+            for (int i = 0; i < inline.length(); i++) {
+                JSONObject f = inline.getJSONObject(i);
+                out.write(base + f.getString("dst"), f.getString("text").getBytes(StandardCharsets.UTF_8));
+                job.done++;
+            }
+        }
+        job.log(files.length() + " arquivo(s) gravados em " + out.getName() + "/" + name + " (" + nEnc + " criptografados).");
+        JSONObject r = new JSONObject();
+        r.put("name", name);
+        r.put("size", 0);
+        r.put("location", out.getName() + "/" + name);
+        r.put("file", "");
+        job.result = r;
     }
 
     /** Mesmo formato que Utils.decryptArrayBuffer (rmmz_core.js) desfaz. */
