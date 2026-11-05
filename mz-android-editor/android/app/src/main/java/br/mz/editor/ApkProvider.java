@@ -23,12 +23,21 @@ public class ApkProvider extends ContentProvider {
         return new Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("apk").appendPath(fileName).build();
     }
 
+    /** URI para um arquivo copiado em cacheDir/share (Resource Manager → Exportar). */
+    static Uri shareUriFor(String fileName) {
+        return new Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("share").appendPath(fileName).build();
+    }
+
     private File fileFor(Uri uri) throws FileNotFoundException {
         String name = uri.getLastPathSegment();
         if (name == null || name.contains("/") || name.contains("..")) {
             throw new FileNotFoundException(String.valueOf(uri));
         }
-        File f = new File(new File(getContext().getFilesDir(), Deployer.OUT_DIR), name);
+        java.util.List<String> segs = uri.getPathSegments();
+        boolean share = segs.size() >= 2 && "share".equals(segs.get(0));
+        File base = share ? new File(getContext().getCacheDir(), "share")
+                          : new File(getContext().getFilesDir(), Deployer.OUT_DIR);
+        File f = new File(base, name);
         if (!f.isFile()) {
             throw new FileNotFoundException(f.getPath());
         }
@@ -50,6 +59,10 @@ public class ApkProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
+        java.util.List<String> segs = uri.getPathSegments();
+        if (segs.size() >= 2 && "share".equals(segs.get(0))) {
+            return LocalServer.Mime.of(segs.get(1)).split(";")[0];
+        }
         return "application/vnd.android.package-archive";
     }
 

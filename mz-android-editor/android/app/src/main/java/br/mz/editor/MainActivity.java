@@ -19,10 +19,13 @@ import java.io.IOException;
 public class MainActivity extends Activity {
     private static final String TAG = "MZ.Main";
     private static final int REQ_PICK_PROJECT = 1;
+    private static final int REQ_NEW_PROJECT_PARENT = 2;
     private static final String PREF_PROJECT = "projectTreeUri";
 
     private LocalServer server;
     private WebView web;
+    private String pendingNewName;
+    private String pendingNewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +126,69 @@ public class MainActivity extends Activity {
             prefs().edit().putString(PREF_PROJECT, tree.toString()).apply();
             openProject(tree);
             web.loadUrl("http://127.0.0.1:" + server.getPort() + "/");
+        } else if (requestCode == REQ_NEW_PROJECT_PARENT && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            createNewProjectIn(data.getData());
+        }
+    }
+
+    /** Novo projeto: cria a pasta <nome> dentro da pasta escolhida, abre-a e manda o editor copiar o template. */
+    private void createNewProjectIn(Uri parentTree) {
+        String name = pendingNewName;
+        String title = pendingNewTitle == null ? "" : pendingNewTitle;
+        pendingNewName = null;
+        pendingNewTitle = null;
+        if (name == null || name.isEmpty()) {
+            return;
+        }
+        try {
+            getContentResolver().takePersistableUriPermission(parentTree,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            String parentDocId = android.provider.DocumentsContract.getTreeDocumentId(parentTree);
+            Uri parentDoc = android.provider.DocumentsContract.buildDocumentUriUsingTree(parentTree, parentDocId);
+            Uri created = android.provider.DocumentsContract.createDocument(getContentResolver(), parentDoc,
+                android.provider.DocumentsContract.Document.MIME_TYPE_DIR, name);
+            if (created == null) {
+                Toast.makeText(this, "Não foi possível criar a pasta " + name, Toast.LENGTH_LONG).show();
+                return;
+            }
+            String childDocId = android.provider.DocumentsContract.getDocumentId(created);
+            Uri childTree = android.provider.DocumentsContract.buildTreeDocumentUri(parentTree.getAuthority(), childDocId);
+            prefs().edit().putString(PREF_PROJECT, childTree.toString()).apply();
+            openProject(childTree);
+            web.loadUrl("http://127.0.0.1:" + server.getPort() + "/?newProject=" + Uri.encode(title));
+        } catch (Exception e) {
+            Log.e(TAG, "newProject", e);
+            Toast.makeText(this, "Novo projeto falhou: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /** Compartilha um arquivo do projeto (Resource Manager → Exportar). */
+    private void shareFile(String relPath, String mime) {
+        try {
+            SafProject prj = server.getProject();
+            SafProject.Entry entry = prj == null ? null : prj.resolve(relPath);
+            if (entry == null || entry.isDir) {
+                Toast.makeText(this, "Arquivo não encontrado: " + relPath, Toast.LENGTH_LONG).show();
+                return;
+            }
+            java.io.File dir = new java.io.File(getCacheDir(), "share");
+            dir.mkdirs();
+            java.io.File out = new java.io.File(dir, entry.name);
+            try (java.io.InputStream in = prj.open(entry); java.io.OutputStream os = new java.io.FileOutputStream(out)) {
+                byte[] buf = new byte[64 * 1024];
+                int n;
+                while ((n = in.read(buf)) >= 0) {
+                    os.write(buf, 0, n);
+                }
+            }
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType(mime == null || mime.isEmpty() ? "application/octet-stream" : mime);
+            i.putExtra(Intent.EXTRA_STREAM, ApkProvider.shareUriFor(entry.name));
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(i, entry.name));
+        } catch (Exception e) {
+            Log.e(TAG, "shareFile", e);
+            Toast.makeText(this, "Não foi possível compartilhar: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -190,6 +256,26 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public void toast(String msg) {
             runOnUiThread(() -> Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show());
+        }
+
+        /** Novo projeto: pede a pasta-mãe (SAF); o editor copia o template depois (?newProject=). */
+        @JavascriptInterface
+        public void newProject(String name, String title) {
+            runOnUiThread(() -> {
+                pendingNewName = name;
+                pendingNewTitle = title;
+                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                startActivityForResult(i, REQ_NEW_PROJECT_PARENT);
+            });
+        }
+
+        /** Resource Manager → Exportar: compartilha um arquivo do projeto. */
+        @JavascriptInterface
+        public void shareFile(String relPath, String mime) {
+            new Thread(() -> MainActivity.this.shareFile(relPath, mime), "mz-share").start();
         }
     }
 }

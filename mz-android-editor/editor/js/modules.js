@@ -8,6 +8,8 @@ export const MODULES = [
     "./database/index.js",
     "./plugins/index.js",
     "./generator/index.js",
+    "./tools/index.js",
+    "./deploy/index.js",
 ];
 
 export async function loadModules(api) {

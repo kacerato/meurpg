@@ -159,6 +159,24 @@ async function boot() {
                 : "Nenhum projeto aberto (" + e.message + ")";
             return;
         }
+        // Novo projeto (casca Android): a pasta acabou de ser criada vazia; copia o template antes de tudo.
+        const newTitle = new URLSearchParams(location.search).get("newProject");
+        if (newTitle !== null) {
+            $("emptyHint").textContent = "Criando projeto…";
+            try {
+                const np = await import("./tools/newproject.js");
+                await np.createProject(np.apiWriter(project), {
+                    title: newTitle,
+                    onProgress: (done, total, file) => { $("emptyHint").textContent = `Criando projeto… ${done}/${total} ${file}`; }
+                });
+            } catch (e) {
+                console.error(e);
+                $("emptyHint").textContent = "Falha ao criar o projeto: " + (e.message || e);
+                return;
+            }
+            location.replace(location.pathname);
+            return;
+        }
         if (typeof Tilemap === "undefined" || typeof ImageManager === "undefined") {
             // o runtime do projeto não carregou (página aberta antes do projeto): recarrega
             location.reload();
