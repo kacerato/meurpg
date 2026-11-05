@@ -2,6 +2,7 @@
 
 import { db, TEMPLATE } from "./data.js";
 import { h, dialog, field, row, group, num, sel, radios, locationPick, characterDialog, drawCharacterThumb } from "./ui.js";
+import { t } from "../i18n.js";
 
 const E = i => ({ code: 0, indent: i, parameters: [] });
 const C = (code, indent, parameters = []) => ({ code, indent, parameters });
@@ -18,39 +19,39 @@ function imageField(image, tileset) {
     draw();
     return { el: btn, get: () => cur };
 }
-const DIR_OPTS = [{ value: 0, label: "Retain" }, { value: 2, label: "Down" }, { value: 4, label: "Left" }, { value: 6, label: "Right" }, { value: 8, label: "Up" }];
-const FADE_OPTS = [{ value: 0, label: "Black" }, { value: 1, label: "White" }, { value: 2, label: "None" }];
+const DIR_OPTS = [{ value: 0, label: t("Retain", "Constants") }, { value: 2, label: t("Down", "Constants") }, { value: 4, label: t("Left", "Constants") }, { value: 6, label: t("Right", "Constants") }, { value: 8, label: t("Up", "Constants") }];
+const FADE_OPTS = [{ value: 0, label: t("Black", "Constants") }, { value: 1, label: t("White", "Constants") }, { value: 2, label: t("None", "Constants") }];
 
 // Abre o diálogo e devolve o evento pronto (sem id/x/y definitivos) ou null.
 export async function quickEvent(kind, { mapId, x, y, tileset }) {
     const ev = TEMPLATE.event(0, x, y);
     const page = ev.pages[0];
     const here = { mapId, x, y };
-    const title = { transfer: "Quick Event Creation (Transfer)", door: "Quick Event Creation (Door)", treasure: "Quick Event Creation (Treasure)", inn: "Quick Event Creation (Inn)" }[kind];
+    const title = { transfer: t("Transfer", "Dialog_QuickTransfer"), door: t("Door", "Dialog_QuickDoor"), treasure: t("Treasure", "Dialog_QuickTreasure"), inn: t("Inn", "Dialog_QuickInn") }[kind];
     let get;
     const ok = await dialog({
         title, width: "640px", height: "auto",
         build: b => {
             if (kind === "transfer") {
                 const loc = locationPick(here.mapId, here.x, here.y); const dir = sel(DIR_OPTS, 0); const fade = sel(FADE_OPTS, 0);
-                b.append(field("Location:", loc), row(field("Direction:", dir), field("Fade:", fade)));
+                b.append(field(t("Location", "Dialog_QuickTransfer"), loc), row(field(t("Direction", "Dialog_QuickTransfer"), dir), field(t("Fade", "EventCommand201"), fade)));
                 get = () => ({ loc: loc.get(), dir: dir.get(), fade: fade.get() });
             } else if (kind === "door") {
                 const img = imageField({ characterName: "!Door1", characterIndex: 0, direction: 2, pattern: 0, tileId: 0 }, tileset);
                 const loc = locationPick(here.mapId, here.x, here.y); const fade = sel(FADE_OPTS, 0);
-                b.append(row(group("Image", img), h("div", null, field("Location:", loc), field("Fade:", fade))));
+                b.append(row(group(t("Image", "Constants"), img), h("div", null, field(t("Location", "Dialog_QuickDoor"), loc), field(t("Fade", "EventCommand201"), fade))));
                 get = () => ({ img: img.get(), loc: loc.get(), fade: fade.get() });
             } else if (kind === "treasure") {
                 const img = imageField({ characterName: "!Chest", characterIndex: 0, direction: 2, pattern: 0, tileId: 0 }, tileset);
                 const gold = num(100, { min: 1, max: 9999999 });
                 const it = sel(db.options("items"), 1), wp = sel(db.options("weapons"), 1), ar = sel(db.options("armors"), 1);
-                const r = radios([{ label: "Gold", value: 0, controls: [gold] }, { label: "Item", value: 1, controls: [it] }, { label: "Weapon", value: 2, controls: [wp] }, { label: "Armor", value: 3, controls: [ar] }], 1);
-                b.append(row(group("Image", img), group("Contents", r)));
+                const r = radios([{ label: t("Gold", "Dialog_QuickTreasure"), value: 0, controls: [gold] }, { label: t("Item", "Constants"), value: 1, controls: [it] }, { label: t("Weapon", "Constants"), value: 2, controls: [wp] }, { label: t("Armor", "Constants"), value: 3, controls: [ar] }], 1);
+                b.append(row(group(t("Image", "Constants"), img), group(t("Content", "Dialog_QuickTreasure"), r)));
                 get = () => ({ img: img.get(), kind: r.get(), gold: gold.get(), id: [0, it.get(), wp.get(), ar.get()][r.get()] });
             } else {
                 const img = imageField({ characterName: "People1", characterIndex: 0, direction: 2, pattern: 1, tileId: 0 }, tileset);
                 const price = num(50, { min: 0, max: 9999999 });
-                b.append(row(group("Image", img), field("Price:", price)));
+                b.append(row(group(t("Image", "Constants"), img), field(t("Price", "Dialog_QuickInn"), price)));
                 get = () => ({ img: img.get(), price: price.get() });
             }
         },
@@ -73,7 +74,8 @@ export async function quickEvent(kind, { mapId, x, y, tileset }) {
         page.image = v.img; page.priorityType = 1; page.trigger = 0; page.directionFix = true; page.walkAnime = false;
         const lists = ["", "items", "weapons", "armors"];
         const obj = v.kind ? db[lists[v.kind]][v.id] : null;
-        const text = v.kind === 0 ? `Obtained ${v.gold}\\G!` : `Obtained \\I[${obj ? obj.iconIndex : 0}]${obj ? obj.name : ""}!`;
+        // Mesmas mensagens do editor original (%G vira \\G).
+        const text = (v.kind === 0 ? t("%1%G were found!", "Dialog_QuickTreasure", v.gold) : t("%1 was found!", "Dialog_QuickTreasure", `\\I[${obj ? obj.iconIndex : 0}]${obj ? obj.name : ""}`)).replace(/%G/g, "\\G");
         L.push(C(250, 0, [se("Chest1")]),
             ...moveRoute(0, 0, route([[36], [17], [15, [3]], [18], [15, [3]], [19], [15, [3]], [35]])));
         if (v.kind === 0) { L.push(C(125, 0, [0, 0, v.gold])); }
@@ -87,10 +89,11 @@ export async function quickEvent(kind, { mapId, x, y, tileset }) {
     } else {
         page.image = v.img; page.priorityType = 1; page.trigger = 0;
         const price = v.price;
+        const yes = t("Yes", "BasicConstants"), no = t("No", "BasicConstants");
         L.push(C(101, 0, [v.img.characterName ? "" : "", 0, 0, 2, ""]),
-            C(401, 0, [`Welcome. It's ${price}\\G per night to stay. Would you like a room?\\$`]),
-            C(102, 0, [["Stay", "Leave"], 1, 0, 2, 0]),
-            C(402, 0, [0, "Stay"]),
+            C(401, 0, [t("%1%G for one night. Would you like to stay?", "Dialog_QuickInn", price).replace(/%G/g, "\\G") + "\\$"]),
+            C(102, 0, [[yes, no], 1, 0, 2, 0]),
+            C(402, 0, [0, yes]),
             C(111, 1, [7, price, 0]),
             C(125, 2, [1, 0, price]),
             C(221, 2, []),
@@ -101,11 +104,11 @@ export async function quickEvent(kind, { mapId, x, y, tileset }) {
             E(2),
             C(411, 1, []),
             C(101, 2, ["", 0, 0, 2, ""]),
-            C(401, 2, ["You don't have enough money."]),
+            C(401, 2, [t("You don’t have enough money.", "Dialog_QuickInn")]),
             E(2),
             C(412, 1, []),
             E(1),
-            C(402, 0, [1, "Leave"]),
+            C(402, 0, [1, no]),
             E(1),
             C(404, 0, []));
     }

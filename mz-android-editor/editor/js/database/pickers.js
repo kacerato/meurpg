@@ -1,6 +1,7 @@
 // Seletores de recursos: imagens (com pré-visualização e matiz), sprite sheets de
 // personagem/rosto (com índice), ícones do IconSet e áudio (volume/tom/pan + tocar).
 import { el, btn, modal, fld, num, getApi, changed } from "./ui.js";
+import { t } from "../i18n.js";
 
 const imgCache = new Map();
 export function imageUrl(folder, name) {
@@ -119,7 +120,7 @@ export function iconCanvas(index, size = 32) {
 
 // ---------------------------------------------------------------- diálogo base de seleção
 
-function fileListPane(names, current, onPick, noneLabel = "(None)") {
+function fileListPane(names, current, onPick, noneLabel = "(" + t("None", "Constants") + ")") {
     const list = el("div", { class: "dbPickList" });
     const items = [noneLabel !== false ? ["", noneLabel] : null, ...names.map(n => [n, n])].filter(Boolean);
     const rows = [];
@@ -138,7 +139,7 @@ function fileListPane(names, current, onPick, noneLabel = "(None)") {
 }
 
 // Seleciona uma imagem de img/<folder>/. Devolve {name, hue} ou null.
-export async function pickImage({ folder, current = "", hue, title = "Select an Image", none = true }) {
+export async function pickImage({ folder, current = "", hue, title = t("Select an Image", "Dialog_ImageSelector"), none = true }) {
     const names = await listFiles("img/" + folder, ["png"]);
     const state = { name: current, hue: hue || 0 };
     const preview = el("div", { class: "dbPickPreview" });
@@ -153,13 +154,13 @@ export async function pickImage({ folder, current = "", hue, title = "Select an 
         title, width: "860px", height: "560px",
         build: b => {
             b.classList.add("dbPickBody");
-            b.appendChild(fileListPane(names, current, v => { state.name = v; show(); }, none ? "(None)" : false));
+            b.appendChild(fileListPane(names, current, v => { state.name = v; show(); }, none ? "(" + t("None", "Constants") + ")" : false));
             const right = el("div", { class: "dbPickRight" }, preview);
             if (hue !== undefined) {
                 const slider = el("input", { type: "range", min: 0, max: 360, value: state.hue, class: "dbRange" });
                 const lab = el("span", { text: String(state.hue) });
                 slider.addEventListener("input", () => { state.hue = Number(slider.value); lab.textContent = slider.value; show(); });
-                right.appendChild(el("div", { class: "dbRow" }, el("span", { text: "Hue:" }), slider, lab));
+                right.appendChild(el("div", { class: "dbRow" }, el("span", { text: t("Hue", "Dialog_ImageSelector") + ":" }), slider, lab));
             }
             b.appendChild(right);
             show();
@@ -198,7 +199,7 @@ export async function pickSheet({ kind, name = "", index = 0, title }) {
         draw();
     });
     const ok = await modal({
-        title: title || "Select an Image", width: "900px", height: "560px",
+        title: title || t("Select an Image", "Dialog_ImageSelector"), width: "900px", height: "560px",
         build: b => {
             b.classList.add("dbPickBody");
             b.appendChild(fileListPane(names, name, v => { state.name = v; state.index = 0; draw(); }));
@@ -222,7 +223,7 @@ export async function pickIcon(current = 0) {
         ctx.lineWidth = 3;
         ctx.strokeStyle = "#ff3030";
         ctx.strokeRect((state.index % 16) * 32 + 1, Math.floor(state.index / 16) * 32 + 1, 30, 30);
-        info.textContent = "Index: " + state.index;
+        info.textContent = t("Icon Index", "Dialog_IconSelector") + ": " + state.index;
     };
     const reveal = () => {
         const sc = cv.parentElement;
@@ -236,7 +237,7 @@ export async function pickIcon(current = 0) {
         draw();
     });
     const ok = await modal({
-        title: "Select an Image", width: "620px", height: "560px",
+        title: t("Select an Icon", "Dialog_IconSelector"), width: "620px", height: "560px",
         build: b => {
             b.appendChild(el("div", { class: "dbIconScroll" }, cv));
             b.appendChild(el("div", { class: "dbRow" }, info));
@@ -278,15 +279,15 @@ export async function pickAudio(folder, a, title) {
         return fld(label, [s, v]);
     };
     const ok = await modal({
-        title: title || "Select " + folder.toUpperCase(), width: "760px", height: "520px",
+        title: title || t("Select an Audio", "Dialog_AudioSelector") + " (" + folder.toUpperCase() + ")", width: "760px", height: "520px",
         build: b => {
             b.classList.add("dbPickBody");
             b.appendChild(fileListPane(names, state.name, v => { state.name = v; }));
             b.appendChild(el("div", { class: "dbPickRight audio" },
-                el("div", { class: "dbRow" }, btn("Play", () => playAudio(folder, state)), btn("Stop", stopAudio)),
-                slider("volume", 0, 100, "Volume"),
-                slider("pitch", 50, 150, "Pitch"),
-                slider("pan", -100, 100, "Pan")));
+                el("div", { class: "dbRow" }, btn(t("Play", "Layout_AudioSelector"), () => playAudio(folder, state)), btn(t("Stop", "Layout_AudioSelector"), stopAudio)),
+                slider("volume", 0, 100, t("Volume", "Layout_AudioSelector")),
+                slider("pitch", 50, 150, t("Pitch", "Layout_AudioSelector")),
+                slider("pan", -100, 100, t("Pan", "Layout_AudioSelector"))));
         }
     });
     stopAudio();
@@ -294,7 +295,7 @@ export async function pickAudio(folder, a, title) {
 }
 
 export function audioText(a) {
-    return a && a.name ? `${a.name} (${a.volume}, ${a.pitch}, ${a.pan})` : "(None)";
+    return a && a.name ? `${a.name} (${a.volume}, ${a.pitch}, ${a.pan})` : "(" + t("None", "Constants") + ")";
 }
 
 // Campo de áudio ligado a obj[key] (objeto de áudio).
@@ -315,7 +316,8 @@ export function audioField(obj, key, folder, o = {}) {
 export async function pickColor(values, mode = "tone", title, forceCount) {
     const v = values.slice();
     const isTone = mode === "tone";
-    const labels = isTone ? ["Red", "Green", "Blue", "Gray"] : ["Red", "Green", "Blue", "Intensity"];
+    const labels = isTone ? [t("Red", "Layout_ColorTone"), t("Green", "Layout_ColorTone"), t("Blue", "Layout_ColorTone"), t("Gray", "Layout_ColorTone")]
+        : [t("Red", "Layout_FlashColor"), t("Green", "Layout_FlashColor"), t("Blue", "Layout_FlashColor"), t("Intensity", "Layout_FlashColor")];
     const count = forceCount || (isTone && v.length < 4 ? 3 : 4);
     const prev = el("div", { class: "dbColorPrev" });
     const paint = () => {
@@ -328,7 +330,7 @@ export async function pickColor(values, mode = "tone", title, forceCount) {
         }
     };
     const ok = await modal({
-        title: title || (isTone ? "Color" : "Flash Color"), width: "520px",
+        title: title || (isTone ? t("Color Tone", "EventCommand223") : t("Flash Color", "EventCommand224")), width: "520px",
         build: b => {
             for (let i = 0; i < count; i++) {
                 const min = isTone && i < 3 ? -255 : 0;
@@ -349,7 +351,7 @@ export async function pickColor(values, mode = "tone", title, forceCount) {
 // Botão de imagem simples ligado a obj[key] (nome do arquivo em img/<folder>).
 export function imageButton(obj, key, folder, o = {}) {
     const b = el("button", { class: "dbBtn dbPickBtn", type: "button" });
-    const show = () => { b.textContent = obj[key] || "(None)"; };
+    const show = () => { b.textContent = obj[key] || "(" + t("None", "Constants") + ")"; };
     show();
     b.addEventListener("click", async () => {
         const r = await pickImage({ folder, current: obj[key] || "", title: o.title });

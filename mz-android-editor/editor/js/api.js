@@ -1,4 +1,6 @@
 // API compartilhada entre os módulos do editor (banco de dados, eventos, pintura, plugins...).
+import { t } from "./i18n.js";
+
 // Regras: módulos NÃO editam index.html/app.js; cada um exporta `register(api)` a partir de
 // editor/js/<modulo>/index.js e é ligado em editor/js/modules.js.
 
@@ -68,7 +70,7 @@ export const api = {
             const i = dialogs.indexOf(root);
             if (i >= 0) { dialogs.splice(i, 1); }
         };
-        for (const b of opts.buttons || [{ label: "OK", primary: true }, { label: "Cancelar" }]) {
+        for (const b of opts.buttons || [{ label: t("OK", "BasicConstants"), primary: true }, { label: t("Cancel", "BasicConstants") }]) {
             const btn = document.createElement("button");
             btn.textContent = b.label;
             if (b.primary) { btn.classList.add("primary"); }

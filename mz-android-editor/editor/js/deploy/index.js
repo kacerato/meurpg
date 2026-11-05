@@ -5,6 +5,7 @@
 import { md5, encryptAsset, decryptAsset, encryptKind } from "./crypto.js";
 import { findUsedFiles } from "./scan.js";
 import { ZipWriter } from "./zip.js";
+import { t } from "../i18n.js";
 
 const ICON = new URL("./deploy.svg", import.meta.url).href;
 
@@ -46,7 +47,7 @@ function addToolbarButton(api) {
     if (!bar) {
         return;
     }
-    const btn = el("button", { id: "btnDeploy", class: "tb", title: "Implantação (Deployment)" },
+    const btn = el("button", { id: "btnDeploy", class: "tb", title: t("Deployment", "MainMenu") },
         el("img", { src: ICON, alt: "" }));
     const play = document.getElementById("btnPlay");
     if (play && play.parentNode === bar) {
@@ -72,7 +73,7 @@ const hasJavaDeploy = () => isAndroid() && typeof window.Android.deployVersion =
 async function readBytes(path) {
     const res = await fetch("/api/file?path=" + encodeURIComponent(path), { cache: "no-store" });
     if (!res.ok) {
-        throw new Error(`Falha ao ler ${path}: ${res.status}`);
+        throw new Error(t("Failed to read %1: %2", null, path, res.status));
     }
     return new Uint8Array(await res.arrayBuffer());
 }
@@ -102,7 +103,7 @@ async function listAll(api, log) {
         }
     };
     await walk("");
-    log(`${out.length} arquivos no projeto`);
+    log(t("%1 files in the project", null, out.length));
     return out;
 }
 
@@ -117,8 +118,8 @@ function isExcludedTop(name, outRoot) {
 // Configurações
 
 const PLATFORMS = [
-    { id: "web", label: "Navegadores web / Android / iOS (HTML5)" },
-    { id: "apk", label: "Android (APK instalável, gerado no aparelho)" }
+    { id: "web", label: t("Web browsers", "Dialog_Deployment") + " / Android / iOS (HTML5)" },
+    { id: "apk", label: t("Android (installable APK, built on the device)") }
 ];
 
 function loadSettings(api, system) {
@@ -156,7 +157,7 @@ function saveSettings(api, s) {
 
 export async function openDeployDialog(api) {
     if (!api.project) {
-        api.status("Abra um projeto primeiro");
+        api.status(t("Open a project first."));
         return;
     }
     let system = null;
@@ -168,12 +169,12 @@ export async function openDeployDialog(api) {
     let cancelled = false;
 
     const dlg = api.openDialog({
-        title: "Implantação",
+        title: t("Deployment", "Dialog_Deployment"),
         width: "720px",
         height: "620px",
         buttons: [
-            { label: "OK", primary: true, onClick: () => { start(); return false; } },
-            { label: "Cancelar", onClick: () => { if (running) { cancelled = true; log("cancelando..."); return false; } return true; } }
+            { label: t("OK", "BasicConstants"), primary: true, onClick: () => { start(); return false; } },
+            { label: t("Cancel", "BasicConstants"), onClick: () => { if (running) { cancelled = true; log(t("Cancelling...")); return false; } return true; } }
         ]
     });
     dlg.root.classList.add("deployDialog");
@@ -201,44 +202,44 @@ export async function openDeployDialog(api) {
     const fmtZip = el("input", { type: "radio", name: "deployFmt", value: "zip" });
     fmtFolder.checked = s.webFormat !== "zip";
     fmtZip.checked = s.webFormat === "zip";
-    const excl = check(s.excludeUnused, "Excluir arquivos não utilizados");
-    const encImg = check(s.encImages, "Arquivos de imagem");
-    const encAud = check(s.encAudio, "Arquivos de áudio");
-    const key = el("input", { type: "password", placeholder: "Chave de criptografia", autocomplete: "off" });
+    const excl = check(s.excludeUnused, t("Exclude unused files", "Layout_DeploymentOptions"));
+    const encImg = check(s.encImages, t("Image files", "Layout_DeploymentOptions"));
+    const encAud = check(s.encAudio, t("Audio files", "Layout_DeploymentOptions"));
+    const key = el("input", { type: "password", placeholder: t("Encryption key", "Layout_DeploymentOptions"), autocomplete: "off" });
     const showKey = el("button", { class: "dpSmall", type: "button", text: "👁" });
     showKey.addEventListener("click", () => { key.type = key.type === "password" ? "text" : "password"; });
     const appName = input(s.appName);
     const pkg = input(s.packageName, { spellcheck: "false" });
-    const install = check(s.install, "Oferecer instalação ao terminar");
+    const install = check(s.install, t("Offer to install when finished"));
 
     const bar = el("div", { class: "dpBar" }, el("div", { class: "dpBarFill" }));
     const barText = el("span", { class: "dpBarText", text: "" });
     const logBox = el("pre", { class: "dpLog" });
     const result = el("div", { class: "dpResult" });
 
-    const webBox = el("fieldset", { class: "dpGroup" }, el("legend", { text: "Formato (web)" }),
-        el("label", { class: "dpRow" }, fmtFolder, "Pasta dentro do projeto (pode ser aberta no teste de jogo)"),
-        el("label", { class: "dpRow" }, fmtZip, isAndroid() ? "Arquivo .zip (salvo em Download/MZEditor)" : "Arquivo .zip (download do navegador)"));
-    const apkBox = el("fieldset", { class: "dpGroup" }, el("legend", { text: "Android (APK)" }),
+    const webBox = el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Format (web)") }),
+        el("label", { class: "dpRow" }, fmtFolder, t("Folder inside the project (can be opened in the playtest)")),
+        el("label", { class: "dpRow" }, fmtZip, isAndroid() ? t(".zip file (saved to %1)", null, "Download/MZEditor") : t(".zip file (browser download)")));
+    const apkBox = el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Android", "Dialog_Deployment") + " (APK)" }),
         el("div", { class: "dpGrid" },
-            el("span", { text: "Nome do app" }), appName,
-            el("span", { text: "Nome do pacote" }), pkg),
+            el("span", { text: t("App name") }), appName,
+            el("span", { text: t("Package name") }), pkg),
         install.row,
         el("div", { class: "dpHint", id: "dpApkHint" }));
 
-    const encKeyRow = el("div", { class: "dpGrid" }, el("span", { text: "Chave" }), el("div", { class: "dpKey" }, key, showKey));
+    const encKeyRow = el("div", { class: "dpGrid" }, el("span", { text: t("Encryption key", "Layout_DeploymentOptions") }), el("div", { class: "dpKey" }, key, showKey));
 
     dlg.body.append(
-        el("fieldset", { class: "dpGroup" }, el("legend", { text: "Plataforma" }), radios),
-        el("fieldset", { class: "dpGroup" }, el("legend", { text: "Local de saída" }),
+        el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Platform", "Dialog_Deployment") }), radios),
+        el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Output Location", "Dialog_Deployment") }),
             el("div", { class: "dpGrid" },
-                el("span", { text: "Pasta (no projeto)" }), outDir,
-                el("span", { text: "Nome" }), outName),
+                el("span", { text: t("Folder (in the project)") }), outDir,
+                el("span", { text: t("Name", "Constants") }), outName),
             el("div", { class: "dpHint", id: "dpOutHint" })),
         webBox,
         apkBox,
-        el("fieldset", { class: "dpGroup" }, el("legend", { text: "Opções" }), excl.row),
-        el("fieldset", { class: "dpGroup" }, el("legend", { text: "Criptografia" }),
+        el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Options", "Layout_DeploymentOptions") }), excl.row),
+        el("fieldset", { class: "dpGroup" }, el("legend", { text: t("Encryption", "Layout_DeploymentOptions") }),
             el("div", { class: "dpInline" }, encImg.row, encAud.row), encKeyRow),
         el("div", { class: "dpProgress" }, bar, barText),
         result,
@@ -254,16 +255,16 @@ export async function openDeployDialog(api) {
         showKey.disabled = !enc;
         const hint = dlg.body.querySelector("#dpApkHint");
         hint.textContent = hasJavaDeploy()
-            ? "O APK é montado e assinado no aparelho (chave própria guardada no app) e salvo em Download/MZEditor."
-            : "A exportação de APK só funciona dentro do app Android (MZ Editor). No PC use \"Navegadores web\".";
+            ? t("The APK is built and signed on the device (with the app's own key) and saved to %1.", null, "Download/MZEditor")
+            : t("APK export only works inside the Android app (MZ Editor). On a PC, use \"%1\".", null, t("Web browsers", "Dialog_Deployment"));
         const out = dlg.body.querySelector("#dpOutHint");
         const name = outName.value.trim() || "Game";
         if (apk) {
-            out.textContent = `Saída: Download/MZEditor/${name}.apk`;
+            out.textContent = t("Output: %1", null, `Download/MZEditor/${name}.apk`);
         } else if (fmtZip.checked) {
-            out.textContent = `Saída: ${name}.zip (com a pasta www/)`;
+            out.textContent = t("Output: %1 (with the www/ folder)", null, `${name}.zip`);
         } else {
-            out.textContent = `Saída: ${(outDir.value.trim() || "deploy")}/${name}/ (dentro do projeto)`;
+            out.textContent = t("Output: %1 (inside the project)", null, `${(outDir.value.trim() || "deploy")}/${name}/`);
         }
     }
     for (const c of [encImg.box, encAud.box, fmtFolder, fmtZip]) {
@@ -320,9 +321,9 @@ export async function openDeployDialog(api) {
             await runDeploy(api, s, key.value, { log, progress, isCancelled: () => cancelled, result, dlg });
         } catch (e) {
             console.error(e);
-            log("ERRO: " + (e.message || e));
-            progress(0, 0, "Falhou");
-            api.status("Implantação falhou: " + (e.message || e));
+            log(t("ERROR: %1", null, e.message || e));
+            progress(0, 0, t("Failed"));
+            api.status(t("Failed to create a distribution package.", "ProjectManager") + " " + (e.message || e));
         } finally {
             setBusy(false);
         }
@@ -331,23 +332,23 @@ export async function openDeployDialog(api) {
 
 function validate(s, password) {
     if ((s.encImages || s.encAudio) && !password) {
-        throw new Error("Informe a chave de criptografia (ou desmarque a criptografia).");
+        throw new Error(t("Please enter the key of encryption.", "Layout_DeploymentOptions"));
     }
     if (s.platform === "apk") {
         if (!hasJavaDeploy()) {
-            throw new Error("Exportar APK só é possível no app Android (MZ Editor). No PC, use a plataforma \"Navegadores web\".");
+            throw new Error(t("APK export only works inside the Android app (MZ Editor). On a PC, use \"%1\".", null, t("Web browsers", "Dialog_Deployment")));
         }
         if (!s.appName) {
-            throw new Error("Informe o nome do app.");
+            throw new Error(t("Please enter the app name."));
         }
         if (new TextEncoder().encode(s.appName).length > 100) {
-            throw new Error("Nome do app longo demais (máx. 100 bytes).");
+            throw new Error(t("App name is too long (max. 100 bytes)."));
         }
         if (!/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$/.test(s.packageName) || s.packageName.length > 100) {
-            throw new Error("Nome do pacote inválido. Use algo como br.meunome.meujogo (letras, números e _, separados por pontos, até 100 caracteres).");
+            throw new Error(t("Invalid package name. Use something like %1 (letters, digits and _, separated by dots, up to 100 characters).", null, "br.myname.mygame"));
         }
         if (s.packageName === "br.mz.editor") {
-            throw new Error("O nome do pacote não pode ser o do próprio editor.");
+            throw new Error(t("The package name cannot be the editor's own."));
         }
     }
 }
@@ -358,7 +359,7 @@ function validate(s, password) {
 // Monta o plano: [{src, dst, enc}] + System.json reescrito.
 async function buildPlan(api, s, password, ui) {
     const { log, progress } = ui;
-    progress(0, 0, "Listando arquivos...");
+    progress(0, 0, t("Listing files..."));
     const outRoot = s.platform === "web" && s.webFormat === "folder" ? s.outDir.split("/")[0] : null;
     // também nunca empacota a pasta de saída padrão "deploy/" (pacotes anteriores)
     let files = (await listAll(api, log)).filter(f => {
@@ -366,12 +367,12 @@ async function buildPlan(api, s, password, ui) {
         return !isExcludedTop(top, outRoot) && !(f.includes("/") && top.toLowerCase() === (s.outDir.split("/")[0] || "deploy").toLowerCase());
     });
     if (!files.includes("index.html") || !files.includes("data/System.json")) {
-        throw new Error("Projeto incompleto: index.html ou data/System.json não encontrados.");
+        throw new Error(t("Incomplete project: %1 or %2 not found.", null, "index.html", "data/System.json"));
     }
     if (s.excludeUnused) {
-        progress(0, 0, "Procurando arquivos não utilizados...");
+        progress(0, 0, t("Looking for unused files..."));
         const { keep, removed } = await findUsedFiles(files, { readText, readBytes, log });
-        log(`Excluídos ${removed.length} arquivo(s) não utilizado(s).`);
+        log(t("Excluded %1 unused file(s).", null, removed.length));
         if (removed.length) {
             log("  " + removed.slice(0, 40).join("\n  ") + (removed.length > 40 ? `\n  ... (+${removed.length - 40})` : ""));
         }
@@ -384,9 +385,9 @@ async function buildPlan(api, s, password, ui) {
         const sample = Uint8Array.from({ length: 40 }, (_, i) => (i * 37) & 255);
         const back = decryptAsset(encryptAsset(sample, keyHex), keyHex);
         if (back.length !== sample.length || back.some((b, i) => b !== sample[i])) {
-            throw new Error("autoteste de criptografia falhou");
+            throw new Error(t("Encryption self-test failed."));
         }
-        log(`Chave de criptografia (MD5 da senha): ${keyHex}`);
+        log(t("Encryption key (MD5 of the password): %1", null, keyHex));
     }
     const system = JSON.parse(await readText("data/System.json"));
     system.hasEncryptedImages = !!s.encImages;
@@ -410,7 +411,7 @@ async function buildPlan(api, s, password, ui) {
         plan.push({ src: f, dst: e ? f + "_" : f, enc: !!e });
     }
     const inline = [{ dst: "data/System.json", text: JSON.stringify(system) }];
-    log(`${plan.length + 1} arquivo(s) no pacote, ${nEnc} criptografado(s).`);
+    log(t("%1 file(s) in the package, %2 encrypted.", null, plan.length + 1, nEnc));
     return { plan, inline, keyHex };
 }
 
@@ -428,8 +429,8 @@ async function runDeploy(api, s, password, ui) {
     } else {
         await runFolder(api, s, plan, inline, keyHex, ui);
     }
-    ui.log(`Concluído em ${((performance.now() - t0) / 1000).toFixed(1)} s.`);
-    api.status("Implantação concluída");
+    ui.log(t("Finished in %1 s.", null, ((performance.now() - t0) / 1000).toFixed(1)));
+    api.status(t("Deployment finished."));
 }
 
 async function transformed(item, keyHex) {
@@ -444,7 +445,7 @@ async function pool(items, n, fn, ui) {
     const worker = async () => {
         while (i < items.length) {
             if (ui.isCancelled()) {
-                throw new Error("Cancelado pelo usuário.");
+                throw new Error(t("Cancelled by the user."));
             }
             const it = items[i++];
             await fn(it);
@@ -457,16 +458,16 @@ async function pool(items, n, fn, ui) {
 
 async function runFolder(api, s, plan, inline, keyHex, ui) {
     const base = `${s.outDir}/${s.outName}`;
-    ui.log(`Gravando em ${base}/ ...`);
+    ui.log(t("Writing to %1 ...", null, base + "/"));
     await pool(plan, 4, async it => {
         await api.project.writeBinary(`${base}/${it.dst}`, await transformed(it, keyHex));
     }, ui);
     for (const f of inline) {
         await api.project.writeBinary(`${base}/${f.dst}`, new TextEncoder().encode(f.text), "application/json");
     }
-    ui.progress(1, 1, "Concluído");
+    ui.progress(1, 1, t("Finished"));
     const url = "/project/" + base.split("/").map(encodeURIComponent).join("/") + "/index.html";
-    const play = el("button", { class: "primary", text: "▶ Abrir no teste de jogo" });
+    const play = el("button", { class: "primary", text: "▶ " + t("Open in playtest") });
     play.addEventListener("click", () => {
         const frame = document.getElementById("playFrame");
         const overlay = document.getElementById("playOverlay");
@@ -478,7 +479,7 @@ async function runFolder(api, s, plan, inline, keyHex, ui) {
         overlay.hidden = false;
         frame.src = url;
     });
-    ui.result.replaceChildren(el("span", { text: `Pacote web em ${base}/  ` }), play);
+    ui.result.replaceChildren(el("span", { text: t("Web package in %1", null, base + "/") + "  " }), play);
 }
 
 async function runZipJs(s, plan, inline, keyHex, ui) {
@@ -486,7 +487,7 @@ async function runZipJs(s, plan, inline, keyHex, ui) {
     let done = 0;
     for (const it of plan) {
         if (ui.isCancelled()) {
-            throw new Error("Cancelado pelo usuário.");
+            throw new Error(t("Cancelled by the user."));
         }
         await zip.add("www/" + it.dst, await transformed(it, keyHex));
         ui.progress(++done, plan.length);
@@ -495,10 +496,10 @@ async function runZipJs(s, plan, inline, keyHex, ui) {
         await zip.add("www/" + f.dst, new TextEncoder().encode(f.text));
     }
     const blob = zip.finish();
-    const a = el("a", { href: URL.createObjectURL(blob), download: s.outName + ".zip", text: `Baixar ${s.outName}.zip (${(blob.size / 1048576).toFixed(1)} MB)` });
+    const a = el("a", { href: URL.createObjectURL(blob), download: s.outName + ".zip", text: t("Download %1 (%2 MB)", null, s.outName + ".zip", (blob.size / 1048576).toFixed(1)) });
     ui.result.replaceChildren(a);
     a.click();
-    ui.progress(1, 1, "Concluído");
+    ui.progress(1, 1, t("Finished"));
     ui.log(`${s.outName}.zip: ${(blob.size / 1048576).toFixed(1)} MB`);
 }
 
@@ -516,7 +517,7 @@ async function runJavaJob(api, kind, s, plan, inline, keyHex, ui) {
     };
     const res = await fetch("/api/deploy/start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     if (!res.ok) {
-        throw new Error("O app não aceitou a exportação: " + res.status + " " + await res.text());
+        throw new Error(t("The app rejected the export: %1", null, res.status + " " + await res.text()));
     }
     const { id } = await res.json();
     let logLen = 0;
@@ -532,14 +533,14 @@ async function runJavaJob(api, kind, s, plan, inline, keyHex, ui) {
         logLen = (st.log || []).length;
         ui.progress(st.done, st.total, st.state === "running" ? `${st.message || ""} ${st.done}/${st.total}` : null);
         if (st.state === "error") {
-            throw new Error(st.message || "falha na exportação");
+            throw new Error(st.message || t("Export failed."));
         }
         if (st.state === "done") {
             const r = st.result || {};
-            ui.progress(1, 1, "Concluído");
-            const parts = [el("span", { text: `${r.name} (${(r.size / 1048576).toFixed(1)} MB) salvo em ${r.location}  ` })];
+            ui.progress(1, 1, t("Finished"));
+            const parts = [el("span", { text: t("%1 (%2 MB) saved to %3", null, r.name, (r.size / 1048576).toFixed(1), r.location) + "  " })];
             if (kind === "apk") {
-                const inst = el("button", { class: "primary", text: "Instalar" });
+                const inst = el("button", { class: "primary", text: t("Install") });
                 inst.addEventListener("click", () => window.Android.installApk(r.file));
                 parts.push(inst);
                 if (s.install) {

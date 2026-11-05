@@ -4,6 +4,7 @@ import { el, btn, setApi, setChangedHook, modal, fld, num, confirmBox, alertBox,
 import { FILES, BLANK } from "./common.js";
 import { TABS } from "./tabs.js";
 import { stopAudio } from "./pickers.js";
+import { t } from "../i18n.js";
 
 const CSS_ID = "dbCss";
 const ui = { tab: 0, sel: {} };   // aba e seleção lembradas entre aberturas
@@ -20,8 +21,8 @@ export async function register(api) {
     injectCss();
     api.bindToolbar("btnDatabase", () => openDatabase(api).catch(e => {
         console.error(e);
-        api.status("Database: " + (e.message || e));
-    }), "Database");
+        api.status(t("Database", "DatabaseMain") + ": " + (e.message || e));
+    }), t("Database", "DatabaseMain"));
     api.database = { open: (tabId) => openDatabase(api, tabId) };
 }
 
@@ -37,8 +38,8 @@ let opened = null;
 
 export async function openDatabase(api, tabId) {
     if (opened) { return; }
-    if (!api.project) { throw new Error("Nenhum projeto aberto"); }
-    api.status("Carregando banco de dados…");
+    if (!api.project) { throw new Error(t("No project is open.", "MZEditor")); }
+    api.status(t("Loading the database...", "MZEditor"));
     const db = await loadAll(api);
     api.status("");
     const dirty = new Set();
@@ -65,17 +66,17 @@ export async function openDatabase(api, tabId) {
             api.emit("db:changed", { file: `data/${f}.json` });
         }
         updateTitle();
-        api.status(files.length ? "Banco de dados gravado: " + files.join(", ") : "");
+        api.status(files.length ? t("Database saved: %1", "MZEditor", files.join(", ")) : "");
         return files;
     };
 
     const dlg = api.openDialog({
-        title: "Database",
+        title: t("Database", "DatabaseMain"),
         width: "calc(100vw - 12px)", height: "calc(100vh - 12px)",
         buttons: [
-            { label: "OK", primary: true, onClick: () => { save().then(close).catch(err => alertBox("Erro ao gravar: " + err.message)); return false; } },
-            { label: "Cancel", onClick: () => { if (dirty.size) { confirmBox("Descartar as alterações não gravadas?", "Database").then(ok => ok && close()); return false; } close(); } },
-            { label: "Apply", onClick: () => { save().catch(err => alertBox("Erro ao gravar: " + err.message)); return false; } }
+            { label: t("OK", "BasicConstants"), primary: true, onClick: () => { save().then(close).catch(err => alertBox(t("Failed to save: %1", "MZEditor", err.message))); return false; } },
+            { label: t("Cancel", "BasicConstants"), onClick: () => { if (dirty.size) { confirmBox(t("Discard changes to the database?", "DatabaseMain"), t("Database", "DatabaseMain")).then(ok => ok && close()); return false; } close(); } },
+            { label: t("Apply", "BasicConstants"), onClick: () => { save().catch(err => alertBox(t("Failed to save: %1", "MZEditor", err.message))); return false; } }
         ]
     });
     opened = dlg;
@@ -83,7 +84,7 @@ export async function openDatabase(api, tabId) {
     dlg.body.classList.add("dbBody");
     dlg.body.append(tabBar, content);
     const titleBar = dlg.root.querySelector(".mzDialogTitle");
-    const updateTitle = () => { titleBar.textContent = "Database" + (dirty.size ? " *" : ""); };
+    const updateTitle = () => { titleBar.textContent = t("Database", "DatabaseMain") + (dirty.size ? " *" : ""); };
 
     function close() {
         stopAudio();
@@ -109,7 +110,11 @@ export async function openDatabase(api, tabId) {
     };
     window.addEventListener("keydown", onKey);
 
-    TABS.forEach((t, i) => tabBar.appendChild(btn(t.label, () => showTab(i))));
+    TABS.forEach((tab, i) => {
+        const b = btn(tab.label, () => showTab(i));
+        if (tab.desc) { b.title = tab.desc; }
+        tabBar.appendChild(b);
+    });
 
     function showTab(i) {
         ui.tab = i;
@@ -130,19 +135,19 @@ export async function openDatabase(api, tabId) {
         formEl = el("div", { class: "dbForm" });
         multi = new Set([ui.sel[current.id] || 1]);
         multiMode = false;
-        const multiBtn = btn("Multi", () => {
+        const multiBtn = btn(t("Multi", "MZEditor"), () => {
             multiMode = !multiMode;
             multiBtn.classList.toggle("on", multiMode);
             if (!multiMode) { multi = new Set([ui.sel[current.id]]); markSelected(); }
         }, "small");
-        multiBtn.title = "Seleção múltipla (equivale a Shift + clique)";
+        multiBtn.title = t("Multiple selection (same as Shift + click)", "MZEditor");
         const listBtns = el("div", { class: "dbListBtns" },
-            btn("Change Maximum...", changeMaximum),
+            btn(t("Change Maximum", "DataSelector") + "...", changeMaximum),
             el("div", { class: "dbRow" },
                 multiBtn,
-                btn("Copy", copyItems, "small"),
-                btn("Paste", pasteItem, "small"),
-                btn("Clear", clearItem, "small")));
+                btn(t("Copy", "BasicConstants"), copyItems, "small"),
+                btn(t("Paste", "BasicConstants"), pasteItem, "small"),
+                btn(t("Clear", "BasicConstants"), clearItem, "small")));
         content.appendChild(el("div", { class: "dbMain" }, el("div", { class: "dbListPane" }, titleEl, listEl, listBtns), formEl));
         renderList();
         const arr = db[current.file];
@@ -223,12 +228,12 @@ export async function openDatabase(api, tabId) {
         const n = { v: arr.length - 1 };
         const limit = Math.max(current.max || 1000, arr.length - 1);
         const ok = await modal({
-            title: "Change Maximum", width: "380px",
-            build: b => b.appendChild(fld("Maximum:", num(n, "v", { min: 1, max: limit })))
+            title: t("Change Maximum", "Dialog_ChangeMaximum"), width: "380px",
+            build: b => b.appendChild(fld(t("Maximum", "Dialog_ChangeMaximum") + ":", num(n, "v", { min: 1, max: limit })))
         });
         if (!ok || n.v === arr.length - 1) { return; }
         if (n.v < arr.length - 1) {
-            const sure = await confirmBox(`Os dados de ${pad(n.v + 1)} em diante serão apagados. Continuar?`, "Change Maximum");
+            const sure = await confirmBox(t("Data from %1 onward will be deleted. Continue?", "MZEditor", pad(n.v + 1)), t("Change Maximum", "Dialog_ChangeMaximum"));
             if (!sure) { return; }
             arr.length = n.v + 1;
         } else {
@@ -246,7 +251,7 @@ export async function openDatabase(api, tabId) {
 
     function copyItems() {
         clipboard[current.file] = selectedIds().map(id => structuredClone(db[current.file][id]));
-        api.status(`Copiado: ${clipboard[current.file].length} item(ns)`);
+        api.status(t("Copied: %1 item(s)", "MZEditor", clipboard[current.file].length));
     }
 
     // Cola em sequência a partir do item selecionado (vários itens copiados => vários destinos).
@@ -273,6 +278,6 @@ export async function openDatabase(api, tabId) {
     }
 
     let start = ui.tab;
-    if (tabId) { const i = TABS.findIndex(t => t.id === tabId); if (i >= 0) { start = i; } }
+    if (tabId) { const i = TABS.findIndex(tab => tab.id === tabId); if (i >= 0) { start = i; } }
     showTab(start);
 }

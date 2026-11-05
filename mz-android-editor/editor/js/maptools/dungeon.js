@@ -7,6 +7,7 @@
 
 import * as T from "./autotile.js";
 import { drawTile, loadTilesetBitmaps, whenBitmapsReady, paletteShape } from "./render.js";
+import { t } from "../i18n.js";
 
 const WALL_H = 2;
 
@@ -184,7 +185,7 @@ export async function openDungeonDialog(api, edit, after) {
     const tilesets = await api.project.tilesets();
     const tileset = tilesets[edit.map.tilesetId];
     if (!tileset || !tileset.tilesetNames[3] || !tileset.tilesetNames[4]) {
-        api.status("Gerar Masmorra precisa de um tileset com A4 (paredes) e A5 (pisos).");
+        api.status(t("Generate Dungeon needs a tileset with A4 (walls) and A5 (floors)."));
         return false;
     }
     const bitmaps = loadTilesetBitmaps(tileset);
@@ -237,12 +238,12 @@ export async function openDungeonDialog(api, edit, after) {
             return d;
         };
         const dlg = api.openDialog({
-            title: "Gerar Masmorra",
+            title: t("Generate Dungeon", "Dialog_GenerateDungeon"),
             width: "min(760px, 98vw)",
             height: "min(560px, 96vh)",
             buttons: [
                 {
-                    label: "Ok", primary: true, onClick: () => {
+                    label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                         const layout = generateLayout(edit.w, edit.h, {
                             type: maze.checked ? "maze" : "rooms",
                             margins: margins.checked,
@@ -250,27 +251,27 @@ export async function openDungeonDialog(api, edit, after) {
                         });
                         applyDungeon(edit, layout, wallKind, floorId);
                         after(edit);
-                        api.status("Masmorra gerada");
+                        api.status(t("Dungeon generated"));
                         resolve(true);
                     }
                 },
-                { label: "Cancelar", onClick: () => resolve(false) }
+                { label: t("Cancel", "BasicConstants"), onClick: () => resolve(false) }
             ]
         });
         const left = document.createElement("div");
         left.className = "mtDgLeft";
         left.append(
-            group("Tipo",
-                lab(rooms, "Salas", "Gera uma masmorra constituída de salas e passagens."),
-                lab(maze, "Labirinto", "Gera uma masmorra tipo labirinto que não tem salas.")),
-            group("Opções",
-                lab(margins, "Adic. Margens", "Adiciona margens em torno da masmorra."),
-                lab(wide, "Passagens Largas", "Aumenta a largura das passagens.")));
+            group(t("Type", "Constants"),
+                lab(rooms, t("Rooms", "Dialog_GenerateDungeon"), t("Generates a dungeon consisting of rooms and passages.", "Dialog_GenerateDungeon")),
+                lab(maze, t("Maze", "Dialog_GenerateDungeon"), t("Generates a maze-like dungeon which has no rooms.", "Dialog_GenerateDungeon"))),
+            group(t("Options", "Dialog_GenerateDungeon"),
+                lab(margins, t("Add Margins", "Dialog_GenerateDungeon"), t("Adds margins around the dungeon.", "Dialog_GenerateDungeon")),
+                lab(wide, t("Wide passages", "Dialog_GenerateDungeon"), t("Increases the width of passages.", "Dialog_GenerateDungeon"))));
         const right = document.createElement("div");
         right.className = "mtDgRight";
         right.append(
-            group("Parede", grid(walls.map(k => T.makeAutotileId(k, 0)), id => T.kindOf(id) === wallKind, id => { wallKind = T.kindOf(id); })),
-            group("Piso", grid(floors, id => id === floorId, id => { floorId = id; })));
+            group(t("Wall", "Dialog_GenerateDungeon"), grid(walls.map(k => T.makeAutotileId(k, 0)), id => T.kindOf(id) === wallKind, id => { wallKind = T.kindOf(id); })),
+            group(t("Floor", "Dialog_GenerateDungeon"), grid(floors, id => id === floorId, id => { floorId = id; })));
         const wrap = document.createElement("div");
         wrap.className = "mtDgDialog";
         wrap.append(left, right);

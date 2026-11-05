@@ -2,6 +2,7 @@
 // Decodificamos nós mesmos para obter os valores exatos dos pixels: o canvas do navegador
 // aplica gestão de cor/gama e pré-multiplica o alfa, o que quebraria a comparação das
 // cores-chave das máscaras (_c.png) e a colorização por gradiente (mesmo resultado do MZ).
+import { t } from "../i18n.js";
 
 async function inflate(bytes) {
     const ds = new DecompressionStream("deflate");
@@ -22,7 +23,7 @@ export async function decodePng(buffer) {
     const b = new Uint8Array(buffer);
     const dv = new DataView(b.buffer, b.byteOffset, b.byteLength);
     if (dv.getUint32(0) !== 0x89504e47) {
-        throw new Error("não é PNG");
+        throw new Error(t("Unexpected file format.", "ProjectManager"));
     }
     let p = 8, w = 0, h = 0, bd = 8, ct = 6, il = 0, plte = null, trns = null;
     const idat = [];

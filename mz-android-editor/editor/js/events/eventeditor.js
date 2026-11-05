@@ -5,15 +5,18 @@ import { db, clone, TEMPLATE } from "./data.js";
 import { h, dialog, field, row, col, group, num, txt, sel, chk, switchPick, varPick, characterDialog, drawCharacterThumb, confirmBox } from "./ui.js";
 import { createCommandList, commandListToolbar } from "./commandlist.js";
 import { moveRouteDialog } from "./moveroute.js";
+import { t } from "../i18n.js";
 
 let pageClipboard = null;
 
-const MOVE_TYPES = ["Fixed", "Random", "Approach", "Custom"];
-const SPEEDS = ["1: x8 Slower", "2: x4 Slower", "3: x2 Slower", "4: Normal", "5: x2 Faster", "6: x4 Faster"];
-const FREQS = ["1: Lowest", "2: Lower", "3: Normal", "4: Higher", "5: Highest"];
-const PRIORITIES = ["Below characters", "Same as characters", "Above characters"];
-const TRIGGERS = ["Action Button", "Player Touch", "Event Touch", "Autorun", "Parallel"];
+const MOVE_TYPES = [t("Fixed", "Layout_EventPage"), t("Random", "Layout_EventPage"), t("Approach", "Layout_EventPage"), t("Custom", "Layout_EventPage")];
+const SPEEDS = [t("1: x8 Slower", "MovementSpeedBox"), t("2: x4 Slower", "MovementSpeedBox"), t("3: x2 Slower", "MovementSpeedBox"), t("4: Normal", "MovementSpeedBox"), t("5: x2 Faster", "MovementSpeedBox"), t("6: x4 Faster", "MovementSpeedBox")];
+const FREQS = [t("1: Lowest", "MovementFrequencyBox"), t("2: Lower", "MovementFrequencyBox"), t("3: Normal", "MovementFrequencyBox"), t("4: Higher", "MovementFrequencyBox"), t("5: Highest", "MovementFrequencyBox")];
+const PRIORITIES = [t("Below characters", "Layout_EventPage"), t("Same as characters", "Layout_EventPage"), t("Above characters", "Layout_EventPage")];
+const TRIGGERS = [t("Action Button", "Layout_EventPage"), t("Player Touch", "Layout_EventPage"), t("Event Touch", "Layout_EventPage"), t("Autorun", "Layout_EventPage"), t("Parallel", "Layout_EventPage")];
 
+// Rótulos dos botões de página: a fonte oficial tem <br> (quebra de linha no botão do MZ).
+function pageBtn(src) { return t(src, "Layout_EventPageButtons").replace(/<br>/g, " "); }
 function opt(arr, base = 0) { return arr.map((l, i) => ({ value: i + base, label: l })); }
 
 // opts: { map, mapId, event, tileset, page?, row? }  -> resolve(evento editado) ou null
@@ -22,7 +25,7 @@ export function openEventEditor(opts) {
     let pageIndex = Math.min(opts.page || 0, ev.pages.length - 1);
     let cl = null;
     return dialog({
-        title: `Event Editor - ID:${String(ev.id).padStart(3, "0")}`,
+        title: `${t("Event Editor", "EventEditorMain")} - ID:${String(ev.id).padStart(3, "0")}`,
         width: "min(1260px, 99vw)", height: "98vh",
         build: (body, dlg) => {
             body.classList.add("evEditorBody");
@@ -34,22 +37,22 @@ export function openEventEditor(opts) {
             const pageArea = h("div", { class: "evPageArea" });
             const b = (label, fn) => h("button", { type: "button", class: "evBtn", onclick: fn }, label);
             const top = h("div", { class: "evEditorTop" },
-                field("Name:", name), field("Note:", note),
+                field(t("Name", "Constants"), name), field(t("Note", "Constants"), note),
                 h("div", { class: "evRow evPageBtns" },
-                    b("New Event Page", () => { ev.pages.splice(pageIndex + 1, 0, TEMPLATE.page()); showPage(pageIndex + 1); }),
-                    b("Copy Event Page", () => { pageClipboard = clone(ev.pages[pageIndex]); }),
-                    b("Paste Event Page", () => { if (pageClipboard) { ev.pages.splice(pageIndex + 1, 0, clone(pageClipboard)); showPage(pageIndex + 1); } }),
-                    b("Delete Event Page", () => { if (ev.pages.length > 1) { ev.pages.splice(pageIndex, 1); showPage(Math.min(pageIndex, ev.pages.length - 1)); } }),
-                    b("Clear Event Page", async () => { if (await confirmBox("Clear this event page?")) { ev.pages[pageIndex] = TEMPLATE.page(); showPage(pageIndex); } })));
+                    b(pageBtn("New<br>Event Page"), () => { ev.pages.splice(pageIndex + 1, 0, TEMPLATE.page()); showPage(pageIndex + 1); }),
+                    b(pageBtn("Copy<br>Event Page"), () => { pageClipboard = clone(ev.pages[pageIndex]); }),
+                    b(pageBtn("Paste<br>Event Page"), () => { if (pageClipboard) { ev.pages.splice(pageIndex + 1, 0, clone(pageClipboard)); showPage(pageIndex + 1); } }),
+                    b(pageBtn("Delete<br>Event Page"), () => { if (ev.pages.length > 1) { ev.pages.splice(pageIndex, 1); showPage(Math.min(pageIndex, ev.pages.length - 1)); } }),
+                    b(pageBtn("Clear<br>Event Page"), async () => { if (await confirmBox(t("Clear this event page?"))) { ev.pages[pageIndex] = TEMPLATE.page(); showPage(pageIndex); } })));
             body.append(top, tabBar, pageArea);
 
             const showPage = i => {
                 pageIndex = i;
                 tabBar.innerHTML = "";
                 ev.pages.forEach((_, k) => {
-                    const t = h("button", { type: "button", class: "evTab" + (k === i ? " on" : "") }, String(k + 1));
-                    t.addEventListener("click", () => showPage(k));
-                    tabBar.append(t);
+                    const tb = h("button", { type: "button", class: "evTab" + (k === i ? " on" : "") }, String(k + 1));
+                    tb.addEventListener("click", () => showPage(k));
+                    tabBar.append(tb);
                 });
                 pageArea.innerHTML = "";
                 pageArea.append(buildPage(ev.pages[i]));
@@ -73,29 +76,29 @@ export function openEventEditor(opts) {
                 const it = sel(db.options("items"), c.itemId, { width: "190px" }).onChange(() => { c.itemId = it.get(); });
                 const ac = sel(db.options("actors"), c.actorId, { width: "190px" }).onChange(() => { c.actorId = ac.get(); });
                 const vRow = row(vv, "≥", vn); vRow.enable = on => { vv.enable(on); vn.enable(on); };
-                const ssRow = row(ss, "is ON"); ssRow.enable = on => ss.enable(on);
-                const itRow = row(it, "exists"); itRow.enable = on => it.enable(on);
-                const acRow = row(ac, "is present"); acRow.enable = on => ac.enable(on);
-                const conditions = group("Conditions",
-                    condRow("Switch", "switch1Valid", s1), condRow("Switch", "switch2Valid", s2),
-                    condRow("Variable", "variableValid", vRow), condRow("Self Switch", "selfSwitchValid", ssRow),
-                    condRow("Item", "itemValid", itRow), condRow("Actor", "actorValid", acRow));
+                const ssRow = row(ss, t("is ON")); ssRow.enable = on => ss.enable(on);
+                const itRow = row(it, t("exists")); itRow.enable = on => it.enable(on);
+                const acRow = row(ac, t("is present")); acRow.enable = on => ac.enable(on);
+                const conditions = group(t("Conditions", "Group_EventConditions"),
+                    condRow(t("Switch", "Constants"), "switch1Valid", s1), condRow(t("Switch", "Constants"), "switch2Valid", s2),
+                    condRow(t("Variable", "Constants"), "variableValid", vRow), condRow(t("Self Switch", "Group_EventConditions"), "selfSwitchValid", ssRow),
+                    condRow(t("Item", "Constants"), "itemValid", itRow), condRow(t("Actor", "Constants"), "actorValid", acRow));
                 // Image
                 const canvas = h("canvas", { class: "evPageImage" });
-                const imgBtn = h("button", { type: "button", class: "evImageBtn", title: "Image" }, canvas);
+                const imgBtn = h("button", { type: "button", class: "evImageBtn", title: t("Image", "Constants") }, canvas);
                 const drawImg = () => drawCharacterThumb(canvas, page.image, opts.tileset, 120);
                 imgBtn.addEventListener("click", async () => {
                     const r = await characterDialog(page.image, { mode: "event", tileset: opts.tileset });
                     if (r) { page.image = r; drawImg(); }
                 });
                 drawImg();
-                const image = group("Image", imgBtn);
+                const image = group(t("Image", "Constants"), imgBtn);
                 // Autonomous Movement
                 const mt = sel(opt(MOVE_TYPES), page.moveType);
-                const routeBtn = h("button", { type: "button", class: "evBtn" }, "Route…");
+                const routeBtn = h("button", { type: "button", class: "evBtn" }, t("Route", "Layout_EventPage") + "…");
                 routeBtn.addEventListener("click", async () => {
                     const r = await moveRouteDialog(page.moveRoute, {
-                        showWait: false, title: "Movement Route",
+                        showWait: false, title: t("Movement Route", "Dialog_MovementRoute"),
                         previewStart: () => (opts.mapId ? { mapId: opts.mapId, x: ev.x, y: ev.y, d: page.image.direction || 2, directionFix: page.directionFix } : null)
                     });
                     if (r) { page.moveRoute = r.route; }
@@ -104,16 +107,16 @@ export function openEventEditor(opts) {
                 routeBtn.disabled = page.moveType !== 3;
                 const sp = sel(opt(SPEEDS, 1), page.moveSpeed).onChange(() => { page.moveSpeed = sp.get(); });
                 const fq = sel(opt(FREQS, 1), page.moveFrequency).onChange(() => { page.moveFrequency = fq.get(); });
-                const movement = group("Autonomous Movement", field("Type:", mt, routeBtn), field("Speed:", sp), field("Freq:", fq));
+                const movement = group(t("Autonomous Movement", "Layout_EventPage"), field(t("Type", "Layout_EventPage"), mt, routeBtn), field(t("Speed", "MovementSpeedBox"), sp), field(t("Frequency", "MovementFrequencyBox"), fq));
                 // Options
-                const o = k => { const x = chk({ walkAnime: "Walking", stepAnime: "Stepping", directionFix: "Direction Fix", through: "Through" }[k], page[k]); x.onChange(() => { page[k] = x.get(); }); return x; };
-                const options = group("Options", o("walkAnime"), o("stepAnime"), o("directionFix"), o("through"));
+                const o = k => { const x = chk({ walkAnime: t("Walking", "Layout_EventPage"), stepAnime: t("Stepping", "Layout_EventPage"), directionFix: t("Direction Fix", "Layout_EventPage"), through: t("Through", "Layout_EventPage") }[k], page[k]); x.onChange(() => { page[k] = x.get(); }); return x; };
+                const options = group(t("Options", "Layout_EventPage"), o("walkAnime"), o("stepAnime"), o("directionFix"), o("through"));
                 const pr = sel(opt(PRIORITIES), page.priorityType).onChange(() => { page.priorityType = pr.get(); });
                 const tr = sel(opt(TRIGGERS), page.trigger).onChange(() => { page.trigger = tr.get(); });
-                const left = h("div", { class: "evPageLeft" }, conditions, h("div", { class: "evRow evTop" }, image, col(movement)), h("div", { class: "evRow evTop" }, options, col(group("Priority", pr), group("Trigger", tr))));
+                const left = h("div", { class: "evPageLeft" }, conditions, h("div", { class: "evRow evTop" }, image, col(movement)), h("div", { class: "evRow evTop" }, options, col(group(t("Priority", "Layout_EventPage"), pr), group(t("Trigger", "Layout_EventPage"), tr))));
                 // Contents
                 cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id, eventPos: { x: ev.x, y: ev.y, d: page.image.direction || 2, directionFix: page.directionFix } } });
-                const right = h("div", { class: "evPageRight" }, h("div", { class: "evContentsTitle" }, "Contents"), cl.el, commandListToolbar(cl));
+                const right = h("div", { class: "evPageRight" }, h("div", { class: "evContentsTitle" }, t("Contents", "Layout_EventPage")), cl.el, commandListToolbar(cl));
                 return h("div", { class: "evPage" }, left, right);
             };
             showPage(pageIndex);
@@ -128,13 +131,13 @@ export function openCommonEventEditor(api, id, rowIndex) {
     const ce = clone(db.commonEvents[id]);
     if (!ce) { return Promise.resolve(null); }
     return dialog({
-        title: `Common Event - ${String(id).padStart(4, "0")}`, width: "min(1100px, 99vw)", height: "96vh",
+        title: `${t("Common Event", "Constants")} - ${String(id).padStart(4, "0")}`, width: "min(1100px, 99vw)", height: "96vh",
         build: body => {
             const name = txt(ce.name, { width: "220px" }).onChange(() => { ce.name = name.get(); });
-            const trig = sel(opt(["None", "Autorun", "Parallel"]), ce.trigger).onChange(() => { ce.trigger = trig.get(); });
+            const trig = sel(opt([t("None", "Constants"), t("Autorun", "Edit_CommonEvents"), t("Parallel", "Edit_CommonEvents")]), ce.trigger).onChange(() => { ce.trigger = trig.get(); });
             const sw = switchPick(ce.switchId || 1).onChange(() => { ce.switchId = sw.get(); });
             const cl = createCommandList({ list: ce.list, ctx: { map: null, mapId: 0, eventId: 0 } });
-            body.append(row(field("Name:", name), field("Trigger:", trig), field("Switch:", sw)), h("div", { class: "evContentsTitle" }, "Contents"), cl.el, commandListToolbar(cl));
+            body.append(row(field(t("Name", "Constants"), name), field(t("Trigger", "Edit_CommonEvents"), trig), field(t("Switch", "Constants"), sw)), h("div", { class: "evContentsTitle" }, t("Contents", "Edit_CommonEvents")), cl.el, commandListToolbar(cl));
             body.classList.add("evCommonBody");
             if (rowIndex !== undefined) { setTimeout(() => cl.selectRow(rowIndex), 30); }
         },

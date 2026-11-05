@@ -4,6 +4,7 @@
 // sound timings e flash timings (cor mesclada no alvo, decaimento (d-1)/d).
 import { el, btn } from "./ui.js";
 import { pickImage, loadImage } from "./pickers.js";
+import { t } from "../i18n.js";
 
 const W = 816, H = 624, VIEWPORT = 4096;
 const state = {
@@ -24,7 +25,7 @@ function loadScript(src) {
         const s = document.createElement("script");
         s.src = src;
         s.onload = () => resolve();
-        s.onerror = () => reject(new Error("Falha ao carregar " + src));
+        s.onerror = () => reject(new Error(t("Failed to load %1", "MZEditor", src)));
         document.head.appendChild(s);
     });
 }
@@ -32,7 +33,7 @@ function loadScript(src) {
 function initRuntime() {
     if (!state.runtime) {
         state.runtime = loadScript("/project/js/libs/effekseer.min.js").then(() => new Promise((resolve, reject) => {
-            window.effekseer.initRuntime("/project/js/libs/effekseer.wasm", resolve, () => reject(new Error("Falha ao carregar effekseer.wasm")));
+            window.effekseer.initRuntime("/project/js/libs/effekseer.wasm", resolve, () => reject(new Error(t("Failed to load %1", "MZEditor", "effekseer.wasm"))));
         }));
         state.runtime.catch(() => { state.runtime = null; });
     }
@@ -56,7 +57,7 @@ async function ensureContext() {
     if (state.ctx) { return state.ctx; }
     const v = ensureView();
     const gl = v.fx.getContext("webgl", { alpha: true, premultipliedAlpha: true, antialias: false, preserveDrawingBuffer: false });
-    if (!gl) { throw new Error("WebGL indisponível"); }
+    if (!gl) { throw new Error(t("WebGL is not available.", "MZEditor")); }
     const ctx = window.effekseer.createContext();
     ctx.init(gl);
     state.ctx = ctx;
@@ -68,7 +69,7 @@ function loadEffect(name) {
     if (state.effects.has(name)) { return state.effects.get(name); }
     const p = new Promise((resolve, reject) => {
         const url = "/project/effects/" + encodeURIComponent(name) + ".efkefc";
-        const eff = state.ctx.loadEffect(url, 1, () => resolve(eff), () => reject(new Error("Falha ao carregar " + url)));
+        const eff = state.ctx.loadEffect(url, 1, () => resolve(eff), () => reject(new Error(t("Failed to load %1", "MZEditor", url))));
     });
     state.effects.set(name, p);
     p.catch(() => state.effects.delete(name));
@@ -84,12 +85,12 @@ async function loadBackground() {
         sys.battleback1Name ? loadImage("battlebacks1", sys.battleback1Name) : null,
         sys.battleback2Name ? loadImage("battlebacks2", sys.battleback2Name) : null
     ]);
-    const t = state.target;
-    if (!t.name) {
+    const tq = state.target;
+    if (!tq.name) {
         const enemy = (state.db.Enemies || []).find(e => e && e.battlerName);
-        if (enemy) { t.name = enemy.battlerName; t.folder = state.db.System.optSideView ? "sv_enemies" : "enemies"; }
+        if (enemy) { tq.name = enemy.battlerName; tq.folder = state.db.System.optSideView ? "sv_enemies" : "enemies"; }
     }
-    targetImg = t.name ? await loadImage(t.folder, t.name) : null;
+    targetImg = tq.name ? await loadImage(tq.folder, tq.name) : null;
     drawBackground();
 }
 
@@ -113,11 +114,11 @@ function drawBackground() {
             // Sprite.setBlendColor: mistura a cor com alfa ca/255 só onde o alvo é opaco
             const tmp = document.createElement("canvas");
             tmp.width = r.w; tmp.height = r.h;
-            const t = tmp.getContext("2d");
-            t.drawImage(targetImg, 0, 0);
-            t.globalCompositeOperation = "source-atop";
-            t.fillStyle = `rgba(${cr},${cg},${cb},${ca / 255})`;
-            t.fillRect(0, 0, r.w, r.h);
+            const tq = tmp.getContext("2d");
+            tq.drawImage(targetImg, 0, 0);
+            tq.globalCompositeOperation = "source-atop";
+            tq.fillStyle = `rgba(${cr},${cg},${cb},${ca / 255})`;
+            tq.fillRect(0, 0, r.w, r.h);
             g.drawImage(tmp, r.x, r.y);
         }
     }
@@ -146,9 +147,9 @@ function stepFrame() {
         state.handle.setSpeed(anim.speed / 100);
     }
     // updateMain: processSoundTimings / processFlashTimings
-    for (const t of anim.soundTimings) { if (t.frame === state.frame) { playSe(t.se); } }
-    for (const t of anim.flashTimings) {
-        if (t.frame === state.frame) { state.flash = t.color.slice(); state.flashDur = t.duration; }
+    for (const tq of anim.soundTimings) { if (tq.frame === state.frame) { playSe(tq.se); } }
+    for (const tq of anim.flashTimings) {
+        if (tq.frame === state.frame) { state.flash = tq.color.slice(); state.flashDur = tq.duration; }
     }
     state.frame++;
     // updateFlash
@@ -186,10 +187,10 @@ function render() {
     gl.viewport(0, 0, W, H);
 }
 
-function loop(t) {
+function loop(tq) {
     if (!state.view.box.isConnected) { stop(); return; }
-    const dt = state.last ? Math.min(100, t - state.last) : 1000 / 60;
-    state.last = t;
+    const dt = state.last ? Math.min(100, tq - state.last) : 1000 / 60;
+    state.last = tq;
     state.acc += dt;
     while (state.acc >= 1000 / 60 && state.playing) {
         state.acc -= 1000 / 60;
@@ -223,10 +224,10 @@ async function play(anim) {
         state.frame = 0;
         state.flash = [0, 0, 0, 0];
         state.flashDur = 0;
-        state.maxFrame = Math.max(0, ...[...anim.soundTimings, ...anim.flashTimings].map(t => t.frame));
+        state.maxFrame = Math.max(0, ...[...anim.soundTimings, ...anim.flashTimings].map(tq => tq.frame));
         state.handle = null;
         if (anim.effectName) {
-            v.msg.textContent = "Carregando efeito…";
+            v.msg.textContent = t("Loading the effect...", "MZEditor");
             const eff = await loadEffect(anim.effectName);
             v.msg.textContent = "";
             state.handle = state.ctx.play(eff, 0, 0, 0);
@@ -247,14 +248,14 @@ export function previewGroup(ctxDb, anim, changeBattleback) {
     stop();
     loadBackground();
     const controls = el("div", { class: "dbRow" },
-        btn("Play", () => play(anim)),
-        btn("Stop", () => { stop(); state.flash = [0, 0, 0, 0]; drawBackground(); render0(); }),
-        btn("Change Target...", async () => {
+        btn(t("Play", "Layout_MZAnimationEdit"), () => play(anim)),
+        btn(t("Stop", "Layout_AudioSelector"), () => { stop(); state.flash = [0, 0, 0, 0]; drawBackground(); render0(); }),
+        btn(t("Change Target", "Layout_MZAnimationEdit") + "...", async () => {
             const folder = state.db.System.optSideView ? "sv_enemies" : "enemies";
-            const r = await pickImage({ folder, current: state.target.name, title: "Change Target" });
+            const r = await pickImage({ folder, current: state.target.name, title: t("Change Target", "Layout_MZAnimationEdit") });
             if (r) { state.target = { folder, name: r.name }; await loadBackground(); }
         }),
-        btn("Change BG...", async () => { if (await changeBattleback(state.db)) { await loadBackground(); } }));
+        btn(t("Change Battleback", "Layout_MZAnimationEdit") + "...", async () => { if (await changeBattleback(state.db)) { await loadBackground(); } }));
     return [v.box, controls];
 }
 

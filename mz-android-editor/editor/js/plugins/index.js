@@ -3,6 +3,7 @@
 import { openPluginManager } from "./manager.js";
 import { getPluginCommands, getEnabledPluginsWithCommands, editPluginCommandArgs, defaultArgs } from "./commands.js";
 import { getPluginInfo, loadPluginList } from "./store.js";
+import { t } from "../i18n.js";
 
 function injectCss() {
     if (document.getElementById("pluginsCss")) {
@@ -27,5 +28,5 @@ export async function register(api) {
         defaultArgs,
         editCommandArgs: (pluginName, commandName, args) => editPluginCommandArgs(api, pluginName, commandName, args)
     };
-    api.bindToolbar("btnPlugins", () => openPluginManager(api), "Gerenciador de plugins");
+    api.bindToolbar("btnPlugins", () => openPluginManager(api), t("Plugin Manager", "MainMenu"));
 }

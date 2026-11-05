@@ -1,5 +1,6 @@
 // Pequenos diálogos reutilizados pelo gerador (nome de arquivo, lista de arquivos, mensagem, confirmação).
 // Todos usam api.openDialog para manter o visual do editor e funcionar com o botão voltar.
+import { t } from "../i18n.js";
 
 export function el(tag, cls, text) {
     const e = document.createElement(tag);
@@ -10,7 +11,7 @@ export function el(tag, cls, text) {
 
 export function message(api, title, text) {
     return new Promise(resolve => {
-        const d = api.openDialog({ title, width: "min(460px, 96vw)", height: "auto", buttons: [{ label: "OK", primary: true, onClick: () => resolve() }] });
+        const d = api.openDialog({ title, width: "min(460px, 96vw)", height: "auto", buttons: [{ label: t("OK", "BasicConstants"), primary: true, onClick: () => resolve() }] });
         d.body.appendChild(el("div", "gen-msg", text));
         watchClose(d, () => resolve());
     });
@@ -20,7 +21,7 @@ export function confirmBox(api, title, text) {
     return new Promise(resolve => {
         const d = api.openDialog({
             title, width: "min(460px, 96vw)", height: "auto",
-            buttons: [{ label: "Sim", primary: true, onClick: () => resolve(true) }, { label: "Não", onClick: () => resolve(false) }]
+            buttons: [{ label: t("Yes", "BasicConstants"), primary: true, onClick: () => resolve(true) }, { label: t("No", "BasicConstants"), onClick: () => resolve(false) }]
         });
         d.body.appendChild(el("div", "gen-msg", text));
         watchClose(d, () => resolve(false));
@@ -40,8 +41,8 @@ export function promptText(api, { title, label, value = "", hint = "" }) {
         const d = api.openDialog({
             title, width: "min(520px, 96vw)", height: "auto",
             buttons: [
-                { label: "OK", primary: true, onClick: () => { const v = input.value.trim(); if (!v) { return false; } finish(v); } },
-                { label: "Cancelar", onClick: () => finish(null) }
+                { label: t("OK", "BasicConstants"), primary: true, onClick: () => { const v = input.value.trim(); if (!v) { return false; } finish(v); } },
+                { label: t("Cancel", "BasicConstants"), onClick: () => finish(null) }
             ]
         });
         const form = el("div", "gen-form");
@@ -66,14 +67,14 @@ export function pickFile(api, { title, dirs, filter, hint = "", thumbs = false }
         const d = api.openDialog({
             title, width: "min(560px, 96vw)", height: "auto",
             buttons: [
-                { label: "OK", primary: true, onClick: () => { if (!selected) { return false; } finish(selected); } },
-                { label: "Cancelar", onClick: () => finish(null) }
+                { label: t("OK", "BasicConstants"), primary: true, onClick: () => { if (!selected) { return false; } finish(selected); } },
+                { label: t("Cancel", "BasicConstants"), onClick: () => finish(null) }
             ]
         });
         const form = el("div", "gen-form");
         if (hint) { form.appendChild(el("div", "gen-hint", hint)); }
         const list = el("div", "gen-fileList");
-        list.appendChild(el("div", "gen-file", "Carregando…"));
+        list.appendChild(el("div", "gen-file", t("Loading…")));
         form.appendChild(list);
         d.body.appendChild(form);
         watchClose(d, () => finish(null));
@@ -91,7 +92,7 @@ export function pickFile(api, { title, dirs, filter, hint = "", thumbs = false }
             items.sort((a, b) => a.localeCompare(b));
             list.innerHTML = "";
             if (!items.length) {
-                list.appendChild(el("div", "gen-file", "(nenhum arquivo)"));
+                list.appendChild(el("div", "gen-file", t("(no files)")));
                 return;
             }
             for (const path of items) {
@@ -127,7 +128,7 @@ export async function hasProject(api) {
         const res = await fetch("/api/project");
         if (res.ok) { return true; }
     } catch (e) { /* sem servidor */ }
-    await message(api, "Gerador de Personagem", "Abra um projeto primeiro para gravar ou carregar arquivos.");
+    await message(api, t("Character Generator", "Dialog_CharacterGenerator"), t("Open a project first to save or load files."));
     return false;
 }
 

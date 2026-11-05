@@ -2,16 +2,18 @@
 // Uso: const z = new ZipWriter(); await z.add("www/index.html", bytes); const blob = z.finish();
 // As partes ficam em Blobs, então o navegador pode manter os dados fora do heap JS.
 
+import { t } from "../i18n.js";
+
 const CRC_TABLE = (() => {
-    const t = new Uint32Array(256);
+    const tbl = new Uint32Array(256);
     for (let n = 0; n < 256; n++) {
         let c = n;
         for (let k = 0; k < 8; k++) {
             c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
         }
-        t[n] = c >>> 0;
+        tbl[n] = c >>> 0;
     }
-    return t;
+    return tbl;
 })();
 
 export function crc32(data) {
@@ -63,7 +65,7 @@ export class ZipWriter {
             }
         }
         if (this.offset + payload.length > 0xffffffff - 0x10000) {
-            throw new Error("Pacote maior que 4 GB: ZIP64 não suportado");
+            throw new Error(t("Package larger than 4 GB: ZIP64 is not supported."));
         }
         const head = new Uint8Array(30 + nameBytes.length);
         const v = new DataView(head.buffer);
@@ -107,7 +109,7 @@ export class ZipWriter {
             cdSize += c.length;
         }
         if (this.entries.length > 0xffff) {
-            throw new Error("Mais de 65535 arquivos: ZIP64 não suportado");
+            throw new Error(t("More than 65535 files: ZIP64 is not supported."));
         }
         const end = new Uint8Array(22);
         const v = new DataView(end.buffer);

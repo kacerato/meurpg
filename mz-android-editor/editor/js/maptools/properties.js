@@ -2,6 +2,10 @@
 // pt_BR oficial do editor, e os subdiálogos: seleção de áudio (Layout_AudioSelector),
 // fundo de batalha, panorama (Layout_ParallaxBack) e encontro (Dialog_Encounter).
 
+import { t } from "../i18n.js";
+
+const NONE = () => "(" + t("None", "Constants") + ")";
+
 const el = (tag, attrs = {}, ...children) => {
     const e = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
@@ -76,22 +80,22 @@ export function openAudioDialog(api, folder, audio) {
             width: "620px",
             height: "460px",
             buttons: [
-                { label: "Ok", primary: true, onClick: () => { stop(); resolve({ name: list.value || "", volume: +vol.value, pitch: +pitch.value, pan: +pan.value }); } },
-                { label: "Cancelar", onClick: () => { stop(); resolve(null); } }
+                { label: t("OK", "BasicConstants"), primary: true, onClick: () => { stop(); resolve({ name: list.value || "", volume: +vol.value, pitch: +pitch.value, pan: +pan.value }); } },
+                { label: t("Cancel", "BasicConstants"), onClick: () => { stop(); resolve(null); } }
             ]
         });
         const body = el("div", { class: "mtAudio" },
             el("div", { class: "mtAudioList" }, list),
             el("div", { class: "mtAudioSide" },
-                el("button", { class: "mtBtn", text: "Reproduzir", onclick: play }),
-                el("button", { class: "mtBtn", text: "Parar", onclick: stop }),
-                field("Volume", el("div", { class: "mtRange" }, vol, lab(vol, v => v + "%"))),
-                field("Intensidade", el("div", { class: "mtRange" }, pitch, lab(pitch, v => v + "%"))),
-                field("Panning", el("div", { class: "mtRange" }, pan, lab(pan, v => v)))
+                el("button", { class: "mtBtn", text: t("Play", "Layout_AudioSelector"), title: t("Plays the selected file.", "Layout_AudioSelector"), onclick: play }),
+                el("button", { class: "mtBtn", text: t("Stop", "Layout_AudioSelector"), title: t("Stops playback.", "Layout_AudioSelector"), onclick: stop }),
+                field(t("Volume", "Layout_AudioSelector"), el("div", { class: "mtRange" }, vol, lab(vol, v => v + "%")), t("Volume for audio playback.", "Layout_AudioSelector")),
+                field(t("Pitch", "Layout_AudioSelector"), el("div", { class: "mtRange" }, pitch, lab(pitch, v => v + "%")), t("Pitch for audio playback.", "Layout_AudioSelector")),
+                field(t("Pan", "Layout_AudioSelector"), el("div", { class: "mtRange" }, pan, lab(pan, v => v)), t("Pan for audio playback.", "Layout_AudioSelector"))
             )
         );
         dlg.body.appendChild(body);
-        list.append(el("option", { value: "", text: "(Nenhum)" }));
+        list.append(el("option", { value: "", text: NONE() }));
         listAssets(api, "audio/" + folder).then(names => {
             for (const n of names) {
                 list.append(el("option", { value: n, text: n }));
@@ -121,14 +125,14 @@ export function openImageDialog(api, title, folders, current) {
             width: "760px",
             height: "480px",
             buttons: [
-                { label: "Ok", primary: true, onClick: () => resolve(lists.map(l => l.value || "")) },
-                { label: "Cancelar", onClick: () => resolve(null) }
+                { label: t("OK", "BasicConstants"), primary: true, onClick: () => resolve(lists.map(l => l.value || "")) },
+                { label: t("Cancel", "BasicConstants"), onClick: () => resolve(null) }
             ]
         });
         const cols = el("div", { class: "mtImgLists" });
         folders.forEach((folder, i) => {
             const list = el("select", { size: 14, class: "mtList" });
-            list.append(el("option", { value: "", text: "(Nenhum)" }));
+            list.append(el("option", { value: "", text: NONE() }));
             list.addEventListener("change", refresh);
             lists.push(list);
             cols.append(list);
@@ -149,9 +153,9 @@ function openEncounterDialog(api, troops, enc) {
     return new Promise(resolve => {
         const cur = enc ? JSON.parse(JSON.stringify(enc)) : { troopId: 1, weight: 10, regionSet: [] };
         const troop = el("select");
-        troops.forEach((t, i) => {
-            if (t) {
-                troop.append(el("option", { value: i, text: String(i).padStart(4, "0") + " " + (t.name || "") }));
+        troops.forEach((tr, i) => {
+            if (tr) {
+                troop.append(el("option", { value: i, text: String(i).padStart(4, "0") + " " + (tr.name || "") }));
             }
         });
         troop.value = cur.troopId;
@@ -164,34 +168,34 @@ function openEncounterDialog(api, troops, enc) {
         rangeReg.addEventListener("change", sync);
         sync();
         const dlg = api.openDialog({
-            title: "Batalha",
+            title: t("Encounter", "Dialog_Encounter"),
             width: "440px",
             height: "400px",
             buttons: [
                 {
-                    label: "Ok", primary: true, onClick: () => {
+                    label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                         const regionSet = rangeReg.checked ? regs.map(r => clampInt(r.value, 0, 255)).filter(v => v > 0) : [];
                         resolve({ troopId: Number(troop.value) || 1, weight: clampInt(weight.value, 1, 100), regionSet });
                     }
                 },
-                { label: "Cancelar", onClick: () => resolve(null) }
+                { label: t("Cancel", "BasicConstants"), onClick: () => resolve(null) }
             ]
         });
         dlg.body.append(
-            el("fieldset", { class: "mtGroup" }, el("legend", { text: "Tropa e Frequência" }),
-                field("Tropa", troop, "Tropa a ser encontrada."),
-                field("Frequência", weight, "Valor que afeta a frequência com a qual a tropa é encontrada.")),
-            el("fieldset", { class: "mtGroup" }, el("legend", { text: "Área" }),
-                el("label", { class: "mtCheck" }, rangeAll, " Mapa Inteiro"),
-                el("label", { class: "mtCheck" }, rangeReg, " Especificar ID de Região"),
-                el("div", { class: "mtRow" }, ...regs))
+            el("fieldset", { class: "mtGroup" }, el("legend", { text: t("Troop and Weight", "Dialog_Encounter") }),
+                field(t("Troop", "Constants"), troop, t("Troop to be encountered.", "Dialog_Encounter")),
+                field(t("Weight", "Dialog_Encounter"), weight, t("Value that affects the frequency at which the troop is encountered.", "Dialog_Encounter"))),
+            el("fieldset", { class: "mtGroup", title: t("Range in which the troop is encountered.", "Dialog_Encounter") }, el("legend", { text: t("Range", "Dialog_Encounter") }),
+                el("label", { class: "mtCheck", title: t("No limit on the encounter range.", "Dialog_Encounter") }, rangeAll, " " + t("Entire Map", "Dialog_Encounter")),
+                el("label", { class: "mtCheck", title: t("Specifies the numbers set with the map editor.", "Dialog_Encounter") }, rangeReg, " " + t("Specify by Region ID", "Dialog_Encounter")),
+                el("div", { class: "mtRow", title: t("Valid when a non-zero value is entered.", "Dialog_Encounter") }, ...regs))
         );
     });
 }
 
 function audioButton(api, folder, getAudio, setAudio) {
     const btn = el("button", { class: "mtBtn mtPick" });
-    const show = () => { btn.textContent = (getAudio() && getAudio().name) || "(Nenhum)"; };
+    const show = () => { btn.textContent = (getAudio() && getAudio().name) || NONE(); };
     btn.addEventListener("click", async () => {
         const r = await openAudioDialog(api, folder, getAudio());
         if (r) { setAudio(r); show(); }
@@ -212,16 +216,16 @@ export async function openMapProperties(api, { title, map, info }) {
         const name = el("input", { type: "text", value: info ? info.name : "" });
         const displayName = el("input", { type: "text", value: m.displayName || "" });
         const tileset = el("select");
-        tilesets.forEach((t, i) => {
-            if (t) {
-                tileset.append(el("option", { value: i, text: String(i).padStart(4, "0") + " " + (t.name || "") }));
+        tilesets.forEach((ts, i) => {
+            if (ts) {
+                tileset.append(el("option", { value: i, text: String(i).padStart(4, "0") + " " + (ts.name || "") }));
             }
         });
         tileset.value = m.tilesetId;
         const width = numberInput(m.width, 1, 256);
         const height = numberInput(m.height, 1, 256);
         const scroll = el("select");
-        ["Sem deslocamento", "Desloc. Vertical", "Desloc. Horizontal", "Desloc. em ambos"].forEach((t, i) => scroll.append(el("option", { value: i, text: t })));
+        [t("No Loop", "Dialog_MapProperties"), t("Loop Vertically", "Dialog_MapProperties"), t("Loop Horizontally", "Dialog_MapProperties"), t("Loop Both", "Dialog_MapProperties")].forEach((s, i) => scroll.append(el("option", { value: i, text: s })));
         scroll.value = m.scrollType || 0;
         const encStep = numberInput(m.encounterStep || 30, 1, 999);
 
@@ -231,9 +235,9 @@ export async function openMapProperties(api, { title, map, info }) {
         const bgsBtn = audioButton(api, "bgs", () => m.bgs, a => { m.bgs = a; });
         const bbOn = el("input", { type: "checkbox", checked: !!m.specifyBattleback });
         const bbBtn = el("button", { class: "mtBtn mtPick" });
-        const showBb = () => { bbBtn.textContent = [m.battleback1Name, m.battleback2Name].filter(Boolean).join(" & ") || "(Nenhum)"; };
+        const showBb = () => { bbBtn.textContent = [m.battleback1Name, m.battleback2Name].filter(Boolean).join(" & ") || NONE(); };
         bbBtn.addEventListener("click", async () => {
-            const r = await openImageDialog(api, "Fundo de Batalha", ["battlebacks1", "battlebacks2"], [m.battleback1Name, m.battleback2Name]);
+            const r = await openImageDialog(api, t("Battle Background", "EventCommand283"), ["battlebacks1", "battlebacks2"], [m.battleback1Name, m.battleback2Name]);
             if (r) { [m.battleback1Name, m.battleback2Name] = r; showBb(); }
         });
         showBb();
@@ -248,9 +252,9 @@ export async function openMapProperties(api, { title, map, info }) {
 
         // Panorama
         const pxBtn = el("button", { class: "mtBtn mtPick" });
-        const showPx = () => { pxBtn.textContent = m.parallaxName || "(Nenhum)"; };
+        const showPx = () => { pxBtn.textContent = m.parallaxName || NONE(); };
         pxBtn.addEventListener("click", async () => {
-            const r = await openImageDialog(api, "Panorama", ["parallaxes"], [m.parallaxName]);
+            const r = await openImageDialog(api, t("Parallax Background", "Dialog_MapProperties"), ["parallaxes"], [m.parallaxName]);
             if (r) { m.parallaxName = r[0]; showPx(); }
         });
         showPx();
@@ -277,7 +281,7 @@ export async function openMapProperties(api, { title, map, info }) {
                 const tr = el("tr", { class: i === encSel ? "sel" : "" },
                     el("td", { text: troopName(e.troopId) }),
                     el("td", { text: String(e.weight) }),
-                    el("td", { text: e.regionSet && e.regionSet.length ? e.regionSet.join(", ") : "Mapa Inteiro" }));
+                    el("td", { text: e.regionSet && e.regionSet.length ? e.regionSet.join(", ") : t("Entire Map", "Group_Encounters") }));
                 tr.addEventListener("click", () => { encSel = i; drawEnc(); });
                 tr.addEventListener("dblclick", () => editEnc(i));
                 encBody.append(tr);
@@ -296,17 +300,17 @@ export async function openMapProperties(api, { title, map, info }) {
         };
         drawEnc();
         const encButtons = el("div", { class: "mtRow" },
-            el("button", { class: "mtBtn", text: "Novo", onclick: () => editEnc(-1) }),
-            el("button", { class: "mtBtn", text: "Editar", onclick: () => { if (encSel >= 0) { editEnc(encSel); } } }),
-            el("button", { class: "mtBtn", text: "Excluir", onclick: () => { if (encSel >= 0) { encList.splice(encSel, 1); encSel = -1; drawEnc(); } } }));
+            el("button", { class: "mtBtn", text: t("New", "StandardPopupMenu"), onclick: () => editEnc(-1) }),
+            el("button", { class: "mtBtn", text: t("Edit", "StandardPopupMenu"), onclick: () => { if (encSel >= 0) { editEnc(encSel); } } }),
+            el("button", { class: "mtBtn", text: t("Delete", "BasicConstants"), onclick: () => { if (encSel >= 0) { encList.splice(encSel, 1); encSel = -1; drawEnc(); } } }));
 
         const dlg = api.openDialog({
-            title: title || "Propriedades do Mapa",
+            title: title || t("Map Properties", "Dialog_MapProperties"),
             width: "980px",
             height: "600px",
             buttons: [
                 {
-                    label: "Ok", primary: true, onClick: () => {
+                    label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                         m.displayName = displayName.value;
                         m.tilesetId = Number(tileset.value) || 1;
                         m.scrollType = Number(scroll.value) || 0;
@@ -330,39 +334,39 @@ export async function openMapProperties(api, { title, map, info }) {
                         });
                     }
                 },
-                { label: "Cancelar", onClick: () => resolve(null) }
+                { label: t("Cancel", "BasicConstants"), onClick: () => resolve(null) }
             ]
         });
         dlg.body.classList.add("mtProps");
-        const general = el("fieldset", { class: "mtGroup" }, el("legend", { text: "Configurações Gerais" }),
+        const general = el("fieldset", { class: "mtGroup", title: t("Basic map settings.", "Dialog_MapProperties") }, el("legend", { text: t("General Settings", "Constants") }),
             el("div", { class: "mtGrid2" },
-                field("Nome", name, "Nome do mapa."),
-                field("Nome de Exibição", displayName, "Nome exibido na parte superior esquerda da tela quando entrando no mapa. Nada é exibido se deixado o espaço branco."),
-                field("Tileset", tileset, "Conjunto de tiles (tileset) usados para o mapa."),
+                field(t("Name", "Constants"), name, t("Name of the map.", "Dialog_MapProperties")),
+                field(t("Display Name", "Dialog_MapProperties"), displayName, t("Name displayed on the upper left part of the screen when moving to the map. Not displayed if left blank.", "Dialog_MapProperties")),
+                field(t("Tileset", "Constants"), tileset, t("Tileset used for the map.", "Dialog_MapProperties")),
                 el("div", { class: "mtRow" },
-                    field("Largura", width, "Tamanho horizontal do mapa."),
-                    field("Altura", height, "Tamanho vertical do mapa.")),
-                field("Tipo de Deslocamento", scroll, "Se as bordas dos mapas terão deslocamento, passando a impressão de mapa infinito."),
-                field("Passos", encStep, "Número médio de passos entre encontros aleatórios.")),
+                    field(t("Width", "Dialog_MapProperties"), width, t("Horizontal size of the map.", "Dialog_MapProperties")),
+                    field(t("Height", "Dialog_MapProperties"), height, t("Vertical size of the map.", "Dialog_MapProperties"))),
+                field(t("Scroll Type", "Dialog_MapProperties"), scroll, t("Whether to wrap around from one side to the other.", "Dialog_MapProperties")),
+                field(t("Enc. Steps", "Dialog_MapProperties"), encStep, t("Average number of steps between random encounters.", "Dialog_MapProperties"))),
             el("div", { class: "mtGrid2" },
-                el("div", {}, el("label", { class: "mtCheck", title: "BGM executada automaticamente quando entrando no mapa." }, bgmOn, " BGM Automática"), bgmBtn),
-                el("div", {}, el("label", { class: "mtCheck", title: "BGS executada automaticamente quando entrando no mapa." }, bgsOn, " BGS Automática"), bgsBtn),
-                el("div", {}, el("label", { class: "mtCheck", title: "Define a imagem de fundo especificada quando ocorre uma batalha neste mapa." }, bbOn, " Definir Fundo de Batalha"), bbBtn),
-                el("div", {}, el("label", { class: "mtCheck", title: "Torna impossível correr pelo mapa." }, dash, " Desativar Corrida"))),
-            el("fieldset", { class: "mtGroup" }, el("legend", { text: "Panorama" }),
-                field("Imagem", pxBtn, "Imagem do panorama."),
+                el("div", {}, el("label", { class: "mtCheck", title: t("Makes the BGM change automatically when moving to the map.", "Dialog_MapProperties") }, bgmOn, " " + t("Autoplay BGM", "Dialog_MapProperties")), bgmBtn),
+                el("div", {}, el("label", { class: "mtCheck", title: t("Makes the BGS change automatically when moving to the map.", "Dialog_MapProperties") }, bgsOn, " " + t("Autoplay BGS", "Dialog_MapProperties")), bgsBtn),
+                el("div", {}, el("label", { class: "mtCheck", title: t("Displays the specified background when a battle occurs on this map. When not specified, a background conforming to the terrain is automatically selected for world maps, and for other maps, a processed image of the map screen will be used as a background.", "Dialog_MapProperties") }, bbOn, " " + t("Specify Battleback", "Dialog_MapProperties")), bbBtn),
+                el("div", {}, el("label", { class: "mtCheck", title: t("Makes it impossible to perform a dash on the map.", "Dialog_MapProperties") }, dash, " " + t("Disable Dashing", "Dialog_MapProperties")))),
+            el("fieldset", { class: "mtGroup", title: t("Distant view image displayed in the transparent area of the map.", "Dialog_MapProperties") }, el("legend", { text: t("Parallax Background", "Dialog_MapProperties") }),
+                field(t("Image", "Layout_ParallaxBack"), pxBtn, t("Image of the parallax background.", "Layout_ParallaxBack")),
                 el("div", { class: "mtRow" },
-                    el("label", { class: "mtCheck", title: "Repete o panorama horizontalmente." }, loopX, " Loop Horizontal"),
-                    field("Veloc.", sx, "Realiza a rolagem horizontal automaticamente na velocidade especificada.")),
+                    el("label", { class: "mtCheck", title: t("Loops the parallax background horizontally.", "Layout_ParallaxBack") }, loopX, " " + t("Loop Horizontally", "Constants")),
+                    field(t("Scroll", "Layout_ParallaxBack"), sx, t("Automatically performs horizontal scrolling at the specified speed.", "Layout_ParallaxBack"))),
                 el("div", { class: "mtRow" },
-                    el("label", { class: "mtCheck", title: "Repete o panorama verticalmente." }, loopY, " Loop Vertical"),
-                    field("Veloc.", sy, "Realiza a rolagem vertical automaticamente na velocidade especificada.")),
-                el("label", { class: "mtCheck", title: "Exibe o plano de fundo como panorama no editor de mapa. Pode aparecer de forma diferente no jogo." }, pxShow, " Mostrar no Editor")),
-            field("Anotação", note));
-        const enc = el("fieldset", { class: "mtGroup mtEnc" }, el("legend", { text: "Batalha" }),
+                    el("label", { class: "mtCheck", title: t("Loops the parallax background vertically.", "Layout_ParallaxBack") }, loopY, " " + t("Loop Vertically", "Constants")),
+                    field(t("Scroll", "Layout_ParallaxBack"), sy, t("Automatically performs vertical scrolling at the specified speed.", "Layout_ParallaxBack"))),
+                el("label", { class: "mtCheck", title: t("Displays the parallax background in the map editor. This may appear differently than in the actual game.", "Dialog_MapProperties") }, pxShow, " " + t("Show in the Editor", "Dialog_MapProperties"))),
+            field(t("Note", "Constants"), note));
+        const enc = el("fieldset", { class: "mtGroup mtEnc", title: t("List of the troops for random encounters.", "Group_Encounters") }, el("legend", { text: t("Encounters", "Group_Encounters") }),
             el("div", { class: "mtTableWrap" },
                 el("table", { class: "mtTable" },
-                    el("thead", {}, el("tr", {}, el("th", { text: "Tropa" }), el("th", { text: "Frequência" }), el("th", { text: "Área" }))),
+                    el("thead", {}, el("tr", {}, el("th", { text: t("Troop", "Constants") }), el("th", { text: t("Weight", "Group_Encounters") }), el("th", { text: t("Range", "Group_Encounters") }))),
                     encBody)),
             encButtons);
         dlg.body.append(el("div", { class: "mtPropsCols" }, general, enc));

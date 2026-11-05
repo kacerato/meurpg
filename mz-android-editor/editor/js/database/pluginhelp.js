@@ -3,6 +3,7 @@
 import { el, btn, modal, changed } from "./ui.js";
 import { parsePlugin } from "../plugins/parser.js";
 import { loadPluginList } from "../plugins/store.js";
+import { t } from "../i18n.js";
 
 async function activePluginsHelp() {
     const list = await loadPluginList().catch(() => []);
@@ -32,17 +33,17 @@ export async function openPluginHelp(obj, key, textarea) {
     let cur = plugins.findIndex(p => p.tags.length);
     if (cur < 0) { cur = 0; }
     const insert = tag => {
-        const t = textarea;
+        const tq = textarea;
         const v = obj[key] || "";
-        const a = t ? t.selectionStart ?? v.length : v.length;
-        const b = t ? t.selectionEnd ?? v.length : v.length;
+        const a = tq ? tq.selectionStart ?? v.length : v.length;
+        const b = tq ? tq.selectionEnd ?? v.length : v.length;
         const sep = a > 0 && v[a - 1] !== "\n" ? "\n" : "";
         obj[key] = v.slice(0, a) + sep + tag + v.slice(b);
-        if (t) { t.value = obj[key]; }
+        if (tq) { tq.value = obj[key]; }
         changed();
     };
     await modal({
-        title: "Plugin Help", width: "900px", height: "560px", okLabel: "Close", cancelLabel: null,
+        title: t("Plugin Help", "Dialog_PluginHelpEverywhere"), width: "900px", height: "560px", okLabel: t("Close", "BasicConstants"), cancelLabel: null,
         build: b => {
             b.classList.add("dbPickBody");
             const list = el("div", { class: "dbPickList" });
@@ -52,17 +53,17 @@ export async function openPluginHelp(obj, key, textarea) {
                 [...list.children].forEach((r, j) => r.classList.toggle("sel", j === i));
                 right.innerHTML = "";
                 const p = plugins[i];
-                if (!p) { right.appendChild(el("div", { class: "dbHint", text: "Nenhum plugin ativo." })); return; }
+                if (!p) { right.appendChild(el("div", { class: "dbHint", text: t("No active plugins.", "MZEditor") })); return; }
                 right.appendChild(el("div", { class: "dbHelpTitle", text: p.name + (p.desc ? " — " + p.desc : "") }));
                 if (p.tags.length) {
                     const tags = el("div", { class: "dbHelpTags" });
                     for (const tag of p.tags) {
                         tags.appendChild(el("div", { class: "dbHelpTag" }, el("code", { text: tag }),
-                            btn("Insert", () => insert(tag), "small")));
+                            btn(t("Insert", "MZEditor"), () => insert(tag), "small")));
                     }
                     right.appendChild(tags);
                 }
-                right.appendChild(el("pre", { class: "dbHelpText", text: p.help || "(sem @help)" }));
+                right.appendChild(el("pre", { class: "dbHelpText", text: p.help || t("(no @help)", "MZEditor") }));
             };
             plugins.forEach((p, i) => {
                 const r = el("div", { class: "dbPickItem", text: p.name + (p.tags.length ? ` (${p.tags.length})` : "") });

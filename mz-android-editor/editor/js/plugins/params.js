@@ -5,6 +5,7 @@
 import { typeInfo, defaultsOf, DATABASE_TYPES } from "./parser.js";
 import { el, promptDialog, touchList } from "./ui.js";
 import { pickDatabase, pickFile, pickColor, pickIcon } from "./pickers.js";
+import { t } from "../i18n.js";
 
 const label = def => def.text || def.name;
 
@@ -80,12 +81,12 @@ export class ParamTable {
         const r = this.root;
         r.textContent = "";
         r.appendChild(el("div", { class: "pgTHead" },
-            el("span", { class: "pgCName", text: "Nome" }),
-            el("span", { class: "pgCValue", text: "Valor" })));
+            el("span", { class: "pgCName", text: t("Name", "Constants") }),
+            el("span", { class: "pgCValue", text: t("Value", "PluginSettingBox") })));
         const body = el("div", { class: "pgTBody" });
         r.appendChild(body);
         if (!this.defs.length) {
-            body.appendChild(el("div", { class: "pgEmpty", text: "(sem parâmetros)" }));
+            body.appendChild(el("div", { class: "pgEmpty", text: t("(no parameters)") }));
             return;
         }
         const walk = (nodes, depth) => {
@@ -220,8 +221,8 @@ function numberEditor(api, def, value, title) {
             };
             const minus = el("button", { class: "pgBtn pgSpin", text: "−", onclick: () => step(-1) });
             const plus = el("button", { class: "pgBtn pgSpin", text: "+", onclick: () => step(1) });
-            const range = [isFinite(min) ? "mín. " + min : "", isFinite(max) ? "máx. " + max : "",
-                dec ? dec + " casas decimais" : ""].filter(Boolean).join(" · ");
+            const range = [isFinite(min) ? t("min. %1", null, min) : "", isFinite(max) ? t("max. %1", null, max) : "",
+                dec ? t("%1 decimal places", null, dec) : ""].filter(Boolean).join(" · ");
             body.append(el("div", { class: "pgSpinRow" }, minus, input, plus),
                 range ? el("div", { class: "pgHint", text: range }) : "");
             setTimeout(() => input.focus(), 0);
@@ -279,7 +280,7 @@ function booleanEditor(api, def, value, title) {
                 });
                 return b;
             };
-            const row = el("div", { class: "pgRadioRow" }, mk("true", def.on || "ON"), mk("false", def.off || "OFF"));
+            const row = el("div", { class: "pgRadioRow" }, mk("true", def.on || t("ON", "Constants")), mk("false", def.off || t("OFF", "Constants")));
             body.appendChild(row);
         },
         onOk: () => current
@@ -312,7 +313,7 @@ async function structEditor(api, def, value, title, ctx, structName) {
     const defs = (ctx.structs || {})[structName];
     if (!defs) {
         // Estrutura não declarada no arquivo: edita o JSON como texto.
-        return textEditor(api, def, value, title + ` (struct<${structName}> não encontrada)`, true);
+        return textEditor(api, def, value, title + " " + t("(struct<%1> not found)", null, structName), true);
     }
     const obj = parseJson(value, null);
     const values = defaultsOf(defs);
@@ -401,10 +402,10 @@ async function arrayEditor(api, def, value, title, ctx, elementType) {
                 refresh(j);
             };
             const bar = el("div", { class: "pgBar" },
-                el("button", { class: "pgBtn", text: "Adicionar", onclick: add }),
-                el("button", { class: "pgBtn", text: "Editar", onclick: () => list.selected >= 0 && editAt(list.selected) }),
+                el("button", { class: "pgBtn", text: t("Add", "Edit_Troops"), onclick: add }),
+                el("button", { class: "pgBtn", text: t("Edit", "StandardPopupMenu"), onclick: () => list.selected >= 0 && editAt(list.selected) }),
                 el("button", {
-                    class: "pgBtn", text: "Excluir", onclick: () => {
+                    class: "pgBtn", text: t("Delete", "BasicConstants"), onclick: () => {
                         const i = list.selected;
                         if (i >= 0) {
                             items.splice(i, 1);
@@ -412,8 +413,8 @@ async function arrayEditor(api, def, value, title, ctx, elementType) {
                         }
                     }
                 }),
-                el("button", { class: "pgBtn", text: "▲ Subir", onclick: () => move(-1) }),
-                el("button", { class: "pgBtn", text: "▼ Descer", onclick: () => move(1) }),
+                el("button", { class: "pgBtn", text: "▲ " + t("Up", "Constants"), onclick: () => move(-1) }),
+                el("button", { class: "pgBtn", text: "▼ " + t("Down", "Constants"), onclick: () => move(1) }),
                 el("span", { class: "spacer" }),
                 el("span", { class: "pgHint", text: elementType }));
             body.append(bar, list.root);
@@ -425,32 +426,32 @@ async function arrayEditor(api, def, value, title, ctx, elementType) {
 
 // Abre o editor do tipo do parâmetro. Devolve Promise<string|null>.
 export async function editValue(api, def, value, ctx = {}, title) {
-    const t = title || label(def);
+    const ttl = title || label(def);
     const v = value == null ? "" : String(value);
     const ti = typeInfo(def.type);
     switch (ti.kind) {
-        case "array": return arrayEditor(api, def, v, t, ctx, ti.element);
-        case "struct": return structEditor(api, def, v, t, ctx, ti.struct);
-        case "multiline_string": return textEditor(api, def, v, t, true);
+        case "array": return arrayEditor(api, def, v, ttl, ctx, ti.element);
+        case "struct": return structEditor(api, def, v, ttl, ctx, ti.struct);
+        case "multiline_string": return textEditor(api, def, v, ttl, true);
         case "note": {
             const text = parseJson(v, v);
-            const r = await textEditor(api, def, typeof text === "string" ? text : v, t, true);
+            const r = await textEditor(api, def, typeof text === "string" ? text : v, ttl, true);
             return r == null ? null : JSON.stringify(r);
         }
-        case "number": return numberEditor(api, def, v, t);
-        case "boolean": return booleanEditor(api, def, v, t);
-        case "select": return choiceEditor(api, def, v, t, def.options.map(o => ({ label: o.text, value: o.value })));
-        case "combo": return comboEditor(api, def, v, t);
-        case "file": return pickFile(api, def, v, t);
-        case "color": return pickColor(api, def, v, t);
-        case "icon": return pickIcon(api, def, v, t);
+        case "number": return numberEditor(api, def, v, ttl);
+        case "boolean": return booleanEditor(api, def, v, ttl);
+        case "select": return choiceEditor(api, def, v, ttl, def.options.map(o => ({ label: o.text, value: o.value })));
+        case "combo": return comboEditor(api, def, v, ttl);
+        case "file": return pickFile(api, def, v, ttl);
+        case "color": return pickColor(api, def, v, ttl);
+        case "icon": return pickIcon(api, def, v, ttl);
         case "switch":
         case "variable":
-            return pickDatabase(api, { ...def, kind: ti.kind }, v, t);
+            return pickDatabase(api, { ...def, kind: ti.kind }, v, ttl);
         default:
             if (DATABASE_TYPES[ti.kind]) {
-                return pickDatabase(api, { ...def, kind: ti.kind }, v, t);
+                return pickDatabase(api, { ...def, kind: ti.kind }, v, ttl);
             }
-            return textEditor(api, def, v, t, false);
+            return textEditor(api, def, v, ttl, false);
     }
 }

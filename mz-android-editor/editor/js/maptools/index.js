@@ -311,7 +311,7 @@ async function doSave() {
                 api.emit("map:changed", { id: e.id });
             }
         }
-        api.status(n ? t(n > 1 ? "Project saved (%1 maps)" : "Project saved (%1 map)", null, n) : t("Project saved"));
+        api.status(n > 1 ? t("Project saved (%1 maps)", null, n) : n ? t("Project saved (%1 map)", null, n) : t("Project saved"));
     } catch (err) {
         console.error(err);
         api.status(t("Failed to save: %1", null, err.message || err));

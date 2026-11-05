@@ -5,30 +5,31 @@ import { getPluginInfo, listPluginFiles, mergeParameters } from "./store.js";
 import { defaultsOf, typeInfo } from "./parser.js";
 import { ParamTable } from "./params.js";
 import { el, promptDialog } from "./ui.js";
+import { t } from "../i18n.js";
 
 function commandsView(info) {
     const box = el("div", { class: "pgCommands" });
     if (!info.commands.length) {
-        box.appendChild(el("div", { class: "pgEmpty", text: "(este plugin não declara comandos)" }));
+        box.appendChild(el("div", { class: "pgEmpty", text: t("(This plugin declares no commands)") }));
         return box;
     }
     for (const c of info.commands) {
         const args = el("div", { class: "pgArgs" });
         if (c.args.length) {
             args.appendChild(el("div", { class: "pgArgRow pgArgHead" },
-                el("span", { text: "Argumento" }), el("span", { text: "Tipo" }),
-                el("span", { text: "Padrão" }), el("span", { text: "Descrição" })));
+                el("span", { text: t("Arguments", "EventCommand357") }), el("span", { text: t("Type", "Constants") }),
+                el("span", { text: t("Default", "Constants") }), el("span", { text: t("Description", "Constants") })));
             for (const a of c.args) {
-                const t = typeInfo(a.type);
+                const ti = typeInfo(a.type);
                 const opts = a.options.length ? " [" + a.options.map(o => o.text).join(", ") + "]" : "";
                 args.appendChild(el("div", { class: "pgArgRow" },
                     el("span", {}, el("b", { text: a.text || a.name }), a.text ? el("small", { text: " " + a.name }) : ""),
-                    el("span", { text: t.raw + opts }),
+                    el("span", { text: ti.raw + opts }),
                     el("span", { text: a.default }),
                     el("span", { text: a.desc })));
             }
         } else {
-            args.appendChild(el("div", { class: "pgHint", text: "Sem argumentos." }));
+            args.appendChild(el("div", { class: "pgHint", text: t("No arguments.") }));
         }
         const head = el("div", { class: "pgCmdHead" },
             el("span", { class: "pgToggle", text: "▸" }),
@@ -98,19 +99,19 @@ export async function openPluginDialog(api, entry, { usedNames = [] } = {}) {
         urlEl.textContent = info.url || "";
         urlEl.parentElement.hidden = !info.url;
         helpEl.textContent = info.help || "";
-        const warn = info.missing ? `Arquivo js/plugins/${name}.js não encontrado.`
-            : !info.isMZ ? "Este plugin não tem \"@target MZ\" (plugin de RPG Maker MV). Pode não funcionar corretamente."
+        const warn = info.missing ? t("The plugin \"%1\" cannot be loaded.", "Dialog_PluginManager", name)
+            : !info.isMZ ? t("The plugin \"%1\" may not support %2.", "Dialog_PluginManager", name, "RPG Maker MZ")
                 : "";
         warnEl.textContent = warn;
         warnEl.hidden = !warn;
         table.setData(info.params, state.parameters, info.structs);
         paramDesc.textContent = "";
         cmdPane.replaceChildren(commandsView(info));
-        tabs.querySelector("[data-tab=cmd]").textContent = `Comandos (${info.commands.length})`;
+        tabs.querySelector("[data-tab=cmd]").textContent = `${t("Commands", "Edit_X_Terms")} (${info.commands.length})`;
     }
 
     return promptDialog(api, {
-        title: "Plugin", width: "1240px", height: "580px",
+        title: t("Plugin Settings", "Dialog_PluginSettings"), width: "1240px", height: "580px",
         build(body) {
             body.classList.add("pgPluginDlg");
             nameSel = el("select", { class: "pgSelect" });
@@ -121,14 +122,14 @@ export async function openPluginDialog(api, entry, { usedNames = [] } = {}) {
             }
             for (const n of names) {
                 const used = usedNames.includes(n) && n !== (original && original.name);
-                nameSel.appendChild(el("option", { value: n, text: used ? n + "  (já na lista)" : n }));
+                nameSel.appendChild(el("option", { value: n, text: used ? n + "  " + t("(already in the list)") : n }));
             }
             nameSel.value = state.name;
             nameSel.addEventListener("change", () => loadInfo(nameSel.value, original && nameSel.value === original.name));
 
             statusRow = el("div", { class: "pgRadioRow small" },
-                el("button", { class: "pgRadio", "data-v": "1", text: "ON", onclick: () => setStatus(true) }),
-                el("button", { class: "pgRadio", "data-v": "0", text: "OFF", onclick: () => setStatus(false) }));
+                el("button", { class: "pgRadio", "data-v": "1", text: t("ON", "Constants"), onclick: () => setStatus(true) }),
+                el("button", { class: "pgRadio", "data-v": "0", text: t("OFF", "Constants"), onclick: () => setStatus(false) }));
             descEl = el("div", { class: "pgField pgRO" });
             authorEl = el("div", { class: "pgField pgRO" });
             urlEl = el("div", { class: "pgField pgRO pgUrl" });
@@ -136,13 +137,13 @@ export async function openPluginDialog(api, entry, { usedNames = [] } = {}) {
             warnEl = el("div", { class: "pgWarn", hidden: true });
 
             const left = el("div", { class: "pgLeft" },
-                el("div", { class: "pgFormRow" }, el("label", { text: "Nome:" }), nameSel),
-                el("div", { class: "pgFormRow" }, el("label", { text: "Status:" }), statusRow),
-                el("div", { class: "pgFormRow" }, el("label", { text: "Descrição:" }), descEl),
-                el("div", { class: "pgFormRow" }, el("label", { text: "Autor:" }), authorEl),
+                el("div", { class: "pgFormRow" }, el("label", { text: t("Name", "Constants") + ":" }), nameSel),
+                el("div", { class: "pgFormRow" }, el("label", { text: t("Status", "Dialog_PluginSettings") + ":" }), statusRow),
+                el("div", { class: "pgFormRow" }, el("label", { text: t("Description", "Constants") + ":" }), descEl),
+                el("div", { class: "pgFormRow" }, el("label", { text: t("Author", "Dialog_PluginSettings") + ":" }), authorEl),
                 el("div", { class: "pgFormRow", hidden: true }, el("label", { text: "URL:" }), urlEl),
                 warnEl,
-                el("label", { class: "pgHelpLabel", text: "Ajuda:" }),
+                el("label", { class: "pgHelpLabel", text: t("Help", "Dialog_PluginSettings") + ":" }),
                 helpEl);
 
             table = new ParamTable(api, {
@@ -152,14 +153,14 @@ export async function openPluginDialog(api, entry, { usedNames = [] } = {}) {
             paramDesc = el("div", { class: "pgDesc pgParamDesc" });
             const paramPane = el("div", { class: "pgPane" }, table.root, paramDesc);
             cmdPane = el("div", { class: "pgPane", hidden: true });
-            const showTab = t => {
-                paramPane.hidden = t !== "par";
-                cmdPane.hidden = t !== "cmd";
-                tabs.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+            const showTab = tab => {
+                paramPane.hidden = tab !== "par";
+                cmdPane.hidden = tab !== "cmd";
+                tabs.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
             };
             tabs = el("div", { class: "pgTabs" },
-                el("button", { class: "on", "data-tab": "par", text: "Parâmetros", onclick: () => showTab("par") }),
-                el("button", { "data-tab": "cmd", text: "Comandos", onclick: () => showTab("cmd") }));
+                el("button", { class: "on", "data-tab": "par", text: t("Parameters", "Dialog_PluginSettings"), onclick: () => showTab("par") }),
+                el("button", { "data-tab": "cmd", text: t("Commands", "Edit_X_Terms"), onclick: () => showTab("cmd") }));
             const right = el("div", { class: "pgRight" }, tabs, paramPane, cmdPane);
             body.append(left, right);
             setStatus(state.status);

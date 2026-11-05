@@ -6,6 +6,7 @@ import { cols, noteGroup } from "./tabs_actors.js";
 import { commandList } from "./eventlist.js";
 import { previewGroup } from "./animpreview.js";
 import { changeBattleback } from "./tabs_battle.js";
+import { t } from "../i18n.js";
 
 // ------------------------------------------------------------------ Animations
 
@@ -13,11 +14,11 @@ async function pickEffect(current) {
     const names = await listFiles("effects", ["efkefc"]);
     let value = current;
     const ok = await modal({
-        title: "Particle Effect", width: "520px", height: "520px",
+        title: t("Select an Effect", "Dialog_EffectSelector"), width: "520px", height: "520px",
         build: b => {
             const list = el("div", { class: "dbPickList full" });
             for (const n of ["", ...names]) {
-                const r = el("div", { class: "dbPickItem" + (n === current ? " sel" : ""), text: n || "(None)" });
+                const r = el("div", { class: "dbPickItem" + (n === current ? " sel" : ""), text: n || "(" + t("None", "Constants") + ")" });
                 r.addEventListener("click", () => { list.querySelectorAll(".sel").forEach(x => x.classList.remove("sel")); r.classList.add("sel"); value = n; });
                 list.appendChild(r);
             }
@@ -28,19 +29,19 @@ async function pickEffect(current) {
     return ok ? value : null;
 }
 
-async function editSoundTiming(t) {
-    const o = t ? structuredClone(t) : { frame: 0, se: { name: "", pan: 0, pitch: 100, volume: 90 } };
+async function editSoundTiming(tq) {
+    const o = tq ? structuredClone(tq) : { frame: 0, se: { name: "", pan: 0, pitch: 100, volume: 90 } };
     const ok = await modal({
-        title: "Sound Timing", width: "520px",
-        build: b => b.appendChild(grid(2, fld("Frame:", num(o, "frame", { min: 0, max: 9999 })), fld("SE:", audioField(o, "se", "se"))))
+        title: t("Sound", "Dialog_AnimationSound"), width: "520px",
+        build: b => b.appendChild(grid(2, fld(t("Frame", "Dialog_AnimationSound") + ":", num(o, "frame", { min: 0, max: 9999 })), fld(t("Filename", "Dialog_AnimationSound") + ":", audioField(o, "se", "se"))))
     });
     return ok ? o : null;
 }
 
-async function editFlashTiming(t) {
-    const o = t ? structuredClone(t) : { frame: 0, duration: 30, color: [255, 255, 255, 170] };
+async function editFlashTiming(tq) {
+    const o = tq ? structuredClone(tq) : { frame: 0, duration: 30, color: [255, 255, 255, 170] };
     const ok = await modal({
-        title: "Flash Timing", width: "560px",
+        title: t("Flash", "Dialog_AnimationFlash"), width: "560px",
         build: b => {
             const colorBtn = btn("", async () => {
                 const c = await pickColor(o.color, "color");
@@ -51,52 +52,52 @@ async function editFlashTiming(t) {
                 colorBtn.style.background = `rgba(${o.color[0]},${o.color[1]},${o.color[2]},${o.color[3] / 255})`;
             };
             paint();
-            b.appendChild(grid(3, fld("Frame:", num(o, "frame", { min: 0, max: 9999 })),
-                fld("Duration:", num(o, "duration", { min: 1, max: 999 })), fld("Color:", colorBtn)));
+            b.appendChild(grid(3, fld(t("Frame", "Dialog_AnimationFlash") + ":", num(o, "frame", { min: 0, max: 9999 })),
+                fld(t("Duration", "Dialog_AnimationFlash") + ":", num(o, "duration", { min: 1, max: 999 })), fld(t("Color", "Dialog_AnimationFlash") + ":", colorBtn)));
         }
     });
     return ok ? o : null;
 }
 
 export const animationsTab = {
-    id: "animations", label: "Animations", file: "Animations", max: 1000,
+    id: "animations", label: t("Animations", "DatabaseMain"), desc: t("Data used for various visual effects.", "DatabaseMain"), file: "Animations", max: 1000,
     form(ctx, a, host) {
         const [left, right] = cols(host);
         if (!a.rotation) { a.rotation = { x: 0, y: 0, z: 0 }; }
         if (!a.soundTimings) { a.soundTimings = []; }
         if (!a.flashTimings) { a.flashTimings = []; }
-        left.appendChild(grp("General Settings", grid(2,
-            fld("Name:", text(a, "name", { onInput: () => ctx.refreshRow() })),
-            fld("Display Type:", sel(a, "displayType", [[0, "For each target"], [1, "For the center of targets"], [2, "For the screen"]], { number: true })))));
-        const fileBtn = btn(a.effectName || "(None)", async () => {
+        left.appendChild(grp(t("General Settings", "Constants"), grid(2,
+            fld(t("Name", "Constants") + ":", text(a, "name", { onInput: () => ctx.refreshRow() })),
+            fld(t("Display Type", "Layout_MZAnimationEdit") + ":", sel(a, "displayType", [[0, t("For each target", "Layout_MZAnimationEdit")], [1, t("Center of all targets", "Layout_MZAnimationEdit")], [2, t("Center of the screen", "Layout_MZAnimationEdit")]], { number: true })))));
+        const fileBtn = btn(a.effectName || "(" + t("None", "Constants") + ")", async () => {
             const r = await pickEffect(a.effectName);
-            if (r !== null) { a.effectName = r; fileBtn.textContent = r || "(None)"; changed(); }
+            if (r !== null) { a.effectName = r; fileBtn.textContent = r || "(" + t("None", "Constants") + ")"; changed(); }
         }, "dbPickBtn");
-        left.appendChild(grp("Particle Effect", grid(3,
-            fld("File:", fileBtn, { span: 3 }),
-            fld("Scale:", [num(a, "scale", { min: 0, max: 1000 }), "%"]),
-            fld("Speed:", [num(a, "speed", { min: 1, max: 1000 }), "%"]),
+        left.appendChild(grp(t("Particle Effect", "Layout_MZAnimationEdit"), grid(3,
+            fld(t("Filename", "Layout_MZAnimationEdit") + ":", fileBtn, { span: 3 }),
+            fld(t("Scale", "Layout_MZAnimationEdit") + ":", [num(a, "scale", { min: 0, max: 1000 }), "%"]),
+            fld(t("Speed", "Layout_MZAnimationEdit") + ":", [num(a, "speed", { min: 1, max: 1000 }), "%"]),
             el("div"),
-            fld("Rotation X:", num(a.rotation, "x", { min: -360, max: 360 })),
-            fld("Rotation Y:", num(a.rotation, "y", { min: -360, max: 360 })),
-            fld("Rotation Z:", num(a.rotation, "z", { min: -360, max: 360 })),
-            fld("Offset X:", num(a, "offsetX", { min: -9999, max: 9999 })),
-            fld("Offset Y:", num(a, "offsetY", { min: -9999, max: 9999 })))));
-        left.appendChild(grp("Preview", ...previewGroup(ctx.db, a, async db => {
+            fld(t("Rotation", "Layout_MZAnimationEdit") + " " + t("X", "Dialog_EffectRotation") + ":", num(a.rotation, "x", { min: -360, max: 360 })),
+            fld(t("Rotation", "Layout_MZAnimationEdit") + " " + t("Y", "Dialog_EffectRotation") + ":", num(a.rotation, "y", { min: -360, max: 360 })),
+            fld(t("Rotation", "Layout_MZAnimationEdit") + " " + t("Z", "Dialog_EffectRotation") + ":", num(a.rotation, "z", { min: -360, max: 360 })),
+            fld(t("Offset X", "Layout_MZAnimationEdit") + ":", num(a, "offsetX", { min: -9999, max: 9999 })),
+            fld(t("Offset Y", "Layout_MZAnimationEdit") + ":", num(a, "offsetY", { min: -9999, max: 9999 })))));
+        left.appendChild(grp(t("Preview", "Constants"), ...previewGroup(ctx.db, a, async db => {
             const ok = await changeBattleback(db);
             if (ok) { ctx.touch("System"); }
             return ok;
         })));
-        right.appendChild(grp("Sound Timings", tableList({
-            columns: [{ title: "Frame", width: "70px" }, { title: "Sound", width: "1fr" }],
+        right.appendChild(grp(t("Sound", "Group_AnimationSound"), tableList({
+            columns: [{ title: t("Frame", "Group_AnimationSound"), width: "70px" }, { title: t("Filename", "Group_AnimationSound"), width: "1fr" }],
             items: a.soundTimings,
             cells: s => [String(s.frame), audioText(s.se)],
             create: () => editSoundTiming(null),
             edit: s => editSoundTiming(s),
             clipKey: "sound"
         })));
-        right.appendChild(grp("Flash Timings", tableList({
-            columns: [{ title: "Frame", width: "70px" }, { title: "Duration", width: "80px" }, { title: "Color", width: "1fr" }],
+        right.appendChild(grp(t("Flash", "Group_AnimationFlash"), tableList({
+            columns: [{ title: t("Frame", "Group_AnimationFlash"), width: "70px" }, { title: t("Duration", "Group_AnimationFlash"), width: "80px" }, { title: t("Color", "Group_AnimationFlash"), width: "1fr" }],
             items: a.flashTimings,
             cells: f => {
                 const sw = el("span", { class: "dbSwatch" });
@@ -114,8 +115,8 @@ export const animationsTab = {
 
 const T = 48;
 const SLOT_NAMES = ["A1", "A2", "A3", "A4", "A5", "B", "C", "D", "E"];
-const MODES = [["passage", "Passage"], ["passage4", "Passage (4 dir)"], ["ladder", "Ladder"], ["bush", "Bush"],
-    ["counter", "Counter"], ["damage", "Damage Floor"], ["terrain", "Terrain Tag"]];
+const MODES = [["passage", t("Passage", "Edit_Tilesets")], ["passage4", t("Passage (4 dir)", "Edit_Tilesets")], ["ladder", t("Ladder", "Edit_Tilesets")],
+    ["bush", t("Bush", "Edit_Tilesets")], ["counter", t("Counter", "Edit_Tilesets")], ["damage", t("Damage Floor", "Edit_Tilesets")], ["terrain", t("Terrain Tag", "Edit_Tilesets")]];
 const BIT = { ladder: 0x20, bush: 0x40, counter: 0x80, damage: 0x100 };
 const ui = { tab: 0, mode: "passage" };
 
@@ -372,7 +373,7 @@ function tilePalette(ts) {
         if (id === ui.mode) { b.classList.add("on"); }
         modeBar.appendChild(b);
     }
-    modeBar.appendChild(chk(rev, "v", "Reverse"));
+    modeBar.appendChild(chk(rev, "v", t("Reverse", "MZEditor")));
     wrap.append(el("div", { class: "dbTileMain" }, el("div", { class: "dbTileLeft" }, scroll, tabBar), modeBar));
     wrap.redraw = draw;
     draw();
@@ -380,7 +381,7 @@ function tilePalette(ts) {
 }
 
 export const tilesetsTab = {
-    id: "tilesets", label: "Tilesets", file: "Tilesets", max: 1000,
+    id: "tilesets", label: t("Tilesets", "DatabaseMain"), desc: t("Data defining the behavior of tilesets for maps.", "DatabaseMain"), file: "Tilesets", max: 1000,
     form(ctx, ts, host) {
         while (ts.tilesetNames.length < 9) { ts.tilesetNames.push(""); }
         const host2 = el("div", { class: "dbCols tileset" });
@@ -388,38 +389,38 @@ export const tilesetsTab = {
         host2.append(left, right);
         host.appendChild(host2);
         let palette = null;
-        left.appendChild(grp("General Settings", grid(2,
-            fld("Name:", text(ts, "name", { onInput: () => ctx.refreshRow() })),
-            fld("Mode:", sel(ts, "mode", [[0, "World Type"], [1, "Area Type"], [2, "VX Compatible Type"]], { number: true })))));
+        left.appendChild(grp(t("General Settings", "Constants"), grid(2,
+            fld(t("Name", "Constants") + ":", text(ts, "name", { onInput: () => ctx.refreshRow() })),
+            fld(t("Mode", "Edit_Tilesets") + ":", sel(ts, "mode", [[0, t("World Type", "Edit_Tilesets")], [1, t("Area Type", "Edit_Tilesets")], [2, t("VX Compatible Type", "MZEditor")]], { number: true })))));
         const imgs = el("div", { class: "dbTileImgs" });
         SLOT_NAMES.forEach((n, i) => {
             const b = btn("", async () => {
-                const r = await pickImage({ folder: "tilesets", current: ts.tilesetNames[i], title: "Select an Image (" + n + ")" });
+                const r = await pickImage({ folder: "tilesets", current: ts.tilesetNames[i], title: t("Select an Image", "Dialog_ImageSelector") + " (" + n + ")" });
                 if (r) { ts.tilesetNames[i] = r.name; recomputeVehicleBits(ts); changed(); paint(); palette.redraw(); }
             }, "dbPickBtn");
-            const paint = () => { b.textContent = ts.tilesetNames[i] || "(None)"; };
+            const paint = () => { b.textContent = ts.tilesetNames[i] || "(" + t("None", "Constants") + ")"; };
             paint();
             imgs.appendChild(el("div", { class: "dbTileImgRow" }, el("span", { class: "dbLabel", text: n + ":" }), b));
         });
-        left.appendChild(grp("Images", imgs));
+        left.appendChild(grp(t("Images", "Group_TilesetImages"), imgs));
         left.appendChild(noteGroup(ts, 4));
         palette = tilePalette(ts);
-        right.appendChild(grp("Tile List", palette));
+        right.appendChild(grp(t("Tile List", "MZEditor"), palette));
     }
 };
 
 // ------------------------------------------------------------------ Common Events
 
 export const commonEventsTab = {
-    id: "commonEvents", label: "Common Events", file: "CommonEvents", max: 1000,
+    id: "commonEvents", label: t("Common Events", "DatabaseMain"), desc: t("Data for commonly used events.", "DatabaseMain"), file: "CommonEvents", max: 1000,
     form(ctx, ce, host) {
         const db = ctx.db;
         const sw = sel(ce, "switchId", switchOptions(db.System), { number: true, disabled: ce.trigger === 0 });
-        host.appendChild(grp("General Settings", grid(3,
-            fld("Name:", text(ce, "name", { onInput: () => ctx.refreshRow() })),
-            fld("Trigger:", sel(ce, "trigger", [[0, "None"], [1, "Autorun"], [2, "Parallel"]], { number: true, onChange: v => { sw.disabled = v === 0; } })),
-            fld("Switch:", sw))));
-        const contents = grp("Contents", commandList(ce, "list", { context: "common", commonEventId: ce.id, title: "Common Event" }));
+        host.appendChild(grp(t("General Settings", "Constants"), grid(3,
+            fld(t("Name", "Constants") + ":", text(ce, "name", { onInput: () => ctx.refreshRow() })),
+            fld(t("Trigger", "Edit_CommonEvents") + ":", sel(ce, "trigger", [[0, t("None", "Constants")], [1, t("Autorun", "Edit_CommonEvents")], [2, t("Parallel", "Edit_CommonEvents")]], { number: true, onChange: v => { sw.disabled = v === 0; } })),
+            fld(t("Switch", "Constants") + ":", sw))));
+        const contents = grp(t("Contents", "Edit_CommonEvents"), commandList(ce, "list", { context: "common", commonEventId: ce.id, title: t("Common Event", "Constants") }));
         contents.classList.add("grow");
         host.appendChild(contents);
     }

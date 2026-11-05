@@ -1,6 +1,8 @@
 // Cliente do projeto: fala com o servidor local (Node no PC, NanoHTTPD no Android)
 // pelo contrato /api e /project. O editor nunca toca o sistema de arquivos diretamente.
 
+import { t } from "./i18n.js";
+
 export const PROJECT_BASE = "/project/";
 
 export class Project {
@@ -12,7 +14,7 @@ export class Project {
     async open() {
         const res = await fetch("/api/project");
         if (!res.ok) {
-            throw new Error("Não foi possível abrir o projeto: " + res.status);
+            throw new Error(t("Could not open the project: %1", null, res.status));
         }
         this.info = await res.json();
         this.cache.clear();
@@ -29,7 +31,7 @@ export class Project {
         }
         const res = await fetch("/api/file?path=" + encodeURIComponent(relPath));
         if (!res.ok) {
-            throw new Error(`Falha ao ler ${relPath}: ${res.status}`);
+            throw new Error(t("Failed to read %1: %2", null, relPath, res.status));
         }
         const data = await res.json();
         this.cache.set(relPath, data);
@@ -44,7 +46,7 @@ export class Project {
             body
         });
         if (!res.ok) {
-            throw new Error(`Falha ao gravar ${relPath}: ${res.status}`);
+            throw new Error(t("Failed to write %1: %2", null, relPath, res.status));
         }
         this.cache.set(relPath, data);
         return res.json();
@@ -57,7 +59,7 @@ export class Project {
             body: blob
         });
         if (!res.ok) {
-            throw new Error(`Falha ao gravar ${relPath}: ${res.status}`);
+            throw new Error(t("Failed to write %1: %2", null, relPath, res.status));
         }
         return res.json();
     }

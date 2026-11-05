@@ -6,6 +6,7 @@ import { h, dialog, field, row, sel, txt, radios, switchPick, varPick, alertBox 
 import { CMD } from "./commands.js";
 import { rowText } from "./commandlist.js";
 import { openCommonEventEditor } from "./eventeditor.js";
+import { t } from "../i18n.js";
 
 let last = { kind: 0, sw: 1, vr: 1, item: 1, weapon: 1, armor: 1, common: 1, text: "", results: [] };
 
@@ -46,10 +47,10 @@ async function runSearch(api, q) {
         for (const ev of map.events || []) {
             if (!ev) { continue; }
             ev.pages.forEach((page, pi) => {
-                const where = `${info.name}, ${String(ev.id).padStart(3, "0")}:${ev.name} (${ev.x},${ev.y}), Page ${pi + 1}`;
-                if (pageCondHit(page, q)) { out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: pi, where, line: "Conditions" }); }
+                const where = `${info.name}, ${String(ev.id).padStart(3, "0")}:${ev.name} (${ev.x},${ev.y}), ${t("Page", "Dialog_EventSearcher")} ${pi + 1}`;
+                if (pageCondHit(page, q)) { out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: pi, where, line: t("Conditions", "Group_EventConditions") }); }
                 if (q.type === "switch" && page.moveType === 3 && page.moveRoute.list.some(r => (r.code === 27 || r.code === 28) && r.parameters[0] === q.id)) {
-                    out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: pi, where, line: "Autonomous Movement (Route)" });
+                    out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: pi, where, line: `${t("Autonomous Movement", "Layout_EventPage")} (${t("Route", "Layout_EventPage")})` });
                 }
                 for (const i of matchList(page.list, q, ctx)) {
                     out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: pi, row: i, where, line: rowText(page.list, i, ctx).trim() });
@@ -59,16 +60,16 @@ async function runSearch(api, q) {
     }
     db.commonEvents.forEach((ce, id) => {
         if (!ce) { return; }
-        const where = `Common Event ${String(id).padStart(4, "0")}:${ce.name}`;
-        if (q.type === "switch" && ce.trigger > 0 && ce.switchId === q.id) { out.push({ kind: "common", id, where, line: "Trigger Switch" }); }
+        const where = `${t("Common Event", "Constants")} ${String(id).padStart(4, "0")}:${ce.name}`;
+        if (q.type === "switch" && ce.trigger > 0 && ce.switchId === q.id) { out.push({ kind: "common", id, where, line: `${t("Trigger", "Edit_CommonEvents")} (${t("Switch", "Constants")})` }); }
         for (const i of matchList(ce.list, q, {})) { out.push({ kind: "common", id, row: i, where, line: rowText(ce.list, i, {}).trim() }); }
     });
     db.troops.forEach((tr, id) => {
         if (!tr) { return; }
         (tr.pages || []).forEach((page, pi) => {
-            const where = `Troop ${String(id).padStart(4, "0")}:${tr.name}, Page ${pi + 1}`;
+            const where = `${t("Troop", "Constants")} ${String(id).padStart(4, "0")}:${tr.name}, ${t("Page", "Dialog_EventSearcher")} ${pi + 1}`;
             const c = page.conditions || {};
-            if (q.type === "switch" && c.switchValid && c.switchId === q.id) { out.push({ kind: "troop", id, where, line: "Conditions" }); }
+            if (q.type === "switch" && c.switchValid && c.switchId === q.id) { out.push({ kind: "troop", id, where, line: t("Conditions", "Group_EventConditions") }); }
             for (const i of matchList(page.list, q, {})) { out.push({ kind: "troop", id, where, line: rowText(page.list, i, {}).trim() }); }
         });
     });
@@ -80,7 +81,7 @@ export function openSearcher(api, eventMode) {
     let resultsEl = null;
     const render = () => {
         resultsEl.innerHTML = "";
-        resultsEl.append(h("div", { class: "evDesc" }, last.results.length ? `${last.results.length} result(s)` : "No results."));
+        resultsEl.append(h("div", { class: "evDesc" }, last.results.length ? t("%1 result(s)", null, last.results.length) : t("No results.")));
         for (const r of last.results) {
             const it = h("div", { class: "evListItem evSearchHit" }, h("div", { class: "evHitWhere" }, r.where), h("div", { class: "evHitLine" }, r.line));
             it.addEventListener("click", () => jump(r));
@@ -91,13 +92,13 @@ export function openSearcher(api, eventMode) {
     const jump = async r => {
         if (dlgClose) { dlgClose(); }
         if (r.kind === "common") { await openCommonEventEditor(api, r.id, r.row); return; }
-        if (r.kind === "troop") { alertBox(`${r.where}\n${r.line}\n\nEdite grupos de inimigos no Banco de dados (aba Troops).`, "Event Searcher"); return; }
+        if (r.kind === "troop") { alertBox(`${r.where}\n${r.line}\n\n${t("Edit troops in the Database (Troops tab).")}`, t("Event Searcher", "Dialog_EventSearcher")); return; }
         if (api.currentMapId !== r.mapId) { await api.selectMap(r.mapId); }
         if (!eventMode.active) { document.getElementById("btnModeEvent").click(); }
         await eventMode.openEvent(r.eventId, r.page, r.row);
     };
     return dialog({
-        title: "Event Searcher", width: "min(1000px, 98vw)", height: "94vh", okLabel: "Close", noCancel: true,
+        title: t("Event Searcher", "Dialog_EventSearcher"), width: "min(1000px, 98vw)", height: "94vh", okLabel: t("Close", "BasicConstants"), noCancel: true,
         build: (body, dlg) => {
             dlgClose = dlg.close;
             const sw = switchPick(last.sw), vr = varPick(last.vr);
@@ -105,23 +106,23 @@ export function openSearcher(api, eventMode) {
             const ce = sel(db.options("commonEvents"), last.common);
             const tx = txt(last.text, { width: "320px" });
             const r = radios([
-                { label: "Switch", value: 0, controls: [sw] }, { label: "Variable", value: 1, controls: [vr] },
-                { label: "Item", value: 2, controls: [it] }, { label: "Weapon", value: 3, controls: [wp] }, { label: "Armor", value: 4, controls: [ar] },
-                { label: "Common Event", value: 5, controls: [ce] }, { label: "Text", value: 6, controls: [tx] }
+                { label: t("Switch", "Constants"), value: 0, controls: [sw] }, { label: t("Variable", "Constants"), value: 1, controls: [vr] },
+                { label: t("Item", "Constants"), value: 2, controls: [it] }, { label: t("Weapon", "Constants"), value: 3, controls: [wp] }, { label: t("Armor", "Constants"), value: 4, controls: [ar] },
+                { label: t("Common Event", "Constants"), value: 5, controls: [ce] }, { label: t("Text", "EventCommands"), value: 6, controls: [tx] }
             ], last.kind);
             resultsEl = h("div", { class: "evList evSearchResults" });
-            const go = h("button", { type: "button", class: "evBtn primary" }, "Search");
+            const go = h("button", { type: "button", class: "evBtn primary" }, t("Search", "Dialog_EventSearcher"));
             go.addEventListener("click", async () => {
                 last = { ...last, kind: r.get(), sw: sw.get(), vr: vr.get(), item: it.get(), weapon: wp.get(), armor: ar.get(), common: ce.get(), text: tx.get() };
                 const types = ["switch", "variable", "item", "weapon", "armor", "common", "text"];
                 const q = { type: types[last.kind], id: [last.sw, last.vr, last.item, last.weapon, last.armor, last.common][last.kind], text: last.text.toLowerCase() };
                 if (q.type === "text" && !q.text) { return; }
-                go.disabled = true; go.textContent = "Searching…";
-                try { last.results = await runSearch(api, q); } finally { go.disabled = false; go.textContent = "Search"; }
+                go.disabled = true; go.textContent = t("Searching…");
+                try { last.results = await runSearch(api, q); } finally { go.disabled = false; go.textContent = t("Search", "Dialog_EventSearcher"); }
                 render();
             });
             body.classList.add("evSearchBody");
-            body.append(h("div", { class: "evSearchTop" }, h("fieldset", { class: "evGroup" }, h("legend", null, "Search Target"), r.el), go), resultsEl);
+            body.append(h("div", { class: "evSearchTop" }, h("fieldset", { class: "evGroup" }, h("legend", null, t("Search for", "Dialog_EventSearcher")), r.el), go), resultsEl);
             render();
         }
     });

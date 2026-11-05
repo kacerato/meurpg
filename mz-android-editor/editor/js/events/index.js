@@ -6,6 +6,7 @@ import { setApi, h, dialog } from "./ui.js";
 import { EventMode } from "./eventmode.js";
 import { openSearcher } from "./search.js";
 import { createCommandList, commandListToolbar } from "./commandlist.js";
+import { t } from "../i18n.js";
 
 export async function register(api) {
     if (!document.querySelector('link[data-mz="events"]')) {
@@ -27,10 +28,10 @@ export async function register(api) {
     mode.editCommandList = (list, opts = {}) => {
         const work = clone(list);
         return dialog({
-            title: opts.title || "Contents", width: "min(1100px, 99vw)", height: "96vh",
+            title: opts.title || t("Contents", "Layout_EventPage"), width: "min(1100px, 99vw)", height: "96vh",
             build: body => {
                 const cl = createCommandList({ list: work, ctx: { map: null, mapId: 0, eventId: 0, troopId: opts.troopId || 0 } });
-                body.append(h("div", { class: "evContentsTitle" }, "Contents"), cl.el, commandListToolbar(cl));
+                body.append(h("div", { class: "evContentsTitle" }, t("Contents", "Layout_EventPage")), cl.el, commandListToolbar(cl));
                 body.classList.add("evCommonBody");
             },
             onOk: () => ({ v: work })
@@ -47,10 +48,10 @@ export async function register(api) {
         if (btnMap) { btnMap.classList.toggle("on", m !== "event"); }
         if (!fromEvent) { api.emit("mode:changed", { mode: m }); }
     };
-    api.bindToolbar("btnModeEvent", () => setMode("event"), "Modo evento");
+    api.bindToolbar("btnModeEvent", () => setMode("event"), t("Event", "MainMenu"));
     if (btnMap) { btnMap.addEventListener("click", () => { if (api.mode === "event") { setMode("map"); } }); }
     api.on("mode:changed", ({ mode: m }) => { if ((m === "event") !== mode.active) { setMode(m, true); } });
-    api.bindToolbar("btnEventSearch", () => openSearcher(api, mode), "Event Searcher");
+    api.bindToolbar("btnEventSearch", () => openSearcher(api, mode), t("Event Searcher", "MainMenu"));
 
     // Mapa já carregado antes do registro (app.js chama loadModules antes de selectMap, mas por garantia)
     if (api.view && api.view.mapData && api.currentMapId) {

@@ -1,6 +1,7 @@
 // Leitura/gravação de js/plugins.js e leitura (com cache) dos arquivos de plugin.
 
 import { parsePlugin, defaultsOf } from "./parser.js";
+import { t } from "../i18n.js";
 
 export const PLUGINS_JS = "js/plugins.js";
 export const PLUGINS_DIR = "js/plugins";
@@ -24,7 +25,7 @@ export function parsePluginsJs(text) {
             // Arquivo editado à mão com sintaxe JS (vírgula sobrando, aspas simples...).
             return new Function("return " + body)() || [];
         } catch (e) {
-            throw new Error("js/plugins.js inválido: " + e.message);
+            throw new Error(t("Invalid %1: %2", null, "js/plugins.js", e.message));
         }
     }
 }
@@ -53,7 +54,7 @@ export async function loadPluginList() {
         return [];
     }
     if (!res.ok) {
-        throw new Error("Falha ao ler js/plugins.js: " + res.status);
+        throw new Error(t("Failed to read %1: %2", null, "js/plugins.js", res.status));
     }
     return parsePluginsJs(await res.text());
 }
@@ -66,7 +67,7 @@ export async function savePluginList(list) {
         body: text
     });
     if (!res.ok) {
-        throw new Error("Falha ao gravar js/plugins.js: " + res.status);
+        throw new Error(t("Failed to write %1: %2", null, "js/plugins.js", res.status));
     }
     return text;
 }

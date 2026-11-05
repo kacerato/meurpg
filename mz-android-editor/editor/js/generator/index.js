@@ -14,6 +14,7 @@ import {
 } from "./composer.js";
 import { openExporter } from "./exporter.js";
 import { promptText, pickFile, message, el, hasProject } from "./ui.js";
+import { t } from "../i18n.js";
 
 const CSS_URL = new URL("../../css/generator.css", import.meta.url).href;
 
@@ -53,7 +54,7 @@ let dialogOpen = null;
 export async function register(apiObj) {
     api = apiObj;
     injectCss();
-    api.bindToolbar("btnGenerator", () => openGenerator(), "Gerador de Personagem");
+    api.bindToolbar("btnGenerator", () => openGenerator(), t("Character Generator", "Dialog_CharacterGenerator"));
 }
 
 const PALETTE_COLS = 6;
@@ -62,10 +63,10 @@ const SW_W = 26, SW_H = 30, SW_GAP = 2;
 async function openGenerator() {
     if (dialogOpen) { return; }
     const dlg = api.openDialog({
-        title: "Gerador de Personagem",
+        title: t("Character Generator", "Dialog_CharacterGenerator"),
         width: "min(1260px, 99vw)",
         height: "min(600px, 98vh)",
-        buttons: [{ label: "Fechar", onClick: () => { stopAnim(); dialogOpen = null; } }]
+        buttons: [{ label: t("Close", "BasicConstants"), onClick: () => { stopAnim(); dialogOpen = null; } }]
     });
     dlg.root.querySelector(".mzDialog").classList.add("genDialog");
     dialogOpen = dlg;
@@ -263,11 +264,11 @@ async function openGenerator() {
     async function refreshAll() {
         const token = ++refreshToken;
         const s = session;
-        const results = await Promise.all(["face", "tv", "tvd", "sv"].map(t => compose(t, s.assets, s.data)));
+        const results = await Promise.all(["face", "tv", "tvd", "sv"].map(type => compose(type, s.assets, s.data)));
         if (token !== refreshToken || s !== session) { return; }
         const available = new Set();
-        ["face", "tv", "tvd", "sv"].forEach((t, i) => {
-            s.images[t] = results[i].image;
+        ["face", "tv", "tvd", "sv"].forEach((type, i) => {
+            s.images[type] = results[i].image;
             for (const id of results[i].available) { available.add(id); }
         });
         s.available = available;
@@ -311,8 +312,11 @@ async function openGenerator() {
     // Animação: andando (3 quadros × 4 direções), battler SV (movimentos do rmmz_sprites) e caído.
     const SV_MOTIONS = ["walk", "wait", "chant", "guard", "damage", "evade", "thrust", "swing", "missile", "skill",
         "spell", "item", "escape", "victory", "dying", "abnormal", "sleep", "dead"];
-    const SV_MOTION_TEXT = ["Andar", "Esperar", "Recitar", "Defender", "Dano", "Esquivar", "Estocar", "Golpear",
-        "Disparar", "Habilidade", "Magia", "Item", "Fugir", "Vitória", "Em perigo", "Status anormal", "Dormir", "Morto"];
+    const SV_MOTION_TEXT = [t("Walk"), t("Wait", "EventCommands"), t("Chant"), t("Guard", "Constants"),
+        t("Damage", "Group_Damage"), t("Evade"), t("Thrust", "Constants"), t("Swing", "Constants"),
+        t("Missile", "Constants"), t("Use Skill", "Group_SystemSound"), t("Spell"), t("Item", "Constants"),
+        t("Escape", "Constants"), t("Victory", "Group_SystemMessages"), t("Dying"), t("Abnormal", "Edit_States"),
+        t("Sleep", "Edit_States"), t("Dead", "Edit_States")];
     const anim = buildAnimView();
 
     function buildAnimView() {
@@ -326,8 +330,8 @@ async function openGenerator() {
             wrap.appendChild(cell);
             return { cell, cv };
         };
-        const face = mk("Rosto", 144, 144);
-        const tv = mk("Personagem Andando", 48 * 3, 48 * 3);
+        const face = mk(t("Face", "CharacterGeneratorData"), 144, 144);
+        const tv = mk(t("Walking Character", "Layout_CharacterGenerator"), 48 * 3, 48 * 3);
         const dirs = el("div", "gen-dirs");
         const dirBtns = [];
         // ordem das linhas na folha: baixo, esquerda, direita, cima
@@ -340,12 +344,12 @@ async function openGenerator() {
             dirs.appendChild(b);
         }
         tv.cell.appendChild(dirs);
-        const sv = mk("Personagem Lutando", 64 * 3, 64 * 3);
+        const sv = mk(t("Battler", "Layout_CharacterGenerator"), 64 * 3, 64 * 3);
         const sel = document.createElement("select");
         SV_MOTIONS.forEach((m, i) => { const o = document.createElement("option"); o.value = i; o.textContent = SV_MOTION_TEXT[i]; sel.appendChild(o); });
         sel.addEventListener("change", () => { svMotion = Number(sel.value); drawAnimFrame(); });
         sv.cell.appendChild(sel);
-        const tvd = mk("Personagem Caído", 48 * 3, 48 * 3);
+        const tvd = mk(t("Damaged Character", "Layout_CharacterGenerator"), 48 * 3, 48 * 3);
         return { wrap, face, tv, sv, tvd };
     }
 
@@ -425,10 +429,10 @@ async function openGenerator() {
     ui.btn.save.addEventListener("click", async () => {
         if (!(await hasProject(api))) { return; }
         const name = await promptText(api, {
-            title: "Salvar Configurações",
-            label: "Arquivo (JSON) dentro do projeto:",
+            title: t("Save Settings", "Layout_CharacterGenerator"),
+            label: t("File (JSON) inside the project:"),
             value: session.settingsPath || "Personagem.json",
-            hint: "Salva as configurações atuais."
+            hint: t("Saves the current setting.", "Layout_CharacterGenerator")
         });
         if (!name) { return; }
         const path = name.endsWith(".json") ? name : name + ".json";
@@ -445,26 +449,26 @@ async function openGenerator() {
         });
         if (res.ok) {
             session.settingsPath = path;
-            api.status("Configurações salvas: " + path);
+            api.status(t("Settings saved: %1", null, path));
         } else {
-            await message(api, "Salvar Configurações", "Falha ao gravar " + path + " (" + res.status + ")");
+            await message(api, t("Save Settings", "Layout_CharacterGenerator"), t("Unable to write to file %1.", "ProjectManager", path) + " (" + res.status + ")");
         }
     });
 
     ui.btn.load.addEventListener("click", async () => {
         if (!(await hasProject(api))) { return; }
         const path = await pickFile(api, {
-            title: "Carregar Configurações",
+            title: t("Load Settings", "Layout_CharacterGenerator"),
             dirs: [""],
             filter: n => n.toLowerCase().endsWith(".json") && n !== "package.json",
-            hint: "Carrega as configurações salvas."
+            hint: t("Loads a previously saved setting.", "Layout_CharacterGenerator")
         });
         if (!path) { return; }
         try {
             const res = await fetch("/api/file?path=" + encodeURIComponent(path));
             const json = await res.json();
             if (!json || json.identity !== SETTINGS_IDENTITY || !json.patterns || !json.colors) {
-                throw new Error("arquivo inválido");
+                throw new Error(t("Unexpected file format.", "ProjectManager"));
             }
             const gender = GENDERS.some(g => g.key === json.gender) ? json.gender : session.gender;
             const target = await getSession(gender);
@@ -476,9 +480,9 @@ async function openGenerator() {
             };
             target.settingsPath = path;
             await switchGender(gender);
-            api.status("Configurações carregadas: " + path);
+            api.status(t("Settings loaded: %1", null, path));
         } catch (e) {
-            await message(api, "Carregar Configurações", "Não foi possível carregar " + path + ": " + e.message);
+            await message(api, t("Load Settings", "Layout_CharacterGenerator"), t("Unable to read file %1.", "ProjectManager", path) + "\n" + e.message);
         }
     });
 
@@ -503,8 +507,8 @@ function buildLayout(body) {
     const partsBox = el("div", "gen-box");
     partsBox.style.flex = "1";
     const parts = el("div", "gen-list");
-    parts.title = "Selecione um tipo de peças.";
-    partsBox.append(el("div", "gen-boxTitle", "Lista de Peças"), parts);
+    parts.title = t("Selects the part to change.", "Layout_CharacterGenerator");
+    partsBox.append(el("div", "gen-boxTitle", t("Parts List", "Layout_CharacterGenerator")), parts);
     const leftBtns = el("div", "gen-leftBtns");
     left.append(tabs, partsBox, leftBtns);
 
@@ -512,19 +516,19 @@ function buildLayout(body) {
     const mid = el("div", "gen-col");
     const varBox = el("div", "gen-box gen-variation");
     const varGrid = el("div", "gen-varGrid");
-    varBox.title = "Selecionar variação.";
-    varBox.append(el("div", "gen-boxTitle", "Variação"), varGrid);
+    varBox.title = t("Changes the variation of the selected part.", "Layout_CharacterGenerator");
+    varBox.append(el("div", "gen-boxTitle", t("Variation", "Layout_CharacterGenerator")), varGrid);
     const colorBox = el("div", "gen-box gen-color");
-    colorBox.title = "Selecionar cor.";
+    colorBox.title = t("Changes the color of the selected part.", "Layout_CharacterGenerator");
     const colorRow = el("div", "gen-colorRow");
     const colorNames = el("div", "gen-list");
     const paletteWrap = el("div", "gen-paletteWrap");
     const palette = document.createElement("canvas");
     paletteWrap.appendChild(palette);
     colorRow.append(colorNames, paletteWrap);
-    colorBox.append(el("div", "gen-boxTitle", "Cor"), colorRow);
+    colorBox.append(el("div", "gen-boxTitle", t("Color", "Layout_CharacterGenerator")), colorRow);
     const offBox = el("div", "gen-box gen-offset");
-    offBox.title = "Ajusta a posição da parte do rosto.";
+    offBox.title = t("Changes the part’s position on the face.", "Layout_CharacterGenerator");
     const padEl = el("div", "gen-pad");
     const pad = {
         up: el("button", "up", "△"), left: el("button", "left", "◁"),
@@ -534,24 +538,24 @@ function buildLayout(body) {
     const offsetText = el("div", "gen-offsetText", "X+0,Y+0");
     const offRow = el("div", "gen-offRow");
     offRow.append(padEl, offsetText);
-    offBox.append(el("div", "gen-boxTitle", "Ajustar"), offRow);
+    offBox.append(el("div", "gen-boxTitle", t("Offset", "Layout_CharacterGenerator")), offRow);
     mid.append(varBox, colorBox, offBox);
 
     // coluna direita: pré-visualização
     const right = el("div", "gen-col");
     const prevBox = el("div", "gen-box gen-preview");
-    prevBox.title = "Pré-visualização de personagem.";
+    prevBox.title = t("Previews the generated images.", "Layout_CharacterGenerator");
     const head = el("div", "gen-previewHead");
     const seg = el("div", "gen-seg");
-    const modeBtns = [["sheet", "Folhas"], ["anim", "Animação"]].map(([m, t]) => {
-        const b = el("button", "", t);
+    const modeBtns = [["sheet", t("Sheets")], ["anim", t("Animation", "Constants")]].map(([m, label]) => {
+        const b = el("button", "", label);
         b.dataset.mode = m;
         seg.appendChild(b);
         return b;
     });
-    head.append(el("div", "gen-boxTitle", "Pré-visualização"), seg);
+    head.append(el("div", "gen-boxTitle", t("Preview", "Constants")), seg);
     const previewArea = el("div", "gen-previewArea");
-    const loading = el("div", "gen-loading", "Carregando…");
+    const loading = el("div", "gen-loading", t("Loading…"));
     previewArea.appendChild(loading);
     prevBox.append(head, previewArea);
     right.appendChild(prevBox);
@@ -560,15 +564,15 @@ function buildLayout(body) {
     const actions = el("div", "gen-actions");
     const mkb = (text, hint, parent = actions) => { const b = el("button", "", text); b.title = hint; parent.appendChild(b); return b; };
     const btn = {};
-    btn.random = mkb("Aleatório", "Define todas as opções de personagem aleatoriamente.", leftBtns);
-    btn.reset = mkb("Redefinir", "Volta todas as partes e cores ao padrão inicial.", leftBtns);
-    btn.face = mkb("Imagem do rosto…", "Abre janela de imagens de rosto.");
-    btn.tv = mkb("Personagem Andando…", "Abre janela para importação e exportação de gráfico do personagem andando.");
-    btn.tvd = mkb("Personagem Caído…", "Abre janela para importação e exportação de gráfico do personagem nocauteado.");
-    btn.sv = mkb("Personagem Lutando…", "Abre janela para importação e exportação de gráfico de personagem em batalha.");
+    btn.random = mkb(t("Randomize", "Layout_CharacterGenerator"), t("Sets all the parts at random.", "Layout_CharacterGenerator"), leftBtns);
+    btn.reset = mkb(t("Reset"), t("Resets all parts and colors to the defaults."), leftBtns);
+    btn.face = mkb(t("Face Image", "Layout_CharacterGenerator") + "…", t("Opens the export window for face images.", "Layout_CharacterGenerator"));
+    btn.tv = mkb(t("Walking Character", "Layout_CharacterGenerator") + "…", t("Opens the export window for walking characters.", "Layout_CharacterGenerator"));
+    btn.tvd = mkb(t("Damaged Character", "Layout_CharacterGenerator") + "…", t("Opens the export window for damaged characters.", "Layout_CharacterGenerator"));
+    btn.sv = mkb(t("Battler", "Layout_CharacterGenerator") + "…", t("Opens the export window for side-view battlers.", "Layout_CharacterGenerator"));
     actions.appendChild(el("span", "sep"));
-    btn.save = mkb("Salvar Configurações…", "Salva as configurações atuais.");
-    btn.load = mkb("Carregar Configurações…", "Carrega as configurações salvas.");
+    btn.save = mkb(t("Save Settings", "Layout_CharacterGenerator") + "…", t("Saves the current setting.", "Layout_CharacterGenerator"));
+    btn.load = mkb(t("Load Settings", "Layout_CharacterGenerator") + "…", t("Loads a previously saved setting.", "Layout_CharacterGenerator"));
 
     root.append(left, mid, right, actions);
     body.appendChild(root);

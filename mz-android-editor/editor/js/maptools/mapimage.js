@@ -1,6 +1,7 @@
 // "Deslocar" (Dialog_MapShift) e "Salvar como Imagem" (Dialog_MapSaveAsImage) do MZ.
 
 import { drawTile, loadTilesetBitmaps, whenBitmapsReady } from "./render.js";
+import { t } from "../i18n.js";
 
 const pad3 = n => String(n).padStart(3, "0");
 
@@ -54,36 +55,36 @@ export function openShiftDialog(api, edit, after) {
         const x = numInput(0, -256, 256);
         const y = numInput(0, -256, 256);
         const dlg = api.openDialog({
-            title: "Deslocar",
+            title: t("Shift", "Dialog_MapShift"),
             width: "360px",
             height: "250px",
             buttons: [
                 {
-                    label: "Ok", primary: true, onClick: () => {
+                    label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                         const dx = Math.round(Number(x.value) || 0);
                         const dy = Math.round(Number(y.value) || 0);
                         if (dx || dy) {
                             const before = edit.snapshot();
                             shiftMap(edit.map, dx, dy);
-                            edit.recordFull("Deslocar", before);
+                            edit.recordFull(t("Shift", "MainMenu"), before);
                             after(edit);
                         }
                         resolve(true);
                     }
                 },
-                { label: "Cancelar", onClick: () => resolve(false) }
+                { label: t("Cancel", "BasicConstants"), onClick: () => resolve(false) }
             ]
         });
         const g = document.createElement("fieldset");
         g.className = "mtGroup";
         const lg = document.createElement("legend");
-        lg.textContent = "Deslocamento";
+        lg.textContent = t("Offset", "Dialog_MapShift");
         const row = document.createElement("div");
         row.className = "mtRow";
         row.append(
-            field("X", x, "Número de tiles a serem deslocados horizontalmente no Eixo X."),
-            field("Y", y, "Número de tiles a serem deslocados verticalmente no Eixo Y."));
-        g.title = "Distância para o deslocamento.";
+            field(t("X", "Dialog_MapShift"), x, t("Number of tiles to be shifted horizontally.", "Dialog_MapShift")),
+            field(t("Y", "Dialog_MapShift"), y, t("Number of tiles to be shifted vertically.", "Dialog_MapShift")));
+        g.title = t("Distance to shift.", "Dialog_MapShift");
         g.append(lg, row);
         dlg.body.appendChild(g);
         x.focus();
@@ -140,46 +141,46 @@ export function openSaveImageDialog(api, edit) {
         path.value = `Map${pad3(edit.id)}.png`;
         const note = document.createElement("p");
         note.className = "mtHint";
-        note.textContent = "Caminho dentro da pasta do projeto.";
+        note.textContent = t("Path inside the project folder.");
         const dlg = api.openDialog({
-            title: "Salvar como Imagem",
+            title: t("Save as Image", "Dialog_MapSaveAsImage"),
             width: "460px",
             height: "230px",
             buttons: [
                 {
-                    label: "Ok", primary: true, onClick: () => {
+                    label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                         const p = path.value.trim().replace(/^[\\/]+/, "");
                         if (!p) {
-                            api.status("O local está vazio.");
+                            api.status(t("Location is empty.", "Dialog_MapSaveAsImage"));
                             return false;
                         }
                         if (p.length > 240) {
-                            api.status("O nome do caminho é muito longo.");
+                            api.status(t("Path name is too long.", "Dialog_MapSaveAsImage"));
                             return false;
                         }
                         save(api, edit, /\.png$/i.test(p) ? p : p + ".png").then(resolve);
                         return true;
                     }
                 },
-                { label: "Cancelar", onClick: () => resolve(false) }
+                { label: t("Cancel", "BasicConstants"), onClick: () => resolve(false) }
             ]
         });
-        dlg.body.append(field("Local de Saída", path, "Local para salvar a imagem do mapa."), note);
+        dlg.body.append(field(t("Output Location", "Dialog_MapSaveAsImage"), path, t("Location to save the map image.", "Dialog_MapSaveAsImage")), note);
     });
 }
 
 async function save(api, edit, relPath) {
     try {
-        api.status("Gerando imagem…");
+        api.status(t("Generating image…"));
         const tilesets = await api.project.tilesets();
         const { canvas, scaled } = await renderMapCanvas(edit.map, tilesets[edit.map.tilesetId]);
         const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
         await api.project.writeBinary(relPath, blob, "image/png");
-        api.status(`Imagem salva: ${relPath} (${canvas.width}×${canvas.height}${scaled ? ", reduzida" : ""})`);
+        api.status(scaled ? t("Image saved: %1 (%2×%3, reduced)", null, relPath, canvas.width, canvas.height) : t("Image saved: %1 (%2×%3)", null, relPath, canvas.width, canvas.height));
         return true;
     } catch (err) {
         console.error(err);
-        api.status("Falha ao salvar imagem: " + (err.message || err));
+        api.status(t("Failed to save image: %1", null, err.message || err));
         return false;
     }
 }

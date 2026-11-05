@@ -5,6 +5,7 @@
 import * as T from "./autotile.js";
 import { drawTile, loadTilesetBitmaps, whenBitmapsReady, paletteShape, regionColor } from "./render.js";
 import { paletteBrush } from "./editops.js";
+import { t } from "../i18n.js";
 
 const COLS = 8;
 export const TABS = ["A", "B", "C", "D", "E", "R"];
@@ -35,13 +36,13 @@ export class Palette {
         this.tabBar = document.createElement("div");
         this.tabBar.className = "mtTabs";
         this.tabButtons = {};
-        for (const t of TABS) {
+        for (const tab of TABS) {
             const b = document.createElement("button");
-            b.textContent = t;
-            b.title = t === "R" ? "Região" : "Tiles " + t;
-            b.addEventListener("click", () => this.setTab(t));
+            b.textContent = tab;
+            b.title = tab === "R" ? t("Regions") : t("Tiles %1", null, tab);
+            b.addEventListener("click", () => this.setTab(tab));
             this.tabBar.appendChild(b);
-            this.tabButtons[t] = b;
+            this.tabButtons[tab] = b;
         }
         root.append(this.scroller, this.tabBar);
         this._bindInput();

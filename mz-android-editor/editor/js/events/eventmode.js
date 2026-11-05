@@ -6,6 +6,7 @@ import { db, clone, TEMPLATE, mapPath } from "./data.js";
 import { h, actionMenu, alertBox, isBigCharacter } from "./ui.js";
 import { openEventEditor } from "./eventeditor.js";
 import { quickEvent } from "./quick.js";
+import { t } from "../i18n.js";
 
 const T = 48;
 
@@ -162,7 +163,7 @@ export class EventMode {
         let clip = this.clip;
         if (!clip) { try { clip = JSON.parse(localStorage.getItem("mzEventsEventClip") || "null"); } catch (e) { clip = null; } }
         if (!clip || !this.map) { return; }
-        if (this.selectedEvent) { this.api.status("Já existe um evento neste tile."); return; }
+        if (this.selectedEvent) { this.api.status(t("There is already an event on this tile.")); return; }
         this.record();
         this.placeEvent(clone(clip), this.cursor.x, this.cursor.y);
         await this.save();
@@ -176,7 +177,7 @@ export class EventMode {
     }
     async quick(kind) {
         if (!this.map) { return; }
-        if (this.selectedEvent) { this.api.status("Já existe um evento neste tile."); return; }
+        if (this.selectedEvent) { this.api.status(t("There is already an event on this tile.")); return; }
         const ev = await quickEvent(kind, { mapId: this.mapId, x: this.cursor.x, y: this.cursor.y, tileset: this.tileset });
         if (!ev) { return; }
         this.record();
@@ -203,19 +204,19 @@ export class EventMode {
     }
     contextMenu(cx, cy) {
         const has = !!this.selectedEvent;
-        const startItems = [["Player", "player"], ["Boat", "boat"], ["Ship", "ship"], ["Airship", "airship"]].map(([l, k]) => ({ label: l, action: () => this.setStart(k) }));
+        const startItems = [[t("Player", "Constants"), "player"], [t("Boat", "Constants"), "boat"], [t("Ship", "Constants"), "ship"], [t("Airship", "Constants"), "airship"]].map(([l, k]) => ({ label: l, action: () => this.setStart(k) }));
         return actionMenu([
-            { label: has ? "Edit…" : "New…", action: () => this.editAt(this.cursor.x, this.cursor.y) },
+            { label: (has ? t("Edit", "MainMenu") : t("New", "MainMenu")) + "…", action: () => this.editAt(this.cursor.x, this.cursor.y) },
             "-",
-            { label: "Cut", disabled: !has, action: () => this.cut() },
-            { label: "Copy", disabled: !has, action: () => this.copy() },
-            { label: "Paste", disabled: has, action: () => this.paste() },
-            { label: "Delete", disabled: !has, action: () => this.del() },
+            { label: t("Cut", "BasicConstants"), disabled: !has, action: () => this.cut() },
+            { label: t("Copy", "BasicConstants"), disabled: !has, action: () => this.copy() },
+            { label: t("Paste", "BasicConstants"), disabled: has, action: () => this.paste() },
+            { label: t("Delete", "BasicConstants"), disabled: !has, action: () => this.del() },
             "-",
-            { label: "Quick Event Creation", disabled: has, items: [
-                { label: "Transfer…", action: () => this.quick("transfer") }, { label: "Door…", action: () => this.quick("door") },
-                { label: "Treasure…", action: () => this.quick("treasure") }, { label: "Inn…", action: () => this.quick("inn") }] },
-            { label: "Set Starting Position", items: startItems }
+            { label: t("Quick Event Creation", "MainMenu"), disabled: has, items: [
+                { label: t("Transfer", "MainMenu") + "…", action: () => this.quick("transfer") }, { label: t("Door", "MainMenu") + "…", action: () => this.quick("door") },
+                { label: t("Treasure", "MainMenu") + "…", action: () => this.quick("treasure") }, { label: t("Inn", "MainMenu") + "…", action: () => this.quick("inn") }] },
+            { label: t("Set Starting Position", "MainMenu"), items: startItems }
         ], { x: cx, y: cy, title: `(${this.cursor.x},${this.cursor.y})` + (has ? " " + this.selectedEvent.name : "") });
     }
     centerOn(x, y) {
@@ -315,16 +316,16 @@ export class EventMode {
         const vp = document.getElementById("viewport");
         const b = (label, fn, title) => h("button", { type: "button", class: "evBtn", title, onclick: e => { e.stopPropagation(); fn(e); } }, label);
         this.info = h("span", { class: "evBarInfo" });
-        this.btnEdit = b("New…", () => this.editAt(this.cursor.x, this.cursor.y), "Editar/Novo (duplo toque)");
+        this.btnEdit = b(t("New", "MainMenu") + "…", () => this.editAt(this.cursor.x, this.cursor.y), t("Edit/New (double tap)"));
         this.bar = h("div", { class: "evModeBar hidden" },
             this.info, this.btnEdit,
-            this.btnUndo = b("↶ Undo", () => this.undo(), "Desfazer (Ctrl+Z)"), this.btnRedo = b("↷ Redo", () => this.redo(), "Refazer (Ctrl+Y)"),
-            b("Cut", () => this.cut()), b("Copy", () => this.copy()), b("Paste", () => this.paste()), b("Delete", () => this.del()),
-            b("Quick ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([
-                { label: "Transfer…", action: () => this.quick("transfer") }, { label: "Door…", action: () => this.quick("door") },
-                { label: "Treasure…", action: () => this.quick("treasure") }, { label: "Inn…", action: () => this.quick("inn") }], { x: r.left, y: r.top - 200, title: "Quick Event Creation" }); }),
-            b("Start ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([["Player", "player"], ["Boat", "boat"], ["Ship", "ship"], ["Airship", "airship"]].map(([l, k]) => ({ label: l, action: () => this.setStart(k) })), { x: r.left, y: r.top - 200, title: "Set Starting Position" }); }),
-            b("☰ List", () => { this.listPanel.classList.toggle("hidden"); this._renderList(); }, "Event List"));
+            this.btnUndo = b("↶ " + t("Undo", "BasicConstants"), () => this.undo(), t("Undoes the last action.", "BasicConstants") + " (Ctrl+Z)"), this.btnRedo = b("↷ " + t("Redo", "BasicConstants"), () => this.redo(), t("Redoes the last action that was undone.", "BasicConstants") + " (Ctrl+Y)"),
+            b(t("Cut", "BasicConstants"), () => this.cut()), b(t("Copy", "BasicConstants"), () => this.copy()), b(t("Paste", "BasicConstants"), () => this.paste()), b(t("Delete", "BasicConstants"), () => this.del()),
+            b(t("Quick") + " ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([
+                { label: t("Transfer", "MainMenu") + "…", action: () => this.quick("transfer") }, { label: t("Door", "MainMenu") + "…", action: () => this.quick("door") },
+                { label: t("Treasure", "MainMenu") + "…", action: () => this.quick("treasure") }, { label: t("Inn", "MainMenu") + "…", action: () => this.quick("inn") }], { x: r.left, y: r.top - 200, title: t("Quick Event Creation", "MainMenu") }); }),
+            b(t("Starting Positions", "Group_SystemStarting") + " ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([[t("Player", "Constants"), "player"], [t("Boat", "Constants"), "boat"], [t("Ship", "Constants"), "ship"], [t("Airship", "Constants"), "airship"]].map(([l, k]) => ({ label: l, action: () => this.setStart(k) })), { x: r.left, y: r.top - 200, title: t("Set Starting Position", "MainMenu") }); }),
+            b("☰ " + t("Map Events", "EventListBox"), () => { this.listPanel.classList.toggle("hidden"); this._renderList(); }, t("Map Events", "EventListBox")));
         this.listPanel = h("div", { class: "evListPanel hidden" });
         for (const el of [this.bar, this.listPanel]) {
             el.addEventListener("pointerdown", e => e.stopPropagation());
@@ -342,7 +343,7 @@ export class EventMode {
     _updateBar() {
         const e = this.map ? this.selectedEvent : null;
         this.info.textContent = `(${this.cursor.x},${this.cursor.y})` + (e ? ` ${String(e.id).padStart(3, "0")}:${e.name}` : "");
-        this.btnEdit.textContent = e ? "Edit…" : "New…";
+        this.btnEdit.textContent = (e ? t("Edit", "MainMenu") : t("New", "MainMenu")) + "…";
         const h = this.map ? this._hist() : { undo: [], redo: [] };
         this.btnUndo.disabled = !h.undo.length;
         this.btnRedo.disabled = !h.redo.length;
@@ -352,7 +353,7 @@ export class EventMode {
     _renderList() {
         if (!this.listPanel || this.listPanel.classList.contains("hidden")) { return; }
         this.listPanel.innerHTML = "";
-        this.listPanel.append(h("div", { class: "evListPanelTitle" }, "Event List"));
+        this.listPanel.append(h("div", { class: "evListPanelTitle" }, t("Map Events", "EventListBox")));
         const sel = this.selectedEvent;
         let last = { id: -1, t: 0 };
         for (const ev of (this.map && this.map.events) || []) {
