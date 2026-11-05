@@ -6,14 +6,14 @@
 import {
     LAYERGROUP_LIST, LAYERGROUP_TEXT, COLOR_TEXT, GENDERS, MASK_ID_LIST,
     layergroupToMaskIDs, layergroupToPaletteType, maskIDToPaletteType, isEssential, blankProbability,
-    SETTINGS_IDENTITY, SETTINGS_VERSION
+    SETTINGS_IDENTITY, SETTINGS_VERSION, LAYER_ORDERS
 } from "./data.js";
 import {
     buildAssets, makeDefaultData, compose, loadGradients, paletteLength, gradientRow,
     patternKeyList, imageToCanvas, BASE
 } from "./composer.js";
 import { openExporter } from "./exporter.js";
-import { promptText, pickFile, message, el, hasProject } from "./ui.js";
+import { promptText, pickFile, message, el, hasProject, saveOutside } from "./ui.js";
 import { t } from "../i18n.js";
 
 const CSS_URL = new URL("../../css/generator.css", import.meta.url).href;
@@ -80,7 +80,7 @@ async function openGenerator() {
     let session = null;
     let refreshToken = 0;
     let previewMode = "sheet";
-    let animTimer = 0, animFrame = 0, animDir = 0, svMotion = 0;
+    let animTimer = 0, animFrame = 0, animDir = 0, svMotion = 0, svStart = 0;
     const grads = await loadGradients();
 
     function stopAnim() {
@@ -236,14 +236,24 @@ async function openGenerator() {
     });
 
     // ---------- Ajustar (deslocamento da parte no rosto, -8..+8) ----------
+    // O deslocamento só é aplicado à imagem do rosto (composer.js): partes sem camada no rosto
+    // (cauda, asa) ou sem a variação atual no rosto ficam com os botões desabilitados.
+    function partShifts(lg) {
+        const pattern = session.data.patterns[lg];
+        if (!pattern) { return false; }
+        return LAYER_ORDERS.face.some(l => l.replace(/\d$/, "") === lg && session.assets.face[l] && session.assets.face[l][pattern]);
+    }
     function refreshOffset() {
-        const off = session.data.offsets[currentLg()] || { x: 0, y: 0 };
+        const lg = currentLg();
+        const off = session.data.offsets[lg] || { x: 0, y: 0 };
         const s = v => (v >= 0 ? "+" : "") + v;
+        const on = partShifts(lg);
         ui.offsetText.textContent = `X${s(off.x)},Y${s(off.y)}`;
-        ui.pad.up.disabled = !(off.y > -8);
-        ui.pad.down.disabled = !(off.y < 8);
-        ui.pad.left.disabled = !(off.x > -8);
-        ui.pad.right.disabled = !(off.x < 8);
+        ui.offsetText.classList.toggle("gen-disabled", !on);
+        ui.pad.up.disabled = !on || !(off.y > -8);
+        ui.pad.down.disabled = !on || !(off.y < 8);
+        ui.pad.left.disabled = !on || !(off.x > -8);
+        ui.pad.right.disabled = !on || !(off.x < 8);
     }
     for (const [dir, dx, dy] of [["up", 0, -1], ["down", 0, 1], ["left", -1, 0], ["right", 1, 0]]) {
         ui.pad[dir].addEventListener("click", async () => {
@@ -312,6 +322,9 @@ async function openGenerator() {
     // Animação: andando (3 quadros × 4 direções), battler SV (movimentos do rmmz_sprites) e caído.
     const SV_MOTIONS = ["walk", "wait", "chant", "guard", "damage", "evade", "thrust", "swing", "missile", "skill",
         "spell", "item", "escape", "victory", "dying", "abnormal", "sleep", "dead"];
+    // loop de cada movimento (Sprite_Actor.MOTIONS do rmmz_sprites.js)
+    const SV_MOTION_LOOP = [true, true, true, true, false, false, false, false, false, false,
+        false, false, true, true, true, true, true, true];
     const SV_MOTION_TEXT = [t("Walk"), t("Wait", "EventCommands"), t("Chant"), t("Guard", "Constants"),
         t("Damage", "Group_Damage"), t("Evade"), t("Thrust", "Constants"), t("Swing", "Constants"),
         t("Missile", "Constants"), t("Use Skill", "Group_SystemSound"), t("Spell"), t("Item", "Constants"),
@@ -347,7 +360,9 @@ async function openGenerator() {
         const sv = mk(t("Battler", "Layout_CharacterGenerator"), 64 * 3, 64 * 3);
         const sel = document.createElement("select");
         SV_MOTIONS.forEach((m, i) => { const o = document.createElement("option"); o.value = i; o.textContent = SV_MOTION_TEXT[i]; sel.appendChild(o); });
-        sel.addEventListener("change", () => { svMotion = Number(sel.value); drawAnimFrame(); });
+        sel.addEventListener("change", () => { svMotion = Number(sel.value); svStart = animFrame; drawAnimFrame(); });
+        // tocar de novo um movimento único (dano, golpe, magia…)
+        sv.cv.addEventListener("click", () => { svStart = animFrame; drawAnimFrame(); });
         sv.cell.appendChild(sel);
         const tvd = mk(t("Damaged Character", "Layout_CharacterGenerator"), 48 * 3, 48 * 3);
         return { wrap, face, tv, sv, tvd };
@@ -364,8 +379,11 @@ async function openGenerator() {
         };
         blitScaled(session.images.face, 0, 0, 144, 144, anim.face.cv);
         blitScaled(session.images.tv, pattern * 48, animDir * 48, 48, 48, anim.tv.cv);
+        // Sprite_Actor.updateMotionCount: movimentos em loop fazem 0-1-2-1; os únicos
+        // (SV_MOTION_LOOP falso) tocam 0-1-2 uma vez e param no último quadro.
         const m = svMotion;
-        const cx = Math.floor(m / 6) * 3 + pattern, cy = m % 6;
+        const svPattern = SV_MOTION_LOOP[m] ? pattern : Math.min(2, Math.max(0, animFrame - svStart));
+        const cx = Math.floor(m / 6) * 3 + svPattern, cy = m % 6;
         blitScaled(session.images.sv, cx * 64, cy * 64, 64, 64, anim.sv.cv);
         blitScaled(session.images.tvd, [0, 1, 2, 2][animFrame % 4] * 48, 0, 48, 48, anim.tvd.cv);
     }
@@ -432,10 +450,13 @@ async function openGenerator() {
             title: t("Save Settings", "Layout_CharacterGenerator"),
             label: t("File (JSON) inside the project:"),
             value: session.settingsPath || "Personagem.json",
-            hint: t("Saves the current setting.", "Layout_CharacterGenerator")
+            hint: t("Saves the current setting.", "Layout_CharacterGenerator"),
+            outside: t("Other Location…")
         });
         if (!name) { return; }
-        const path = name.endsWith(".json") ? name : name + ".json";
+        const outside = typeof name === "object";
+        const raw = outside ? name.value : name;
+        const path = raw.endsWith(".json") ? raw : raw + ".json";
         const body = JSON.stringify({
             identity: SETTINGS_IDENTITY,
             version: SETTINGS_VERSION,
@@ -444,6 +465,15 @@ async function openGenerator() {
             colors: session.data.colors,
             offsets: session.data.offsets
         });
+        if (outside) {
+            try {
+                const how = await saveOutside(new Blob([body], { type: "application/json" }), path.split("/").pop(), "application/json", path);
+                if (how) { api.status(t("Settings saved: %1", null, how === "share" ? path : path.split("/").pop())); }
+            } catch (e) {
+                await message(api, t("Save Settings", "Layout_CharacterGenerator"), t("Unable to write to file %1.", "ProjectManager", path) + "\n" + e.message);
+            }
+            return;
+        }
         const res = await fetch("/api/file?path=" + encodeURIComponent(path), {
             method: "PUT", headers: { "Content-Type": "application/json" }, body
         });
@@ -461,12 +491,13 @@ async function openGenerator() {
             title: t("Load Settings", "Layout_CharacterGenerator"),
             dirs: [""],
             filter: n => n.toLowerCase().endsWith(".json") && n !== "package.json",
-            hint: t("Loads a previously saved setting.", "Layout_CharacterGenerator")
+            hint: t("Loads a previously saved setting.", "Layout_CharacterGenerator"),
+            accept: ".json,application/json"
         });
         if (!path) { return; }
+        const local = typeof path !== "string";   // File de outro local
         try {
-            const res = await fetch("/api/file?path=" + encodeURIComponent(path));
-            const json = await res.json();
+            const json = local ? JSON.parse(await path.text()) : await (await fetch("/api/file?path=" + encodeURIComponent(path))).json();
             if (!json || json.identity !== SETTINGS_IDENTITY || !json.patterns || !json.colors) {
                 throw new Error(t("Unexpected file format.", "ProjectManager"));
             }
@@ -478,11 +509,11 @@ async function openGenerator() {
                 colors: { ...def.colors, ...json.colors },
                 offsets: { ...def.offsets, ...(json.offsets || {}) }
             };
-            target.settingsPath = path;
+            target.settingsPath = local ? path.name : path;
             await switchGender(gender);
-            api.status(t("Settings loaded: %1", null, path));
+            api.status(t("Settings loaded: %1", null, local ? path.name : path));
         } catch (e) {
-            await message(api, t("Load Settings", "Layout_CharacterGenerator"), t("Unable to read file %1.", "ProjectManager", path) + "\n" + e.message);
+            await message(api, t("Load Settings", "Layout_CharacterGenerator"), t("Unable to read file %1.", "ProjectManager", local ? path.name : path) + "\n" + e.message);
         }
     });
 

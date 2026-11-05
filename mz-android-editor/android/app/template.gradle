@@ -1,0 +1,54 @@
+// Template completo de projeto novo (RPG Maker MZ 1.1.1 "newdata": img/, audio/, effects/, ...).
+// Copiado no build para build/templateAssets/editor/template-full/ (fora do git) e servido pelo
+// editor em /template-full/. manifest.json lista os arquivos para editor/js/tools/newproject.js.
+//
+// Pasta de origem configurável:  gradle assembleDebug -PmzNewdataDir="D:/MZ/newdata"
+// Sem a pasta, o build continua e o editor cai para o template mínimo (editor/template/).
+import groovy.json.JsonOutput
+
+def mzNewdataDir = file(project.findProperty('mzNewdataDir') ?: 'C:/Users/jamaa/Downloads/RPG AUTORIZADO PRO LUCAS/RPG/newdata')
+def templateOut = layout.buildDirectory.dir('templateAssets/editor/template-full')
+
+android {
+    sourceSets {
+        main {
+            assets.srcDirs += "$buildDir/templateAssets"
+        }
+    }
+}
+
+tasks.register('copyTemplateFull', Sync) {
+    description = 'Copia o newdata do MZ para assets/editor/template-full e gera manifest.json'
+    onlyIf {
+        if (!mzNewdataDir.isDirectory()) {
+            logger.warn("mzNewdataDir não encontrado ($mzNewdataDir): APK sem template completo")
+            return false
+        }
+        true
+    }
+    from mzNewdataDir
+    into templateOut
+    exclude 'manifest.json', 'game.rmmzproject'
+    doLast {
+        def root = templateOut.get().asFile
+        def files = []
+        root.eachFileRecurse(groovy.io.FileType.FILES) { f ->
+            def rel = root.toPath().relativize(f.toPath()).toString().replace('\\', '/')
+            if (rel != 'manifest.json') {
+                files << [path: rel, size: f.length()]
+            }
+        }
+        files.sort { a, b -> a.path <=> b.path }
+        def manifest = [source: 'RPG Maker MZ 1.1.1 newdata (completo)', total: files.sum { it.size } ?: 0, files: files]
+        new File(root, 'manifest.json').setText(JsonOutput.toJson(manifest), 'UTF-8')
+        logger.lifecycle("template-full: ${files.size()} arquivos, ${(manifest.total / 1048576).round(1)} MB")
+    }
+}
+tasks.named('preBuild') {
+    dependsOn 'copyTemplateFull'
+}
+// Uma cópia local de teste em editor/template-full/ (PC/devserver, ignorada pelo git) não pode
+// entrar pelo copyEditorAssets: duplicaria os 100 MB no APK.
+tasks.named('copyEditorAssets') {
+    exclude 'template-full/**'
+}

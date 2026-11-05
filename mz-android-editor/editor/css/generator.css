@@ -90,6 +90,7 @@
 .gen-pad .right { grid-column: 3; grid-row: 2; }
 .gen-pad .down { grid-column: 2; grid-row: 3; }
 .gen-offsetText { color: var(--muted); min-width: 80px; }
+.gen-offsetText.gen-disabled { opacity: .45; }
 .gen-leftBtns { display: flex; gap: 4px; }
 .gen-leftBtns button { flex: 1; min-height: 40px; border: 1px solid var(--line); background: var(--panel2); border-radius: 4px; padding: 0 4px; }
 

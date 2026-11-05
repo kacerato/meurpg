@@ -4,28 +4,42 @@
 import { el, button, modal, confirmBox, alertBox, progressDialog } from "./ui.js";
 import * as audio from "./audio.js";
 import { t } from "../i18n.js";
+import { loadTemplate, templateFileUrl } from "./newproject.js";
 
 // Pastas na ordem do Resource Manager do MZ.
 export const FOLDERS = [
     "audio/bgm", "audio/bgs", "audio/me", "audio/se",
     "effects",
-    "img/animations", "img/battlebacks1", "img/battlebacks2", "img/characters",
+    "img/battlebacks1", "img/battlebacks2", "img/characters",
     "img/enemies", "img/faces", "img/parallaxes", "img/pictures",
     "img/sv_actors", "img/sv_enemies", "img/system", "img/tilesets",
-    "img/titles1", "img/titles2"
+    "img/titles1", "img/titles2",
+    "movies"
 ];
+// Pastas de topo cujos arquivos podem ficar em subpastas (effects/Texture, effects/Model).
+const NESTED = new Set(["effects"]);
 
 export function extsFor(folder) {
     if (folder.startsWith("audio/")) { return ["ogg", "m4a"]; }
     if (folder === "effects") { return ["efkefc"]; }
+    if (folder === "movies") { return ["webm", "mp4"]; }
     return ["png"];
 }
 function acceptFor(folder) {
     if (folder.startsWith("audio/")) { return ".ogg,.m4a,audio/ogg,audio/mp4"; }
     if (folder === "effects") { return ".efkefc"; }
+    if (folder === "movies") { return ".webm,.mp4,video/webm,video/mp4"; }
     return ".png,image/png";
 }
-const MIME = { png: "image/png", ogg: "audio/ogg", m4a: "audio/mp4", efkefc: "application/octet-stream" };
+const MIME = { png: "image/png", ogg: "audio/ogg", m4a: "audio/mp4", webm: "video/webm", mp4: "video/mp4", efkefc: "application/octet-stream" };
+// Pasta de recurso de um caminho relativo ("img/faces/Actor1.png" → "img/faces"), ou null.
+function resourceFolderOf(rel) {
+    const segs = rel.split("/");
+    if (segs.length < 2) { return null; }
+    if (NESTED.has(segs[0]) || segs[0] === "movies") { return segs[0]; }
+    const two = segs[0] + "/" + segs[1];
+    return FOLDERS.includes(two) && segs.length > 2 ? two : null;
+}
 const extOf = n => (n.lastIndexOf(".") > 0 ? n.slice(n.lastIndexOf(".") + 1).toLowerCase() : "");
 const baseOf = n => (n.lastIndexOf(".") > 0 ? n.slice(0, n.lastIndexOf(".")) : n);
 const fileUrl = (folder, name) => `/project/${folder}/${encodeURIComponent(name)}`;
@@ -66,7 +80,8 @@ async function writeAll(items, title) {
         while (queue.length) {
             const it = queue.shift();
             try {
-                await api.project.writeBinary(it.rel, it.file, MIME[extOf(it.rel)] || it.file.type || "application/octet-stream");
+                const blob = it.file || await it.load();
+                await api.project.writeBinary(it.rel, blob, MIME[extOf(it.rel)] || blob.type || "application/octet-stream");
             } catch (e) {
                 failed.push(it.rel + ": " + e.message);
             }
@@ -119,14 +134,15 @@ export async function importFromFolder(onlyFolder = null) {
         for (let i = 0; i < segs.length - 1; i++) {
             const two = segs[i] + "/" + segs[i + 1];
             if (known.has(two) && i + 2 < segs.length) { rel = segs.slice(i).join("/"); break; }
-            if (segs[i] === "effects") { rel = segs.slice(i).join("/"); break; }
+            if ((NESTED.has(segs[i]) || segs[i] === "movies") && i + 1 < segs.length) { rel = segs.slice(i).join("/"); break; }
         }
         if (!rel) { continue; }
-        const folder = rel.split("/")[0] === "effects" ? "effects" : rel.split("/").slice(0, 2).join("/");
+        const folder = resourceFolderOf(rel);
+        if (!folder) { continue; }
         if (onlyFolder && folder !== onlyFolder) { continue; }
         // effects/ inclui texturas (effects/Texture/*.png) usadas pelos .efkefc
-        if (folder !== "effects" && !extsFor(folder).includes(extOf(f.name))) { continue; }
-        items.push({ rel, file: f, folder });
+        if (!NESTED.has(folder) && !extsFor(folder).includes(extOf(f.name))) { continue; }
+        items.push({ rel, file: f, size: f.size });
     }
     if (!items.length) {
         await alertBox(api, t("Import", "Dialog_ResourceManager"), onlyFolder
@@ -134,23 +150,52 @@ export async function importFromFolder(onlyFolder = null) {
             : t("No resources (img/, audio/, effects/) found in the chosen folder."), "warning");
         return 0;
     }
-    // não sobrescreve o que já existe no projeto
+    return copyMissing(items, onlyFolder ? t("DLC", "Dialog_ResourceManager") : t("Import Default Resources"));
+}
+
+// Copia os itens [{rel, file | load(), size}] que ainda não existem no projeto (não sobrescreve).
+async function copyMissing(items, title, intro = "") {
     const existingBy = new Map();
-    for (const folder of new Set(items.map(i => i.folder))) {
-        const ents = await api.project.list(folder).catch(() => []);
-        existingBy.set(folder, new Set((ents || []).map(e => e.name || e)));
+    for (const dir of new Set(items.map(i => i.rel.slice(0, i.rel.lastIndexOf("/"))))) {
+        const ents = await api.project.list(dir).catch(() => []);
+        existingBy.set(dir, new Set((ents || []).filter(e => !e.dir).map(e => e.name || e)));
     }
-    const fresh = items.filter(i => !(i.rel.split("/").length === i.folder.split("/").length + 1 && existingBy.get(i.folder).has(i.file.name)));
+    const fresh = items.filter(i => {
+        const k = i.rel.lastIndexOf("/");
+        return !existingBy.get(i.rel.slice(0, k)).has(i.rel.slice(k + 1));
+    });
     const keep = items.length - fresh.length;
-    const total = fresh.reduce((s, i) => s + i.file.size, 0);
-    if (!(await confirmBox(api, t("Import Default Resources"),
+    if (!fresh.length) {
+        await alertBox(api, title, t("%1 already exist and will be kept.", null, keep));
+        return 0;
+    }
+    const total = fresh.reduce((s, i) => s + (i.size || 0), 0);
+    if (!(await confirmBox(api, title, (intro ? intro + "\n\n" : "") +
         t("Copy %1 file(s) (%2 MB) to the project?", null, fresh.length, (total / 1048576).toFixed(1)) +
         (keep ? "\n" + t("%1 already exist and will be kept.", null, keep) : "")))) {
         return 0;
     }
-    const n = await writeAll(fresh.map(({ rel, file }) => ({ rel, file })), t("Importing resources…"));
+    const n = await writeAll(fresh, t("Importing resources…"));
     api.status(t("%1 resource(s) imported", null, n));
     return n;
+}
+
+// "Importar recursos padrão": usa o template completo do editor (editor/template-full/, empacotado
+// no APK) — a mesma fonte do Novo projeto; sem ele, pede a pasta (ex.: RPG/newdata).
+export async function importDefaultResources() {
+    const tp = await loadTemplate().catch(() => null);
+    if (!tp || !tp.full) { return importFromFolder(null); }
+    const items = tp.manifest.files
+        .filter(f => resourceFolderOf(f.path))
+        .map(f => ({
+            rel: f.path, size: f.size,
+            load: async () => {
+                const r = await fetch(templateFileUrl(tp, f.path));
+                if (!r.ok) { throw new Error("HTTP " + r.status); }
+                return r.blob();
+            }
+        }));
+    return copyMissing(items, t("Import Default Resources"), t("Source: default resources of RPG Maker MZ 1.1.1 (bundled with the editor)."));
 }
 
 // ------------------------------------------------------------------ exportação
@@ -199,6 +244,12 @@ function previewInto(box, folder, name, filesSet, { big = false } = {}) {
                     button("▶ " + t("Play", "Layout_AudioSelector"), () => audio.play(type, st, filesSet)),
                     button("■ " + t("Stop", "Layout_AudioSelector"), () => audio.stop(type))))
         );
+    } else if (ext === "webm" || ext === "mp4") {
+        const video = el("video", { class: big ? "tlPreviewImgBig" : "tlPreviewImg", src: fileUrl(folder, name), controls: true, preload: "metadata" });
+        const info = el("div", { class: "tlPreviewInfo", text: name });
+        video.addEventListener("loadedmetadata", () => { info.textContent = `${name} — ${video.videoWidth}×${video.videoHeight}, ${video.duration.toFixed(1)} s`; });
+        video.addEventListener("error", () => { info.textContent = `${name} — ${t("could not be loaded")}`; });
+        box.append(el("div", { class: "tlPreviewCanvas" }, video), info);
     } else {
         box.append(el("div", { class: "tlPreviewAudio" },
             el("div", { class: "tlEffName", text: "✦ " + name }),
@@ -325,7 +376,7 @@ export async function openResourceManager() {
         if (n) { previewDialog(state.folder, n, filesSet); }
     });
     btns.std = button(t("Import Default Resources") + "…", async () => {
-        await importFromFolder(null);
+        await importDefaultResources();
         await selectFolder(state.folder, true);
     });
     btns.imp.title = t("Import files into the selected folder.", "Dialog_ResourceManager");

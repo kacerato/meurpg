@@ -28,8 +28,9 @@ export function confirmBox(api, title, text) {
     });
 }
 
-// Resolve com o texto digitado ou null.
-export function promptText(api, { title, label, value = "", hint = "" }) {
+// Resolve com o texto digitado ou null. Com `outside` (rótulo), ganha um terceiro botão que
+// resolve com { outside: true, value } — salvar fora da pasta do projeto (ver saveOutside).
+export function promptText(api, { title, label, value = "", hint = "", outside = "" }) {
     return new Promise(resolve => {
         let done = false;
         const finish = v => { if (!done) { done = true; resolve(v); } };
@@ -42,6 +43,7 @@ export function promptText(api, { title, label, value = "", hint = "" }) {
             title, width: "min(520px, 96vw)", height: "auto",
             buttons: [
                 { label: t("OK", "BasicConstants"), primary: true, onClick: () => { const v = input.value.trim(); if (!v) { return false; } finish(v); } },
+                ...(outside ? [{ label: outside, onClick: () => { const v = input.value.trim(); if (!v) { return false; } finish({ outside: true, value: v }); } }] : []),
                 { label: t("Cancel", "BasicConstants"), onClick: () => finish(null) }
             ]
         });
@@ -60,7 +62,8 @@ export function promptText(api, { title, label, value = "", hint = "" }) {
 }
 
 // Lista arquivos do projeto (pastas em `dirs`) e devolve o caminho escolhido ou null.
-export function pickFile(api, { title, dirs, filter, hint = "", thumbs = false }) {
+// Com `accept` (ex.: ".png"), ganha o botão "Outro local…" que devolve um File do aparelho/PC.
+export function pickFile(api, { title, dirs, filter, hint = "", thumbs = false, accept = "" }) {
     return new Promise(resolve => {
         let done = false, selected = null;
         const finish = v => { if (!done) { done = true; resolve(v); } };
@@ -68,6 +71,12 @@ export function pickFile(api, { title, dirs, filter, hint = "", thumbs = false }
             title, width: "min(560px, 96vw)", height: "auto",
             buttons: [
                 { label: t("OK", "BasicConstants"), primary: true, onClick: () => { if (!selected) { return false; } finish(selected); } },
+                ...(accept ? [{
+                    label: t("Other Location…"), onClick: () => {
+                        chooseLocalFile(accept).then(f => { if (f) { finish(f); d.close(); } });
+                        return false;
+                    }
+                }] : []),
                 { label: t("Cancel", "BasicConstants"), onClick: () => finish(null) }
             ]
         });
@@ -113,6 +122,63 @@ export function pickFile(api, { title, dirs, filter, hint = "", thumbs = false }
             }
         })();
     });
+}
+
+// Abre o seletor de arquivos do sistema (PC; no Android, o file chooser do WebView).
+export function chooseLocalFile(accept) {
+    return new Promise(resolve => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = accept;
+        input.style.display = "none";
+        let settled = false;
+        const done = f => { if (!settled) { settled = true; resolve(f); input.remove(); } };
+        input.addEventListener("change", () => done(input.files[0] || null));
+        input.addEventListener("cancel", () => done(null));
+        document.body.appendChild(input);
+        input.click();
+    });
+}
+
+// Grava `blob` fora da pasta do projeto, como o diálogo "Salvar como" do MZ:
+//  - PC (Chrome/Edge): showSaveFilePicker — o usuário escolhe pasta e nome;
+//  - Android: grava em `projectPath` e abre o compartilhamento (Android.shareFile), de onde o
+//    arquivo vai para Arquivos/Drive/outro app;
+//  - senão: download pelo navegador.
+// → "picker" | "share" | "download" | null (cancelado)
+export async function saveOutside(blob, fileName, mime, projectPath) {
+    if (typeof window.showSaveFilePicker === "function") {
+        const ext = fileName.slice(fileName.lastIndexOf("."));
+        let h;
+        try {
+            h = await window.showSaveFilePicker({ suggestedName: fileName, types: [{ description: ext, accept: { [mime]: [ext] } }] });
+        } catch (e) {
+            if (e && e.name === "AbortError") { return null; }
+            h = null;
+        }
+        if (h) {
+            const w = await h.createWritable();
+            await w.write(blob);
+            await w.close();
+            return "picker";
+        }
+    }
+    if (window.Android && typeof window.Android.shareFile === "function" && projectPath) {
+        const res = await fetch("/api/file?path=" + encodeURIComponent(projectPath), { method: "PUT", headers: { "Content-Type": mime }, body: blob });
+        if (!res.ok) { throw new Error(String(res.status)); }
+        window.Android.shareFile(projectPath, mime);
+        return "share";
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+    return "download";
 }
 
 // Chama fn quando o diálogo some do DOM (Cancelar, X, botão voltar).

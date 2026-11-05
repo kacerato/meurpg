@@ -58,3 +58,4 @@ tasks.register('copyPlayerTemplate', Copy) {
 tasks.named('preBuild') {
     dependsOn 'copyPlayerTemplate'
 }
+apply from: 'template.gradle'

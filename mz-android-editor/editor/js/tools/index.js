@@ -5,7 +5,7 @@ import { t } from "../i18n.js";
 import * as resources from "./resources.js";
 import * as soundtest from "./soundtest.js";
 import * as options from "./options.js";
-import { openNewProject, createProject, apiWriter, dirWriter, zipWriter, loadManifest } from "./newproject.js";
+import { openNewProject, createProject, apiWriter, dirWriter, zipWriter, loadManifest, loadTemplate } from "./newproject.js";
 import { openHelp, openAbout } from "./help.js";
 
 function injectCss() {
@@ -82,6 +82,7 @@ export async function register(api) {
         // Lista + pré-visualização + Importar. → nome sem extensão, "" (Nenhum) ou null (cancelado)
         pickResource: (folder, opts) => resources.pickResource(folder, opts),
         importFromFolder: only => resources.importFromFolder(only),
+        importDefaultResources: () => resources.importDefaultResources(),
         listFolder: folder => resources.listFolder(folder),
         exportFile: (folder, name) => resources.exportFile(folder, name),
         folders: resources.FOLDERS.slice(),
@@ -92,6 +93,10 @@ export async function register(api) {
         openHelp: page => openHelp(api, page),
         openAbout: () => openAbout(api),
         options: { get: options.get, set: options.set },
+        // Opções → Seletor de objetos: "dropdown" | "extended" para uma lista de `count` objetos.
+        objectSelectorMode: count => options.objectSelectorMode(count),
+        // Fonte do template de projeto novo: {full, base, manifest} (template-full no APK).
+        loadTemplate: () => loadTemplate(),
         newProject: { createProject, apiWriter, dirWriter, zipWriter, loadManifest }
     };
 }

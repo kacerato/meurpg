@@ -35,6 +35,17 @@ export function set(patch) {
     if (api) { api.emit("options:changed", { ...values }); }
 }
 
+// Opções → Seletor de objetos (MZ, 01_05): "Dropdown" = lista suspensa; "Extended" = janela
+// separada; "Smart" = escolhe pela quantidade (lista suspensa abaixo de 100 objetos — textos do
+// .qm: "Optimized for less than 100 objects" / "Optimized for hundreds of objects").
+// Devolve "dropdown" ou "extended" para uma lista com `count` objetos.
+export const SMART_LIMIT = 100;
+export function objectSelectorMode(count) {
+    const m = values.objectSelector;
+    if (m === "dropdown" || m === "extended") { return m; }
+    return (count || 0) < SMART_LIMIT ? "dropdown" : "extended";
+}
+
 const ICON = { small: { img: 18, bar: 40 }, normal: { img: 22, bar: 46 }, large: { img: 30, bar: 56 } };
 
 export function apply() {
@@ -44,8 +55,10 @@ export function apply() {
     const ic = ICON[values.iconSize] || ICON.normal;
     root.style.setProperty("--bar-h", ic.bar + "px");
     root.style.setProperty("--tl-icon", ic.img + "px");
-    const vp = document.getElementById("viewport");
-    if (vp) { vp.style.background = values.transparentColor; }
+    // Cor transparente (MZ: "cor usada no fundo transparente do editor"): vale nos visualizadores
+    // de imagem (tools.css aplica --mz-transparent a eles), não no fundo do mapa.
+    root.style.setProperty("--mz-transparent", values.transparentColor);
+    root.dataset.objectSelector = values.objectSelector;
     // Grade: o botão btnGrid (app.js) é quem liga/desliga no MapView
     const grid = document.getElementById("btnGrid");
     if (grid && grid.classList.contains("on") !== !!values.showGrid) { grid.click(); }
@@ -96,8 +109,28 @@ export async function openOptions() {
         c.addEventListener("change", () => { draft[key] = c.checked; });
         return el("label", { class: "tlCheckLbl" }, c, label);
     };
-    const color = el("input", { type: "color", value: draft.transparentColor, class: "tlColor" });
-    color.addEventListener("input", () => { draft.transparentColor = color.value; });
+    // Cor transparente como no MZ: Vermelho / Verde / Azul (0–255) + amostra.
+    const hex = n => n.toString(16).padStart(2, "0");
+    const rgb = [1, 3, 5].map(i => parseInt(String(draft.transparentColor).slice(i, i + 2), 16) || 0);
+    const swatch = el("div", { class: "tlSwatch", title: t("Shows how the transparent color looks like.", "Group_CheckerboardColor") });
+    const syncColor = () => {
+        draft.transparentColor = "#" + rgb.map(hex).join("");
+        swatch.style.setProperty("--sw", draft.transparentColor);
+    };
+    const chan = (i, label, tip) => {
+        const n = el("input", { type: "number", class: "tlInput tlNum", min: 0, max: 255, step: 1, value: rgb[i], title: tip });
+        n.addEventListener("input", () => { rgb[i] = Math.max(0, Math.min(255, Math.round(Number(n.value) || 0))); syncColor(); });
+        n.addEventListener("change", () => { n.value = rgb[i]; });
+        return row0(label + ":", n);
+    };
+    const row0 = (label, ctrl) => el("div", { class: "tlFormRow" }, el("label", { text: label }), ctrl);
+    const colorRows = () => [
+        chan(0, t("Red", "Group_CheckerboardColor"), t("R value of the transparent color.", "Group_CheckerboardColor")),
+        chan(1, t("Green", "Group_CheckerboardColor"), t("G value of the transparent color.", "Group_CheckerboardColor")),
+        chan(2, t("Blue", "Group_CheckerboardColor"), t("B value of the transparent color.", "Group_CheckerboardColor")),
+        row0("", swatch)
+    ];
+    syncColor();
 
     const group = (title, ...rows) => el("fieldset", { class: "tlGroup" }, el("legend", { text: title }), ...rows);
     const row = (label, ctrl) => el("div", { class: "tlFormRow" }, el("label", { text: label }), ctrl);
@@ -107,7 +140,7 @@ export async function openOptions() {
         build: b => {
             b.append(
                 el("div", { class: "tlOptGrid" },
-                    group(t("Transparent Color", "Group_CheckerboardColor"), row(t("Color", "Group_AnimationFlash") + ":", color)),
+                    group(t("Transparent Color", "Group_CheckerboardColor"), ...colorRows()),
                     group(t("Map Grid", "Group_MapGrid"), check("showGrid", t("Show", "Group_MapGrid"))),
                     group(t("UI", "Group_UI"),
                         row(t("Theme", "Group_UI") + ":", sel("theme", [["light", t("Default", "Constants")], ["dark", t("Dark", "Constants")]])),
