@@ -5,6 +5,7 @@ import { db, clone, TEMPLATE } from "./data.js";
 import { h, dialog, field, row, col, group, num, txt, sel, chk, switchPick, varPick, characterDialog, drawCharacterThumb, getApi } from "./ui.js";
 import { createCommandList, commandListToolbar } from "./commandlist.js";
 import { moveRouteDialog } from "./moveroute.js";
+import { pageMoveProps } from "./routesim.js";
 import { t } from "../i18n.js";
 
 let pageClipboard = null;
@@ -119,7 +120,7 @@ export function openEventEditor(opts) {
                 routeBtn.addEventListener("click", async () => {
                     const r = await moveRouteDialog(page.moveRoute, {
                         showWait: false, title: t("Movement Route", "Dialog_MovementRoute"),
-                        previewStart: () => (opts.mapId ? { mapId: opts.mapId, x: ev.x, y: ev.y, d: page.image.direction || 2, directionFix: page.directionFix } : null)
+                        previewStart: () => (opts.mapId ? { mapId: opts.mapId, x: ev.x, y: ev.y, selfId: ev.id, events: opts.map && opts.map.events, forced: false, ...pageMoveProps(page) } : null)
                     });
                     if (r) { page.moveRoute = r.route; }
                 });
@@ -135,7 +136,7 @@ export function openEventEditor(opts) {
                 const tr = sel(opt(TRIGGERS), page.trigger).onChange(() => { page.trigger = tr.get(); });
                 const left = h("div", { class: "evPageLeft" }, conditions, h("div", { class: "evRow evTop" }, image, col(movement)), h("div", { class: "evRow evTop" }, options, col(group(t("Priority", "Layout_EventPage"), pr), group(t("Trigger", "Layout_EventPage"), tr))));
                 // Contents
-                cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id, eventPos: { x: ev.x, y: ev.y, d: page.image.direction || 2, directionFix: page.directionFix } } });
+                cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id, eventPos: { x: ev.x, y: ev.y, ...pageMoveProps(page) } } });
                 const right = h("div", { class: "evPageRight" }, h("div", { class: "evContentsTitle" }, t("Contents", "Layout_EventPage")), cl.el, commandListToolbar(cl));
                 return h("div", { class: "evPage" }, left, right);
             };

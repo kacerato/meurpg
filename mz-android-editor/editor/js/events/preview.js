@@ -267,3 +267,67 @@ export async function drawBattleback(canvas, name1, name2) {
         ctx.drawImage(im, x, y, im.width * k, im.height * k);
     }
 }
+
+// ---------- Prévia do Show Scrolling Text ----------
+// Window_ScrollText (rmmz_windows.js): janela sem moldura/fundo (opacity 0) do tamanho da área de UI
+// (Scene_Message.scrollTextWindowRect), padding 12; o texto (drawTextEx em baseTextRect: x = 8) começa
+// com origin.y = -altura da janela e sobe velocidade/2 px por quadro (×3 com OK/Shift/toque segurado,
+// a não ser com "No Fast Forward"); acaba quando origin.y >= altura do conteúdo (textSizeEx). 60 quadros/s.
+// Devolve { stop() }; segurar o dedo/mouse na prévia acelera como no jogo.
+export async function playScrollText(host, { lines, speed = 2, noFast = false, onEnd }) {
+    host.innerHTML = "";
+    await loadGameFont();
+    const skin = await projectImage("system", "Window");
+    const icons = await projectImage("system", "IconSet");
+    const colors = textColors(skin);
+    const scr = screenSize(), box = boxSize();
+    const bx = (scr.w - box.w) / 2, by = (scr.h - box.h) / 2;
+    const pad = 12, innerW = box.w - pad * 2, innerH = box.h - pad * 2;
+    const text = lines.join("\n");
+    const meas = new TextPainter(document.createElement("canvas").getContext("2d"), { colors });
+    const contentsH = Math.max(1, meas.draw(text, 0, 0, { draw: false }).height);
+    // conteúdo pré-desenhado (como o bitmap contents do runtime)
+    const contents = document.createElement("canvas");
+    contents.width = innerW; contents.height = contentsH;
+    new TextPainter(contents.getContext("2d"), { colors, icons }).draw(text, 8, 0, { maxHeight: contentsH });
+    const bg = await sampleImage();
+    const back = document.createElement("canvas");
+    back.width = scr.w; back.height = scr.h;
+    drawToned(back, bg, [0, 0, 0, 0]);
+    const cv = h("canvas", { class: "evMsgPvCanvas evScrollPv" });
+    cv.width = scr.w; cv.height = scr.h;
+    const info = h("div", { class: "evDesc" });
+    host.append(cv, info);
+    const ctx = cv.getContext("2d");
+    let originY = -box.h, frame = 0, held = false, raf = 0, last = performance.now(), acc = 0, done = false;
+    const down = e => { held = true; e.preventDefault(); };
+    const up = () => { held = false; };
+    cv.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+    const paint = () => {
+        ctx.drawImage(back, 0, 0);
+        ctx.strokeStyle = "rgba(255,255,255,0.15)"; ctx.strokeRect(bx + 0.5, by + 0.5, box.w - 1, box.h - 1);
+        ctx.save(); ctx.beginPath(); ctx.rect(bx + pad, by + pad, innerW, innerH); ctx.clip();
+        ctx.drawImage(contents, bx + pad, by + pad - Math.round(originY));
+        ctx.restore();
+        info.textContent = `${(frame / 60).toFixed(1)} s · ${Math.max(0, Math.round(originY + box.h))}/${contentsH + box.h} px`;
+    };
+    const step = () => {
+        let v = speed / 2;
+        if (!noFast && held) { v *= 3; } // Window_ScrollText.fastForwardRate
+        originY += v; frame++;
+        if (originY >= contentsH) { done = true; }
+    };
+    const loop = now => {
+        acc += Math.min(250, now - last); last = now;
+        while (acc >= 1000 / 60 && !done) { acc -= 1000 / 60; step(); }
+        paint();
+        if (done) { cleanup(); if (onEnd) { onEnd(frame); } return; }
+        raf = requestAnimationFrame(loop);
+    };
+    const cleanup = () => { cancelAnimationFrame(raf); window.removeEventListener("pointerup", up); window.removeEventListener("pointercancel", up); };
+    paint();
+    raf = requestAnimationFrame(t0 => { last = t0; loop(t0); });
+    return { stop: () => { done = true; cleanup(); } };
+}

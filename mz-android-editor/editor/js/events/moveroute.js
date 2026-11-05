@@ -4,6 +4,7 @@
 import { db, clone } from "./data.js";
 import { h, dialog, field, row, num, txt, sel, chk, switchPick, audioPick, audioText, charIndexPick, alertBox, actionMenu, getApi } from "./ui.js";
 import { MiniMap } from "./minimap.js";
+import { SimMap, SimChar, runRoute } from "./routesim.js";
 import { t } from "../i18n.js";
 
 const SPEEDS = ["", t("1: x8 Slower", "MovementSpeedBox"), t("2: x4 Slower", "MovementSpeedBox"), t("3: x2 Slower", "MovementSpeedBox"), t("4: Normal", "MovementSpeedBox"), t("5: x2 Faster", "MovementSpeedBox"), t("6: x4 Faster", "MovementSpeedBox")];
@@ -112,39 +113,71 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
                 if (s) { s.scrollIntoView({ block: "nearest" }); }
                 updatePreview();
             };
-            // ---- prévia no mapa ----
+            // ---- prévia no mapa (simulação do runtime: routesim.js) ----
             const pvHost = h("div", { class: "evRoutePvHost" });
-            const pvInfo = h("div", { class: "evDesc" });
-            let pvStart = null, pvMapId = 0, anim = null;
+            const pvInfo = h("div", { class: "evDesc evRoutePvInfo" });
+            let pvStart = null, pvMapId = 0, anim = null, simMap = null, playerRef = null, seed = 1;
+            const curRoute = () => ({ list: r.list, repeat: repeat ? repeat.get() : r.repeat, skippable: skip ? skip.get() : r.skippable });
+            const buildSimMap = st => new SimMap({ map: mini.map, flags: mini.tileset && mini.tileset.flags, events: st.events, system: db.system, mapId: st.mapId, selfId: st.selfId || 0, player: st.isPlayer ? null : playerRef });
             const updatePreview = async recenter => {
                 if (!previewStart) { return; }
+                stopAnim();
                 const st = await previewStart(targetSel ? targetSel.get() : target);
                 if (!st) { pvInfo.textContent = t("No known position for the preview."); if (mini) { mini.layer.removeChildren(); } return; }
-                if (!mini) { mini = new MiniMap(pvHost, { zoom: 0.75 }); }
-                if (pvMapId !== st.mapId) { pvMapId = st.mapId; await mini.load(getApi(), st.mapId); recenter = true; }
+                if (!mini) {
+                    mini = new MiniMap(pvHost, { zoom: 0.75 });
+                    // toque no mapa: posição de referência do jogador (Move/Turn toward/away from Player)
+                    mini.onTap = (x, y) => { if (pvStart && !pvStart.isPlayer) { playerRef = { x, y }; updatePreview(); } };
+                }
+                if (pvMapId !== st.mapId) {
+                    pvMapId = st.mapId; await mini.load(getApi(), st.mapId); recenter = true;
+                    const s = db.system || {};
+                    playerRef = s.startMapId === st.mapId ? { x: s.startX, y: s.startY } : null;
+                }
                 pvStart = st;
-                const steps = simulateRoute(r.list, st);
-                drawRoute(mini.layer, steps, repeat ? repeat.get() : r.repeat, selected);
+                simMap = buildSimMap(st);
+                const res = runRoute(simMap, st, curRoute(), { forced: st.forced !== false, seed });
+                drawRoute(mini.layer, st, res, curRoute().repeat, selected, st.isPlayer ? null : playerRef);
                 if (recenter) { mini.centerOn(st.x, st.y); }
-                const end = steps[steps.length - 1];
-                pvInfo.textContent = `(${st.x},${st.y}) → (${end.x},${end.y})`;
+                const end = res.char;
+                const secs = (res.frames / 60).toFixed(1);
+                const parts = [`(${st.x},${st.y}) → (${end.x},${end.y})`, t("%1 frames (%2 s)", "MZEditor", res.frames, secs)];
+                if (res.stuck) { parts.push(t("blocked: the route stops here (no \"Skip If Cannot Move\")", "MZEditor")); }
+                const usesPlayer = r.list.some(c => [10, 11, 25, 26].includes(c.code));
+                const usesRandom = r.list.some(c => [9, 23, 24].includes(c.code));
+                if (usesPlayer && !st.isPlayer) { parts.push(playerRef ? t("player at (%1,%2): tap the map to move it", "MZEditor", playerRef.x, playerRef.y) : t("the player is not on this map: tap the map to place it", "MZEditor")); }
+                if (usesRandom) { parts.push("\u{1F3B2} " + t("random: one possible outcome", "MZEditor")); }
+                pvInfo.textContent = parts.join(" · ");
             };
+            const stopAnim = () => { if (anim && mini && mini.app) { mini.app.ticker.remove(anim.fn); anim.dot.destroy({ children: true }); } anim = null; };
+            // ▶ Preview: o personagem anda quadro a quadro como no jogo (velocidade, frequência, espera, salto).
             const playPreview = () => {
-                if (!mini || !pvStart) { return; }
-                if (anim) { mini.app.ticker.remove(anim); anim = null; }
-                const steps = simulateRoute(r.list, pvStart);
-                const dot = new PIXI.Graphics().lineStyle(2, 0x000000).beginFill(0xffff00).drawCircle(0, 0, 10).endFill();
+                if (!mini || !pvStart || !simMap) { return; }
+                stopAnim();
+                const route = curRoute();
+                const ch = new SimChar(simMap, pvStart, route, { forced: pvStart.forced !== false, seed });
+                const dot = new PIXI.Graphics();
+                dot.lineStyle(2, 0x000000).beginFill(0xffff00).drawCircle(0, 0, 11).endFill();
+                const nose = new PIXI.Graphics().beginFill(0x000000).drawPolygon([0, 15, -6, 6, 6, 6]).endFill();
+                dot.addChild(nose);
                 mini.layer.addChild(dot);
-                let t = 0;
-                anim = () => {
-                    t += 1 / 12;
-                    const i = Math.floor(t);
-                    if (i >= steps.length - 1) { mini.app.ticker.remove(anim); anim = null; dot.destroy(); return; }
-                    const a = steps[i], b = steps[i + 1], f = t - i;
-                    const lift = b.kind === "jump" ? Math.sin(f * Math.PI) * 30 : 0;
-                    dot.position.set((a.x + (b.x - a.x) * f + 0.5) * 48, (a.y + (b.y - a.y) * f + 0.5) * 48 - lift);
+                let acc = 0, idle = 0;
+                const fn = () => {
+                    acc += mini.app.ticker.deltaMS;
+                    let guard = 0;
+                    while (acc >= 1000 / 60 && guard++ < 10) {
+                        acc -= 1000 / 60;
+                        const n = ch.log.length;
+                        ch.update();
+                        idle = ch.log.length > n && ch.log[ch.log.length - 1].ok ? 0 : idle + 1;
+                    }
+                    dot.position.set((ch._realX + 0.5) * 48, (ch._realY + 0.5) * 48 - ch.jumpHeight());
+                    nose.rotation = { 2: 0, 4: Math.PI / 2, 6: -Math.PI / 2, 8: Math.PI }[ch._direction] || 0;
+                    const done = (ch.ended && ch.isStopping()) || ch.frame > 60 * 600 || (!route.skippable && idle > 240 && ch.isStopping() && ch._waitCount <= 0);
+                    if (done) { setTimeout(stopAnim, 400); mini.app.ticker.remove(fn); }
                 };
-                mini.app.ticker.add(anim);
+                anim = { fn, dot };
+                mini.app.ticker.add(fn);
             };
             // ---- seleção e edição da lista (como a lista do MZ: Shift+clique, menu, atalhos) ----
             const range = () => { const a = Math.min(selected, selEnd); let b = Math.max(selected, selEnd); if (b === r.list.length - 1 && a < b) { b--; } return [a, b]; };
@@ -258,6 +291,7 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
             skip = chk(t("Skip If Cannot Move", "Layout_MovementRoute"), r.skippable);
             wait = chk(t("Wait for Completion", "Layout_MovementRoute"), r.wait);
             repeat.onChange(() => updatePreview());
+            skip.onChange(() => updatePreview());
             left.append(h("fieldset", { class: "evGroup" }, h("legend", null, t("Options", "Layout_MovementRoute")), repeat.el, skip.el, showWait ? wait.el : null));
             const cmds = h("fieldset", { class: "evGroup evRouteCmds" }, h("legend", null, t("Movement Commands", "Layout_MovementRoute")));
             const grid = h("div", { class: "evRouteGrid" });
@@ -271,7 +305,8 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
             cmds.append(grid);
             const center = previewStart ? h("div", { class: "evRouteCenter" },
                 h("div", { class: "evRow" }, h("span", { class: "evContentsTitle" }, t("Preview", "Constants")),
-                    h("button", { type: "button", class: "evBtn", onclick: playPreview }, "▶ " + t("Preview", "Constants"))),
+                    h("button", { type: "button", class: "evBtn", onclick: playPreview }, "▶ " + t("Preview", "Constants")),
+                    h("button", { type: "button", class: "evBtn", title: t("Draw the random moves again", "MZEditor"), onclick: () => { seed = (seed * 48271 + 11) % 2147483647; updatePreview(); } }, "\u{1F3B2}")),
                 pvHost, pvInfo) : null;
             body.append(h("div", { class: "evRouteWrap" + (center ? " withPreview" : "") }, left, center, cmds));
             render();
@@ -284,51 +319,8 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
     }).then(x => { if (mini) { mini.destroy(); mini = null; } return x ? x.v : null; });
 }
 
-// ---------- simulação e desenho da prévia ----------
+// ---------- desenho da prévia ----------
 const DX = { 2: 0, 4: -1, 6: 1, 8: 0 }, DY = { 2: 1, 4: 0, 6: 0, 8: -1 };
-const TURN_R = { 2: 4, 4: 8, 6: 2, 8: 6 }, TURN_L = { 2: 6, 4: 2, 6: 8, 8: 4 };
-const DIAG = { 5: [-1, 1, 4], 6: [1, 1, 6], 7: [-1, -1, 4], 8: [1, -1, 6] };
-
-// Percorre a rota a partir de start {x, y, d} sem checar passabilidade (a prévia não tem o estado
-// do jogo): devolve passos {x, y, d, kind, index}. Movimentos aleatórios/para o jogador viram "?".
-export function simulateRoute(list, start) {
-    let { x, y } = start;
-    let d = start.d || 2;
-    let fix = !!start.directionFix;
-    const steps = [{ x, y, d, kind: "start", index: -1 }];
-    list.forEach((c, index) => {
-        const p = c.parameters || [];
-        const push = kind => steps.push({ x, y, d, kind, index });
-        switch (c.code) {
-            case 1: case 2: case 3: case 4: {
-                const dir = [2, 4, 6, 8][c.code - 1];
-                if (!fix) { d = dir; }
-                x += DX[dir]; y += DY[dir]; push("move"); break;
-            }
-            case 5: case 6: case 7: case 8: {
-                const [dx, dy, hd] = DIAG[c.code];
-                if (!fix && d === 10 - hd) { d = hd; }
-                x += dx; y += dy; push("move"); break;
-            }
-            case 9: case 10: case 11: case 23: case 24: case 25: case 26: push("random"); break;
-            case 12: x += DX[d]; y += DY[d]; push("move"); break;
-            case 13: x -= DX[d]; y -= DY[d]; push("move"); break;
-            case 14: {
-                const dx = p[0] || 0, dy = p[1] || 0;
-                if (!fix) { if (Math.abs(dx) > Math.abs(dy)) { if (dx) { d = dx < 0 ? 4 : 6; } } else if (dy) { d = dy < 0 ? 8 : 2; } }
-                x += dx; y += dy; push("jump"); break;
-            }
-            case 15: push("wait"); break;
-            case 16: case 17: case 18: case 19: if (!fix) { d = [2, 4, 6, 8][c.code - 16]; } push("turn"); break;
-            case 20: if (!fix) { d = TURN_R[d]; } push("turn"); break;
-            case 21: if (!fix) { d = TURN_L[d]; } push("turn"); break;
-            case 22: if (!fix) { d = 10 - d; } push("turn"); break;
-            case 35: fix = true; break;
-            case 36: fix = false; break;
-        }
-    });
-    return steps;
-}
 
 function arrowHead(g, x1, y1, x2, y2, color) {
     const a = Math.atan2(y2 - y1, x2 - x1), s = 13;
@@ -339,46 +331,68 @@ function arrowHead(g, x1, y1, x2, y2, color) {
     g.closePath();
     g.endFill();
 }
+function label(layer, text, x, y, fill = 0xffffff) {
+    const tx = new PIXI.Text(text, { fontSize: 22, fill, stroke: 0x000000, strokeThickness: 4, fontWeight: "bold" });
+    tx.anchor.set(0.5, 0.5);
+    tx.position.set(x, y);
+    layer.addChild(tx);
+}
 
-// Desenha a rota: moldura azul no início, setas vermelhas por passo (a do comando selecionado em
-// amarelo), arco para saltos, "?" para passos imprevisíveis, moldura branca no fim e tracejado
-// de volta ao início quando "Repeat Movements".
-export function drawRoute(layer, steps, repeat, selectedIndex) {
+// Desenha o resultado de runRoute (routesim.js): moldura azul no início, setas por passo executado
+// (vermelhas; laranja para os sorteados e para/longe do jogador; amarela a do comando selecionado), arco
+// para saltos, ✕ onde o movimento foi bloqueado, ponto para giros, "…" para Wait, moldura branca no fim,
+// tracejado de volta ao início com Repeat e o jogador de referência (moldura verde "P").
+export function drawRoute(layer, st, res, repeat, selectedIndex, player) {
     for (const c of layer.removeChildren()) { c.destroy(); }
     const g = new PIXI.Graphics();
     layer.addChild(g);
     const C = v => (v + 0.5) * 48;
-    const st = steps[0];
+    if (player) {
+        g.lineStyle(3, 0x30d030, 1).drawRect(player.x * 48 + 3, player.y * 48 + 3, 42, 42);
+        label(layer, "P", C(player.x), C(player.y), 0x80ff80);
+    }
     g.lineStyle(3, 0x2a6cff, 1).drawRect(st.x * 48 + 2, st.y * 48 + 2, 44, 44);
-    for (let i = 1; i < steps.length; i++) {
-        const a = steps[i - 1], b = steps[i];
-        const color = b.index === selectedIndex - 1 ? 0xffff00 : 0xff3030;
-        if (b.kind === "move" || b.kind === "jump") {
-            const x1 = C(a.x), y1 = C(a.y), x2 = C(b.x), y2 = C(b.y);
+    const seen = new Set();
+    for (const e of res.log) {
+        const sel = e.index === selectedIndex;
+        const guess = [9, 10, 11].includes(e.code);
+        const color = sel ? 0xffff00 : guess ? 0xff9a20 : 0xff3030;
+        const moved = e.x !== e.x0 || e.y !== e.y0;
+        if (e.jump || (moved && e.code >= 1 && e.code <= 13)) {
+            const x1 = C(e.x0), y1 = C(e.y0), x2 = C(e.x), y2 = C(e.y);
             const len = Math.hypot(x2 - x1, y2 - y1) || 1;
             const ex = x2 - (x2 - x1) / len * 10, ey = y2 - (y2 - y1) / len * 10;
-            if (b.kind === "jump") {
+            if (e.jump) {
                 const mx = (x1 + x2) / 2, my = Math.min(y1, y2) - 40 - len / 4;
                 g.lineStyle(6, 0x000000, 0.45).moveTo(x1, y1).quadraticCurveTo(mx, my, ex, ey);
                 g.lineStyle(3, color, 1).moveTo(x1, y1).quadraticCurveTo(mx, my, ex, ey);
                 arrowHead(g, mx, my, x2, y2, color);
+            } else if (len > 48 * 1.6) { // passou pela borda de um mapa em loop: só um toco de saída
+                g.lineStyle(3, color, 1).moveTo(x1, y1).lineTo(x1 + Math.sign(x1 - x2) * 24, y1 + Math.sign(y1 - y2) * 24);
             } else {
                 g.lineStyle(6, 0x000000, 0.45).moveTo(x1, y1).lineTo(ex, ey);
                 g.lineStyle(3, color, 1).moveTo(x1, y1).lineTo(ex, ey);
                 arrowHead(g, x1, y1, x2, y2, color);
             }
-        } else if (b.kind === "turn") {
-            g.lineStyle(1, 0x000000, 1).beginFill(0xffffff, 1).drawCircle(C(b.x) + DX[b.d] * 16, C(b.y) + DY[b.d] * 16, 5).endFill();
-        } else if (b.kind === "random" || b.kind === "wait") {
-            const t = new PIXI.Text(b.kind === "random" ? "?" : "…", { fontSize: 22, fill: 0xffffff, stroke: 0x000000, strokeThickness: 4, fontWeight: "bold" });
-            t.anchor.set(0.5, 0.5);
-            t.position.set(C(b.x) + 14, C(b.y) - 14);
-            layer.addChild(t);
+        } else if (e.code >= 1 && e.code <= 13 && !e.ok) {
+            // bloqueado: ✕ na borda do tile, do lado para onde tentou andar
+            const d = e.code === 13 ? 10 - e.d : e.d;
+            const key = e.x + "," + e.y + "," + d;
+            if (seen.has(key)) { continue; }
+            seen.add(key);
+            const cx = C(e.x) + (DX[d] || 0) * 20, cy = C(e.y) + (DY[d] || 0) * 20;
+            g.lineStyle(4, 0x000000, 0.6).moveTo(cx - 7, cy - 7).lineTo(cx + 7, cy + 7).moveTo(cx + 7, cy - 7).lineTo(cx - 7, cy + 7);
+            g.lineStyle(2.5, sel ? 0xffff00 : 0xff2020, 1).moveTo(cx - 7, cy - 7).lineTo(cx + 7, cy + 7).moveTo(cx + 7, cy - 7).lineTo(cx - 7, cy + 7);
+        } else if (e.code >= 16 && e.code <= 26) {
+            g.lineStyle(1, 0x000000, 1).beginFill(sel ? 0xffff00 : 0xffffff, 1).drawCircle(C(e.x) + DX[e.d] * 16, C(e.y) + DY[e.d] * 16, 5).endFill();
+        } else if (e.code === 15) {
+            label(layer, "…", C(e.x) + 14, C(e.y) - 14, sel ? 0xffff00 : 0xffffff);
         }
     }
-    const end = steps[steps.length - 1];
+    const end = res.char;
     g.lineStyle(3, 0xffffff, 1).drawRect(end.x * 48 + 6, end.y * 48 + 6, 36, 36);
-    if (repeat && (end.x !== st.x || end.y !== st.y)) {
+    if (res.stuck) { label(layer, "✕", C(end.x), C(end.y), 0xff4040); }
+    if (repeat && !res.stuck && (end.x !== st.x || end.y !== st.y)) {
         const x1 = C(end.x), y1 = C(end.y), x2 = C(st.x), y2 = C(st.y);
         const n = Math.max(2, Math.floor(Math.hypot(x2 - x1, y2 - y1) / 12));
         g.lineStyle(2, 0xffffff, 0.85);

@@ -13,7 +13,8 @@ Registro: `register(api)` em `index.js`; CSS em `editor/css/events.css` (injetad
 | `commands.js` | definição de **todos** os comandos (101…357): nome, texto na lista, diálogo, referências para o buscador; paleta "Event Commands" de 3 abas; prévia da mensagem (cores de `Window.png`, ícones de `IconSet.png`); guia de largura do Show Text; Plugin Command sobre o módulo plugins |
 | `commandlist.js` | lista de conteúdo: texto igual ao MZ (`◆Text：…`, `：　　：…`, `：When …`, `：End`), recuo por `indent`, seleção por bloco, multi-seleção, novo/editar/recortar/copiar/colar/apagar, Select All, Copy as Text/HTML; reconstrução de ramos (Choices, If/Else, Battle) preservando os corpos |
 | `moveroute.js` | editor de rota (45 comandos `ROUTE_*`, opções Repeat/Skip/Wait, alvo) com **prévia no mapa**: simulação da rota (`simulateRoute`) e desenho (`drawRoute`) |
-| `minimap.js` | mini-visualizador de mapa (Tilemap do corescript) usado pela prévia da rota |
+| `minimap.js` | mini-visualizador de mapa (Tilemap do corescript) usado pela prévia da rota; `onTap(x, y)` |
+| `routesim.js` | simulação da rota portada do runtime (`SimMap`, `SimChar`, `runRoute`, `activePage`, `pageMoveProps`) |
 | `etest.js` | "Test" da lista: grava `data/Test_*.json` + `data/Test_Event.json` e abre `/project/index.html?etest` |
 | `eventeditor.js` | Event Editor (nome, nota, páginas New/Copy/Paste/Delete/Clear, condições, imagem, movimento autônomo, opções, prioridade, trigger, conteúdo) e editor de lista de evento comum |
 | `eventmode.js` | sobreposição PIXI em `api.view.world`, cursor, molduras, posições iniciais (azul), toque/arrasto/menu, barra flutuante e Event List |
@@ -58,8 +59,8 @@ O editor de evento comum (aberto pelo buscador) grava `data/CommonEvents.json`.
   Route) há um painel com o mapa do evento; a partir da posição/direção do alvo (evento, This Event ou
   jogador na posição inicial do mapa) desenha moldura azul no início, setas vermelhas por passo (o passo
   do comando selecionado em amarelo), arco para Jump, "?" para movimentos aleatórios/para o jogador,
-  "…" para Wait, ponto para giros, moldura branca no fim e tracejado de volta ao início com Repeat.
-  "▶ Preview" anima um marcador pelo trajeto. Passabilidade não é simulada.
+  "…" para Wait, ponto para giros, moldura branca no fim e tracejado de volta ao início com Repeat (simulação real desde a rodada 4).
+  "▶ Preview" anima um marcador pelo trajeto. (Rodada 4: passabilidade, velocidade e frequência simuladas, ver abaixo.)
 - **Plugin Command** usa `plugins/commands.js` (`getEnabledPluginsWithCommands`, `getPluginCommands`,
   `defaultArgs`), `plugins/params.js` (`ParamTable`: árvore por `@parent`, editores por `@type`,
   `struct<…>` e arrays estruturados, `file` com `@dir`) e `plugins/store.js` (`listPluginFiles`).
@@ -114,10 +115,62 @@ Change Window Color (`$gameSystem.windowTone()`) e Change Battle Background (`ba
 
 - Troops: o buscador encontra referências nas páginas de tropas, mas a edição é do módulo database.
 - Show Text: "Batch Entry" divide em blocos de 4 linhas; `\V[n]` é medido como "0" (como na prévia do MZ).
-- Show Scrolling Text ainda sem prévia.
-- A prévia da rota não testa passabilidade nem eventos no caminho.
-- Desfazer não cobre renomear switches/variáveis nem edições de evento comum.
+- Prévia da rota: os outros eventos ficam parados na posição inicial (não executam o próprio movimento
+  autônomo) e o jogador fica parado na posição de referência; Script (45) e Switch ON/OFF (27/28) não
+  são executados; seguidores e veículos em movimento não entram.
+- Desfazer da lista e do seletor de nomes vale enquanto o diálogo está aberto (como o resto do editor de
+  evento, que só grava no OK/Aplicar); depois de gravado, o histórico do modo evento (por mapa) não cobre
+  `CommonEvents.json` nem `System.json`.
 - Textos da lista seguem o MZ em inglês; algumas variações de redação do editor original podem diferir em detalhes.
+
+## Rodada 4 (FIDELITY.md: Scrolling Text, prévia de rota, Shop, desfazer, Seletor de objetos)
+
+- **Show Scrolling Text (105/405)**: botão "Visualização…" no diálogo (`commands.js scrollTextPreview` →
+  `preview.js playScrollText`). Igual a `Window_ScrollText`: janela sem moldura do tamanho da área de UI
+  (`uiAreaWidth/Height`, centrada na tela), padding 12, texto em `x = 8` (`baseTextRect`), começa com
+  `origin.y = -altura` e sobe `velocidade / 2` px por quadro a 60 quadros/s; acaba quando `origin.y` passa a
+  altura do texto (`textSizeEx`, `\{ \}`/`\FS` aumentam a linha). Segurar o dedo/mouse na prévia = ×3
+  (`fastForwardRate`), exceto com "Sem Avanço Rápido". Códigos de controle, cores do `Window.png`, ícones e
+  fonte do jogo como na prévia do Show Text. "↻ Repetir" reinicia; o rodapé mostra tempo e px.
+- **Prévia de rota** (`routesim.js`, usada por `moveroute.js`): port de `Game_Map.checkPassage/isPassable/
+  roundX/deltaX/isLadder`, `Game_CharacterBase.canPass/canPassDiagonally/isMapPassable/isCollidedWith*/
+  moveStraight/moveDiagonally/jump/update*`, `Game_Character.processMoveCommand/updateRoutineMove/
+  advanceMoveRouteIndex/moveRandom/moveToward…/turn…` e `Game_Event.updateSelfMovement` (frequência:
+  `30 * (5 - freq)`), quadro a quadro. Passabilidade = flags do tileset + eventos de tile; colisão com os
+  eventos do mapa (página ativa num jogo novo: `activePage`; sem página = atravessável), barco/navio na
+  posição inicial do System e o jogador. Set Movement Route = rota forçada (um comando por quadro parado,
+  velocidade da página do evento ou 4 do jogador); página Custom = frequência da página. Jogador de
+  referência = posição inicial do System (moldura verde "P"); **toque no mapa da prévia** muda a posição.
+  Sorteios (9, 23, 24) usam semente fixa (resultado = um dos possíveis; 🎲 sorteia de novo); passos sorteados
+  ou para/longe do jogador ficam em laranja. Bloqueio = ✕ na borda do tile; sem "Ignorar se Intransponível"
+  a rota para ali (✕ grande no fim). Rodapé: início → fim, quadros e segundos. "▶ Visualização" anda o
+  marcador quadro a quadro com a mesma simulação (velocidade, espera, salto com `jumpHeight`).
+  Conferido contra o runtime (`rmmz_objects.js` carregado em `/project/index.html`, `Game_Event.update()`
+  quadro a quadro): rota forçada com bloqueio, Approach Player, Wait 45 e Jump — mesmas posições nos mesmos
+  quadros (448 quadros); rota Custom com Repeat e frequência 3 — idem (61, 153, 245, … 705).
+- **Shop Processing (302/605)**: lista com alça ⠿ para **arrastar** e reordenar, ▲/▼ (Alt+↑/↓), Recortar/Copiar/
+  Colar (área própria + `localStorage.mzShopClip`, cola antes da linha selecionada), Excluir, ☰, **menu de
+  contexto** por toque longo ou botão direito (Editar, Recortar, Copiar, Colar, Excluir, Para Cima, Para
+  Baixo), duplo toque = editar (linha vazia = nova), Enter/Delete/Ctrl+C/X/V. A ordem sai no formato do
+  runtime (302 = 1ª mercadoria, 605 = as demais), que é a ordem da loja no jogo (`command302`).
+- **Desfazer/Refazer na lista de comandos** (`commandlist.js`): ↶/↷ na barra da lista, no menu (topo) e
+  Ctrl+Z / Ctrl+Y (ou Ctrl+Shift+Z), até 100 passos, para Novo/Editar/Colar/Excluir/Recortar. Vale em toda
+  lista: evento comum aberto pelo buscador, ponte do Banco de dados (`api.events.editCommandList`, Tropas e
+  Eventos comuns) e páginas do Event Editor.
+- **Desfazer ao renomear switches/variáveis** (`ui.js listDialog editNames`): ↶/↷ e Ctrl+Z/Ctrl+Y no seletor;
+  cada renomeação (digitação seguida no mesmo ID = 1 passo) e cada "Escolher Limite" é um passo.
+- **Seletor de objetos** (Opções → Dropdown/Extended/Smart): `db.options()` marca a lista (`objectList`) e
+  `ui.js sel()` consulta `objectSelectorMode(n)` (`api.tools.objectSelectorMode`, ou o `localStorage` das
+  Opções): "dropdown" = lista suspensa; "extended" = campo "0001 Nome" com "…" que abre a janela "Seleção de
+  Objeto" (com filtro). Smart = lista suspensa abaixo de 100 objetos. Vale para todos os seletores de banco
+  do módulo (34 lugares: comandos, condições de página, Quick Event, buscador) e `dataPick`. A opção é lida
+  ao abrir cada diálogo. Listas montadas à mão (ex.: equipamento filtrado por tipo no 319) seguem suspensas.
+
+Verificado em 2026-11-05 a 1200×554 (cópia do testproject, porta 8794), com capturas: rolagem (velocidade 4
+= 2 px/quadro), prévia de rota com bloqueio, jogador "P", toque para mover o jogador, animação; loja (▲,
+arrastar, copiar/colar, recortar, menu, parâmetros devolvidos na nova ordem); undo/redo da lista pela ponte do
+Banco de dados; ↶/↷ no seletor de switches; os três modos do Seletor de objetos (Show Animation abre a janela
+de seleção em Extended).
 
 ## Como testar
 
