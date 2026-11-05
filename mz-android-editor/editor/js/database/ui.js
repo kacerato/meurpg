@@ -225,7 +225,17 @@ export async function askNumber(title, label, value, min, max) {
 // Lista em tabela (Traits, Effects, Learnings, Action Patterns, timings...).
 // o: { columns:[{title, width}], items:Array (referência), cells(item,i) => [..],
 //      create():Promise<item|null>, edit(item):Promise<item|null>, clipKey, height, onChange }
-const clip = new Map();
+// Clipboards do banco (lista de dados, linhas de tabela, páginas de Tropas) sobrevivem a recarregar,
+// como a área de transferência do MZ: ficam no localStorage (falha silenciosa sem espaço).
+const CLIP_KEY = "mzEditor.dbClipboard";
+function readClips() { try { return JSON.parse(localStorage.getItem(CLIP_KEY) || "{}") || {}; } catch (e) { return {}; } }
+export function getClip(key) { const v = readClips()[key]; return v === undefined ? null : v; }
+export function setClip(key, value) {
+    const all = readClips(); all[key] = value;
+    try { localStorage.setItem(CLIP_KEY, JSON.stringify(all)); } catch (e) { memClips.set(key, value); }
+}
+const memClips = new Map();
+const clip = { get: k => getClip("table:" + k) ?? memClips.get("table:" + k), set: (k, v) => setClip("table:" + k, v) };
 
 export function tableList(o) {
     const wrap = el("div", { class: "dbTable" });

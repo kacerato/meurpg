@@ -191,13 +191,25 @@ async function editExpCurve(c) {
     const p = { base: c.expParams[0], extra: c.expParams[1], a: c.expParams[2], b: c.expParams[3] };
     let mode = 0;
     const table = el("div", { class: "dbExpTable" });
+    // gráfico de fundo da tabela (como no MZ): barras dos 99 níveis no modo atual
+    const graph = document.createElement("canvas");
+    graph.width = 594; graph.height = 200;
     const render = () => {
         const arr = [p.base, p.extra, p.a, p.b];
         table.innerHTML = "";
+        const vals = [];
         for (let lv = 1; lv < 100; lv++) {
             const v = mode === 0 ? (lv < 99 ? expForLevel(arr, lv + 1) - expForLevel(arr, lv) : 0) : expForLevel(arr, lv);
+            vals.push(v);
             table.appendChild(el("div", { class: "dbExpCell" }, el("b", { text: "L" + lv + ": " }), String(v)));
         }
+        const g = graph.getContext("2d");
+        g.clearRect(0, 0, graph.width, graph.height);
+        const max = Math.max(1, ...vals);
+        const bw = graph.width / 99;
+        g.fillStyle = "rgba(60,120,232,.22)";
+        vals.forEach((v, i) => { const h = v / max * graph.height; g.fillRect(i * bw, graph.height - h, Math.ceil(bw), h); });
+        table.style.backgroundImage = `url(${graph.toDataURL()})`;
     };
     const ok = await modal({
         title: t("EXP Curve", "Dialog_ExpCurve"), width: "760px", height: "560px",

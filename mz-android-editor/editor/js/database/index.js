@@ -1,6 +1,6 @@
 // Módulo "database": diálogo Banco de dados do RPG Maker MZ (16 abas).
 // Contrato: SESSIONS.md. Liga o botão btnDatabase; grava data/*.json e emite db:changed.
-import { el, btn, setApi, setChangedHook, modal, fld, num, confirmBox, alertBox, pad } from "./ui.js";
+import { el, btn, setApi, setChangedHook, modal, fld, num, confirmBox, alertBox, pad, getClip, setClip } from "./ui.js";
 import { FILES, BLANK } from "./common.js";
 import { TABS } from "./tabs.js";
 import { stopAudio } from "./pickers.js";
@@ -8,7 +8,7 @@ import { t } from "../i18n.js";
 
 const CSS_ID = "dbCss";
 const ui = { tab: 0, sel: {} };   // aba e seleção lembradas entre aberturas
-const clipboard = {};             // Copy/Paste da lista de dados, por arquivo
+
 
 function injectCss() {
     if (document.getElementById(CSS_ID)) { return; }
@@ -250,13 +250,14 @@ export async function openDatabase(api, tabId) {
     }
 
     function copyItems() {
-        clipboard[current.file] = selectedIds().map(id => structuredClone(db[current.file][id]));
-        api.status(t("Copied: %1 item(s)", "MZEditor", clipboard[current.file].length));
+        const items = selectedIds().map(id => structuredClone(db[current.file][id]));
+        setClip("data:" + current.file, items);
+        api.status(t("Copied: %1 item(s)", "MZEditor", items.length));
     }
 
     // Cola em sequência a partir do item selecionado (vários itens copiados => vários destinos).
     function pasteItem() {
-        const c = clipboard[current.file];
+        const c = getClip("data:" + current.file);
         const s = ui.sel[current.id];
         if (!c || !c.length || !s) { return; }
         const arr = db[current.file];

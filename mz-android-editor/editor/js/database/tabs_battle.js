@@ -1,5 +1,5 @@
 // Abas Enemies, Troops e States.
-import { el, num, text, area, sel, chk, fld, grp, grid, btn, tableList, modal, changed, pad, alertBox, confirmBox, setChangedHook } from "./ui.js";
+import { el, num, text, area, sel, chk, fld, grp, grid, btn, tableList, modal, changed, pad, alertBox, confirmBox, setChangedHook, getClip, setClip } from "./ui.js";
 import { PARAMS, RESTRICTIONS, SV_MOTIONS, SV_OVERLAYS, AUTO_REMOVAL, idOptions, nameOf, switchOptions, blankTroopPage, FILES } from "./common.js";
 import { traitsList } from "./traits.js";
 import { pickImage, imageThumb, imageUrl, loadImage, pickIcon } from "./pickers.js";
@@ -109,7 +109,7 @@ export const enemiesTab = {
             }),
             grid(4, ...PARAMS.map((p, i) => fld(p + ":", num(e.params, i, { min: i === 0 ? 1 : 0, max: i === 0 ? 999999 : i === 1 ? 9999 : 999 }))))));
         left.appendChild(grp(t("Rewards", "Edit_Enemies"), grid(2,
-            fld(t("EXP", "Constants") + ":", num(e, "exp", { min: 0, max: 9999999 })),
+            fld(t("EXP", "Constants") + ":", num(e, "exp", { min: 1, max: 9999999 })),
             fld(t("Gold", "Edit_Enemies") + ":", num(e, "gold", { min: 0, max: 9999999 })))));
         while (e.dropItems.length < 3) { e.dropItems.push({ dataId: 1, denominator: 1, kind: 0 }); }
         left.appendChild(grp(t("Drop Items", "Edit_Enemies"), tableList({
@@ -135,7 +135,6 @@ export const enemiesTab = {
 // ------------------------------------------------------------------ Troops
 
 const SCREEN_W = 816, SCREEN_H = 624;
-let pageClip = null;
 
 function autoName(db, tq) {
     const counts = new Map();
@@ -445,8 +444,8 @@ function battleEvents(ctx, tq, troopId) {
         });
         const tools = el("div", { class: "dbRow" },
             btn(t("New<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { tq.pages.splice(cur + 1, 0, blankTroopPage()); cur++; changed(); render(); }, "small"),
-            btn(t("Copy<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { pageClip = structuredClone(page); }, "small"),
-            btn(t("Paste<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { if (pageClip) { tq.pages[cur] = structuredClone(pageClip); changed(); render(); } }, "small"),
+            btn(t("Copy<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { setClip("troopPage", structuredClone(page)); }, "small"),
+            btn(t("Paste<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { const c = getClip("troopPage"); if (c) { tq.pages[cur] = c; changed(); render(); } }, "small"),
             btn(t("Delete<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { if (tq.pages.length > 1) { tq.pages.splice(cur, 1); changed(); render(); } }, "small"),
             btn(t("Clear<br>Event Page", "Layout_EventPageButtons").replace("<br>", " "), () => { tq.pages[cur] = blankTroopPage(); changed(); render(); }, "small"));
         const condBtn = btn(conditionSummary(db, tq, page.conditions), async () => {
@@ -474,11 +473,15 @@ export const statesTab = {
             fld(t("Priority", "Edit_States") + ":", num(s, "priority", { min: 0, max: 100 })),
             fld(t("[SV] Motion", "Edit_States") + ":", sel(s, "motion", SV_MOTIONS, { number: true })),
             fld(t("[SV] Overlay", "Edit_States") + ":", sel(s, "overlay", SV_OVERLAYS, { number: true })))));
+        // Duração em turnos só vale com Timing ≠ Nenhum (fica desabilitada, como no MZ)
+        const turns = [num(s, "minTurns", { min: 0, max: 9999 }), num(s, "maxTurns", { min: 0, max: 9999 })];
+        const syncTurns = () => turns.forEach(x => { x.disabled = s.autoRemovalTiming === 0; });
+        syncTurns();
         left.appendChild(grp(t("Removal Conditions", "Edit_States"),
             el("div", { class: "dbRow" }, chk(s, "removeAtBattleEnd", t("Remove at Battle End", "Edit_States")), chk(s, "removeByRestriction", t("Remove by Restriction", "Edit_States"))),
             grid(2,
-                fld(t("Auto-removal Timing", "Edit_States") + ":", sel(s, "autoRemovalTiming", AUTO_REMOVAL, { number: true })),
-                fld(t("Duration in Turns", "Edit_States") + ":", [num(s, "minTurns", { min: 0, max: 9999 }), " ~ ", num(s, "maxTurns", { min: 0, max: 9999 })])),
+                fld(t("Auto-removal Timing", "Edit_States") + ":", sel(s, "autoRemovalTiming", AUTO_REMOVAL, { number: true, onChange: syncTurns })),
+                fld(t("Duration in Turns", "Edit_States") + ":", [turns[0], " ~ ", turns[1]])),
             el("div", { class: "dbRow" }, chk(s, "removeByDamage", t("Remove by Damage", "Edit_States")), num(s, "chanceByDamage", { min: 0, max: 100 }), "%"),
             el("div", { class: "dbRow" }, chk(s, "removeByWalking", t("Remove by Walking", "Edit_States")), num(s, "stepsToRemove", { min: 0, max: 9999 }), t("steps", "Edit_States"))));
         left.appendChild(grp(t("Messages", "Edit_States"),

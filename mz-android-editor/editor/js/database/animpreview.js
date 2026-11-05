@@ -13,7 +13,7 @@ const state = {
     ctx: null,              // contexto Effekseer
     gl: null,
     effects: new Map(),     // nome -> effect
-    target: { folder: "enemies", name: "" },
+    target: { folder: "enemies", name: "", hue: 0 },
     anim: null, handle: null, frame: 0, maxFrame: 0, flash: [0, 0, 0, 0], flashDur: 0,
     playing: false, raf: 0, last: 0, acc: 0,
     db: null
@@ -85,10 +85,15 @@ async function loadBackground() {
         sys.battleback1Name ? loadImage("battlebacks1", sys.battleback1Name) : null,
         sys.battleback2Name ? loadImage("battlebacks2", sys.battleback2Name) : null
     ]);
+    // alvo = System.battlerName/battlerHue (o MZ grava ali o "Alterar Alvo"); sem ele, o 1º inimigo com imagem
+    const sys2 = state.db.System;
     const tq = state.target;
+    tq.folder = sys2.optSideView ? "sv_enemies" : "enemies";
+    tq.name = sys2.battlerName || "";
+    tq.hue = sys2.battlerHue || 0;
     if (!tq.name) {
         const enemy = (state.db.Enemies || []).find(e => e && e.battlerName);
-        if (enemy) { tq.name = enemy.battlerName; tq.folder = state.db.System.optSideView ? "sv_enemies" : "enemies"; }
+        if (enemy) { tq.name = enemy.battlerName; tq.hue = enemy.battlerHue || 0; }
     }
     targetImg = tq.name ? await loadImage(tq.folder, tq.name) : null;
     drawBackground();
@@ -108,14 +113,18 @@ function drawBackground() {
     }
     if (targetImg) {
         const r = targetRect();
+        g.filter = state.target.hue ? `hue-rotate(${state.target.hue}deg)` : "none";
         g.drawImage(targetImg, r.x, r.y);
+        g.filter = "none";
         const [cr, cg, cb, ca] = state.flash;
         if (ca > 0) {
             // Sprite.setBlendColor: mistura a cor com alfa ca/255 só onde o alvo é opaco
             const tmp = document.createElement("canvas");
             tmp.width = r.w; tmp.height = r.h;
             const tq = tmp.getContext("2d");
+            tq.filter = state.target.hue ? `hue-rotate(${state.target.hue}deg)` : "none";
             tq.drawImage(targetImg, 0, 0);
+            tq.filter = "none";
             tq.globalCompositeOperation = "source-atop";
             tq.fillStyle = `rgba(${cr},${cg},${cb},${ca / 255})`;
             tq.fillRect(0, 0, r.w, r.h);
@@ -242,7 +251,8 @@ async function play(anim) {
 }
 
 // Grupo "Preview" da aba Animations: Play / Change Target / Change Battle Background.
-export function previewGroup(ctxDb, anim, changeBattleback) {
+// onSystemChanged: chamado quando o alvo (System.battlerName/battlerHue) muda.
+export function previewGroup(ctxDb, anim, changeBattleback, onSystemChanged) {
     state.db = ctxDb;
     const v = ensureView();
     stop();
@@ -252,8 +262,13 @@ export function previewGroup(ctxDb, anim, changeBattleback) {
         btn(t("Stop", "Layout_AudioSelector"), () => { stop(); state.flash = [0, 0, 0, 0]; drawBackground(); render0(); }),
         btn(t("Change Target", "Layout_MZAnimationEdit") + "...", async () => {
             const folder = state.db.System.optSideView ? "sv_enemies" : "enemies";
-            const r = await pickImage({ folder, current: state.target.name, title: t("Change Target", "Layout_MZAnimationEdit") });
-            if (r) { state.target = { folder, name: r.name }; await loadBackground(); }
+            const r = await pickImage({ folder, current: state.target.name, hue: state.target.hue, title: t("Change Target", "Layout_MZAnimationEdit") });
+            if (r) {
+                state.db.System.battlerName = r.name;
+                state.db.System.battlerHue = r.hue;
+                if (onSystemChanged) { onSystemChanged(); }
+                await loadBackground();
+            }
         }),
         btn(t("Change Battleback", "Layout_MZAnimationEdit") + "...", async () => { if (await changeBattleback(state.db)) { await loadBackground(); } }));
     return [v.box, controls];

@@ -87,7 +87,7 @@ export const animationsTab = {
             const ok = await changeBattleback(db);
             if (ok) { ctx.touch("System"); }
             return ok;
-        })));
+        }, () => ctx.touch("System"))));
         right.appendChild(grp(t("Sound", "Group_AnimationSound"), tableList({
             columns: [{ title: t("Frame", "Group_AnimationSound"), width: "70px" }, { title: t("Filename", "Group_AnimationSound"), width: "1fr" }],
             items: a.soundTimings,
