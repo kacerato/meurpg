@@ -63,7 +63,24 @@ public class PlayerActivity extends Activity {
         s.setSupportZoom(false);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         web.setBackgroundColor(0xff000000);
+        final long t0 = android.os.SystemClock.elapsedRealtime();
         web.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                Log.i(TAG, "timing pageStarted +" + (android.os.SystemClock.elapsedRealtime() - t0) + "ms");
+            }
+
+            @Override
+            public void onPageCommitVisible(WebView view, String url) {
+                Log.i(TAG, "timing commitVisible +" + (android.os.SystemClock.elapsedRealtime() - t0) + "ms");
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.i(TAG, "timing pageFinished +" + (android.os.SystemClock.elapsedRealtime() - t0) + "ms");
+                probeScene(t0, "", 0);
+            }
+
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest req) {
                 if (!HOST.equals(req.getUrl().getHost())) {
@@ -80,8 +97,31 @@ public class PlayerActivity extends Activity {
             }
         });
         setContentView(web);
+        web.setFocusable(true);
+        web.setFocusableInTouchMode(true);
+        web.requestFocus();
         applyImmersive();
         web.loadUrl(ORIGIN + "index.html");
+    }
+
+    /** Registra no logcat (tag MZ.Player, "timing") cada troca de cena nos primeiros 30 s. */
+    private void probeScene(long t0, String last, int n) {
+        if (web == null || n > 150) {
+            return;
+        }
+        web.evaluateJavascript("(function(){try{var s=window.SceneManager&&SceneManager._scene;"
+            + "var c=document.getElementById('gameCanvas');var g=window.Graphics;"
+            + "var sz=' win='+innerWidth+'x'+innerHeight+' ch='+document.documentElement.clientHeight"
+            + "+(c?' canvas='+c.width+'x'+c.height+' css='+c.style.width+'x'+c.style.height+' op='+getComputedStyle(c).opacity+' vis='+getComputedStyle(c).visibility:'')"
+            + "+(g?' scale='+g._realScale:'');"
+            + "return (s?(s.constructor.name+(s.isStarted&&s.isStarted()?':started':'')):'boot')+sz;}catch(e){return 'err '+e;}})()",
+            r -> {
+                String cur = r == null ? "" : r.replace("\"", "");
+                if (!cur.equals(last)) {
+                    Log.i(TAG, "timing scene " + cur + " +" + (android.os.SystemClock.elapsedRealtime() - t0) + "ms");
+                }
+                web.postDelayed(() -> probeScene(t0, cur, n + 1), 200);
+            });
     }
 
     /** assets/www/app.json: {"title": "..."} gravado pelo editor na exportação. */
@@ -108,10 +148,20 @@ public class PlayerActivity extends Activity {
         }
         String rel = "www" + path;
         String type = mime(path);
-        if (fitScreen && path.equals("/index.html")) {
+        if (path.equals("/index.html")) {
             try (InputStream in = assets.open(rel)) {
                 String html = new String(readAll(in), StandardCharsets.UTF_8);
-                String tag = "<script>window.MZ_FIT=true;</script><script type=\"text/javascript\" src=\"mz_fitscreen.js\"></script>\n";
+                // O runtime só atualiza a cena quando document.hasFocus() é verdadeiro
+                // (SceneManager.isGameActive). No WebView o documento só ganha foco no primeiro toque,
+                // então o jogo ficava parado no fade-in preto. O app pausa o WebView em onPause,
+                // logo "visível" basta para considerar o jogo ativo.
+                String tag = "<script>(function(){var n=0,t=setInterval(function(){"
+                    + "if(window.SceneManager&&SceneManager.isGameActive){clearInterval(t);"
+                    + "SceneManager.isGameActive=function(){try{return document.hasFocus()||!document.hidden;}catch(e){return true;}};}"
+                    + "else if(++n>2000){clearInterval(t);}},5);})();</script>\n";
+                if (fitScreen) {
+                    tag += "<script>window.MZ_FIT=true;</script><script type=\"text/javascript\" src=\"mz_fitscreen.js\"></script>\n";
+                }
                 int m = html.indexOf("main.js");
                 int at = m >= 0 ? html.lastIndexOf("<script", m) : html.lastIndexOf("</body>");
                 if (at >= 0) {

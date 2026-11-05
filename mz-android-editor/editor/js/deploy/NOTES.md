@@ -112,3 +112,13 @@ Aparelho: `gradle assembleDebug`, instalar, Implantação > Android APK > OK. Te
   **1,6 s** em Java (6 threads, pastas criadas antes com Uri em cache) contra **8,4 s** arquivo a arquivo
   (`newproject.js` com PUT por arquivo) — ~5× mais rápido. Para o template completo (~1311 arquivos), a
   estimativa proporcional é ~42 s contra ~3,7 min.
+
+## Tela preta ao abrir o jogo exportado (corrigido)
+
+O runtime só atualiza a cena quando `SceneManager.isGameActive()` é verdadeiro, e ele usa
+`window.top.document.hasFocus()`. No WebView do player o documento só ganhava foco no primeiro
+toque, então a cena de título ficava parada no início do fade-in (tela preta) até o usuário tocar.
+Medido no aparelho: a cena de título fica pronta em ~0,7 s após abrir. Correção no
+`PlayerActivity`: o WebView pede foco ao abrir e o `index.html` servido recebe um script que troca
+`isGameActive` por `document.hasFocus() || !document.hidden` (o app pausa o WebView em `onPause`).
+O player também registra no logcat (tag `MZ.Player`, "timing") as trocas de cena dos primeiros 30 s.
