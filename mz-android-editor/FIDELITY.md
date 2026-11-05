@@ -1364,3 +1364,18 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
   O mapa mostra mais tiles e não há barras pretas, sem distorção. Desligado, o comportamento é o do MZ (4:3 com barras).
 - **Novo projeto em lote no Android** (`POST /api/template/copy`, `TemplateCopier.java`): copia o template direto
   dos assets para a pasta SAF, em 6 threads, em vez de um PUT por arquivo.
+
+## Rodada 4 (concluída, mesclada em master)
+
+Itens das tabelas acima que passaram a OK (detalhes nos NOTES.md dos módulos):
+- Layout: paleta em cima e lista de mapas embaixo na coluna esquerda, divisória arrastável (maptools).
+- Event List substitui a paleta no modo evento, com seleção sincronizada e menu por toque longo (eventmode.js).
+- Novo projeto: Local escolhido no diálogo (SAF) e aviso de pasta existente.
+- Gerenciador de recursos: Importar e DLC no Android (SAF de pasta), testados no aparelho.
+- Atalhos do MZ (lidos do RPG.exe) e botão FPS (F2) no teste de jogo; panorama com rolagem Sx/Sy no editor.
+- Show Scrolling Text com prévia; prévia de rota com simulação do runtime; Shop com reordenar/copiar; desfazer em eventos comuns e renomeação de switch/variável (enquanto o diálogo está aberto).
+- Seletor de objetos das Opções nos módulos de eventos e banco de dados.
+- Conversão de dados MV ao abrir o projeto (com confirmação, divergência consciente).
+- Tutoriais: os 19 tutoriais oficiais (1 560 passos) extraídos do Tutorial.exe; textos em inglês como no MZ em pt_BR.
+
+Pendências conhecidas: prévia de rota não move outros eventos nem executa Script/Switch; desfazer de evento comum não cobre o que já foi gravado; autotile de paredes A3/A4 ~81% igual aos mapas oficiais; Steam, Atsumaru e exportação Windows/macOS fora por plataforma.
