@@ -204,6 +204,24 @@ export class MapView {
         if (this.tilemap) {
             this.tilemap.update();
         }
+        this._scrollParallax();
+    }
+
+    // Panorama "Mostrar no editor" com Repetir + Rolar Sx/Sy: anda como no jogo
+    // (Game_Map.updateParallax: _parallaxX += sx / tileWidth / 2 por quadro → sx/2 px por quadro a 60 fps).
+    _scrollParallax() {
+        const m = this.mapData;
+        const p = this.parallax;
+        if (!p || !m || p.destroyed) {
+            return;
+        }
+        const frames = Math.min(4, this.app.ticker.deltaMS / (1000 / 60));
+        if (m.parallaxLoopX && m.parallaxSx) {
+            p.tilePosition.x = (p.tilePosition.x - m.parallaxSx / 2 * frames) % p.texture.width;
+        }
+        if (m.parallaxLoopY && m.parallaxSy) {
+            p.tilePosition.y = (p.tilePosition.y - m.parallaxSy / 2 * frames) % p.texture.height;
+        }
     }
 
     // Entrada: arrastar para rolar, roda para rolar/zoom, pinça para zoom.

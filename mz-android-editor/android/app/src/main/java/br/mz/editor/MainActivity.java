@@ -25,6 +25,9 @@ public class MainActivity extends Activity {
     private static final int REQ_FILE_CHOOSER = 3;
     private static final int REQ_FOLDER_CHOOSER = 4;
     private static final int REQ_DEPLOY_FOLDER = 5;
+    private static final int REQ_NEW_PROJECT_LOCATION = 6;
+    /** Último Local do Novo projeto (árvore SAF com permissão persistente). */
+    private static final String PREF_NEW_PARENT = "newProjectParentUri";
     /** FileChooserParams.MODE_OPEN_FOLDER (constante oculta do SDK): <input webkitdirectory>. */
     private static final int MODE_OPEN_FOLDER = 2;
     private static final String PREF_PROJECT = "projectTreeUri";
@@ -35,6 +38,8 @@ public class MainActivity extends Activity {
     private WebView web;
     private String pendingNewName;
     private String pendingNewTitle;
+    /** Novo projeto com o Local já escolhido no diálogo (null = pedir a pasta depois do OK). */
+    private Uri pendingNewParent;
     private ValueCallback<Uri[]> fileCallback;
 
     @Override
@@ -213,6 +218,21 @@ public class MainActivity extends Activity {
             cb.onReceiveValue(result);
             return;
         }
+        if (requestCode == REQ_NEW_PROJECT_LOCATION) {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                Uri tree = data.getData();
+                try {
+                    getContentResolver().takePersistableUriPermission(tree,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                } catch (Exception e) {
+                    Log.w(TAG, "newProjectLocation", e);
+                }
+                prefs().edit().putString(PREF_NEW_PARENT, tree.toString()).apply();
+                web.evaluateJavascript("window.mzNewProjectLocationPicked && window.mzNewProjectLocationPicked("
+                    + LocalServer.Json.str(tree.toString()) + "," + LocalServer.Json.str(treeLabel(tree)) + ")", null);
+            }
+            return;
+        }
         if (requestCode == REQ_DEPLOY_FOLDER) {
             if (resultCode == RESULT_OK && data != null && data.getData() != null) {
                 Uri tree = data.getData();
@@ -241,6 +261,50 @@ public class MainActivity extends Activity {
         }
     }
 
+    /** Caminho legível de uma árvore SAF ("primary:Documents/RPG" → "/sdcard/Documents/RPG"). */
+    private String treeLabel(Uri tree) {
+        try {
+            String id = DocumentsContract.getTreeDocumentId(tree);
+            int c = id.indexOf(':');
+            String vol = c < 0 ? "" : id.substring(0, c);
+            String rest = c < 0 ? id : id.substring(c + 1);
+            String root = "primary".equals(vol) ? "/sdcard" : "/storage/" + vol;
+            return rest.isEmpty() ? root : root + "/" + rest;
+        } catch (Exception e) {
+            return Uri.decode(String.valueOf(tree.getLastPathSegment()));
+        }
+    }
+
+    /** true se a pasta-mãe já tem um item chamado `name` (o SAF criaria "name (1)"). */
+    private boolean childExists(Uri parentTree, String name) {
+        String parentDocId = DocumentsContract.getTreeDocumentId(parentTree);
+        Uri children = DocumentsContract.buildChildDocumentsUriUsingTree(parentTree, parentDocId);
+        try (android.database.Cursor c = getContentResolver().query(children,
+                new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null)) {
+            while (c != null && c.moveToNext()) {
+                if (name.equalsIgnoreCase(c.getString(0))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /** Local lembrado, se a permissão persistente ainda vale. */
+    private Uri rememberedNewParent() {
+        String saved = prefs().getString(PREF_NEW_PARENT, null);
+        if (saved == null) {
+            return null;
+        }
+        Uri u = Uri.parse(saved);
+        for (android.content.UriPermission p : getContentResolver().getPersistedUriPermissions()) {
+            if (p.getUri().equals(u) && p.isWritePermission()) {
+                return u;
+            }
+        }
+        return null;
+    }
+
     /** Novo projeto: cria a pasta <nome> dentro da pasta escolhida, abre-a e manda o editor copiar o template. */
     private void createNewProjectIn(Uri parentTree) {
         String name = pendingNewName;
@@ -253,6 +317,10 @@ public class MainActivity extends Activity {
         try {
             getContentResolver().takePersistableUriPermission(parentTree,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            if (childExists(parentTree, name)) {
+                Toast.makeText(this, "Já existe uma pasta " + name + " em " + treeLabel(parentTree), Toast.LENGTH_LONG).show();
+                return;
+            }
             String parentDocId = android.provider.DocumentsContract.getTreeDocumentId(parentTree);
             Uri parentDoc = android.provider.DocumentsContract.buildDocumentUriUsingTree(parentTree, parentDocId);
             Uri created = android.provider.DocumentsContract.createDocument(getContentResolver(), parentDoc,
@@ -433,8 +501,71 @@ public class MainActivity extends Activity {
         public void leaveConfirmed(String kind) {
             runOnUiThread(() -> {
                 if ("new".equals(kind) && pendingNewName != null) {
-                    launchNewProjectPicker();
+                    if (pendingNewParent != null) {
+                        Uri parent = pendingNewParent;
+                        pendingNewParent = null;
+                        createNewProjectIn(parent);
+                    } else {
+                        launchNewProjectPicker();
+                    }
                 }
+            });
+        }
+
+        /** Novo projeto → botão "Escolher…" do Local: abre o SAF; responde em
+         *  window.mzNewProjectLocationPicked(uri, caminho). */
+        @JavascriptInterface
+        public void pickNewProjectLocation() {
+            runOnUiThread(() -> {
+                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                Uri last = rememberedNewParent();
+                if (last != null) {
+                    try {
+                        i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, DocumentsContract.buildDocumentUriUsingTree(
+                            last, DocumentsContract.getTreeDocumentId(last)));
+                    } catch (Exception ignored) {
+                        // sem pasta inicial
+                    }
+                }
+                startActivityForResult(i, REQ_NEW_PROJECT_LOCATION);
+            });
+        }
+
+        /** Local lembrado do último Novo projeto: JSON {uri, label} ou "" se não houver. */
+        @JavascriptInterface
+        public String newProjectLocation() {
+            Uri u = rememberedNewParent();
+            return u == null ? "" : "{\"uri\":" + LocalServer.Json.str(u.toString()) + ",\"label\":" + LocalServer.Json.str(treeLabel(u)) + "}";
+        }
+
+        /** O diálogo checa antes do OK se a pasta do projeto já existe no Local. */
+        @JavascriptInterface
+        public boolean newProjectExists(String parentUri, String name) {
+            try {
+                return childExists(Uri.parse(parentUri), name);
+            } catch (Exception e) {
+                Log.w(TAG, "newProjectExists", e);
+                return false;
+            }
+        }
+
+        /** Novo projeto no Local escolhido no diálogo (sem abrir o SAF de novo). */
+        @JavascriptInterface
+        public void newProjectIn(String parentUri, String name, String title) {
+            runOnUiThread(() -> {
+                pendingNewName = name;
+                pendingNewTitle = title;
+                pendingNewParent = Uri.parse(parentUri);
+                web.evaluateJavascript("(window.mzConfirmLeave ? (window.mzConfirmLeave('new'), true) : false)", r -> {
+                    if (!"true".equals(r)) {
+                        Uri parent = pendingNewParent;
+                        pendingNewParent = null;
+                        createNewProjectIn(parent);
+                    }
+                });
             });
         }
 

@@ -188,6 +188,19 @@ export function pasteMapFromClipboard(parentId) {
     return ctx.S.mapClipboard ? createMap(parentId, ctx.S.mapClipboard) : Promise.resolve(null);
 }
 
+// Atalhos do menu da lista de mapas no MZ: Espaço = Editar, Enter = Novo, Ctrl+T = Deslocar,
+// Ctrl+D = Gerar masmorra (maptools/index.js bindKeys).
+export async function runTreeAction(action, id) {
+    const { api } = ctx;
+    if (action === "edit" && id) { return editMapProperties(id); }
+    if (action === "new") { return createMap(id); }
+    const e = id ? await openForEdit(id) : null;
+    if (!e) { return null; }
+    if (action === "shift") { return openShiftDialog(api, e, ctx.afterBulkEdit); }
+    if (action === "dungeon") { return openDungeonDialog(api, e, ctx.afterBulkEdit); }
+    return null;
+}
+
 // ---------------- Menu de contexto ----------------
 
 function showTreeMenu(x, y, id) {

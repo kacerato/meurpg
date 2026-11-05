@@ -549,6 +549,7 @@ export class EventMode {
                 this.refresh();
             } else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.editAt(this.cursor.x, this.cursor.y); }
             else if (e.key === "Delete") { this.del(); }
+            else if (mod && !e.shiftKey && /^[1-4]$/.test(e.key)) { e.preventDefault(); this.quick(["transfer", "door", "treasure", "inn"][Number(e.key) - 1]); }
             else if (mod && e.key === "c") { this.copy(); }
             else if (mod && e.key === "x") { this.cut(); }
             else if (mod && e.key === "v") { this.paste(); }

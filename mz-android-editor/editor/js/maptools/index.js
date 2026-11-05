@@ -6,7 +6,7 @@ import * as T from "./autotile.js";
 import { MapEdit, LAYER_AUTO } from "./editops.js";
 import { Palette } from "./palette.js";
 import { regionColor } from "./render.js";
-import { initMapTree, copyMapToClipboard, pasteMapFromClipboard, deleteMap } from "./maptree.js";
+import { initMapTree, copyMapToClipboard, pasteMapFromClipboard, deleteMap, runTreeAction } from "./maptree.js";
 import { t } from "../i18n.js";
 
 const TILE = 48;
@@ -834,7 +834,22 @@ function bindKeys() {
         else if (ctrl && k === "v") { if (S.clipboard) { e.preventDefault(); doPaste(); } }
         else if (k === "delete") { if (S.selection) { e.preventDefault(); doDelete(); } }
         else if (k === "escape") { if (S.selection) { S.selection = null; refreshView(); } }
+        // teclas do MZ (MainMenu.qml): camada seguinte/anterior e ações da lista de mapas
+        else if (ctrl && k === "tab") { e.preventDefault(); cycleLayer(e.shiftKey ? -1 : 1); }
+        else if (ctrl && !e.shiftKey && k === "t") { if (api.currentMapId) { e.preventDefault(); runTreeAction("shift", api.currentMapId); } }
+        else if (ctrl && !e.shiftKey && k === "d") { if (api.currentMapId) { e.preventDefault(); runTreeAction("dungeon", api.currentMapId); } }
+        else if (treeFocused() && !ctrl && k === " ") { if (api.currentMapId) { e.preventDefault(); runTreeAction("edit", api.currentMapId); } }
+        else if (treeFocused() && !ctrl && k === "enter") { e.preventDefault(); runTreeAction("new", api.currentMapId || 0); }
     });
+}
+
+// Camada → próxima/anterior (Automático, Camada 1…4), como "nextLayer"/"previousLayer" do MZ.
+function cycleLayer(dir) {
+    const sel = S.ui && S.ui.layer;
+    if (!sel) { return; }
+    const n = sel.options.length;
+    sel.selectedIndex = (sel.selectedIndex + dir + n) % n;
+    sel.dispatchEvent(new Event("change"));
 }
 
 // ---------------- Lista de mapas (maptree.js) ----------------

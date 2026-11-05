@@ -67,14 +67,14 @@ function spec(api, shell) {
             ...[0, 1, 2, 3].map(z => layerItem(String(z), t("Layer %1", "MainMenu", z + 1), t("Writes to layer %1 only.", "MainMenu", z + 1)))
         ] },
         { label: t("Scale", "MainMenu"), items: [
-            { label: t("Zoom In", "MainMenu"), tip: t("Zooms in the map view.", "MainMenu"), enabled: hasProject, run: click("btnZoomIn") },
-            { label: t("Zoom Out", "MainMenu"), tip: t("Zooms out the map view.", "MainMenu"), enabled: hasProject, run: click("btnZoomOut") },
-            { label: t("Actual Size", "MainMenu"), tip: t("Displays the map at a scale of 1:1.", "MainMenu"), enabled: hasProject, run: click("btnZoomActual") }
+            { label: t("Zoom In", "MainMenu"), key: "Ctrl++", tip: t("Zooms in the map view.", "MainMenu"), enabled: hasProject, run: click("btnZoomIn") },
+            { label: t("Zoom Out", "MainMenu"), key: "Ctrl+-", tip: t("Zooms out the map view.", "MainMenu"), enabled: hasProject, run: click("btnZoomOut") },
+            { label: t("Actual Size", "MainMenu"), key: "Ctrl+0", tip: t("Displays the map at a scale of 1:1.", "MainMenu"), enabled: hasProject, run: click("btnZoomActual") }
         ] },
         { label: t("Tools", "MainMenu"), items: [
             { label: t("Database", "MainMenu") + "…", key: "F9", tip: t("Opens the database.", "MainMenu"), enabled: btnEnabled("btnDatabase"), run: click("btnDatabase") },
             { label: t("Plugin Manager", "MainMenu") + "…", key: "F10", tip: t("Opens the plugin manager window.", "MainMenu"), enabled: btnEnabled("btnPlugins"), run: click("btnPlugins") },
-            { label: t("Sound Test", "MainMenu") + "…", key: "F11", tip: t("Opens the sound test window.", "MainMenu"), enabled: btnEnabled("btnSoundTest"), run: click("btnSoundTest") },
+            { label: t("Sound Test", "MainMenu") + "…", tip: t("Opens the sound test window.", "MainMenu"), enabled: btnEnabled("btnSoundTest"), run: click("btnSoundTest") },
             { label: t("Event Searcher", "MainMenu") + "…", tip: t("Opens the event searcher window.", "MainMenu"), enabled: btnEnabled("btnEventSearch"), run: click("btnEventSearch") },
             { label: t("Character Generator", "MainMenu") + "…", tip: t("Opens the Character Generator window.", "MainMenu"), enabled: btnEnabled("btnGenerator"), run: click("btnGenerator") },
             { label: t("Resource Manager", "MainMenu") + "…", tip: t("Opens the Resource Manager window.", "MainMenu"), enabled: btnEnabled("btnResources"), run: click("btnResources") },

@@ -446,6 +446,12 @@ function clickButton(id) {
     return false;
 }
 
+// Teclas do RPG Maker MZ 1.1.1 (lidas do MainMenu.qml compilado no RPG.exe; o manual não as lista):
+// Ctrl+N/O/S, Ctrl+Z/X/C/V, Delete, F5 Mapa, F6 Evento, Ctrl++/Ctrl+-/Ctrl+0 zoom, F9 Banco de dados,
+// F10 Gerenciador de plugins, Ctrl+R Teste de jogo, F1 Conteúdo. As ferramentas de desenho, o Teste de
+// som, o Buscador de eventos, o Gerenciador de recursos e o Gerador não têm tecla no MZ.
+// Lista de mapas (maptools): Espaço = Editar, Enter = Novo, Ctrl+T = Deslocar, Ctrl+D = Gerar masmorra;
+// Ctrl+Tab / Ctrl+Shift+Tab = próxima/anterior camada. Modo evento (eventmode.js): Ctrl+1…4 = Evento rápido.
 function bindShortcuts() {
     document.addEventListener("keydown", e => {
         const tag = (e.target && e.target.tagName) || "";
@@ -481,8 +487,12 @@ function bindShortcuts() {
             clickButton("btnDatabase");
         } else if (!ctrl && k === "F10") {
             clickButton("btnPlugins");
-        } else if (!ctrl && k === "F11") {
-            clickButton("btnSoundTest");
+        } else if (ctrl && !e.altKey && (k === "+" || k === "=" || e.code === "NumpadAdd")) {
+            clickButton("btnZoomIn");
+        } else if (ctrl && !e.altKey && (k === "-" || e.code === "NumpadSubtract")) {
+            clickButton("btnZoomOut");
+        } else if (ctrl && !e.altKey && (k === "0" || e.code === "Numpad0")) {
+            clickButton("btnZoomActual");
         } else {
             handled = false;
         }
@@ -569,6 +579,12 @@ async function boot() {
         try { $("playFrame").contentWindow.location.reload(); } catch (_) { /* outra origem */ }
     });
     $("btnPlayDebug").addEventListener("click", () => pressGameKey("debug"));
+    // F2 do runtime (Graphics._switchFPSCounter): FPS → ms → oculto, como no teclado
+    $("btnPlayFps").addEventListener("click", () => {
+        const w = gameWindow();
+        if (w && w.Graphics && w.Graphics._switchFPSCounter) { w.Graphics._switchFPSCounter(); }
+        $("playFrame").focus();
+    });
     $("btnPlayThrough").addEventListener("click", () => setThrough(!throughTimer));
     // Tela cheia (extensão do port): resolução ajustada à proporção da tela, lembrada; ver /fitscreen.js
     const fitKey = "mzEditor.fitScreen";

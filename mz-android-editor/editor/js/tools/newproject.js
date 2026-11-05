@@ -206,8 +206,11 @@ const validName = s => /^[^\\/:*?"<>|]+$/.test(s) && !/^\.+$/.test(s);
 
 export async function openNewProject(api) {
     const android = !!(window.Android && typeof window.Android.newProject === "function");
+    // casca com o Local escolhido dentro do diálogo (SAF), como o "Escolher…" do MZ (01_02)
+    const androidLoc = android && typeof window.Android.pickNewProjectLocation === "function";
     const canPickDir = typeof window.showDirectoryPicker === "function";
     let parentDir = null;
+    let androidParent = null; // {uri, label}
     let n = 1;
     const name = el("input", { type: "text", class: "tlInput", value: "Project" + n, maxlength: 64 });
     const title = el("input", { type: "text", class: "tlInput", value: "", maxlength: 128 });
@@ -217,22 +220,42 @@ export async function openNewProject(api) {
     const manifest = tp && tp.manifest;
 
     let locText;
-    if (android) {
+    if (androidLoc) {
+        try { androidParent = JSON.parse(window.Android.newProjectLocation() || "null"); } catch { androidParent = null; }
+        locText = t("(click Choose…)");
+    } else if (android) {
         locText = t("(folder chosen on the device)");
     } else if (canPickDir) {
         locText = t("(click Choose…)");
     } else {
         locText = t("(will be downloaded as a .zip)");
     }
+    const showAndroidLoc = () => {
+        loc.value = androidParent ? androidParent.label + "/" + (name.value || "") : locText;
+        loc.title = loc.value;
+    };
     loc.value = locText;
-    const choose = el("button", { class: "tlBtn", type: "button", disabled: android || !canPickDir }, t("Choose…"));
+    const choose = el("button", { class: "tlBtn", type: "button", disabled: (android && !androidLoc) || (!android && !canPickDir) }, t("Choose…"));
     choose.addEventListener("click", async () => {
+        if (androidLoc) {
+            window.mzNewProjectLocationPicked = (uri, label) => {
+                androidParent = { uri, label };
+                err.textContent = "";
+                showAndroidLoc();
+            };
+            window.Android.pickNewProjectLocation();
+            return;
+        }
         try {
             parentDir = await window.showDirectoryPicker({ id: "mzNewProject", mode: "readwrite" });
             loc.value = parentDir.name + "\\" + (name.value || "");
         } catch { /* cancelado */ }
     });
-    name.addEventListener("input", () => { if (parentDir) { loc.value = parentDir.name + "\\" + name.value; } });
+    name.addEventListener("input", () => {
+        if (parentDir) { loc.value = parentDir.name + "\\" + name.value; }
+        if (androidLoc) { showAndroidLoc(); }
+    });
+    if (androidLoc) { showAndroidLoc(); }
 
     const ok = await modal(api, {
         title: t("New Project", "Dialog_NewProject"), width: "620px", height: "auto", cls: "tlNewDlg",
@@ -257,6 +280,14 @@ export async function openNewProject(api) {
                     if (!nm) { err.textContent = t("Name is empty.", "Dialog_NewProject"); return false; }
                     if (!validName(nm)) { err.textContent = t("Invalid folder name."); return false; }
                     if (!manifest && !android) { err.textContent = t("Template not found (%1).", null, "editor/template/manifest.json"); return false; }
+                    if (androidLoc) {
+                        if (!androidParent) { err.textContent = t("Choose the location of the project folder."); return false; }
+                        // o SAF criaria "Nome (1)" em silêncio: avisa como o MZ ("O projeto já existe.")
+                        if (window.Android.newProjectExists(androidParent.uri, nm)) {
+                            err.textContent = t("The project already exists.", "Dialog_NewProject") + " (" + androidParent.label + "/" + nm + ")";
+                            return false;
+                        }
+                    }
                     return true;
                 }
             },
@@ -267,6 +298,11 @@ export async function openNewProject(api) {
     const projName = name.value.trim();
     const gameTitle = title.value;
 
+    if (androidLoc && androidParent) {
+        // Local já escolhido no diálogo: a casca cria <Local>/<nome>/ e recarrega com ?newProject=<título>
+        window.Android.newProjectIn(androidParent.uri, projName, gameTitle);
+        return;
+    }
     if (android) {
         // A casca escolhe a pasta (SAF), cria <nome>/ e recarrega com ?newProject=<título>;
         // app.js chama createProject(apiWriter) e o template (completo no APK) é copiado.
