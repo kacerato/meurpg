@@ -119,6 +119,14 @@ const server = http.createServer(async (req, res) => {
                     await fsp.writeFile(file, body);
                     return send(res, 200, JSON.stringify({ ok: true, bytes: body.length }), MIME[".json"]);
                 }
+                if (req.method === "DELETE") {
+                    try {
+                        await fsp.unlink(file);
+                        return send(res, 200, JSON.stringify({ ok: true }), MIME[".json"]);
+                    } catch {
+                        return send(res, 404, "not found");
+                    }
+                }
             }
             if (p === "/api/list" && req.method === "GET") {
                 const dir = safeJoin(PROJECT_DIR, url.searchParams.get("dir") || "");

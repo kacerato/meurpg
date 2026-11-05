@@ -8,13 +8,24 @@ export const api = {
     project: null,       // instância de Project (project.js): readJson/writeJson/list/map()/tilesets()...
     view: null,          // MapView atual (mapview.js) ou null
     currentMapId: 0,
+    mode: "map",         // "map" | "event" — contrato entre maptools e events; mudar emite "mode:changed"
     listeners: new Map(),
 
-    // Eventos simples: "map:selected" {id, map}, "map:changed" {id}, "db:changed" {file}
+    // Preenchidos por app.js
+    selectMap: async () => {},
+    refreshMapTree: async () => {},
+
+    // Eventos simples: "map:selected" {id, map, tileset}, "map:changed" {id}, "maps:changed",
+    // "db:changed" {file}, "mode:changed" {mode}, "plugins:changed"
     on(name, fn) {
         const list = this.listeners.get(name) || [];
         list.push(fn);
         this.listeners.set(name, list);
+    },
+    off(name, fn) {
+        const list = this.listeners.get(name) || [];
+        const i = list.indexOf(fn);
+        if (i >= 0) { list.splice(i, 1); }
     },
     emit(name, payload) {
         for (const fn of this.listeners.get(name) || []) {

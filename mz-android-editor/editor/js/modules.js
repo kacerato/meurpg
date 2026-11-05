@@ -1,20 +1,22 @@
 // Registro dos módulos do editor. Cada módulo vive em editor/js/<nome>/index.js e exporta
 // `register(api)`. Para ligar um módulo novo, adicione UMA linha na lista abaixo.
-// (As sessões paralelas entregam o módulo; a integração aqui é feita pela sessão principal.)
+// Ordem importa: events antes de database (o banco usa api.events.editCommandList).
 
 export const MODULES = [
-    // "./database/index.js",
-    // "./events/index.js",
-    // "./maptools/index.js",
-    // "./plugins/index.js",
-    // "./generator/index.js",
+    "./maptools/index.js",
+    "./events/index.js",
+    "./database/index.js",
+    "./plugins/index.js",
+    "./generator/index.js",
 ];
 
 export async function loadModules(api) {
-    // Desenvolvimento: ?modules=./database/index.js,./events/index.js liga módulos sem editar este arquivo.
-    const extra = (new URLSearchParams(location.search).get("modules") || "")
-        .split(",").map(s => s.trim()).filter(Boolean);
-    for (const path of [...MODULES, ...extra]) {
+    // Desenvolvimento: ?modules=./database/index.js,./events/index.js liga módulos sem editar este arquivo;
+    // ?modules=none desliga todos.
+    const q = new URLSearchParams(location.search).get("modules");
+    const extra = (q || "").split(",").map(s => s.trim()).filter(Boolean);
+    const list = q === "none" ? [] : (extra.length ? extra : MODULES);
+    for (const path of list) {
         try {
             const mod = await import(path);
             await mod.register(api);

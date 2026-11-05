@@ -168,6 +168,11 @@ export class MapView {
         }
     }
 
+    // Redesenha grade e molduras de eventos (público; usado pelos módulos).
+    redrawOverlay() {
+        this._drawOverlay();
+    }
+
     _drawOverlay() {
         const g = this.overlay;
         g.clear();

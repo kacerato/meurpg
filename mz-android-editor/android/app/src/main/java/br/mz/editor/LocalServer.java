@@ -215,6 +215,12 @@ public class LocalServer implements Runnable {
                 } else if ("PUT".equals(req.method) || "POST".equals(req.method)) {
                     prj.write(rel, req.body);
                     json(out, 200, "{\"ok\":true,\"bytes\":" + req.body.length + "}");
+                } else if ("DELETE".equals(req.method)) {
+                    if (prj.delete(rel)) {
+                        json(out, 200, "{\"ok\":true}");
+                    } else {
+                        text(out, 404, "not found");
+                    }
                 } else {
                     text(out, 405, "method");
                 }

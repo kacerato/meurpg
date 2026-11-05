@@ -1,10 +1,11 @@
 // Módulo events do MZ Editor: modo evento no mapa, editor de evento, todos os comandos de evento
 // e Event Searcher. Contrato: mz-android-editor/SESSIONS.md.
 
-import { db } from "./data.js";
-import { setApi } from "./ui.js";
+import { db, clone } from "./data.js";
+import { setApi, h, dialog } from "./ui.js";
 import { EventMode } from "./eventmode.js";
 import { openSearcher } from "./search.js";
+import { createCommandList, commandListToolbar } from "./commandlist.js";
 
 export async function register(api) {
     if (!document.querySelector('link[data-mz="events"]')) {
@@ -20,6 +21,21 @@ export async function register(api) {
 
     const mode = new EventMode(api);
     api.events = mode; // útil para depuração e para outros módulos (ex.: abrir evento)
+
+    // Ponte para o módulo database (Troops / Common Events): edita uma lista de comandos num diálogo.
+    // Recebe uma cópia da lista; devolve a lista editada ou null se cancelado.
+    mode.editCommandList = (list, opts = {}) => {
+        const work = clone(list);
+        return dialog({
+            title: opts.title || "Contents", width: "min(1100px, 99vw)", height: "96vh",
+            build: body => {
+                const cl = createCommandList({ list: work, ctx: { map: null, mapId: 0, eventId: 0, troopId: opts.troopId || 0 } });
+                body.append(h("div", { class: "evContentsTitle" }, "Contents"), cl.el, commandListToolbar(cl));
+                body.classList.add("evCommonBody");
+            },
+            onOk: () => ({ v: work })
+        }).then(r => (r ? r.v : null));
+    };
     api.mode = api.mode || "map";
 
     const btnEvent = document.getElementById("btnModeEvent");

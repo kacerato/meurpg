@@ -61,8 +61,7 @@ async function selectMap(id) {
         for (const row of document.querySelectorAll("#mapTree div")) {
             row.classList.toggle("selected", Number(row.dataset.id) === id);
         }
-        const events = (map.events || []).filter(Boolean).length;
-        $("statusMap").textContent = `Mapa ${String(id).padStart(3, "0")} · ${map.width}×${map.height} · ${tileset.name} · ${events} eventos`;
+        updateMapStatus(id, map, tileset);
         setStatus("");
         if (window.matchMedia("(max-width: 700px)").matches) {
             $("sidebar").classList.add("hidden");
@@ -70,6 +69,20 @@ async function selectMap(id) {
     } catch (e) {
         console.error(e);
         setStatus(String(e.message || e));
+    }
+}
+
+function updateMapStatus(id, map, tileset) {
+    const events = (map.events || []).filter(Boolean).length;
+    const ts = tileset ? tileset.name : "";
+    $("statusMap").textContent = `Mapa ${String(id).padStart(3, "0")} · ${map.width}×${map.height} · ${ts} · ${events} eventos`;
+}
+
+async function refreshMapTree() {
+    const infos = await project.readJson("data/MapInfos.json", { fresh: true });
+    buildTree(infos);
+    for (const row of document.querySelectorAll("#mapTree div")) {
+        row.classList.toggle("selected", Number(row.dataset.id) === currentMapId);
     }
 }
 
@@ -154,6 +167,15 @@ async function boot() {
         createView();
         api.project = project;
         api.view = view;
+        api.selectMap = selectMap;
+        api.refreshMapTree = refreshMapTree;
+        api.on("map:changed", async ({ id }) => {
+            if (id === currentMapId && view.mapData) {
+                const tilesets = await project.tilesets();
+                updateMapStatus(id, view.mapData, tilesets[view.mapData.tilesetId]);
+                view.redrawOverlay();
+            }
+        });
         await loadModules(api);
         $("projectName").textContent = info.name;
         document.title = info.name + " – MZ Editor";

@@ -184,6 +184,25 @@ public class SafProject {
         return cur;
     }
 
+    /** Apaga um arquivo do projeto; devolve false se não existir. */
+    public boolean delete(String relPath) {
+        Entry e = resolve(relPath);
+        if (e == null || e.isDir) {
+            return false;
+        }
+        try {
+            boolean ok = DocumentsContract.deleteDocument(resolver, e.uri);
+            int slash = relPath.lastIndexOf('/');
+            String dirPath = slash >= 0 ? relPath.substring(0, slash) : "";
+            synchronized (dirCache) {
+                dirCache.remove(dirPath);
+            }
+            return ok;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     public String listJson(String dirPath) {
         Entry dir = resolve(dirPath);
         if (dir == null || !dir.isDir) {

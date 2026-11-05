@@ -50,6 +50,24 @@ export class Project {
         return res.json();
     }
 
+    async writeBinary(relPath, blob, type = "application/octet-stream") {
+        const res = await fetch("/api/file?path=" + encodeURIComponent(relPath), {
+            method: "PUT",
+            headers: { "Content-Type": type },
+            body: blob
+        });
+        if (!res.ok) {
+            throw new Error(`Falha ao gravar ${relPath}: ${res.status}`);
+        }
+        return res.json();
+    }
+
+    async delete(relPath) {
+        const res = await fetch("/api/file?path=" + encodeURIComponent(relPath), { method: "DELETE" });
+        this.cache.delete(relPath);
+        return res.ok;
+    }
+
     async list(dir) {
         const res = await fetch("/api/list?dir=" + encodeURIComponent(dir));
         return res.ok ? res.json() : [];
