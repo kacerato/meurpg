@@ -31,7 +31,8 @@
 .dbListItem.multi { background: var(--accent-bg); }
 .dbListBtns { padding: 4px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--line2); }
 .dbListBtns .dbRow { gap: 4px; }
-.dbListBtns .dbRow .dbBtn { flex: 1; }
+.dbListBtns .dbRow { flex-wrap: wrap; }
+.dbListBtns .dbRow .dbBtn { flex: 1 1 auto; min-width: 0; padding: 0 4px; font-size: 12.5px; white-space: nowrap; }
 .dbForm { flex: 1; min-width: 0; overflow: auto; padding: 6px 8px; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; }
 
 .dbCols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: start; }
