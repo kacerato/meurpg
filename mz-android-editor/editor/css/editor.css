@@ -155,6 +155,14 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
 #playBar button { border: 1px solid var(--line2); background: var(--panel2); }
 #playFrame { flex: 1; border: 0; width: 100%; background: #000; }
 
+/* Telas de ~1000 CSS px (celulares em paisagem): barra compacta para caber tudo sem rolar */
+@media (max-width: 1150px) {
+    #toolbar { gap: 0; padding: 0 2px; }
+    #toolbar button { min-width: 26px; height: 28px; padding: 0 2px; }
+    #toolbar button.tb img { width: 19px; height: 19px; }
+    #toolbar .sep { margin: 0 1px; height: 18px; }
+}
+
 @media (max-width: 700px) {
     #sidebar { position: absolute; top: 0; bottom: 0; left: 0; z-index: 10; box-shadow: 4px 0 16px rgba(0,0,0,.35); }
 }
