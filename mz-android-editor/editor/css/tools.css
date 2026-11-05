@@ -1,0 +1,165 @@
+/* Módulo tools: Resource Manager, Sound Test, Novo projeto, Opções, Ajuda. Toque em paisagem, alvos ≥ 36px. */
+
+/* ---------- tamanho dos ícones da barra (Opções) ---------- */
+html[data-iconsize] button.tb img { width: var(--tl-icon, 22px); height: var(--tl-icon, 22px); }
+html[data-iconsize="large"] button.tb { min-width: 44px; height: 44px; }
+html[data-iconsize="small"] button.tb { min-width: 30px; height: 32px; }
+
+/* ---------- tema escuro (Opções → UI → Tema) ---------- */
+html[data-theme="dark"] {
+    --bg: #2b2b2b;
+    --panel: #353535;
+    --panel2: #262626;
+    --line: #5a5a5a;
+    --line2: #474747;
+    --text: #e6e6e6;
+    --muted: #a8a8a8;
+    --accent: #3c82e6;
+    --accent-bg: #284a78;
+    color-scheme: dark;
+}
+html[data-theme="dark"] .mzDialogTitle { background: #404040; }
+html[data-theme="dark"] button:hover:not(:disabled) { background: #474747; }
+html[data-theme="dark"] button:active:not(:disabled) { background: #555; }
+html[data-theme="dark"] #mapTree li > div:hover { background: #3a4656; }
+html[data-theme="dark"] button.tb img { filter: brightness(1.08); }
+html[data-theme="dark"] input, html[data-theme="dark"] select, html[data-theme="dark"] textarea {
+    background: #262626; color: var(--text); border-color: var(--line);
+}
+
+/* ---------- barra / menu ☰ ---------- */
+.tlMenuBtn { font-size: 20px; min-width: 40px; }
+.tlMenuBackdrop { position: fixed; inset: 0; z-index: 60; }
+.tlMenuBackdrop[hidden], .tlMenu[hidden] { display: none !important; }
+.tlMenu {
+    position: fixed; z-index: 61;
+    min-width: 250px;
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.35);
+    padding: 4px 0;
+    display: flex; flex-direction: column;
+}
+.tlMenuItem {
+    display: flex; align-items: center; gap: 10px;
+    height: 40px; padding: 0 14px; border: 0; border-radius: 0;
+    text-align: left; width: 100%;
+}
+.tlMenuItem img, .tlMenuNoIcon { width: 22px; height: 22px; flex: none; }
+.tlMenuSep { height: 1px; background: var(--line2); margin: 4px 0; }
+
+/* ---------- comuns ---------- */
+.tlDialog .mzDialogButtons button { min-height: 36px; }
+.tlSmall .mzDialog { height: auto !important; }
+.tlDialog .mzDialog[style*="height: auto"] { height: auto; }
+.tlBtn {
+    min-height: 36px; min-width: 44px; padding: 0 12px;
+    border: 1px solid var(--line); background: var(--panel2);
+}
+.tlBtn.on, .tlBtn.toggle.on { background: var(--accent-bg); border-color: var(--accent); }
+.tlBtn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tlRow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.tlGrow > input { flex: 1; min-width: 0; }
+.tlHint { color: var(--muted); font-size: 12px; padding: 6px 4px; }
+.tlErr { color: #c62828; min-height: 18px; padding: 2px 4px; }
+.tlMsg { display: flex; gap: 12px; align-items: flex-start; padding: 8px 4px; }
+.tlMsg img { width: 32px; height: 32px; flex: none; }
+.tlPre { white-space: pre-wrap; user-select: text; word-break: break-word; }
+.tlInput {
+    min-height: 36px; padding: 4px 8px; font: inherit;
+    border: 1px solid var(--line); border-radius: 3px; background: var(--panel2); color: var(--text);
+}
+.tlProgressBar { height: 18px; border: 1px solid var(--line); background: var(--panel2); margin: 8px 0; }
+.tlProgressBar > div { height: 100%; width: 0; background: var(--accent); transition: width .1s; }
+.tlProgressLabel { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.tlCol { display: flex; flex-direction: column; min-width: 0; min-height: 0; gap: 6px; }
+.tlColHead { font-weight: 500; font-family: "M+ 1p", sans-serif; padding: 2px 2px 0; }
+.tlCount { color: var(--muted); font-weight: 400; font-size: 12px; }
+.tlList {
+    flex: 1; min-height: 0; overflow: auto;
+    background: var(--panel2); border: 1px solid var(--line);
+    -webkit-overflow-scrolling: touch;
+}
+.tlItem {
+    display: flex; align-items: center; gap: 8px;
+    min-height: 36px; padding: 4px 10px;
+    border-bottom: 1px solid var(--line2);
+    cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tlItem.selected { background: var(--accent); color: #fff; }
+.tlItem.selected .tlFolderTop { color: #dde8ff; }
+.tlFolderTop { color: var(--muted); font-size: 11px; }
+.tlCheck { font-size: 18px; width: 18px; }
+
+/* ---------- Resource Manager ---------- */
+.tlResBody { display: grid; grid-template-columns: 200px 1fr 1.3fr; gap: 8px; overflow: hidden !important; }
+.tlPreviewBox {
+    flex: 1; min-height: 0; overflow: auto;
+    border: 1px solid var(--line);
+    background: repeating-conic-gradient(#d8d8d8 0 25%, #f4f4f4 0 50%) 0 0 / 16px 16px;
+    display: flex; flex-direction: column;
+}
+html[data-theme="dark"] .tlPreviewBox { background: repeating-conic-gradient(#3a3a3a 0 25%, #303030 0 50%) 0 0 / 16px 16px; }
+.tlPreviewCanvas { flex: 1; min-height: 0; overflow: auto; display: flex; align-items: center; justify-content: center; padding: 6px; }
+.tlPreviewImg { max-width: 100%; max-height: 100%; image-rendering: pixelated; object-fit: contain; }
+.tlPreviewImgBig { image-rendering: pixelated; }
+.tlPreviewBox.big .tlPreviewCanvas { align-items: flex-start; justify-content: flex-start; }
+.tlPreviewInfo { font-size: 12px; padding: 4px 6px; background: var(--panel); border-top: 1px solid var(--line2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tlPreviewAudio { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 12px; background: var(--panel); }
+.tlPreviewAudio .tlPreviewInfo { border: 0; background: transparent; }
+.tlBigIcon { width: 48px; height: 48px; }
+.tlEffName { font-size: 16px; font-weight: 500; }
+.tlBtnGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.tlBtnGrid .tlBtn:last-child { grid-column: span 3; }
+.tlPreviewDlg .mzDialogBody { display: flex; flex-direction: column; }
+
+/* seletor genérico */
+.tlPickBody { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8px; overflow: hidden !important; }
+
+/* ---------- Sound Test ---------- */
+.tlSoundBody { display: grid; grid-template-columns: 1fr 270px; gap: 10px; overflow: hidden !important; }
+.tlTabs { display: flex; gap: 2px; }
+.tlTab { flex: 1; min-height: 38px; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; background: var(--panel); font-weight: 500; }
+.tlTab.on { background: var(--panel2); border-color: var(--accent); color: var(--accent); }
+.tlTabs + .tlList { margin-top: -6px; }
+.tlColCtrl { gap: 10px; }
+.tlField label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+.tlRange { flex: 1; min-width: 0; height: 36px; accent-color: var(--accent); }
+.tlNum { width: 64px; min-height: 36px; font: inherit; padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; background: var(--panel2); color: var(--text); }
+.tlPlayRow .tlBtn { flex: 1; }
+.tlColCtrl > .tlBtn { width: 100%; }
+.tlNow { min-height: 20px; color: var(--accent); font-size: 12px; word-break: break-all; }
+
+/* ---------- Novo projeto / Opções ---------- */
+.tlForm { display: grid; grid-template-columns: 130px 1fr; gap: 8px 10px; align-items: center; padding: 6px 2px; }
+.tlForm > label { text-align: right; }
+.tlOptGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tlGroup { border: 1px solid var(--line2); border-radius: 4px; padding: 6px 10px 10px; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.tlGroup legend { padding: 0 4px; font-weight: 500; }
+.tlGroup:nth-child(3), .tlGroup:nth-child(4) { grid-column: span 1; }
+.tlFormRow { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8px; align-items: center; }
+.tlCheckLbl { display: flex; align-items: center; gap: 8px; min-height: 36px; }
+.tlCheckLbl input { width: 22px; height: 22px; }
+.tlColor { width: 64px; height: 36px; padding: 2px; border: 1px solid var(--line); background: var(--panel2); }
+
+/* ---------- Ajuda / Sobre ---------- */
+.tlHelpBody { display: flex; flex-direction: column; gap: 6px; padding: 6px !important; overflow: hidden !important; }
+.tlHelpBar .tlBtn { min-width: 44px; }
+.tlHelpFrame { flex: 1; width: 100%; border: 1px solid var(--line); background: #fff; }
+.tlLink { margin-left: auto; color: var(--accent); font-size: 12px; }
+.tlAbout { display: flex; gap: 16px; padding: 10px 6px; user-select: text; }
+.tlAboutIcon { width: 64px; height: 64px; flex: none; }
+.tlAboutTitle { font-size: 18px; font-weight: 500; margin-bottom: 4px; font-family: "M+ 1p", sans-serif; }
+.tlAboutCredits { margin-top: 10px; font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+
+/* ---------- telas baixas (celular em paisagem) ---------- */
+@media (max-height: 640px) {
+    .tlDialog .mzDialog { max-height: calc(100vh - 16px); }
+    .tlResBody { grid-template-columns: 170px 1fr 1.1fr; }
+}
+@media (max-width: 900px) {
+    .tlResBody { grid-template-columns: 150px 1fr 1fr; }
+    .tlBtnGrid { grid-template-columns: repeat(2, 1fr); }
+    .tlBtnGrid .tlBtn:last-child { grid-column: span 2; }
+    .tlOptGrid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_7";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>How to Set Traits</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>How to Set Traits</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="How to Set Traits">
+        <span>How to Set Traits</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Database</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Database</a></li>
+				<li>&gt;</li>
+				<li>How to Set Traits</li>
+			</ul>
+			<img src="assets/img/common/cha08.webp" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">How to Set Traits</h1>
+
+		<div class="section">
+			<h2 class="title--h2">Settings Overview</h2>
+			<p class="text">
+				The [Traits] settings for actors, classes, weapons, armors, enemies, and states define the unique properties and functions for each type of data. <br/>The 25 types of properties that can be assigned are detailed below. By assigning these properties according to the contents of the data you wish to create, you can give complex traits to the data. <br/>Traits of classes, weapons, armors, and states will be reflected in a character&#39;s traits when that character has that type of data added (or equipped). <br/>Furthermore, please be careful when configuring traits that permanently restrict actions. For example, a weapon which is set to lock equipment cannot be removed once an actor equips it.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">How to Configure</h2>
+					<p class="text">
+						To set a trait, double-click an empty row in the Traits field. Select the property type in the displayed window, then specify what effects are to be applied. <br/> <br/>The properties you&#39;ve set will be displayed in the [Traits] list. Double-clicking this icon will allow you to re-edit the content you specified. Additionally, by right-clicking an item and using the context menu that is shown, you can perform actions such as copying and deleting settings.
+					</p>
+				</div>
+				<img src="assets/img/01_08_15_img01.webp" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Contents of Each Trait</h2>
+			<h3 class="title--h3">
+				[Rate] Tab
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Element Rate </h4>
+					<dd>Change the damage received when an attack contains an element. Specify the desired element and its rate of variability (0-1000%). An attack&#39;s damage will become greater than normal if the rate is set over 100%, indicating that this character is weak against the specified element.</dd>
+				</li>
+				<li>
+					<h4>Debuff Rate</h4>
+					<dd>Change the success rate of items and skills which have a [Debuff] effect when used. Specify the desired parameter and the rate for success (0 to 1000%, 100% meaning no change).</dd>
+				</li>
+				<li>
+					<h4>State Rate </h4>
+					<dd>Change the success rate of items and skills which have an [Add State] effect when used. Specify the desired state and the rate of change for success (0 to 1000%, 100% meaning no change).</dd>
+				</li>
+				<li>
+					<h4>State Resist </h4>
+					<dd>Negates the specified state. If [Knockout] is selected, a character will not be knocked out even when their HP reaches 0.</dd>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				[Param] Tab
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Regular Parameters </h4>
+					<dd>Raises or lowers parameters such as Max HP and Attack Power at a fixed rate. Specify the desired parameter and the rate of change (0 to 1000%, 100% means no change).</dd>
+				</li>
+				<li>
+					<h4>Ex-Parameters </h4>
+					<dd>Raises or lowers the values of extra parameters such as Hit Rate and Evasion Rate. Specify the desired parameter and the percentage to add (-100 to 100%, starting value is 0%).</dd>
+				</li>
+				<li>
+					<h4>Sp-Parameter </h4>
+					<dd>Raises or lowers the values of special parameters such as Target Rate and Guard Rate. Specify the desired parameter and the rate of change (0 to 1000%, starting value is 100%).</dd>
+				</li>
+			</ul>
+			<dl class="dl">
+			</dl>
+
+			<h3 class="title--h3" id="m01">
+				[Attack] Tab
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Attack Element </h4>
+					<dd>Adds the specified element to normal attacks.</dd>
+				</li>
+				<li>
+					<h4>Attack State </h4>
+					<dd>Adds an effect of changing states to normal attacks. Specify the effect and the change in rate of success (0 to 1000%, 100% means no change).</dd>
+				</li>
+				<li>
+					<h4>Attack Speed </h4>
+					<dd>Raises or lowers agility when choosing a normal attack in battle. Specify the increase/decrease value (-999 to 999).</dd>
+				</li>
+				<li>
+					<h4>Attack Times </h4>
+					<dd>Increases the number of times (1 by default) a target is damaged using normal attacks. Specify the amount to increase.</dd>
+				</li>
+				<li>
+					<h4>Attack Skills </h4>
+					<dd>
+						Specify the skill to be used as a regular attack. <br/> Please see [Improvements to Artistic Expressions in Games] → [Database Improvements] → [<a href="01_01_01_05.html#m01">Add &quot;Attack Skills&quot;</a>] for more information.
+					</dd>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				[Skill] Tab
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Add Skill Type </h4>
+					<dd>Allows the player to select the specified skill type command.</dd>
+				</li>
+				<li>
+					<h4>Seal Skill Type </h4>
+					<dd>Prevents the player from selecting the specified skill type.</dd>
+				</li>
+				<li>
+					<h4>Add Skill </h4>
+					<dd>Makes the specified skill usable.</dd>
+				</li>
+				<li>
+					<h4>Seal Skill </h4>
+					<dd>Makes the specified skill unusable.</dd>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				[Equip] Tab
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Equip Weapon </h4>
+					<dd>Makes the specified weapon type able to be equipped.</dd>
+				</li>
+				<li>
+					<h4>Equip Armor </h4>
+					<dd>Makes the specified armor type able to be equipped.</dd>
+				</li>
+				<li>
+					<h4>Lock Equip </h4>
+					<dd>Makes it so that equipment for the specified slot cannot be changed. Use this when you do not want to allow equipment changes for an actor that is temporarily in the party.</dd>
+				</li>
+				<li>
+					<h4>Seal Equip </h4>
+					<dd>Prevents equipment from being equipped in the specified slot. This allows you to create things such as &quot;Two-handed Weapons&quot; which seals shield equipment and &quot;Full-body Clothing&quot; that seals head equipment.</dd>
+				</li>
+				<li>
+					<h4>Slot Type </h4>
+					<dd>Can only be set to [Dual Wield]. In exchange for not being able to equip a shield, characters can equip two weapons.</dd>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				[Other] Tab
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Action Times +</h4>
+					<dd>Sets the chance of raising the number of actions during battle by 1 using the specified probability. If a character has multiple entries for this trait, determination or whether or not to increase the number of actions will be based on the individually specified probabilities. For example, if a character has two of these traits with a probability of 50% each, the chance of the number of actions increasing 2 times, and the chance of actions not increasing even 1 time will each be 25% (50% x 50%).</dd>
+				</li>
+				<li>
+					<h4>Collapse Effect </h4>
+					<dd>A parameter only usable on enemies. The effect when an enemy is knocked out and collapses will change to the specified effect.</dd>
+				</li>
+				<li>
+					<h4>Special Flag </h4>
+					<dd>
+						Grants special traits related to actions during battle.
+						<table class="table--type04 mt10px">
+							<tbody><tr>
+								<th>Auto Battle</th>
+								<td>Characters will perform actions automatically without taking commands from the player.</td>
+							</tr>
+							<tr>
+								<th>Guard</th>
+								<td>Decreases the amount of damage taken by a fixed rate.</td>
+							</tr>
+							<tr>
+								<th>Substitute</th>
+								<td>Take damage in place of an ally when they are attacked when their HP is low.</td>
+							</tr>
+							<tr>
+								<th>Preserve TP</th>
+								<td>Accumulated TP will be preserved for the next battle. By default, TP will be reset each battle, and the amount of TP that each character has at the start of battle will be decided randomly.</td>
+							</tr>
+						</tbody></table>
+					</dd>
+				</li>
+				<li>
+					<h4>Party Ability </h4>
+					<dd>
+						Grants special traits related to the party&#39;s actions. These are reflected as traits for the entire party even when just one actor given these traits is in the party.
+						<table class="table--type04 mt10px">
+							<tbody><tr>
+								<th>Half Encounters</th>
+								<td>The frequency of encounters while moving on the map will be reduced by half.</td>
+							</tr>
+							<tr>
+								<th>Encounter None</th>
+								<td>No encounters will occur while moving on the map.</td>
+							</tr>
+							<tr>
+								<th>Cancel Surprise</th>
+								<td>Surprise attacks (in which only enemy troops can perform actions on the first turn) will no longer occur when a battle starts.</td>
+							</tr>
+							<tr>
+								<th>Raise Preemptive</th>
+								<td>The chance of preemptive attacks (in which only the party can perform actions on the first turn) when a battle starts will increase.</td>
+							</tr>
+							<tr>
+								<th>Gold Double</th>
+								<td>The amount of gold received when the party wins a battle will be twice the normal amount.</td>
+							</tr>
+							<tr>
+								<th>Drop Item Double</th>
+								<td>The rate of a party getting items from enemies after winning a battle will be twice the normal rate. (Only applies when an item has been configured for the enemy that is defeated.)</td>
+							</tr>
+						</tbody></table>
+					</dd>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

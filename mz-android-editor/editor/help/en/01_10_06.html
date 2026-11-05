@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Movement</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Movement</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Movement">
+        <span>Movement</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Movement</li>
+			</ul>
+			<img src="assets/img/common/cha10.webp" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Movement</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Transfer Player</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img01.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the location of the party.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Position</h4>
+					<p>Specify the location to be used after the change takes place. To move a party to a specific location, select [Direct Designation], then click [...]. A new window will appear in which you can click to specify the new location of the party. To specify the location using a map&#39;s ID and coordinates, select [Designation with Variables], then specify the variables in the [ID], [X], and [Y] fields.</p>
+				</li>
+				<li>
+					<h4>Direction</h4>
+					<p>Specify the direction the player should be facing after being moved.</p>
+				</li>
+				<li>
+					<h4>Fade</h4>
+					<p>Specify how the screen will transition during a transfer. The screen will temporarily fade to black when choosing [Black] or white when choosing [White], followed by the new map location.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Set Vehicle Location</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img02.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the location of vehicles.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Vehicle</h4>
+					<p>Specify the target vehicle (boat/ship/plane).</p>
+				</li>
+				<li>
+					<h4>Location</h4>
+					<p>Specify the new location to be assigned to the vehicle. To move a vehicle to a specific location, select [Direct Designation], then click [...]. A new window will appear in which you can click to specify the new location of the vehicle. To specify the location using a map&#39;s ID and coordinates, select [Designation with Variables], then specify the variables in the [ID], [X], and [Y] fields.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Set Event Location</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img03.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the location of an event.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Event</h4>
+					<p>Specify the target event. By setting this to [This Event], the event itself will be the target of the location change. You may only move events to another location on the same map.</p>
+				</li>
+				<li>
+					<h4>Location</h4>
+					<p>Specify the location to be used after the change takes place. To move an event to a specific location, select [Direct Designation], then click [...]. A new window will appear in which you can click to specify the new location of the event. To specify the location using map coordinates, select [Designation with Variables], then specify the variables in the [X] and [Y] fields.</p>
+				</li>
+				<li>
+					<h4>Direction</h4>
+					<p>Specify the direction the player should be facing after being moved.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks</h3>
+			<ul class="ul">
+				<li>This cannot be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Scroll Map</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img04.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Moves (scrolls) the display range of the map while playing without changing the location of the player.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Direction</h4>
+					<p>Specify the direction to scroll.</p>
+				</li>
+				<li>
+					<h4>Distance</h4>
+					<p>Specify the distance (number of tiles) to move.</p>
+				</li>
+				<li>
+					<h4>Speed</h4>
+					<p>Specify the speed (6 levels) of the scrolling.</p>
+				</li>
+				<li>
+					<h4>Wait for Completion</h4>
+					<p>When enabled, will wait until scroll is complete.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks</h3>
+			<ul class="ul">
+				<li>This cannot be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Set Movement Route</h2>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Forces the player or map event to move along a specified route. <br/>For more information, please refer to [<a href="01_10_06_01.html">Movement Route Settings</a>].</p>
+
+			<h3 class="title--h3">Remarks</h3>
+			<ul class="ul">
+				<li>Characters set on a movement route will start to move immediately.</li>
+				<li>Using this event command on characters which are already set on movement routes will cause those settings to be abandoned, and only the new settings will remain active. Choose [Wait for Completion] when you wish to set the next route after the movement from a previous route is completed.</li>
+				<li>When [Wait for Completion] is enabled, the player cannot perform any actions until the movement command has finished (excluding processes running in parallel). If the character on the specified movement route runs into any obstacles during this time and the movement command is no longer able to run, the event will stop at that point. Enable options such as [Skip If Cannot Move] to avoid these sorts of situations.</li>
+				<li>When using this command event, a player&#39;s total number of steps will not increase even if the player is moved.</li>
+				<li>This cannot be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">Get On/Off Vehicle</h2>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Controls getting on and off vehicles. If currently on a vehicle, the player will exit to the ground. If not on a vehicle, they will get on. There are no parameters to set.</p>
+			<h3 class="title--h3">Remarks</h3>
+			<ul class="ul">
+				<li>This event forces the player to get on or off the vehicle just as when they use the [Action] key. (Nothing will happen if there are no vehicles that can be boarded or when there is no ground to move to.)</li>
+				<li>Cannot be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>
