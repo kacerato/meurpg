@@ -43,6 +43,7 @@ export async function openDatabase(api, tabId) {
     api.status("");
     const dirty = new Set();
     let current = null;                      // aba atual
+    let multi = new Set(), multiMode = false, anchor = 0;   // seleção múltipla na lista
     const ctx = {
         api, db, dirty,
         touch(file) { dirty.add(file || current.file); updateTitle(); },
@@ -127,10 +128,19 @@ export async function openDatabase(api, tabId) {
         titleEl = el("div", { class: "dbListTitle", text: current.label });
         listEl = el("div", { class: "dbList" });
         formEl = el("div", { class: "dbForm" });
+        multi = new Set([ui.sel[current.id] || 1]);
+        multiMode = false;
+        const multiBtn = btn("Multi", () => {
+            multiMode = !multiMode;
+            multiBtn.classList.toggle("on", multiMode);
+            if (!multiMode) { multi = new Set([ui.sel[current.id]]); markSelected(); }
+        }, "small");
+        multiBtn.title = "Seleção múltipla (equivale a Shift + clique)";
         const listBtns = el("div", { class: "dbListBtns" },
             btn("Change Maximum...", changeMaximum),
             el("div", { class: "dbRow" },
-                btn("Copy", () => { const s = ui.sel[current.id]; clipboard[current.file] = structuredClone(db[current.file][s]); }, "small"),
+                multiBtn,
+                btn("Copy", copyItems, "small"),
                 btn("Paste", pasteItem, "small"),
                 btn("Clear", clearItem, "small")));
         content.appendChild(el("div", { class: "dbMain" }, el("div", { class: "dbListPane" }, titleEl, listEl, listBtns), formEl));
@@ -155,14 +165,32 @@ export async function openDatabase(api, tabId) {
         listEl.appendChild(frag);
         listEl.onclick = e => {
             const r = e.target.closest(".dbListItem");
-            if (r) { selectItem(Number(r.dataset.id)); }
+            if (!r) { return; }
+            const id = Number(r.dataset.id);
+            if (e.shiftKey) {
+                // Shift + clique: intervalo a partir da âncora (como no MZ)
+                const a = anchor || ui.sel[current.id] || id;
+                multi = new Set();
+                for (let k = Math.min(a, id); k <= Math.max(a, id); k++) { multi.add(k); }
+            } else if (multiMode) {
+                if (multi.has(id) && multi.size > 1) { multi.delete(id); } else { multi.add(id); }
+                anchor = id;
+            } else {
+                multi = new Set([id]);
+                anchor = id;
+            }
+            selectItem(id, true);
         };
         markSelected();
     }
 
     function markSelected() {
         const s = ui.sel[current.id];
-        for (const r of listEl.querySelectorAll(".dbListItem.sel")) { r.classList.remove("sel"); }
+        for (const r of listEl.querySelectorAll(".dbListItem.sel, .dbListItem.multi")) { r.classList.remove("sel", "multi"); }
+        for (const id of multi) {
+            const m = id !== s && listEl.querySelector(`.dbListItem[data-id="${id}"]`);
+            if (m) { m.classList.add("multi"); }
+        }
         const r = listEl.querySelector(`.dbListItem[data-id="${s}"]`);
         if (r) {
             r.classList.add("sel");
@@ -178,8 +206,9 @@ export async function openDatabase(api, tabId) {
         if (r) { r.textContent = labelOf(db[current.file][s], s); }
     }
 
-    function selectItem(id) {
+    function selectItem(id, keepMulti) {
         if (id < 1) { formEl.innerHTML = ""; return; }
+        if (!keepMulti) { multi = new Set([id]); anchor = id; }
         ui.sel[current.id] = id;
         markSelected();
         const arr = db[current.file];
@@ -210,23 +239,37 @@ export async function openDatabase(api, tabId) {
         selectItem(Math.min(ui.sel[current.id] || 1, arr.length - 1));
     }
 
+    function selectedIds() {
+        const ids = [...multi].sort((a, b) => a - b);
+        return ids.length ? ids : [ui.sel[current.id]];
+    }
+
+    function copyItems() {
+        clipboard[current.file] = selectedIds().map(id => structuredClone(db[current.file][id]));
+        api.status(`Copiado: ${clipboard[current.file].length} item(ns)`);
+    }
+
+    // Cola em sequência a partir do item selecionado (vários itens copiados => vários destinos).
     function pasteItem() {
         const c = clipboard[current.file];
         const s = ui.sel[current.id];
-        if (!c || !s) { return; }
-        db[current.file][s] = Object.assign(structuredClone(c), { id: s });
+        if (!c || !c.length || !s) { return; }
+        const arr = db[current.file];
+        c.forEach((item, k) => {
+            const id = s + k;
+            if (id < arr.length) { arr[id] = Object.assign(structuredClone(item), { id }); }
+        });
         ctx.touch(current.file);
-        refreshRowLabel();
+        renderList();
         selectItem(s);
     }
 
-    async function clearItem() {
-        const s = ui.sel[current.id];
-        if (!s) { return; }
-        db[current.file][s] = BLANK[current.file](s);
+    function clearItem() {
+        const ids = selectedIds();
+        for (const id of ids) { db[current.file][id] = BLANK[current.file](id); }
         ctx.touch(current.file);
-        refreshRowLabel();
-        selectItem(s);
+        renderList();
+        selectItem(ui.sel[current.id]);
     }
 
     let start = ui.tab;

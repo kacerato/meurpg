@@ -4,6 +4,8 @@ import { switchOptions } from "./common.js";
 import { listFiles, pickImage, pickColor, audioField, audioText, loadImage } from "./pickers.js";
 import { cols, noteGroup } from "./tabs_actors.js";
 import { commandList } from "./eventlist.js";
+import { previewGroup } from "./animpreview.js";
+import { changeBattleback } from "./tabs_battle.js";
 
 // ------------------------------------------------------------------ Animations
 
@@ -80,8 +82,11 @@ export const animationsTab = {
             fld("Rotation Z:", num(a.rotation, "z", { min: -360, max: 360 })),
             fld("Offset X:", num(a, "offsetX", { min: -9999, max: 9999 })),
             fld("Offset Y:", num(a, "offsetY", { min: -9999, max: 9999 })))));
-        left.appendChild(grp("Preview", el("div", { class: "dbHint", text:
-            "A pré-visualização Effekseer não está disponível no editor Android: o efeito é referenciado pelo nome do arquivo em effects/. Use o Teste de jogo para vê-lo." })));
+        left.appendChild(grp("Preview", ...previewGroup(ctx.db, a, async db => {
+            const ok = await changeBattleback(db);
+            if (ok) { ctx.touch("System"); }
+            return ok;
+        })));
         right.appendChild(grp("Sound Timings", tableList({
             columns: [{ title: "Frame", width: "70px" }, { title: "Sound", width: "1fr" }],
             items: a.soundTimings,
@@ -113,6 +118,67 @@ const MODES = [["passage", "Passage"], ["passage4", "Passage (4 dir)"], ["ladder
     ["counter", "Counter"], ["damage", "Damage Floor"], ["terrain", "Terrain Tag"]];
 const BIT = { ladder: 0x20, bush: 0x40, counter: 0x80, damage: 0x100 };
 const ui = { tab: 0, mode: "passage" };
+
+// Bits de veículo (0x200 barco, 0x400 navio, 0x800 pouso de aeronave), recalculados como o MZ:
+// A1 bloco A (mar) e D (água) navegáveis por barco/navio, B (mar profundo) só navio, C e E nenhum;
+// tile transitável (passagem ≠ ×) bloqueia barco/navio; aeronave não pousa em A1, A3, A4, nem em
+// A2 intransitável ou com Bush. Só nas folhas que têm imagem (conferido com os 6 tilesets do
+// template: 34048/34048 tiles idênticos).
+function slotOfTile(id) {
+    if (id < 1024) { return 5 + Math.floor(id / 256); }
+    if (id < 1536) { return -1; }
+    if (id < 2048) { return 4; }
+    if (id < 2816) { return 0; }
+    if (id < 4352) { return 1; }
+    if (id < 5888) { return 2; }
+    return 3;
+}
+export function vehicleBits(flags, id) {
+    if (id === 0) { return 0; }
+    const walk = ((flags[id] || 0) & 0x0f) !== 0x0f;
+    if (id >= 2048 && id < 2816) {
+        const k = Math.floor((id - 2048) / 48);
+        const boat = k === 0 || (k >= 4 && k % 2 === 0);
+        const ship = boat || k === 1;
+        return ((!boat || walk) ? 0x200 : 0) | ((!ship || walk) ? 0x400 : 0) | 0x800;
+    }
+    let land = 0;
+    if (id >= 2816 && id < 4352) {
+        const b = flags[2048 + Math.floor((id - 2048) / 48) * 48] || 0;
+        if ((b & 0x0f) === 0x0f || (b & 0x40)) { land = 0x800; }
+    } else if (id >= 4352) {
+        land = 0x800;
+    }
+    return 0x600 | land;
+}
+export function recomputeVehicleBits(ts) {
+    for (let id = 0; id < ts.flags.length && id < 8192; id++) {
+        const s = slotOfTile(id);
+        if (s < 0 || !ts.tilesetNames[s]) { continue; }
+        ts.flags[id] = ((ts.flags[id] || 0) & ~0xe00) | vehicleBits(ts.flags, id);
+    }
+}
+
+// Autotile "tipo floresta" (manual, Asset Standards): o pixel (8,8) a partir do canto inferior
+// direito do bloco é transparente. Nesses, Bush não vale para as 8 formas da borda inferior.
+const FOREST_SHAPES = [38, 39, 40, 41, 43, 44, 45, 46];
+const forestCache = new Map();
+function isForestKind(img, name, kind) {
+    const key = name + "#" + kind;
+    if (forestCache.has(key)) { return forestCache.get(key); }
+    let res = false;
+    try {
+        const tx = kind % 8, ty = Math.floor(kind / 8);
+        const bx = tx * 2, by = (ty - 2) * 3;
+        const c = document.createElement("canvas");
+        c.width = 1; c.height = 1;
+        const g = c.getContext("2d");
+        g.drawImage(img, bx * T + 2 * T - 8, by * T + 3 * T - 8, 1, 1, 0, 0, 1, 1);
+        res = g.getImageData(0, 0, 1, 1).data[3] === 0;
+    } catch (e) { res = false; }
+    forestCache.set(key, res);
+    return res;
+}
 
 // Lista de células da paleta de uma aba: {ids:[...], img:slot, sx, sy}
 function paletteCells(ts, tab) {
@@ -228,6 +294,14 @@ function tilePalette(ts) {
     const setFlags = (cell, fn) => {
         if (cell.locked) { return; }
         for (const id of cell.ids) { ts.flags[id] = fn(ts.flags[id] || 0); }
+        const base = cell.ids[0];
+        if (ui.mode === "bush" && base >= 2816 && base < 4352 && imgs[1]) {
+            const kind = Math.floor((base - 2048) / 48);
+            if (isForestKind(imgs[1], ts.tilesetNames[1], kind)) {
+                for (const sh of FOREST_SHAPES) { ts.flags[base + sh] &= ~0x40; }
+            }
+        }
+        recomputeVehicleBits(ts);
     };
     // calcula a transformação a partir da célula tocada; o arrasto aplica o mesmo resultado
     const transformFor = (cell, px, py) => {
@@ -321,7 +395,7 @@ export const tilesetsTab = {
         SLOT_NAMES.forEach((n, i) => {
             const b = btn("", async () => {
                 const r = await pickImage({ folder: "tilesets", current: ts.tilesetNames[i], title: "Select an Image (" + n + ")" });
-                if (r) { ts.tilesetNames[i] = r.name; changed(); paint(); palette.redraw(); }
+                if (r) { ts.tilesetNames[i] = r.name; recomputeVehicleBits(ts); changed(); paint(); palette.redraw(); }
             }, "dbPickBtn");
             const paint = () => { b.textContent = ts.tilesetNames[i] || "(None)"; };
             paint();

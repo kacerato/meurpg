@@ -1,7 +1,8 @@
 // Abas Actors e Classes.
 import { el, num, text, area, sel, fld, grp, grid, btn, tableList, modal, tabs, changed } from "./ui.js";
-import { PARAMS, idOptions, nameOf, expForLevel, generateCurve, CURVE_PRESETS } from "./common.js";
+import { PARAMS, idOptions, nameOf, expForLevel, generateCurve, quickCurve, PARAM_MIN, PARAM_MAX, PARAM_GRAPH_MAX, GROWTH_MIN, GROWTH_NORMAL, GROWTH_MAX } from "./common.js";
 import { traitsList } from "./traits.js";
+import { openPluginHelp } from "./pluginhelp.js";
 import { pickSheet, pickImage, faceThumb, charThumb, svThumb } from "./pickers.js";
 
 export function cols(host) {
@@ -12,7 +13,8 @@ export function cols(host) {
 }
 
 export function noteGroup(obj, rows = 5) {
-    return grp("Note", area(obj, "note", { rows }));
+    const ta = area(obj, "note", { rows });
+    return grp("Note", ta, el("div", { class: "dbRow" }, btn("Plugin Help...", () => openPluginHelp(obj, "note", ta), "small")));
 }
 
 // Caixa de imagem tocável (rótulo + miniatura).
@@ -102,14 +104,13 @@ export const actorsTab = {
 // ------------------------------------------------------------------ Classes
 
 const PARAM_COLORS = ["#e8903c", "#3c78e8", "#d84040", "#c8a020", "#a040d0", "#38a048", "#30a8c8", "#d860a0"];
-const PARAM_MAX = [9999, 9999, 999, 999, 999, 999, 999, 999];
 
 function drawCurve(cv, values, color, max, selLevel) {
     const ctx = cv.getContext("2d");
     const W = cv.width, H = cv.height;
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, W, H);
-    const top = Math.max(max, ...values.slice(1, 100));
+    const top = max;
     const bw = W / 99;
     ctx.fillStyle = color;
     for (let lv = 1; lv <= 99; lv++) {
@@ -125,25 +126,25 @@ function drawCurve(cv, values, color, max, selLevel) {
 function curveThumb(c, i) {
     const cv = el("canvas", { class: "dbCurve" });
     cv.width = 198; cv.height = 70;
-    drawCurve(cv, c.params[i], PARAM_COLORS[i], PARAM_MAX[i] / 2);
+    drawCurve(cv, c.params[i], PARAM_COLORS[i], PARAM_GRAPH_MAX[i]);
     return el("div", { class: "dbCurveBox" }, el("div", { class: "dbLabel", text: PARAMS[i] }), cv);
 }
 
 async function generateCurveDialog(i, values) {
-    const o = { v1: values[1], v99: values[99], g: 0 };
-    const isHp = i === 0;
+    const o = { v1: values[1], v99: values[99], g: GROWTH_NORMAL };
     const ok = await modal({
         title: "Generate Curve", width: "460px",
         build: b => {
             b.appendChild(grid(2,
-                fld("Level 1:", num(o, "v1", { min: isHp ? 1 : 0, max: PARAM_MAX[i] })),
-                fld("Level 99:", num(o, "v99", { min: isHp ? 1 : 0, max: PARAM_MAX[i] }))));
-            const s = el("input", { type: "range", min: -10, max: 10, value: 0, class: "dbRange" });
-            s.addEventListener("input", () => { o.g = Number(s.value) / 10; });
-            b.appendChild(fld("Growth Type:", [el("span", { text: "Fast" }), s, el("span", { text: "Slow" })]));
+                fld("Level 1:", num(o, "v1", { min: PARAM_MIN[i], max: PARAM_MAX[i] })),
+                fld("Level 99:", num(o, "v99", { min: PARAM_MIN[i], max: PARAM_MAX[i] }))));
+            const s = el("input", { type: "range", min: GROWTH_MIN, max: GROWTH_MAX, step: 1, value: o.g, class: "dbRange" });
+            s.addEventListener("input", () => { o.g = Number(s.value); });
+            b.appendChild(grp("Growth Type", s, el("div", { class: "dbGrowthLabels" },
+                el("span", { text: "Fast" }), el("span", { text: "Normal" }), el("span", { text: "Slow" }))));
         }
     });
-    return ok ? generateCurve(o.v1, o.v99, o.g) : null;
+    return ok ? generateCurve(o.v1, o.v99, o.g, values) : null;
 }
 
 async function editParamCurves(c, initial) {
@@ -159,11 +160,11 @@ async function editParamCurves(c, initial) {
                     cv.width = 594; cv.height = 260;
                     const lv = { v: state.level };
                     const val = { v: params[i][state.level] };
-                    const valInput = num(val, "v", { min: i === 0 ? 1 : 0, max: PARAM_MAX[i], onChange: v => {
-                        params[i][lv.v] = v; if (lv.v === 1) { params[i][0] = v; } redraw();
+                    const valInput = num(val, "v", { min: PARAM_MIN[i], max: PARAM_MAX[i], onChange: v => {
+                        params[i][lv.v] = v; redraw();
                     } });
                     const lvInput = num(lv, "v", { min: 1, max: 99, onChange: v => { state.level = v; val.v = params[i][v]; valInput.refresh(); redraw(); } });
-                    const redraw = () => drawCurve(cv, params[i], PARAM_COLORS[i], PARAM_MAX[i] / 2, lv.v);
+                    const redraw = () => drawCurve(cv, params[i], PARAM_COLORS[i], PARAM_GRAPH_MAX[i], lv.v);
                     const pick = e => {
                         const r = cv.getBoundingClientRect();
                         lv.v = Math.max(1, Math.min(99, Math.floor((e.clientX - r.left) / r.width * 99) + 1));
@@ -173,10 +174,9 @@ async function editParamCurves(c, initial) {
                     };
                     cv.addEventListener("pointerdown", e => { cv.setPointerCapture(e.pointerId); pick(e); });
                     cv.addEventListener("pointermove", e => { if (e.buttons) { pick(e); } });
-                    const quick = el("div", { class: "dbRow" }, el("span", { text: "Quick Settings:" }),
+                    const quick = el("div", { class: "dbRow" }, el("span", { text: "Quick Setting:" }),
                         ...["A", "B", "C", "D", "E"].map((L, k) => btn(L, () => {
-                            const [a, z] = CURVE_PRESETS[i][k];
-                            params[i] = generateCurve(a, z, 0);
+                            params[i] = quickCurve(i, k, params[i]);
                             val.v = params[i][lv.v]; valInput.refresh(); redraw();
                         }, "small")));
                     page.append(quick,

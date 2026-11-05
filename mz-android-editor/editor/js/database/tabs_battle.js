@@ -251,7 +251,7 @@ async function alignMembers(db, t) {
     t.members.forEach((m, i) => { m.x = x + Math.round(widths[i] / 2); m.y = 436; x += widths[i]; });
 }
 
-async function changeBattleback(db) {
+export async function changeBattleback(db) {
     const sys = db.System;
     const r1 = await pickImage({ folder: "battlebacks1", current: sys.battleback1Name, title: "Battle Background (1/2)" });
     if (!r1) { return false; }

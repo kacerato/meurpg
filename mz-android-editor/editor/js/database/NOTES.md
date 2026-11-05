@@ -20,7 +20,9 @@ original, interface de toque em paisagem (controles ≥ 36 px, abas roláveis, c
 | `pickers.js` | seletores com pré-visualização: imagem (com Hue), sprite sheet de character/face com índice, ícone (IconSet), áudio (volume/pitch/pan, tocar/parar), cor/tom |
 | `ui.js` | widgets ligados a dados (`num`, `text`, `sel`, `chk`...), `tableList`, `modal`, `tabs` |
 | `eventlist.js` | lista "Contents" (resumo textual dos comandos) para Troops e Common Events |
-| `common.js` | constantes, opções, escopo, curva de EXP, dados em branco por tipo |
+| `common.js` | constantes, opções, escopo, curva de EXP, curvas de parâmetro exatas do MZ, dados em branco por tipo |
+| `animpreview.js` | pré-visualização Effekseer da aba Animations |
+| `pluginhelp.js` | "Plugin Help..." do campo Note |
 
 ## Gravação
 
@@ -43,6 +45,55 @@ original, interface de toque em paisagem (controles ≥ 36 px, abas roláveis, c
   só leitura. Nota deixada na pasta compartilhada das sessões (`database-to-events.md`).
 - `pickers.js` (pickImage, pickSheet, pickIcon, pickAudio, pickColor) pode ser reaproveitado.
 
+## Rodada 2 (fidelidade)
+
+### Curvas de parâmetro: valores exatos do RPG.exe
+Os QML do editor estão compilados (cache QV4 do Qt 5.12.9) dentro de `RPG/RPG.exe`. Achei as
+unidades (`qv4cdata`), li as tabelas de strings, lookups e constantes e desmontei o bytecode
+Moth (tabela de opcodes do `qv4instr_moth_p.h` do Qt 5.12). Resultado:
+
+- `Constants.paramMinArray = [1,0,0,0,0,0,0,0]`, `paramMaxArray = [9999,9999,999×6]`,
+  `paramGraphMaxArray = [9999,2000,250,250,250,250,500,500]` (escala do gráfico).
+- `generateParameters(v1, v99, growth)`: para L = 1..99,
+  `lin = v1 + (v99−v1)(L−1)/98`, `quad = v1 + (L−1)·((L−1)(v99−v1))/98/98`,
+  `valor = Math.ceil((quad·(growth−10) + lin·(20−growth)) / 10)`; slider Growth Type 0..20
+  (Fast / Normal = 10 / Slow). O índice 0 não é alterado. Conferido: as 6336 posições das 8
+  classes do template saem idênticas com growth = 10.
+- `quickSetParameters(rank)`, com `rank = 4 − índice do botão` (A = 4 … E = 0):
+  `v1 = (200 + 100·rank + 100·random) · G/10000` (+5 se o parâmetro for ATK em diante),
+  `v99 = (4000 + 1000·rank + 1000·random) · G/10000`, ambos `Math.round`, com
+  `G = paramGraphMaxArray[param]`, e depois `generateParameters(v1, v99, 10)`. "Quick Setting"
+  é aleatório dentro da faixa, como diz a dica do original ("randomly within a predefined range").
+
+### Bits de veículo dos tilesets
+Recalculados depois de cada alteração de flags e ao trocar imagens (`recomputeVehicleBits`):
+A1 bloco A (mar) e D (água) navegáveis por barco e navio; B (mar profundo) só por navio;
+C e E (cachoeira) por nenhum; tile transitável bloqueia barco/navio; aeronave não pousa em
+A1, A3, A4, nem em A2 intransitável ou com Bush. Só vale para folhas com imagem. Conferido com
+os 6 tilesets do template: 34048/34048 tiles idênticos.
+Bush em autotile A2 "tipo floresta" (pixel (8,8) do canto inferior direito transparente, manual
+Asset Standards) não vale para as 8 formas da borda inferior (38–41, 43–46). Isso bate com
+World/Dungeon do template; nos tilesets Outside do template o pixel é transparente, mas as formas
+mantêm o Bush (dados antigos; a regra só é aplicada quando o Bush é editado).
+
+### Pré-visualização de animações (Effekseer)
+`animpreview.js` carrega `/project/js/libs/effekseer.min.js` + `effekseer.wasm` sob demanda,
+cria UM contexto WebGL reaproveitado e reproduz `Sprite_Animation`: matrizes de projeção e
+câmera, viewport 4096 centrado no alvo (displayType 2 = centro da tela; `alignBottom`),
+escala/velocidade/rotação/offset, Sound Timings tocando os SE e Flash Timings com a cor
+mesclada no alvo e decaimento (d−1)/d, a 60 quadros fixos. Botões Play, Stop, Change Target...
+e Change BG... (fundo compartilhado com Troops em `System.battleback1Name/2Name`).
+
+### Plugin Help... no Note
+Botão abaixo de cada campo Note: lista os plugins ATIVOS de `js/plugins.js` (via
+`plugins/store.js`), lê o `@help` com `plugins/parser.js` (importados do módulo plugins) e
+extrai as tags de nota `<...>` citadas na ajuda, com "Insert" para colocá-las no Note.
+
+### Seleção múltipla na lista
+Shift + clique seleciona um intervalo (como no MZ); no toque, o botão "Multi" alterna itens.
+Copy copia todos os selecionados; Paste cola em sequência a partir do item atual; Clear limpa
+todos os selecionados.
+
 ## Gostaria de ver na API
 
 - `api.openDialog` com callback `onClose` e opção de não fechar por `closeTopDialog`
@@ -52,13 +103,8 @@ original, interface de toque em paisagem (controles ≥ 36 px, abas roláveis, c
 
 ## Fora do escopo / limitações
 
-- Pré-visualização de animação Effekseer (o runtime Effekseer não é carregado no editor).
-- Edição dos comandos de evento (pertence ao módulo events).
-- Seleção múltipla com Shift no Copy da lista; menu de contexto (substituído por botões).
-- Quick Settings A–E e Generate Curve usam curvas aproximadas (os valores exatos do MZ não
-  estão no manual nem no runtime).
-- Ao trocar imagens de tileset, os bits de passagem de veículos não são recalculados.
-- "Plugin Help..." no campo Note.
+- Edição dos comandos de evento: feita pelo módulo events via `api.events.editCommandList`.
+- Menu de contexto (substituído por botões).
 
 ## Como testar
 
