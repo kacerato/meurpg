@@ -91,30 +91,49 @@ export function expForLevel(p, level) {
 }
 
 // --------------------------------------------------------------------- Curvas de parâmetro
-// growth: -1 (cresce cedo) .. 1 (cresce tarde). Gera 100 posições (índice = nível; 0 = valor do nível 1).
-export function generateCurve(v1, v99, growth = 0) {
-    const out = new Array(100);
-    const exp = Math.pow(2, growth * 1.5);
+// Valores exatos do editor MZ 1.1.1 (Constants.qml e Dialog_ParameterCurves.qml compilados
+// no RPG.exe; desmontados do bytecode QV4 — ver NOTES.md).
+export const PARAM_MIN = [1, 0, 0, 0, 0, 0, 0, 0];               // Constants.paramMinArray
+export const PARAM_MAX = [9999, 9999, 999, 999, 999, 999, 999, 999]; // Constants.paramMaxArray
+export const PARAM_GRAPH_MAX = [9999, 2000, 250, 250, 250, 250, 500, 500]; // Constants.paramGraphMaxArray
+export const GROWTH_MIN = 0, GROWTH_NORMAL = 10, GROWTH_MAX = 20; // slider Fast / Normal / Slow
+
+// Dialog_ParameterCurves.generateParameters(value1, value2, growth): mistura da reta com a
+// parábola, ponderada pelo slider; Math.ceil. Só altera os níveis 1..99 (o índice 0 fica).
+export function generateCurve(v1, v99, growth = GROWTH_NORMAL, base) {
+    const out = base ? base.slice() : new Array(100).fill(0);
+    const w = growth - 10;
     for (let lv = 1; lv <= 99; lv++) {
-        const t = (lv - 1) / 98;
-        out[lv] = Math.round(v1 + (v99 - v1) * Math.pow(t, exp));
+        const lin = (v1 - v99 === 0 ? v1 : v1 + (v99 - v1) * (lv - 1) / 98);
+        const quad = v1 + (lv - 1) * ((lv - 1) * (v99 - v1)) / 98 / 98;
+        out[lv] = Math.ceil((quad * w + lin * (10 - w)) / 10);
     }
-    out[0] = out[1];
     return out;
 }
-// Predefinições A–E (A = maior). Valores [nível 1, nível 99] por parâmetro.
-export const CURVE_PRESETS = {
-    0: [[650, 9000], [550, 7500], [450, 6000], [350, 4500], [250, 3000]],
-    1: [[90, 2000], [75, 1600], [60, 1200], [45, 800], [30, 400]],
-    2: [[30, 450], [25, 375], [20, 300], [15, 225], [10, 150]],
-    3: [[30, 450], [25, 375], [20, 300], [15, 225], [10, 150]],
-    4: [[30, 450], [25, 375], [20, 300], [15, 225], [10, 150]],
-    5: [[30, 450], [25, 375], [20, 300], [15, 225], [10, 150]],
-    6: [[30, 450], [25, 375], [20, 300], [15, 225], [10, 150]],
-    7: [[30, 450], [25, 375], [20, 300], [15, 225], [10, 150]]
-};
+
+// Dialog_ParameterCurves.quickSetParameters(rank), rank = 4 - índice do botão (A = 4 ... E = 0).
+// rnd: Math.random() (pode ser fixado para testes).
+export function quickCurveEndpoints(paramId, buttonIndex, rnd1 = Math.random(), rnd2 = Math.random()) {
+    const rank = 4 - buttonIndex;
+    const g = PARAM_GRAPH_MAX[paramId];
+    let v1 = (200 + rank * 100 + rnd1 * 100) * (g / 10000);
+    const v99 = (4000 + rank * 1000 + rnd2 * 1000) * (g / 10000);
+    if (paramId >= 2) { v1 += 5; }
+    return [Math.round(v1), Math.round(v99)];
+}
+export function quickCurve(paramId, buttonIndex, base) {
+    const [v1, v99] = quickCurveEndpoints(paramId, buttonIndex);
+    return generateCurve(v1, v99, GROWTH_NORMAL, base);
+}
+
+// Classe nova: curva "C" no meio da faixa (determinística).
 export function defaultClassParams() {
-    return PARAMS.map((_, i) => generateCurve(CURVE_PRESETS[i][2][0], CURVE_PRESETS[i][2][1], 0));
+    return PARAMS.map((_, i) => {
+        const [v1, v99] = quickCurveEndpoints(i, 2, 0.5, 0.5);
+        const arr = generateCurve(v1, v99, GROWTH_NORMAL);
+        arr[0] = PARAM_MIN[i];
+        return arr;
+    });
 }
 
 // --------------------------------------------------------------------- dados em branco (Change Maximum / Clear)
