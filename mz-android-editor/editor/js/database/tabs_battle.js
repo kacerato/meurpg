@@ -1,9 +1,10 @@
 // Abas Enemies, Troops e States.
-import { el, num, text, area, sel, chk, fld, grp, grid, btn, tableList, modal, changed, pad, alertBox } from "./ui.js";
+import { el, num, text, area, sel, chk, fld, grp, grid, btn, tableList, modal, changed, pad, alertBox, confirmBox, setChangedHook } from "./ui.js";
 import { PARAMS, RESTRICTIONS, SV_MOTIONS, SV_OVERLAYS, AUTO_REMOVAL, idOptions, nameOf, switchOptions, blankTroopPage, FILES } from "./common.js";
 import { traitsList } from "./traits.js";
 import { pickImage, imageThumb, imageUrl, loadImage, pickIcon } from "./pickers.js";
-import { cols, noteGroup, imageBox } from "./tabs_actors.js";
+import { cols, noteGroup, imageBox, equipSlotsBox } from "./tabs_actors.js";
+import { actorParams } from "./equip.js";
 import { iconField } from "./tabs_items.js";
 import { commandList } from "./eventlist.js";
 import { t } from "../i18n.js";
@@ -264,46 +265,68 @@ export async function changeBattleback(db) {
     return true;
 }
 
+// Dialog_BattleTest: abas 1–4, Ator, Nível, Status Inicial, Equipamento (filtrado como o
+// runtime, com Dual Wield) e a área [Status] com Game_Actor.param(0..7) calculado na hora.
 async function battleTest(ctx, troopId) {
     const db = ctx.db, sys = db.System;
-    const tb = structuredClone(sys.testBattlers);
+    const tb = structuredClone(sys.testBattlers || []);
     while (tb.length < 4) { tb.push({ actorId: 0, level: 1, equips: [0, 0, 0, 0, 0] }); }
-    const ok = await modal({
-        title: t("Battle Test", "Dialog_BattleTest"), width: "640px",
-        build: b => {
-            const page = el("div");
-            const bar = el("div", { class: "dbTabs small" });
-            const show = k => {
-                [...bar.children].forEach((x, j) => x.classList.toggle("on", j === k));
-                page.innerHTML = "";
-                const m = tb[k];
-                const slots = el("div");
-                const renderSlots = () => {
-                    slots.innerHTML = "";
-                    while (m.equips.length < sys.equipTypes.length - 1) { m.equips.push(0); }
-                    for (let i = 0; i < sys.equipTypes.length - 1; i++) {
-                        const arr = i === 0 ? db.Weapons : db.Armors;
-                        const opts = idOptions(arr, t("None", "Constants")).filter(([id]) => !id || i === 0 || id === m.equips[i] || (arr[id] && arr[id].etypeId === i + 1));
-                        slots.appendChild(fld(sys.equipTypes[i + 1] + ":", sel(m.equips, i, opts, { number: true })));
-                    }
+    // editar o teste não marca nenhum arquivo como alterado (o MZ só guarda testBattlers no System)
+    setChangedHook(() => {});
+    let ok;
+    try {
+        ok = await modal({
+            title: t("Battle Test", "Dialog_BattleTest"), width: "760px",
+            build: b => {
+                const page = el("div", { class: "dbBtPage" });
+                const bar = el("div", { class: "dbTabs small" });
+                const show = k => {
+                    [...bar.children].forEach((x, j) => x.classList.toggle("on", j === k));
+                    page.innerHTML = "";
+                    const m = tb[k];
+                    const owners = () => { const a = db.Actors[m.actorId]; return [a, a && db.Classes[a.classId]]; };
+                    const status = el("div", { class: "dbBtStatus" });
+                    const renderStatus = () => {
+                        status.innerHTML = "";
+                        const p = m.actorId ? actorParams(db, m.actorId, m.level, m.equips) : null;
+                        PARAMS.forEach((name, i) => status.append(el("span", { class: "dbLabel", text: name }), el("span", { class: "dbBtVal", text: p ? String(p[i]) : "" })));
+                    };
+                    const slots = equipSlotsBox(db, owners, m.equips, { onChange: renderStatus });
+                    const refreshAll = () => { slots.refresh(); renderStatus(); };
+                    const init = () => {
+                        const a = db.Actors[m.actorId];
+                        m.level = a ? a.initialLevel : 1;
+                        m.equips.length = 0;
+                        m.equips.push(...(a ? a.equips : [0, 0, 0, 0, 0]));
+                        lv.refresh(); refreshAll();
+                    };
+                    const lv = num(m, "level", { min: 1, max: 99, onChange: renderStatus });
+                    const actorSel = sel(m, "actorId", idOptions(db.Actors, t("None", "Constants")), { number: true, onChange: init });
+                    actorSel.title = t("Actor to use in the battle test.", "Dialog_BattleTest");
+                    lv.title = t("Level of the actor.", "Dialog_BattleTest");
+                    const initBtn = btn(t("Initialize", "Dialog_BattleTest"), init);
+                    initBtn.title = t("Initializes the actor’s level and equipment.", "Dialog_BattleTest");
+                    const eq = grp(t("Equipment", "Dialog_BattleTest"), slots);
+                    eq.title = t("Weapon and armor that the actor has equipped in the battle test.", "Dialog_BattleTest");
+                    const st = grp(t("Status", "Dialog_BattleTest"), status);
+                    st.title = t("Displays status computation based on the level and the equipment.", "Dialog_BattleTest");
+                    page.append(el("div", { class: "dbRow dbBtTop" },
+                        fld(t("Actor", "Constants") + ":", actorSel), fld(t("Level", "Constants") + ":", lv), initBtn),
+                        el("div", { class: "dbBtCols" }, eq, st));
+                    renderStatus();
                 };
-                renderSlots();
-                page.append(grid(2,
-                    fld(t("Actor", "Constants") + ":", sel(m, "actorId", idOptions(db.Actors, t("None", "Constants")), { number: true, onChange: id => {
-                        const a = db.Actors[id];
-                        if (a) { m.equips = a.equips.slice(); m.level = a.initialLevel; renderSlots(); }
-                    } })),
-                    fld(t("Level", "Constants") + ":", num(m, "level", { min: 1, max: 99 }))), grp(t("Equipment", "Dialog_BattleTest"), slots));
-            };
-            [1, 2, 3, 4].forEach((n, k) => bar.appendChild(btn(String(n), () => show(k))));
-            b.append(bar, page);
-            show(0);
-        }
-    });
+                [1, 2, 3, 4].forEach((n, k) => bar.appendChild(btn(String(n), () => show(k))));
+                b.append(bar, page);
+                show(0);
+            }
+        });
+    } finally {
+        setChangedHook(() => ctx.touch());
+    }
     if (!ok) { return; }
+    // runtime (Game_Party.setupBattleTestMembers) ignora quem não existe; o MZ guarda as 4 abas
     sys.testBattlers = tb.filter(x => x.actorId > 0);
     sys.testTroopId = troopId;
-    changed();
     const api = ctx.api;
     api.status(t("Preparing the battle test...", "MZEditor"));
     try {
@@ -346,23 +369,61 @@ export const troopsTab = {
             fld(t("Name", "Constants") + ":", [name, btn(t("Auto-name", "Edit_Troops"), () => { tq.name = autoName(db, tq); name.refresh(); changed(); ctx.refreshRow(); })]),
             btn(t("Change BG", "Edit_Troops") + "...", async () => { if (await changeBattleback(db)) { ctx.touch("System"); view.render(); } }),
             btn(t("Battle Test", "Edit_Troops") + "...", () => battleTest(ctx, id)));
+        // Add: entra na posição livre seguinte, sem mexer nos que já estão (Align é que realinha)
+        const add = async () => {
+            if (tq.members.length >= 8) { alertBox(t("A troop can have at most 8 enemies.", "MZEditor")); return; }
+            const e = db.Enemies[enemySel.id];
+            if (!e) { return; }
+            const folder = db.System.optSideView ? "sv_enemies" : "enemies";
+            const img = e.battlerName ? await loadImage(folder, e.battlerName) : null;
+            const w = img ? img.width : 96;
+            let x = SCREEN_W / 2;
+            const last = tq.members[tq.members.length - 1];
+            if (last) {
+                const le = db.Enemies[last.enemyId];
+                const limg = le && le.battlerName ? await loadImage(folder, le.battlerName) : null;
+                x = last.x + Math.round(((limg ? limg.width : 96) + w) / 2);
+                if (x > SCREEN_W - w / 2) { x = Math.round(w / 2); }
+            }
+            tq.members.push({ enemyId: enemySel.id, x: Math.round(Math.max(0, Math.min(SCREEN_W, x))), y: 436, hidden: false });
+            changed();
+            view.select(tq.members.length - 1);
+        };
+        const list = el("div", { class: "dbTroopEnemies" });
+        list.title = t("Press the [Add] button on the left to add selected enemies to the troop.", "Edit_Troops");
+        let lastTap = { id: 0, t: 0 };
+        for (let i = 1; i < db.Enemies.length; i++) {
+            const r = el("div", { class: "dbListItem" + (i === enemySel.id ? " sel" : ""), text: pad(i) + " " + (db.Enemies[i] ? db.Enemies[i].name : "") });
+            r.addEventListener("click", () => {
+                const now = Date.now();
+                const dbl = lastTap.id === i && now - lastTap.t < 450;
+                lastTap = { id: i, t: now };
+                enemySel.id = i;
+                list.querySelectorAll(".sel").forEach(x => x.classList.remove("sel"));
+                r.classList.add("sel");
+                if (dbl) { lastTap = { id: 0, t: 0 }; add(); }
+            });
+            list.appendChild(r);
+        }
+        const tip = (b, s) => { b.title = s; return b; };
         const side = el("div", { class: "dbTroopSide" },
-            el("div", { class: "dbLabel", text: t("Enemy List", "Edit_Troops") + ":" }),
-            sel(enemySel, "id", idOptions(db.Enemies), { number: true }),
-            btn("< " + t("Add", "Edit_Troops"), () => {
-                if (tq.members.length >= 8) { alertBox(t("A troop can have at most 8 enemies.", "MZEditor")); return; }
-                tq.members.push({ enemyId: enemySel.id, x: SCREEN_W / 2, y: 436, hidden: false });
-                alignMembers(db, tq).then(() => { changed(); view.select(tq.members.length - 1); });
-            }),
-            btn(t("Remove", "Edit_Troops") + " >", () => {
-                const i = view.selected();
-                if (i >= 0 && tq.members[i]) { tq.members.splice(i, 1); changed(); view.select(-1); }
-            }),
-            btn(t("Clear", "Edit_Troops"), () => { tq.members.length = 0; changed(); view.select(-1); }),
-            btn(t("Align", "Edit_Troops"), () => alignMembers(db, tq).then(() => { changed(); view.render(); })),
-            halfway);
+            el("div", { class: "dbTroopBtns" },
+                tip(btn("< " + t("Add", "Edit_Troops"), add), t("Places the selected enemy into the troop.", "Edit_Troops")),
+                tip(btn(t("Remove", "Edit_Troops") + " >", () => {
+                    const i = view.selected();
+                    if (i >= 0 && tq.members[i]) { tq.members.splice(i, 1); changed(); view.select(-1); }
+                }), t("Removes the selected enemy from the troop.", "Edit_Troops")),
+                tip(btn(t("Clear", "Edit_Troops"), async () => {
+                    if (!tq.members.length || !await confirmBox(t("Removes all the enemies from the troop.", "Edit_Troops"), t("Clear", "Edit_Troops"))) { return; }
+                    tq.members.length = 0; changed(); view.select(-1);
+                }), t("Removes all the enemies from the troop.", "Edit_Troops")),
+                tip(btn(t("Align", "Edit_Troops"), () => alignMembers(db, tq).then(() => { changed(); view.render(); })), t("Places all the enemies automatically.", "Edit_Troops")),
+                halfway),
+            el("div", { class: "dbTroopListCol" },
+                el("div", { class: "dbLabel", text: t("Enemy List", "Edit_Troops") }), list));
         host.appendChild(top);
         host.appendChild(el("div", { class: "dbTroopMid" }, view, side));
+        requestAnimationFrame(() => { const s = list.querySelector(".sel"); if (s) { s.scrollIntoView({ block: "nearest" }); } });
         host.appendChild(battleEvents(ctx, tq, id));
     }
 };

@@ -150,7 +150,17 @@
 .dbTroopEnemy { position: absolute; cursor: move; touch-action: none; }
 .dbTroopEnemy.sel { outline: 3px solid #ff3030; }
 .dbTroopEnemy.hidden { opacity: .45; }
-.dbTroopSide { display: flex; flex-direction: column; gap: 4px; }
+.dbTroopMid { grid-template-columns: auto minmax(330px, 1fr); }
+.dbTroopSide { display: grid; grid-template-columns: 130px 1fr; gap: 6px; min-height: 0; }
+.dbTroopBtns { display: flex; flex-direction: column; gap: 4px; }
+.dbTroopListCol { display: flex; flex-direction: column; min-height: 0; }
+.dbTroopEnemies { height: 296px; overflow-y: auto; border: 1px solid #bbb; background: #fff; }
+.dbTroopEnemies .dbListItem { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* teste de batalha */
+.dbBtTop { align-items: flex-end; }
+.dbBtCols { display: grid; grid-template-columns: 1fr 240px; gap: 8px; }
+.dbBtStatus { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; line-height: 30px; }
+.dbBtVal { text-align: right; font-variant-numeric: tabular-nums; min-width: 60px; }
 
 /* ------------------------------------------------ comandos de evento */
 .dbCmdWrap { display: flex; flex-direction: column; flex: 1; min-height: 0; }
@@ -165,8 +175,11 @@
 .dbTilePal { display: flex; flex-direction: column; }
 .dbTileMain { display: flex; gap: 8px; align-items: flex-start; }
 .dbTileLeft { display: flex; flex-direction: column; }
-.dbTileScroll { width: 404px; max-width: 100%; height: 420px; overflow-y: auto; overflow-x: hidden; background: #333; border: 1px solid #555; -webkit-overflow-scrolling: touch; }
-.dbTileCanvas { display: block; width: 384px; touch-action: pan-y; }
+/* a faixa de 40px à direita do canvas rola com um dedo; no canvas um dedo pinta e dois rolam */
+.dbTileScroll { width: 426px; max-width: 100%; height: 420px; overflow-y: auto; overflow-x: hidden; background: #333; border: 1px solid #555; -webkit-overflow-scrolling: touch;
+    background-image: repeating-linear-gradient(0deg, #3d3d3d 0 2px, #333 2px 12px); }
+.dbTileCanvas { display: block; width: 384px; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.dbTileHint { font-size: 12px; color: #666; max-width: 140px; }
 .dbTileModes { display: flex; flex-direction: column; gap: 4px; min-width: 140px; }
 .dbTileModes .dbBtn { text-align: left; }
 
