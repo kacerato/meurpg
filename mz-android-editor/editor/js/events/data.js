@@ -56,6 +56,9 @@ export const db = {
             const o = arr[i];
             out.push({ value: i, label: this.pad(i) + " " + (o ? (o.name || "") : "") });
         }
+        // marca de lista de objetos do banco: ui.js sel() decide lista suspensa / janela pela opção
+        // "Seletor de objetos" (Ferramentas → Opções).
+        out.objectList = list;
         return out;
     },
     nameListOptions(names, { none = false } = {}) {

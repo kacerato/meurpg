@@ -266,6 +266,14 @@
   "is present": "está presente",
   "max. %1": "máx. %1",
   "min. %1": "mín. %1",
-  "warning: could not read %1: %2": "aviso: não foi possível ler %1: %2"
+  "warning: could not read %1: %2": "aviso: não foi possível ler %1: %2",
+  "%1 frames (%2 s)": "%1 quadros (%2 s)",
+  "blocked: the route stops here (no \"Skip If Cannot Move\")": "bloqueado: a rota para aqui (sem \"Ignorar se Intransponível\")",
+  "player at (%1,%2): tap the map to move it": "jogador em (%1,%2): toque no mapa para mudar",
+  "the player is not on this map: tap the map to place it": "o jogador não está neste mapa: toque no mapa para posicioná-lo",
+  "random: one possible outcome": "aleatório: um dos resultados possíveis",
+  "Draw the random moves again": "Sortear de novo os movimentos aleatórios",
+  "Replay": "Repetir",
+  "Hold on the preview to fast-forward (x3).": "Segure na prévia para acelerar (x3)."
  }
 }

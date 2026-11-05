@@ -211,7 +211,38 @@ export function area(value = "", { rows = 6, mono = false, cls = "" } = {}) {
     return ctl(el, () => el.value, v => { el.value = v || ""; });
 }
 
+// Opções → Seletor de objetos (MZ 01_05): "dropdown" (lista suspensa) ou "extended" (campo com
+// botão que abre a janela "Seleção de objeto"); "Smart" escolhe pelo tamanho (api.tools, tools/options.js).
+export function objectSelectorMode(count) {
+    if (API && API.tools && typeof API.tools.objectSelectorMode === "function") { return API.tools.objectSelectorMode(count); }
+    let m = "smart";
+    try { m = JSON.parse(localStorage.getItem("mzEditor.options") || "{}").objectSelector || "smart"; } catch (e) { /* padrão */ }
+    if (m === "dropdown" || m === "extended") { return m; }
+    return (count || 0) < 100 ? "dropdown" : "extended";
+}
+
+// Seletor de objeto do banco no modo "Extended": mostra "0001 Nome" e abre a janela de seleção
+// (com filtro). Mesma interface de sel(): get/set/onChange/enable/setOptions.
+function objectButton(options, value, { width } = {}) {
+    let opts = options, cur = value;
+    const text = h("span", { class: "evObjText" });
+    const el = h("button", { type: "button", class: "evPick evObjPick", style: width ? { width } : null }, text, h("span", { class: "evObjDots" }, "…"));
+    const fix = v => (opts.some(o => o.value === v) ? v : (opts[0] ? opts[0].value : v));
+    const refresh = () => { const o = opts.find(x => x.value === cur); text.textContent = o ? o.label : ""; };
+    el.addEventListener("click", async e => {
+        e.preventDefault();
+        const v = await listDialog({ title: t("Object Selection", "Dialog_GameObjectSelector"), options: opts, value: cur });
+        if (v !== null && v !== undefined && v !== cur) { cur = v; refresh(); el.dispatchEvent(new Event("change")); }
+    });
+    const c = ctl(el, () => cur, v => { cur = fix(v); refresh(); });
+    c.set(value);
+    c.setOptions = (o, v) => { opts = o; c.set(v); };
+    c.mode = "extended";
+    return c;
+}
+
 export function sel(options, value, { width } = {}) {
+    if (options && options.objectList && objectSelectorMode(options.length) === "extended") { return objectButton(options, value, { width }); }
     const el = h("select", { class: "evSel", style: width ? { width } : null });
     const fill = opts => {
         el.innerHTML = "";
@@ -312,20 +343,41 @@ export function listDialog({ title, options, value, width = "520px", height = "8
             filter.addEventListener("input", render);
             body.append(filter, list);
             if (editNames) {
+                // Desfazer/Refazer dos nomes e do máximo (Ctrl+Z / Ctrl+Y no diálogo, ou ↶ ↷): cada renomeação
+                // de um ID (digitação seguida no mesmo ID = um passo) e cada "Change Maximum" é um passo.
+                let undo = [], redo = [], typingId = -1;
+                const push = () => { undo.push(names.slice()); if (undo.length > 100) { undo.shift(); } redo = []; syncUndo(); };
+                const restore = arr => { names = arr; typingId = -1; if (cur >= names.length) { cur = names.length - 1; } maxN.set(names.length - 1); nameBox.set(names[cur] || ""); render(); syncUndo(); };
+                const doUndo = () => { if (undo.length) { redo.push(names.slice()); restore(undo.pop()); } };
+                const doRedo = () => { if (redo.length) { undo.push(names.slice()); restore(redo.pop()); } };
                 nameBox.set(names[cur] || "");
                 nameBox.el.addEventListener("input", () => {
+                    if (typingId !== cur) { push(); typingId = cur; }
                     names[cur] = nameBox.get();
                     const s = list.querySelector(".selected");
                     if (s) { s.textContent = db.pad(cur) + " " + names[cur]; }
                 });
+                list.addEventListener("click", () => { typingId = -1; });
                 const maxN = num(names.length - 1, { min: 1, max: 5000 });
                 const applyMax = h("button", { type: "button", class: "evBtn", onclick: () => {
                     const n = maxN.get();
+                    if (n + 1 === names.length) { return; }
+                    push(); typingId = -1;
                     while (names.length < n + 1) { names.push(""); }
                     names.length = n + 1;
+                    if (cur > n) { cur = n; nameBox.set(names[cur] || ""); }
                     render();
                 } }, t("Change Maximum", "Dialog_VariableSelector") + "…");
-                body.append(row(field(t("Name", "Constants"), nameBox), field(t("Maximum", "Dialog_ChangeMaximum"), maxN), applyMax));
+                const bUndo = h("button", { type: "button", class: "evBtn", title: t("Undo", "BasicConstants") + " (Ctrl+Z)", onclick: doUndo }, "↶");
+                const bRedo = h("button", { type: "button", class: "evBtn", title: t("Redo", "BasicConstants") + " (Ctrl+Y)", onclick: doRedo }, "↷");
+                const syncUndo = () => { bUndo.disabled = !undo.length; bRedo.disabled = !redo.length; };
+                syncUndo();
+                body.addEventListener("keydown", e => {
+                    if (!(e.ctrlKey || e.metaKey)) { return; }
+                    const k = e.key.toLowerCase();
+                    if (k === "z" && !e.shiftKey) { e.preventDefault(); doUndo(); } else if (k === "y" || (k === "z" && e.shiftKey)) { e.preventDefault(); doRedo(); }
+                });
+                body.append(row(field(t("Name", "Constants"), nameBox), field(t("Maximum", "Dialog_ChangeMaximum"), maxN), applyMax, h("span", { class: "evNameUndo" }, bUndo, bRedo)));
             }
             render();
         },
@@ -336,9 +388,9 @@ export function listDialog({ title, options, value, width = "520px", height = "8
     }).then(r => r ? r.v : null);
 }
 
-export function dataPick(list, value, { none = false, width, title } = {}) {
-    const label = v => v ? db.pad(v) + " " + db.name(list, v) : (none ? t("None", "Constants") : db.pad(0));
-    return pickBtn(value, label, cur => listDialog({ title: title || t("Object Selection", "Dialog_GameObjectSelector"), options: db.options(list, { none }), value: cur }), { width });
+// Seletor de objeto do banco (lista suspensa ou janela, conforme Opções → Seletor de objetos).
+export function dataPick(list, value, { none = false, width } = {}) {
+    return sel(db.options(list, { none }), value, { width });
 }
 
 function namedPick(kind, value, width) {

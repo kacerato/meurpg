@@ -186,6 +186,12 @@ export function createCommandList(opts) {
     const box = h("div", { class: "evCmdList", tabindex: "0" });
     const ctx = () => Object.assign({ list }, opts.ctx || {});
     const changed = () => { if (opts.onChange) { opts.onChange(list); } render(); };
+    // Desfazer/Refazer da lista (até 100 passos): a lista é alterada no lugar (é a mesma referência da
+    // página / do evento comum), então cada passo guarda uma cópia inteira e a seleção.
+    let undoStack = [], redoStack = [];
+    const snap = () => ({ list: clone(list), sel: sel.slice() });
+    const record = () => { undoStack.push(snap()); if (undoStack.length > 100) { undoStack.shift(); } redoStack = []; if (opts.onHistory) { opts.onHistory(); } };
+    const restore = st => { list.splice(0, list.length, ...st.list); sel = st.sel; anchor = sel[0]; changed(); };
 
     const render = () => {
         box.innerHTML = "";
@@ -233,7 +239,11 @@ export function createCommandList(opts) {
     const api = {
         el: box,
         get list() { return list; },
-        setList(l) { list = l; sel = [l.length - 1, l.length]; anchor = sel[0]; render(); },
+        setList(l) { list = l; sel = [l.length - 1, l.length]; anchor = sel[0]; undoStack = []; redoStack = []; render(); if (opts.onHistory) { opts.onHistory(); } },
+        canUndo: () => undoStack.length > 0,
+        canRedo: () => redoStack.length > 0,
+        undo() { if (!undoStack.length) { return; } redoStack.push(snap()); restore(undoStack.pop()); if (opts.onHistory) { opts.onHistory(); } },
+        redo() { if (!redoStack.length) { return; } undoStack.push(snap()); restore(redoStack.pop()); if (opts.onHistory) { opts.onHistory(); } },
         setMulti(on) { multi = on; },
         selectRow(i) { if (list[i]) { select(i); const r = box.children[i]; if (r) { r.scrollIntoView({ block: "center" }); } } },
         async newCommand() {
@@ -248,6 +258,7 @@ export function createCommandList(opts) {
             const at = sel[0];
             const ind = list[at].indent;
             const cmds = buildNew(code, res, ind);
+            record();
             list.splice(at, 0, ...cmds);
             sel = [at + cmds.length, at + cmds.length + 1];
             sel = unitAt(list, sel[0]);
@@ -267,6 +278,7 @@ export function createCommandList(opts) {
             }
             const res = await d.edit(clone(c.parameters), ctx(), conts, extra);
             if (!res) { return; }
+            record();
             applyEdit(list, i, res);
             sel = unitAt(list, i);
             changed();
@@ -279,6 +291,7 @@ export function createCommandList(opts) {
             if (!clip) { return; }
             const at = sel[0];
             const cmds = reindent(clip, list[at].indent);
+            record();
             list.splice(at, 0, ...cmds);
             sel = unitAt(list, at + cmds.length);
             changed();
@@ -286,6 +299,7 @@ export function createCommandList(opts) {
         del() {
             if (!canModify()) { return; }
             const [a, b] = sel;
+            record();
             list.splice(a, b - a);
             sel = unitAt(list, Math.min(a, list.length - 1));
             changed();
@@ -313,6 +327,9 @@ export function createCommandList(opts) {
             const c = list[sel[0]];
             const empty = !c || c.code === 0;
             await actionMenu([
+                { label: t("Undo", "BasicConstants"), disabled: !undoStack.length, action: () => api.undo() },
+                { label: t("Redo", "BasicConstants"), disabled: !redoStack.length, action: () => api.redo() },
+                "-",
                 { label: t("New", "StandardPopupMenu") + "…", action: () => api.newCommand() },
                 { label: t("Edit", "StandardPopupMenu") + "…", disabled: empty || (CMD[c.code] && CMD[c.code].noParams), action: () => api.edit() },
                 "-",
@@ -328,7 +345,9 @@ export function createCommandList(opts) {
                 { label: t("Test", "EventCommandListBox"), action: () => api.test() }
             ], { x, y });
         },
-        render
+        render,
+        // assinatura para atualizar botões de Desfazer/Refazer
+        onHistory(fn) { const prev = opts.onHistory; opts.onHistory = () => { if (prev) { prev(); } fn(); }; }
     };
 
     // toque: tap = selecionar, duplo-tap = editar/novo, toque longo = menu
@@ -365,6 +384,8 @@ export function createCommandList(opts) {
         else if (mod && e.key === "x") { api.cut(); }
         else if (mod && e.key === "v") { api.paste(); }
         else if (mod && e.key === "a") { e.preventDefault(); api.selectAll(); }
+        else if (mod && (e.key === "z" || e.key === "Z") && !e.shiftKey) { e.preventDefault(); api.undo(); }
+        else if (mod && (e.key === "y" || e.key === "Y" || ((e.key === "z" || e.key === "Z") && e.shiftKey))) { e.preventDefault(); api.redo(); }
         else if (e.key === "ArrowDown" && e.shiftKey) { e.preventDefault(); extendBy(1); }
         else if (e.key === "ArrowUp" && e.shiftKey) { e.preventDefault(); extendBy(-1); }
         else if (e.key === "ArrowDown") { e.preventDefault(); select(Math.min(list.length - 1, sel[1])); }
@@ -379,7 +400,12 @@ export function commandListToolbar(cl) {
     const multiBtn = h("button", { type: "button", class: "evBtn toggle", title: t("Select multiple (same as Shift+click)") }, t("Multi-select"));
     multiBtn.addEventListener("click", () => { multiBtn.classList.toggle("on"); cl.setMulti(multiBtn.classList.contains("on")); });
     const b = (label, fn, title) => h("button", { type: "button", class: "evBtn", title, onclick: fn }, label);
+    const bUndo = b("↶", () => cl.undo(), t("Undo", "BasicConstants") + " (Ctrl+Z)"), bRedo = b("↷", () => cl.redo(), t("Redo", "BasicConstants") + " (Ctrl+Y)");
+    const sync = () => { bUndo.disabled = !cl.canUndo(); bRedo.disabled = !cl.canRedo(); };
+    cl.onHistory(sync);
+    sync();
     return h("div", { class: "evRow evListTools" },
+        bUndo, bRedo,
         b(t("New", "StandardPopupMenu") + "…", () => cl.newCommand()), b(t("Edit", "StandardPopupMenu") + "…", () => cl.edit()), b(t("Cut", "BasicConstants"), () => cl.cut()), b(t("Copy", "BasicConstants"), () => cl.copy()),
         b(t("Paste", "BasicConstants"), () => cl.paste()), b(t("Delete", "BasicConstants"), () => cl.del()), multiBtn, b(t("Test", "EventCommandListBox"), () => cl.test(), t("Test the selected commands in the game.")), b("☰", e => { const r = e.currentTarget.getBoundingClientRect(); cl.menu(r.left, r.bottom); }, t("More")));
 }

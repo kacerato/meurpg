@@ -6,9 +6,10 @@ import { db, clone, TEMPLATE } from "./data.js";
 import {
     h, dialog, field, row, col, group, num, txt, area, sel, chk, radios, radioName, pickBtn, listDialog,
     dataPick, switchPick, varPick, imagePick, audioPick, audioText, facePick, charIndexPick, tonePick,
-    locationPick, tabs, slider, listFiles, alertBox, imgUrl, loadImage, audioDialog, textMenu
+    locationPick, tabs, slider, listFiles, alertBox, imgUrl, loadImage, audioDialog, textMenu, actionMenu
 } from "./ui.js";
-import { renderMessagePages, sampleImage, drawToned, drawWindow, projectImage, screenSize, drawBattleback, TextPainter, textColors as skinColors, loadGameFont } from "./preview.js";
+import { activePage, pageMoveProps } from "./routesim.js";
+import { renderMessagePages, playScrollText, sampleImage, drawToned, drawWindow, projectImage, screenSize, drawBattleback, TextPainter, textColors as skinColors, loadGameFont } from "./preview.js";
 import { moveRouteDialog, routeText } from "./moveroute.js";
 import { getEnabledPluginsWithCommands, getPluginCommands, defaultArgs } from "../plugins/commands.js";
 import { ParamTable } from "../plugins/params.js";
@@ -353,11 +354,27 @@ def(105, {
         return form(t("Show Scrolling Text", "EventCommands"), b => {
             const te = textEditor((conts || []).map(c => c[0]), 12);
             const s = num(p[0], { min: 1, max: 8 }); const nf = chk(t("No Fast Forward", "EventCommand105"), p[1]);
-            b.append(field(t("Text", "EventCommand105"), withTextMenu(te, { icon: true })), row(field(t("Speed", "EventCommand105"), s), nf));
+            // Preview… (como o botão do MZ): rola o texto na janela/fonte do jogo com a velocidade escolhida.
+            const pvBtn = h("button", { type: "button", class: "evBtn", onclick: () => scrollTextPreview(trimLines(te.get()), s.get(), nf.get()) }, t("Preview", "Constants") + "…");
+            b.append(field(t("Text", "EventCommand105"), withTextMenu(te, { icon: true })), row(field(t("Speed", "EventCommand105"), s), nf, pvBtn));
             return () => ({ p: [s.get(), nf.get()], conts: te.get().split("\n").map(l => [l]) });
         }, { width: "760px" });
     }
 });
+
+function scrollTextPreview(lines, speed, noFast) {
+    let player = null;
+    return dialog({
+        title: t("Preview", "Constants"), width: "min(980px, 98vw)", height: "auto", noCancel: true,
+        build: pb => {
+            const pv = h("div", { class: "evMsgPreview" });
+            const start = async () => { if (player) { player.stop(); } player = await playScrollText(pv, { lines, speed, noFast }); };
+            const replay = h("button", { type: "button", class: "evBtn", onclick: start }, "↻ " + t("Replay", "MZEditor"));
+            pb.append(pv, h("div", { class: "evRow" }, replay, h("span", { class: "evDesc" }, noFast ? "" : t("Hold on the preview to fast-forward (x3).", "MZEditor"))));
+            start();
+        }
+    }).then(() => { if (player) { player.stop(); } });
+}
 
 // ===== Game Progression =====
 def(121, {
@@ -952,18 +969,22 @@ def(205, {
     },
     refs: p => p[1].list.filter(c => c.code === 27 || c.code === 28).map(c => ["switch", c.parameters[0]])
 });
-// Posição inicial da prévia de rota: evento do mapa (ou "This Event") ou jogador na posição inicial.
+// Posição inicial da prévia de rota: evento do mapa (ou "This Event", com a página em edição) ou o
+// jogador na posição inicial do mapa. Leva velocidade, prioridade, Through etc. para a simulação
+// (routesim.js); Set Movement Route é rota forçada (um comando por quadro, sem a frequência).
 function routePreviewStart(ctx, target) {
     if (!ctx || !ctx.map || !ctx.mapId) { return null; }
+    const events = ctx.map.events;
     if (target < 0) {
         const s = db.system;
-        return s.startMapId === ctx.mapId ? { mapId: ctx.mapId, x: s.startX, y: s.startY, d: 2 } : null;
+        return s.startMapId === ctx.mapId ? { mapId: ctx.mapId, x: s.startX, y: s.startY, d: 2, moveSpeed: 4, priorityType: 1, isPlayer: true, events, forced: true } : null;
     }
-    if (target === 0 && ctx.eventPos) { return { mapId: ctx.mapId, ...ctx.eventPos }; }
-    const ev = ctx.map.events[target === 0 ? ctx.eventId : target];
+    if (target === 0 && ctx.eventPos) { return { mapId: ctx.mapId, selfId: ctx.eventId, events, forced: true, ...ctx.eventPos }; }
+    const id = target === 0 ? ctx.eventId : target;
+    const ev = events[id];
     if (!ev) { return null; }
-    const pg = ev.pages[0];
-    return { mapId: ctx.mapId, x: ev.x, y: ev.y, d: (pg && pg.image.direction) || 2, directionFix: pg && pg.directionFix };
+    const pg = activePage(ev, db.system) || ev.pages[0];
+    return { mapId: ctx.mapId, x: ev.x, y: ev.y, selfId: id, events, forced: true, ...pageMoveProps(pg) };
 }
 def(206, { name: "Get on/off Vehicle", cat: "move", text: () => [t("Get on/off Vehicle", "EventCommands"), ""], noParams: true });
 
@@ -1173,6 +1194,7 @@ def(602, { name: "If Escape", cat: "scene", text: () => [t("If Escape", "EventCo
 def(603, { name: "If Lose", cat: "scene", text: () => [t("If Lose", "EventCommands"), ""], branch: true });
 def(604, { name: "End", cat: "scene", text: () => [t("End", "EventCommands"), ""], branch: true });
 const GOODS_LIST = ["items", "weapons", "armors"];
+let shopClip = null; // linha de mercadoria copiada (Shop Processing)
 def(302, {
     name: "Shop Processing", cat: "scene", cont: 605,
     text: p => [t("Shop Processing", "EventCommands"), NM(GOODS_LIST[p[0]], p[1]) + (p[4] ? ` (${t("Purchase Only", "EventCommand302")})` : "")],
@@ -1181,19 +1203,21 @@ def(302, {
         const goods = p ? [p.slice(0, 4), ...(conts || [])].map(g => g.slice(0, 4)) : [];
         let purchaseOnly = p ? !!p[4] : false;
         return form(t("Shop Processing", "EventCommands"), b => {
-            const list = h("div", { class: "evList evGoods" });
+            const list = h("div", { class: "evList evGoods", tabindex: "0" });
             let selIdx = -1;
             const render = () => {
                 list.innerHTML = "";
                 list.append(h("div", { class: "evListHead" }, h("span", null, t("Merchandise", "EventCommand302")), h("span", null, t("Price", "EventCommand302"))));
                 [...goods, null].forEach((g, i) => {
                     const it = h("div", { class: "evListItem evGoodsRow" + (i === selIdx ? " selected" : "") },
+                        h("span", { class: "evGoodsGrip", title: t("Drag to reorder", "MZEditor") }, g ? "⠿" : ""),
                         h("span", null, g ? NM(GOODS_LIST[g[0]], g[1]) : ""), h("span", null, g ? (g[2] === 0 ? String((db[GOODS_LIST[g[0]]][g[1]] || {}).price || 0) : String(g[3])) : ""));
-                    it.addEventListener("click", () => { selIdx = i; render(); });
-                    it.addEventListener("dblclick", () => editGood(i));
+                    it.dataset.i = i;
                     list.append(it);
                 });
+                syncBtns();
             };
+            const select = i => { selIdx = Math.max(-1, Math.min(goods.length, i)); render(); const s = list.querySelector(".selected"); if (s) { s.scrollIntoView({ block: "nearest" }); } };
             const editGood = async i => {
                 const g = goods[i] || [0, 1, 0, 0];
                 const r = await form(t("Merchandise", "Dialog_Merchandise"), bb => {
@@ -1204,19 +1228,113 @@ def(302, {
                     bb.append(group(t("Merchandise", "Dialog_Merchandise"), k), group(t("Price", "Dialog_Merchandise"), pt));
                     return () => [k.get(), [it, wp, ar][k.get()].get(), pt.get(), pt.get() === 1 ? pr.get() : 0];
                 });
-                if (r) { goods[i] = r; selIdx = i; render(); }
+                if (r) { goods[i] = r; select(i); }
             };
+            // Linhas: recortar/copiar/colar (área de transferência própria + localStorage), excluir, subir/descer.
+            const has = () => selIdx >= 0 && selIdx < goods.length;
+            const ops = {
+                edit: () => editGood(selIdx < 0 ? goods.length : selIdx),
+                copy: () => { if (has()) { shopClip = clone(goods[selIdx]); try { localStorage.setItem("mzShopClip", JSON.stringify(shopClip)); } catch (e) { /* ignora */ } syncBtns(); } },
+                cut: () => { if (has()) { ops.copy(); ops.del(); } },
+                paste: () => {
+                    let c = shopClip;
+                    if (!c) { try { c = JSON.parse(localStorage.getItem("mzShopClip") || "null"); } catch (e) { c = null; } }
+                    if (!Array.isArray(c)) { return; }
+                    const at = selIdx < 0 ? goods.length : selIdx;
+                    goods.splice(at, 0, clone(c));
+                    select(at + 1);
+                },
+                del: () => { if (has()) { goods.splice(selIdx, 1); select(Math.min(selIdx, goods.length)); } },
+                move: d => { const j = selIdx + d; if (has() && j >= 0 && j < goods.length) { [goods[selIdx], goods[j]] = [goods[j], goods[selIdx]]; select(j); } }
+            };
+            const clipOk = () => !!(shopClip || (() => { try { return localStorage.getItem("mzShopClip"); } catch (e) { return null; } })());
+            const menu = (x, y) => actionMenu([
+                { label: t("Edit", "StandardPopupMenu") + "…", action: ops.edit },
+                "-",
+                { label: t("Cut", "BasicConstants"), disabled: !has(), action: ops.cut },
+                { label: t("Copy", "BasicConstants"), disabled: !has(), action: ops.copy },
+                { label: t("Paste", "BasicConstants"), disabled: !clipOk(), action: ops.paste },
+                { label: t("Delete", "BasicConstants"), disabled: !has(), action: ops.del },
+                "-",
+                { label: "▲ " + t("Up", "Constants"), disabled: !has() || selIdx === 0, action: () => ops.move(-1) },
+                { label: "▼ " + t("Down", "Constants"), disabled: !has() || selIdx >= goods.length - 1, action: () => ops.move(1) }
+            ], { x, y });
+            // toque = seleciona, duplo toque = editar (na linha vazia: novo), toque longo / botão direito = menu,
+            // arrastar pela alça ⠿ = reordenar.
+            const rowAt = e => { const r = e.target.closest(".evGoodsRow"); return r ? Number(r.dataset.i) : -1; };
+            let lastTap = { i: -1, t: 0 }, pressTimer = null, pressPos = null, longFired = false, drag = null;
+            list.addEventListener("pointerdown", e => {
+                const i = rowAt(e); if (i < 0) { return; }
+                pressPos = { x: e.clientX, y: e.clientY }; longFired = false;
+                if (e.target.closest(".evGoodsGrip") && i < goods.length) {
+                    e.preventDefault(); try { list.setPointerCapture(e.pointerId); } catch (err) { /* ponteiro sintético */ }
+                    drag = { from: i, to: i }; select(i); list.classList.add("dragging");
+                    return;
+                }
+                clearTimeout(pressTimer);
+                if (e.pointerType !== "mouse") { pressTimer = setTimeout(() => { longFired = true; select(i); menu(pressPos.x, pressPos.y); }, 550); }
+            });
+            list.addEventListener("pointermove", e => {
+                if (drag) {
+                    const rows = [...list.querySelectorAll(".evGoodsRow")];
+                    let to = rows.findIndex(r => { const rc = r.getBoundingClientRect(); return e.clientY < rc.top + rc.height / 2; });
+                    if (to < 0) { to = goods.length; }
+                    if (to > drag.from) { to--; }
+                    to = Math.max(0, Math.min(goods.length - 1, to));
+                    for (const r of rows) { r.classList.remove("dropBefore", "dropAfter"); }
+                    const target = rows[to];
+                    if (target && to !== drag.from) { target.classList.add(to > drag.from ? "dropAfter" : "dropBefore"); }
+                    drag.to = to;
+                    return;
+                }
+                if (pressPos && Math.hypot(e.clientX - pressPos.x, e.clientY - pressPos.y) > 10) { clearTimeout(pressTimer); }
+            });
+            list.addEventListener("pointerup", e => {
+                clearTimeout(pressTimer);
+                if (drag) {
+                    const { from, to } = drag; drag = null; list.classList.remove("dragging");
+                    if (to !== from) { const [g] = goods.splice(from, 1); goods.splice(to, 0, g); }
+                    select(to);
+                    return;
+                }
+                if (longFired || e.button === 2) { return; }
+                const i = rowAt(e); if (i < 0) { return; }
+                const now = Date.now();
+                if (lastTap.i === i && now - lastTap.t < 400) { lastTap = { i: -1, t: 0 }; editGood(i); return; }
+                lastTap = { i, t: now };
+                select(i);
+            });
+            list.addEventListener("pointercancel", () => { clearTimeout(pressTimer); if (drag) { drag = null; list.classList.remove("dragging"); render(); } });
+            list.addEventListener("contextmenu", e => { e.preventDefault(); const i = rowAt(e); if (i >= 0) { select(i); } menu(e.clientX, e.clientY); });
+            list.addEventListener("keydown", e => {
+                const mod = e.ctrlKey || e.metaKey;
+                if (e.key === "Enter") { e.preventDefault(); ops.edit(); }
+                else if (e.key === "Delete") { e.preventDefault(); ops.del(); }
+                else if (mod && e.key === "c") { e.preventDefault(); ops.copy(); }
+                else if (mod && e.key === "x") { e.preventDefault(); ops.cut(); }
+                else if (mod && e.key === "v") { e.preventDefault(); ops.paste(); }
+                else if (e.altKey && (e.key === "ArrowUp" || e.key === "ArrowDown")) { e.preventDefault(); ops.move(e.key === "ArrowUp" ? -1 : 1); }
+                else if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); select((selIdx < 0 ? goods.length : selIdx) + (e.key === "ArrowUp" ? -1 : 1)); }
+            });
+            const btn = (label, fn, title) => h("button", { type: "button", class: "evBtn", title, onclick: fn }, label);
+            const bEdit = btn(t("Edit", "StandardPopupMenu") + "…", ops.edit), bNew = btn(t("New", "StandardPopupMenu") + "…", () => editGood(goods.length));
+            const bCut = btn(t("Cut", "BasicConstants"), ops.cut), bCopy = btn(t("Copy", "BasicConstants"), ops.copy), bPaste = btn(t("Paste", "BasicConstants"), ops.paste), bDel = btn(t("Delete", "BasicConstants"), ops.del);
+            const bUp = btn("▲", () => ops.move(-1), t("Up", "Constants") + " (Alt+↑)"), bDown = btn("▼", () => ops.move(1), t("Down", "Constants") + " (Alt+↓)");
+            const bMenu = btn("☰", e => { const rc = e.currentTarget.getBoundingClientRect(); menu(rc.left, rc.bottom); });
+            function syncBtns() {
+                if (!bCut) { return; }
+                for (const x of [bCut, bCopy, bDel]) { x.disabled = !has(); }
+                bPaste.disabled = !clipOk();
+                bUp.disabled = !has() || selIdx === 0; bDown.disabled = !has() || selIdx >= goods.length - 1;
+            }
             const po = chk(t("Purchase Only", "EventCommand302"), purchaseOnly);
-            b.append(list, row(
-                h("button", { type: "button", class: "evBtn", onclick: () => editGood(selIdx < 0 ? goods.length : selIdx) }, t("Edit", "StandardPopupMenu") + "…"),
-                h("button", { type: "button", class: "evBtn", onclick: () => editGood(goods.length) }, t("New", "StandardPopupMenu") + "…"),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (selIdx >= 0 && selIdx < goods.length) { goods.splice(selIdx, 1); render(); } } }, t("Delete", "BasicConstants"))), po.el);
+            b.append(list, h("div", { class: "evRow evListTools" }, bEdit, bNew, bCut, bCopy, bPaste, bDel, bUp, bDown, bMenu), po.el);
             render();
             return () => {
                 if (!goods.length) { alertBox(t("Add at least one item.")); return false; }
                 return { p: [...goods[0], po.get()], conts: goods.slice(1) };
             };
-        }, { width: "640px" });
+        }, { width: "720px" });
     },
     refs: p => [[GOODS_LIST[p[0]].slice(0, -1), p[1]]]
 });

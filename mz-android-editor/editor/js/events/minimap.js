@@ -28,6 +28,7 @@ export class MiniMap {
         const ts = tilesets[map.tilesetId];
         if (!this.app) { return; }
         this.map = map;
+        this.tileset = ts;
         if (this.tilemap) { this.world.removeChild(this.tilemap); this.tilemap.destroy(); }
         const tm = new Tilemap();
         tm.tileWidth = T; tm.tileHeight = T;
@@ -66,17 +67,26 @@ export class MiniMap {
 
     _bindPointer() {
         const v = this.app.view;
-        let down = null;
-        v.addEventListener("pointerdown", e => { v.setPointerCapture(e.pointerId); down = { x: e.clientX, y: e.clientY }; });
+        let down = null, start = null;
+        v.addEventListener("pointerdown", e => { v.setPointerCapture(e.pointerId); down = start = { x: e.clientX, y: e.clientY }; });
         v.addEventListener("pointermove", e => {
             if (!down) { return; }
             this.sx -= e.clientX - down.x; this.sy -= e.clientY - down.y;
             down = { x: e.clientX, y: e.clientY };
             this.apply();
         });
-        const up = () => { down = null; };
-        v.addEventListener("pointerup", up);
-        v.addEventListener("pointercancel", up);
+        // toque sem arrastar: onTap(tileX, tileY) (a prévia da rota usa para a posição do jogador)
+        v.addEventListener("pointerup", e => {
+            const tap = start && Math.hypot(e.clientX - start.x, e.clientY - start.y) < 8;
+            down = start = null;
+            if (!tap || !this.onTap || !this.map) { return; }
+            const r = v.getBoundingClientRect(), z = this.zoom;
+            const lx = (e.clientX - r.left) * (this.app.renderer.width / r.width) - this.world.position.x;
+            const ly = (e.clientY - r.top) * (this.app.renderer.height / r.height) - this.world.position.y;
+            const tx = Math.floor((lx + this.sx) / (48 * z)), ty = Math.floor((ly + this.sy) / (48 * z));
+            if (tx >= 0 && ty >= 0 && tx < this.map.width && ty < this.map.height) { this.onTap(tx, ty); }
+        });
+        v.addEventListener("pointercancel", () => { down = start = null; });
     }
 
     destroy() {
