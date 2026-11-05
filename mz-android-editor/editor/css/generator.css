@@ -151,3 +151,10 @@
 .gen-fileList .gen-file.sel { background: var(--accent); color: #fff; }
 .gen-fileList .gen-file img { max-width: 72px; max-height: 40px; image-rendering: pixelated; }
 .gen-msg { white-space: pre-wrap; }
+
+/* Telas baixas (celular em paisagem a 1200 px reduzidos): compacta Cor e Ajustar para não cobrir a fileira de botões */
+@media (max-height: 620px) {
+    .gen-color { height: 132px; }
+    .gen-pad { grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 28px); }
+    .gen-offRow { gap: 8px; }
+}
