@@ -76,7 +76,7 @@ final class TemplateCopier {
         try {
             if ("/api/template/status".equals(path)) {
                 Job j = job;
-                return new String[]{"200", j == null ? "{\"state\":\"idle\",\"done\":0,\"total\":0}" : j.toJson()};
+                return new String[]{"200", j == null ? "{\"state\":\"idle\",\"done\":0,\"total\":0,\"file\":\"\",\"error\":\"\"}" : j.toJson()};
             }
             if (!"/api/template/copy".equals(path)) {
                 return null;
@@ -136,7 +136,7 @@ final class TemplateCopier {
             for (int i = 0; i < arr.length(); i++) {
                 Object o = arr.get(i);
                 String p = o instanceof JSONObject ? ((JSONObject) o).getString("path") : String.valueOf(o);
-                if (!p.contains("..") && !p.equals("game.rmmzproject")) {
+                if (!p.contains("..") && !p.equals("game.rmmzproject") && !p.equals("manifest.json")) {
                     out.add(p);
                 }
             }
