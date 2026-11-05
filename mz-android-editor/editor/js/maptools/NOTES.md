@@ -15,6 +15,10 @@ das sessões: `mz-strings-pt_BR.txt`).
 | `editops.js` | `MapEdit`: regras de camadas, carimbo/retângulo/elipse/preencher/sombra, traço com prévia e rollback, histórico por mapa, redimensionar |
 | `palette.js` | paleta (abas A–E, R) em canvas 2D |
 | `render.js` | desenho de tiles em canvas 2D com a mesma matemática de `_addAutotile`/`_addNormalTile` |
+| `maptree.js` | menu da lista de mapas (Editar, Novo, Carregar, Copiar, Colar, Excluir, Deslocar, Gerar Masmorra, Salvar como Imagem) e arrastar para reagrupar |
+| `dungeon.js` | Gerar Masmorra: layout de salas/labirinto e aplicação no mapa |
+| `sampleloader.js` | Carregar (Modelos de Mapas) a partir de `editor/samplemaps/` |
+| `mapimage.js` | Deslocar e Salvar como Imagem (render 2D do mapa inteiro) |
 | `properties.js` | diálogos Propriedades do Mapa, áudio (BGM/BGS), imagem (fundo de batalha/panorama), Batalha (encontro) e dados de mapa novo |
 | `test-autotile.mjs` | validação do algoritmo contra mapas do editor oficial |
 | `../../css/maptools.css` | estilos (injetado pelo módulo com `<link>`) |
@@ -64,7 +68,7 @@ das sessões: `mz-strings-pt_BR.txt`).
    (tropa, frequência 1–100, mapa inteiro ou até 3 IDs de região). Mudança entra no
    desfazer. Menu da árvore também tem Novo… (filho do mapa clicado, ou raiz ao clicar no
    vazio; 17×13, tileset do mapa atual, como o MZ), Copiar, Colar e Excluir (com filhos).
-   A árvore é atualizada só via DOM (linha nova/renomeada/removida) e `maps:changed`.
+   A árvore é redesenhada com `api.refreshMapTree()` e é emitido `maps:changed`.
 5. **Salvar** (`btnSave`, Ctrl+S): grava `data/MapXXX.json` de todos os mapas modificados
    e `MapInfos.json`; emite `map:changed {id}` por mapa e `maps:changed`. Indicador
    "● Modificado" na barra de status e sublinhado laranja no botão; aviso ao fechar a
@@ -84,37 +88,67 @@ Regras derivadas dessa comparação:
 - parede: vizinho lateral do mesmo tipo só emenda se a coluna começar na mesma linha; o
   teto A4 correspondente (tipo − 8) ao lado da face emenda.
 
+## Rodada 2 (após a integração no master)
+
+- Usa a API promovida: `api.selectMap`, `api.refreshMapTree` (a árvore é redesenhada por
+  app.js depois de gravar `MapInfos.json`), `api.mode` + `mode:changed` (em vez de observar
+  `btnModeEvent`), `api.project.delete`, `api.project.writeBinary`. O `map:changed` faz o
+  app.js atualizar a barra de status.
+- **Gerar Masmorra** (menu da lista): diálogo do MZ (Tipo Salas/Labirinto, Opções Adic.
+  Margens/Passagens Largas, Parede = tetos de A4, Piso = tiles de A5). Os scripts
+  originais (`Dungeon*.js`) estão compilados no RPG.exe, então o gerador é equivalente,
+  não idêntico: salas aleatórias sem sobreposição ligadas por árvore geradora mínima com
+  corredores em L (+1 ciclo), ou labirinto por backtracking com ~8% de atalhos; margem de
+  2 tiles; passagens de 1 ou 2 tiles. Teto em todo o sólido e face de parede (tipo + 8)
+  com 2 tiles de altura acima do chão — a altura que aparece em quase todos os mapas
+  de masmorra oficiais (tileset 4: 1022 de ~1150 colunas). Substitui as camadas 0–4,
+  mantém regiões e eventos, recalcula autotile e sombra automática, entra no desfazer.
+  Precisa de A4 e A5 no tileset.
+- **Carregar…** (Modelos de Mapas): os 104 mapas de `RPG/samplemaps` foram copiados para
+  `editor/samplemaps/` (JSON + PNG) com `manifest.json` (`id, file, image, name, namePt,
+  width, height, tilesetId`); os nomes em português são os da tradução oficial
+  (contexto `Dialog_MapLoader`; 3 sem tradução ficam em inglês: Bar, Castle B1F, Hotel).
+  O mapa vira filho do mapa clicado, com o nome do modelo.
+- **Deslocar…**: X/Y (−256..256), desloca todas as camadas e os eventos dando a volta nas
+  bordas; entra no desfazer.
+- **Salvar como Imagem…**: "Local de Saída" = caminho dentro do projeto (padrão
+  `MapXXX.png`), grava com `writeBinary`. Desenha camadas 0–1, sombras e 2–3 em canvas 2D
+  (mesma matemática do Tilemap). Mapas acima de 4096×4096 px são reduzidos para caber no
+  canvas do Android.
+- **Arrastar na lista**: mouse arrasta direto; no toque, toque longo abre o menu e, se o
+  dedo andar, vira arrasto. Soltar no quarto de cima/baixo de uma linha = antes/depois
+  (irmão); no meio = último filho; na área vazia = fim da raiz. Não deixa soltar dentro
+  dos próprios descendentes. Grava `parentId`/`order` (renumerados em profundidade).
+- **Excluir** agora apaga `MapXXX.json` (e os dos filhos) com `api.project.delete`.
+- **Destaque de camada**: com "Camada N" escolhida, o mapa fica escurecido e um segundo
+  `Tilemap` do runtime desenha só aquela camada por cima (sincronizado com rolagem/zoom e
+  animação).
+
 ## Fora do escopo / pendências
 
-- Gerar masmorra, Carregar (mapas de exemplo), Deslocar, Salvar como imagem, arrastar
-  mapas na árvore para reagrupar: não feitos.
-- Excluir mapa não apaga `MapXXX.json` (a API não tem DELETE); só tira de `MapInfos`.
-  Novo/Colar/Excluir gravam `MapInfos.json` na hora (o MZ só grava ao salvar).
-- Camada escolhida: grava só nela, mas não faz o destaque visual das outras camadas.
-- Paredes A4 não são criadas automaticamente sob o teto (não sei se o MZ faz).
+- Novo/Carregar/Colar/Excluir/arrastar gravam `MapInfos.json` na hora (o MZ só grava ao
+  salvar).
+- Salvar como Imagem não desenha a borda das mesas (A2 com flag 0x80) nem o panorama, e os
+  tiles ☆ não sobem acima dos superiores (só importa na ordem de desenho).
+- Paredes A4 não são criadas automaticamente sob o teto ao pintar (não sei se o MZ faz).
 - Cores das regiões são aproximadas (matiz por ID), não as do MZ.
-- Pinça com dois dedos depende de o `mapview.js` aceitar o `pointerdown` sintético do
-  1º dedo (funciona no Chrome; testado só com eventos sintéticos, não em aparelho).
-
-## Pedidos para a API (promover)
-
-- `api.selectMap(id)` e `api.refreshMapTree()` (hoje replico `selectMap` de `app.js` e
-  mexo no DOM de `#mapTree`).
-- `api.project.delete(path)` para excluir `MapXXX.json`.
-- `api.mode` ("map"/"event") + evento `mode:changed` (hoje observo a classe de
-  `btnModeEvent`).
-- `api.view.onPointer` ou camada de entrada compartilhada para ferramentas no mapa.
-- `api.status` com áreas separadas (hoje injeto `#mtModifiedFlag` no `#status`).
+- O arrasto por toque na lista foi testado só com mouse; a pinça com dois dedos já foi
+  confirmada no aparelho pela sessão principal.
 
 ## Como testar
 
 ```
 node devserver/server.mjs --project "<caminho>/testproject" --port 8783
 ```
-Abra `http://127.0.0.1:8783/?modules=./maptools/index.js`. Em `window.mzMapTools` há
+Abra `http://127.0.0.1:8783/` (o módulo já está em `modules.js`). Em `window.mzMapTools` há
 `state`, `setTool`, `save`, `undo`, `redo` para inspeção. Testado em 1280×600 e 780×360:
 lagoa de água A1 no MAP001 com retângulo/elipse/lápis (bordas corretas), gravar e
 recarregar, carimbo 2×2 da aba B, desfazer/refazer, preencher região (aba R), sombra,
 conta-gotas, seleção+copiar+colar, Propriedades (redimensionar 20×15 + encontro, e
 desfazer), Novo mapa e Excluir, e toque sintético (1 dedo pinta, 2º dedo cancela, toque
 longo pega o tile).
+Rodada 2 (1280×600): destaque da Camada 4, Carregar "Cidade Normal", Salvar como Imagem
+(1680×1920, conferido), Novo 40×30 com tileset Dungeon + Gerar Masmorra (Salas; e
+Labirinto com margens e passagens largas), Deslocar X=5 com desfazer, arrastar para
+dentro de outro mapa e para antes de um irmão (MapInfos conferido), Excluir com os
+arquivos apagados (404).

@@ -182,3 +182,52 @@ button.tb.mtModified { box-shadow: inset 0 -3px 0 #e07020; }
     .mtPropsCols { flex-direction: column; height: auto; }
     .mtGrid2 { grid-template-columns: 1fr; }
 }
+
+/* Menu da lista: separador */
+.mtMenuSep { height: 1px; background: var(--line2); margin: 3px 0; }
+
+/* Arrastar mapas na lista */
+.mtDragGhost {
+    position: fixed; z-index: 70; pointer-events: none;
+    padding: 6px 10px; background: var(--accent); color: #fff;
+    border-radius: 3px; box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    white-space: nowrap;
+}
+#mapTree div.mtDropBefore { box-shadow: inset 0 3px 0 var(--accent); }
+#mapTree div.mtDropAfter { box-shadow: inset 0 -3px 0 var(--accent); }
+#mapTree div.mtDropInside { background: var(--accent-bg); outline: 2px solid var(--accent); outline-offset: -2px; }
+#sidebar.mtDropRoot .sidebarTitle { background: var(--accent-bg); }
+
+/* Carregar (modelos de mapas) */
+.mtSampleDialog { display: flex; gap: 8px; height: 100%; min-height: 0; }
+.mtSampleList {
+    width: 38%; overflow-y: auto; display: flex; flex-direction: column;
+    border: 1px solid var(--line2); background: var(--panel2);
+}
+.mtSampleList button {
+    text-align: left; border-radius: 0; border: 0; border-bottom: 1px solid #eee;
+    min-height: 36px; padding: 0 10px; flex: none;
+}
+.mtSampleList button.sel { background: var(--accent); color: #fff; }
+.mtSamplePreview {
+    flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px;
+    border: 1px solid var(--line2); background: #222; padding: 6px;
+}
+.mtSamplePreview img { flex: 1; min-height: 0; object-fit: contain; width: 100%; image-rendering: pixelated; }
+.mtSampleInfo { color: #eee; text-align: center; }
+
+/* Gerar Masmorra */
+.mtDgDialog { display: flex; gap: 8px; height: 100%; min-height: 0; }
+.mtDgLeft { width: 200px; flex: none; }
+.mtDgRight { flex: 1; min-width: 0; overflow-y: auto; }
+.mtTileGrid { display: flex; flex-wrap: wrap; gap: 2px; }
+.mtTileBtn { width: 44px; height: 44px; min-width: 44px; padding: 1px; border: 2px solid transparent !important; }
+.mtTileBtn canvas { display: block; }
+.mtTileBtn.sel { border-color: var(--accent) !important; background: var(--accent-bg); }
+.mtHint { color: var(--muted); font-size: 12px; }
+
+@media (max-width: 700px) {
+    .mtSampleDialog, .mtDgDialog { flex-direction: column; }
+    .mtSampleList { width: 100%; height: 40%; }
+    .mtDgLeft { width: auto; }
+}

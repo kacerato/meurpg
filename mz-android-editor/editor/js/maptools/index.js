@@ -3,10 +3,10 @@
 // novo mapa e gravação. Fiel ao RPG Maker MZ 1.1.1 (ver NOTES.md).
 
 import * as T from "./autotile.js";
-import { MapEdit, LAYER_AUTO, resizeMapData } from "./editops.js";
+import { MapEdit, LAYER_AUTO } from "./editops.js";
 import { Palette } from "./palette.js";
 import { regionColor } from "./render.js";
-import { openMapProperties, newMapData } from "./properties.js";
+import { initMapTree } from "./maptree.js";
 
 const TILE = 48;
 const TOOLS = { btnPencil: "pencil", btnRect: "rect", btnEllipse: "ellipse", btnFill: "fill", btnShadow: "shadow" };
@@ -24,8 +24,6 @@ const S = {
     selection: null,     // {x0,y0,x1,y1}
     clipboard: null,     // pincel "map"
     mapClipboard: null,  // {map, info}
-    infos: null,
-    infosModified: false,
     palette: null,
     hover: null,
     gesture: null
@@ -45,8 +43,7 @@ function injectCss() {
 }
 
 function isEventMode() {
-    const b = $("btnModeEvent");
-    return !!(b && b.classList.contains("on"));
+    return api.mode === "event";
 }
 
 function dialogOpen() {
@@ -86,7 +83,7 @@ function buildPanel() {
         o.textContent = t;
         layer.appendChild(o);
     });
-    layer.addEventListener("change", () => { S.layer = Number(layer.value); drawOverlay(); });
+    layer.addEventListener("change", () => { S.layer = Number(layer.value); rebuildLayerView(); drawOverlay(); });
     strip.appendChild(layer);
     S.ui.layer = layer;
     mk("", "Tiles menores", "−", () => S.palette.setCellSize(Math.max(16, S.palette.cell - 8)));
@@ -100,6 +97,7 @@ function buildPanel() {
     S.palette = new Palette(pal, {
         onSelect: brush => {
             S.brush = brush;
+            rebuildLayerView();
             drawOverlay();
         }
     });
@@ -168,6 +166,7 @@ function refreshView() {
     if (v && v.tilemap) {
         v.tilemap.refresh();
     }
+    rebuildLayerView();
     drawOverlay();
     updateButtons();
 }
@@ -187,14 +186,11 @@ async function reloadView(edit) {
         S.palette.setTileset(tileset);
     }
     attachOverlay();
-    updateStatusMap(edit.id, edit.map, tileset);
+    api.emit("map:changed", { id: edit.id }); // app.js atualiza a barra de status
     api.emit("map:selected", { id: edit.id, map: edit.map, tileset });
 }
 
 function anyModified() {
-    if (S.infosModified) {
-        return true;
-    }
     for (const e of S.edits.values()) {
         if (e.modified) {
             return true;
@@ -237,7 +233,6 @@ function afterHistory(rec, edit) {
     }
     if (rec.full) {
         reloadView(edit);
-        updateMapTreeRow(edit.id);
     } else {
         refreshView();
     }
@@ -315,11 +310,6 @@ async function doSave() {
                 api.emit("map:changed", { id: e.id });
             }
         }
-        if (S.infosModified && S.infos) {
-            await api.project.writeJson("data/MapInfos.json", S.infos);
-            S.infosModified = false;
-            api.emit("maps:changed", { infos: S.infos });
-        }
         api.status(n ? `Projeto salvo (${n} mapa${n > 1 ? "s" : ""})` : "Projeto salvo");
     } catch (err) {
         console.error(err);
@@ -342,8 +332,17 @@ function attachOverlay() {
         S.regionPool = [];
         v.app.ticker.add(tick);
     }
+    if (!S.layerView) {
+        S.layerView = new PIXI.Container();   // destaque de camada: Tilemap só com a camada escolhida
+        S.layerDim = new PIXI.Graphics();     // véu escuro sobre as outras camadas
+        S.layerDimC = new PIXI.Container();
+        S.layerDimC.addChild(S.layerDim);
+    }
+    v.world.addChild(S.layerDimC, S.layerView);
+    S.layerTmKey = "";
     v.world.addChild(S.layerC); // por cima do tilemap e da moldura de eventos
     S.regionKey = "";
+    rebuildLayerView();
     drawOverlay();
 }
 
@@ -417,6 +416,73 @@ function tick() {
     if (!v || !S.layerC) { return; }
     S.layerC.position.copyFrom(v.overlay.position);
     drawRegions();
+    syncLayerView();
+}
+
+// ---------------- Destaque da camada escolhida (menu Camada do MZ) ----------------
+
+function layerHighlightOn() {
+    return S.layer !== LAYER_AUTO && !S.palette.isRegion && !!currentEdit() && !isEventMode();
+}
+
+// Recria/atualiza o Tilemap que mostra só a camada escolhida.
+function rebuildLayerView() {
+    const v = api.view;
+    const e = currentEdit();
+    if (!S.layerView || !v || !v.tilemap) { return; }
+    if (!layerHighlightOn()) {
+        S.layerView.visible = false;
+        S.layerDimC.visible = false;
+        return;
+    }
+    const key = `${e.id}:${e.w}x${e.h}:${e.map.tilesetId}`;
+    if (!S.layerTm || S.layerTmKey !== key) {
+        if (S.layerTm) {
+            S.layerView.removeChild(S.layerTm);
+            S.layerTm.destroy();
+        }
+        const tm = new Tilemap();
+        tm.tileWidth = TILE;
+        tm.tileHeight = TILE;
+        S.layerData = new Array(e.w * e.h * 6).fill(0);
+        tm.setData(e.w, e.h, S.layerData);
+        tm.setBitmaps(e.tileset.tilesetNames.map(n => ImageManager.loadTileset(n)));
+        tm.flags = e.tileset.flags;
+        tm.horizontalWrap = v.tilemap.horizontalWrap;
+        tm.verticalWrap = v.tilemap.verticalWrap;
+        S.layerView.addChild(tm);
+        S.layerTm = tm;
+        S.layerTmKey = key;
+    }
+    const n = e.w * e.h;
+    const z = S.layer;
+    const src = e.map.data;
+    S.layerData.fill(0);
+    for (let i = 0; i < n; i++) {
+        S.layerData[z * n + i] = src[z * n + i] || 0;
+    }
+    S.layerDim.clear().beginFill(0x000000, 0.55).drawRect(0, 0, e.w * TILE, e.h * TILE).endFill();
+    S.layerView.visible = true;
+    S.layerDimC.visible = true;
+    S.layerSync = "";
+    S.layerTm.refresh();
+}
+
+function syncLayerView() {
+    const v = api.view;
+    if (!S.layerTm || !S.layerView || !S.layerView.visible || !v.tilemap) { return; }
+    S.layerDimC.position.copyFrom(v.overlay.position);
+    const src = v.tilemap, tm = S.layerTm;
+    const k = `${src.origin.x},${src.origin.y},${src.width},${src.height}`;
+    if (k !== S.layerSync) {
+        S.layerSync = k;
+        tm.width = src.width;
+        tm.height = src.height;
+        tm.origin.x = src.origin.x;
+        tm.origin.y = src.origin.y;
+        tm.refresh();
+    }
+    tm.update();
 }
 
 function drawOverlay() {
@@ -730,299 +796,30 @@ function bindKeys() {
     });
 }
 
-// ---------------- Árvore de mapas: Editar / Novo / Copiar / Colar / Excluir ----------------
+// ---------------- Lista de mapas (maptree.js) ----------------
 
-async function loadInfos() {
-    if (!S.infos) {
-        S.infos = await api.project.mapInfos();
-    }
-    return S.infos;
-}
-
-function treeRow(id) {
-    return document.querySelector(`#mapTree div[data-id="${id}"]`);
-}
-
-function updateMapTreeRow(id) {
-    const info = S.infos && S.infos[id];
-    const row = treeRow(id);
-    if (info && row) {
-        row.textContent = info.name || "MAP" + pad3(id);
-    }
-}
-
-function updateStatusMap(id, map, tileset) {
-    const events = (map.events || []).filter(Boolean).length;
-    const sm = $("statusMap");
-    if (sm) { sm.textContent = `Mapa ${pad3(id)} · ${map.width}×${map.height} · ${tileset ? tileset.name : "?"} · ${events} eventos`; }
-}
-
-async function selectMapLocal(id) {
-    try {
-        const [map, tilesets] = await Promise.all([api.project.map(id), api.project.tilesets()]);
-        const tileset = tilesets[map.tilesetId];
-        api.currentMapId = id;
-        api.view.load(map, tileset);
-        api.emit("map:selected", { id, map, tileset });
-        const hint = $("emptyHint");
-        if (hint) { hint.classList.add("hidden"); }
-        for (const row of document.querySelectorAll("#mapTree div")) {
-            row.classList.toggle("selected", Number(row.dataset.id) === id);
-        }
-        updateStatusMap(id, map, tileset);
-    } catch (err) {
-        console.error(err);
-        api.status(String(err.message || err));
-    }
-}
-
-function addTreeRow(info) {
-    const tree = $("mapTree");
-    if (!tree) { return; }
-    let parentUl;
-    if (info.parentId) {
-        const prow = treeRow(info.parentId);
-        const li = prow && prow.parentElement;
-        if (li) {
-            parentUl = li.querySelector(":scope > ul");
-            if (!parentUl) {
-                parentUl = document.createElement("ul");
-                li.appendChild(parentUl);
-            }
-        }
-    }
-    if (!parentUl) {
-        parentUl = tree.querySelector(":scope > ul") || tree;
-    }
-    const li = document.createElement("li");
-    const row = document.createElement("div");
-    row.textContent = info.name;
-    row.dataset.id = info.id;
-    row.addEventListener("click", () => selectMapLocal(info.id));
-    li.appendChild(row);
-    // posiciona conforme a ordem
-    const siblings = [...parentUl.children];
-    const after = siblings.find(s => {
-        const r = s.querySelector(":scope > div");
-        const o = r && S.infos[Number(r.dataset.id)];
-        return o && o.order > info.order;
-    });
-    parentUl.insertBefore(li, after || null);
-}
-
-function descendants(infos, id) {
-    const out = [];
-    const walk = pid => {
-        for (const inf of infos) {
-            if (inf && inf.parentId === pid) {
-                out.push(inf.id);
-                walk(inf.id);
-            }
-        }
-    };
-    walk(id);
-    return out;
-}
-
-// Insere um mapa novo como filho de parentId, depois dos descendentes dele, e renumera a ordem.
-function insertInfo(infos, parentId, name) {
-    let id = 1;
-    while (infos[id]) { id++; }
-    if (id > 999) { return null; }
-    const ordered = infos.filter(Boolean).sort((a, b) => a.order - b.order);
-    let pos = ordered.length;
-    if (parentId) {
-        const sub = new Set([parentId, ...descendants(infos, parentId)]);
-        let last = -1;
-        ordered.forEach((inf, i) => { if (sub.has(inf.id)) { last = i; } });
-        pos = last + 1;
-    }
-    const info = { id, expanded: false, name: name || "MAP" + pad3(id), order: 0, parentId: parentId || 0, scrollX: 0, scrollY: 0 };
-    ordered.splice(pos, 0, info);
-    ordered.forEach((inf, i) => { inf.order = i + 1; });
-    infos[id] = info;
-    return info;
-}
-
-async function createMap(parentId, source) {
-    const infos = await loadInfos();
-    let probe = 1;
-    while (infos[probe]) { probe++; }
-    if (probe > 999) {
-        api.status("Não é possível criar mais mapas.");
-        return;
-    }
-    let map;
-    let name = "MAP" + pad3(probe);
-    if (source) {
-        map = JSON.parse(JSON.stringify(source.map));
-        name = source.info.name;
-    } else {
-        let tilesetId = 1;
-        const cur = currentEdit();
-        if (cur) { tilesetId = cur.map.tilesetId; }
-        map = newMapData(tilesetId);
-        const r = await openMapProperties(api, { title: "Propriedades do Mapa", map, info: { name } });
-        if (!r) { return; }
-        map = r.map;
-        resizeMapData(map, r.width, r.height);
-        name = r.name;
-    }
-    const info = insertInfo(infos, parentId, name);
-    if (!info) {
-        api.status("Não é possível criar mais mapas.");
-        return;
-    }
-    await api.project.writeJson(mapPath(info.id), map);
-    await api.project.writeJson("data/MapInfos.json", infos);
-    S.infosModified = false;
-    addTreeRow(info);
-    api.emit("maps:changed", { infos, added: info.id });
-    api.emit("map:changed", { id: info.id });
-    await selectMapLocal(info.id);
-    api.status(`Mapa ${pad3(info.id)} criado`);
-}
-
-async function editMapProperties(id) {
-    const infos = await loadInfos();
-    const info = infos[id];
-    if (!info) { return; }
-    const map = await api.project.map(id);
-    const r = await openMapProperties(api, { map, info });
-    if (!r) { return; }
-    const tilesets = await api.project.tilesets();
+// MapEdit do mapa id (cria se preciso), usando o mesmo objeto de mapa do cache do projeto.
+async function editFor(id, map) {
+    map = map || await api.project.map(id);
     let edit = S.edits.get(id);
     if (!edit || edit.map !== map) {
+        const tilesets = await api.project.tilesets();
         edit = new MapEdit(id, map, tilesets[map.tilesetId]);
         S.edits.set(id, edit);
     }
-    const before = edit.snapshot();
-    const keepData = map.data;
-    Object.assign(map, r.map, { data: keepData, events: map.events, width: map.width, height: map.height });
-    if (r.width !== map.width || r.height !== map.height) {
-        resizeMapData(map, r.width, r.height);
+    return edit;
+}
+
+// Depois de Deslocar / Gerar Masmorra: recarrega se o registro trocou o mapa inteiro.
+function afterBulkEdit(edit) {
+    const rec = edit.undoStack[edit.undoStack.length - 1];
+    if (rec && rec.full && api.currentMapId === edit.id) {
+        reloadView(edit);
+    } else {
+        refreshView();
     }
-    edit.recordFull("Propriedades do Mapa", before);
-    if (info.name !== r.name) {
-        info.name = r.name;
-        S.infosModified = true;
-        updateMapTreeRow(id);
-        api.emit("maps:changed", { infos });
-    }
-    if (currentEdit() === edit || api.currentMapId === id) {
-        S.cur = edit;
-        await reloadView(edit);
-    }
-    api.emit("map:changed", { id });
+    api.emit("map:changed", { id: edit.id });
     updateButtons();
-}
-
-async function deleteMap(id) {
-    const infos = await loadInfos();
-    const info = infos[id];
-    if (!info) { return; }
-    const ok = await new Promise(resolve => {
-        const dlg = api.openDialog({
-            title: "RPG Maker MZ",
-            width: "420px",
-            height: "180px",
-            buttons: [{ label: "Sim", primary: true, onClick: () => resolve(true) }, { label: "Não", onClick: () => resolve(false) }]
-        });
-        dlg.body.textContent = `Deletar ${info.name}?`;
-    });
-    if (!ok) { return; }
-    const ids = [id, ...descendants(infos, id)];
-    for (const d of ids) {
-        infos[d] = null;
-        S.edits.delete(d);
-        const row = treeRow(d);
-        if (row && row.parentElement) { row.parentElement.remove(); }
-    }
-    infos.filter(Boolean).sort((a, b) => a.order - b.order).forEach((inf, i) => { inf.order = i + 1; });
-    await api.project.writeJson("data/MapInfos.json", infos);
-    api.emit("maps:changed", { infos, removed: ids });
-    api.status(`Mapa excluído (${ids.length})`);
-    if (ids.includes(api.currentMapId)) {
-        const first = infos.find(Boolean);
-        if (first) { selectMapLocal(first.id); }
-    }
-}
-
-function showTreeMenu(x, y, id) {
-    closeTreeMenu();
-    const menu = document.createElement("div");
-    menu.id = "mtTreeMenu";
-    const items = [
-        ["Editar…", () => editMapProperties(id), !id],
-        ["Novo…", () => createMap(id), false],
-        ["Copiar", async () => {
-            const infos = await loadInfos();
-            const map = await api.project.map(id);
-            S.mapClipboard = { map: JSON.parse(JSON.stringify(map)), info: { ...infos[id] } };
-            api.status("Mapa copiado");
-        }, !id],
-        ["Colar", () => createMap(id, S.mapClipboard), !S.mapClipboard],
-        ["Excluir", () => deleteMap(id), !id]
-    ];
-    for (const [label, fn, disabled] of items) {
-        const b = document.createElement("button");
-        b.textContent = label;
-        b.disabled = !!disabled;
-        b.addEventListener("click", () => { closeTreeMenu(); fn(); });
-        menu.appendChild(b);
-    }
-    document.body.appendChild(menu);
-    const r = menu.getBoundingClientRect();
-    menu.style.left = Math.min(x, window.innerWidth - r.width - 4) + "px";
-    menu.style.top = Math.min(y, window.innerHeight - r.height - 4) + "px";
-    setTimeout(() => document.addEventListener("pointerdown", closeOnOutside, true), 0);
-}
-
-function closeOnOutside(e) {
-    const m = $("mtTreeMenu");
-    if (m && !m.contains(e.target)) { closeTreeMenu(); }
-}
-
-function closeTreeMenu() {
-    const m = $("mtTreeMenu");
-    if (m) { m.remove(); }
-    document.removeEventListener("pointerdown", closeOnOutside, true);
-}
-
-function bindTree() {
-    const sidebar = $("sidebar");
-    if (!sidebar) { return; }
-    const idOf = target => {
-        const row = target.closest && target.closest("#mapTree div[data-id]");
-        return row ? Number(row.dataset.id) : 0;
-    };
-    sidebar.addEventListener("contextmenu", e => {
-        e.preventDefault();
-        showTreeMenu(e.clientX, e.clientY, idOf(e.target));
-    });
-    // toque longo na árvore = menu de contexto
-    let timer = 0, start = null;
-    sidebar.addEventListener("pointerdown", e => {
-        if (e.pointerType === "mouse") { return; }
-        start = { x: e.clientX, y: e.clientY, target: e.target };
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            if (start) {
-                if (navigator.vibrate) { navigator.vibrate(20); }
-                showTreeMenu(start.x, start.y, idOf(start.target));
-                start = null;
-            }
-        }, 550);
-    });
-    sidebar.addEventListener("pointermove", e => {
-        if (start && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 10) {
-            clearTimeout(timer);
-            start = null;
-        }
-    });
-    const cancel = () => { clearTimeout(timer); start = null; };
-    sidebar.addEventListener("pointerup", cancel);
-    sidebar.addEventListener("pointercancel", cancel);
 }
 
 // ---------------- Registro ----------------
@@ -1054,17 +851,21 @@ export async function register(theApi) {
 
     bindViewport();
     bindKeys();
-    bindTree();
+    initMapTree({ api, S, reloadView, updateButtons, editFor, afterBulkEdit });
 
     api.on("map:selected", onMapSelected);
-    // troca de modo mapa/evento (classe "on" de btnModeEvent, controlada pelo módulo events)
-    const modeBtn = $("btnModeEvent");
-    if (modeBtn && window.MutationObserver) {
-        new MutationObserver(() => {
-            if (isEventMode()) { S.selection = null; S.hover = null; drawOverlay(); }
-            updateButtons();
-        }).observe(modeBtn, { attributes: true, attributeFilter: ["class"] });
-    }
+    // troca de modo mapa/evento (api.mode, controlado pelo módulo events)
+    api.on("mode:changed", () => {
+        if (isEventMode()) {
+            S.selection = null;
+            S.hover = null;
+            if (S.gesture && S.gesture.edit && S.gesture.edit.stroke) { S.gesture.edit.cancel(); }
+            S.gesture = null;
+        }
+        rebuildLayerView();
+        drawOverlay();
+        updateButtons();
+    });
     // banco de dados alterou tilesets: recarrega a paleta/visualização do mapa atual
     api.on("db:changed", async ({ file } = {}) => {
         if (file && /Tilesets\.json$/.test(file) && S.cur) {
@@ -1079,7 +880,6 @@ export async function register(theApi) {
     });
     // ponto de inspeção para depuração/testes
     window.mzMapTools = { state: S, setTool, save: doSave, undo: doUndo, redo: doRedo };
-    loadInfos().catch(() => {});
     setTool(null);
     updateButtons();
 }
