@@ -47,6 +47,13 @@ Resource Manager, Sound Test, Novo projeto, Opções e Ajuda/Sobre. Registro em
      git) e o diálogo avisa em destaque que faltam os recursos padrão.
    - Android com `window.Android.newProject(nome, titulo)` → a casca cria a pasta (SAF) e
      recarrega com `?newProject=<título>`; `app.js` chama `createProject(apiWriter(project))`.
+   - **Cópia em lote no servidor:** quando `GET /api/template/status` responde
+     `{state, done, total, file}` (casca Android, sessão mz-shell), `createProject` com
+     `apiWriter(project)` faz `POST /api/template/copy {title}` e só acompanha o progresso (a cada
+     300 ms). A casca copia em Java, com várias threads, e personaliza System.json (gameTitle,
+     versionId), index.html (`<title>`) e game.rmmzproject. Sem a rota (PC/devserver → 404) ou com
+     `apiWriter` com prefixo, a cópia segue arquivo a arquivo por `PUT /api/file` (~8 min no
+     aparelho, por isso a rota). Testado com a rota simulada; falta testar com a casca real.
    - PC (Chrome/Edge): "Escolher…" usa `showDirectoryPicker`; cria `<local>/<nome>/` com o template.
    - Sem nenhum dos dois: gera `<nome>.zip` (zip "store" feito em JS) e explica como extrair/abrir.
    - Personaliza como o MZ: `System.json.gameTitle`, `versionId` aleatório, `<title>` do

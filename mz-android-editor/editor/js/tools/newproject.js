@@ -41,7 +41,41 @@ export const templateFileUrl = (tp, rel) => new URL(rel.split("/").map(encodeURI
 
 // Grava pela API do projeto aberto (útil para testes: prefix = "subpasta/").
 export function apiWriter(project, prefix = "") {
-    return { write: (rel, blob) => project.writeBinary(prefix + rel, blob, blob.type || "application/octet-stream") };
+    return {
+        project: !prefix,   // grava na raiz do projeto aberto: pode usar a cópia em lote do servidor
+        write: (rel, blob) => project.writeBinary(prefix + rel, blob, blob.type || "application/octet-stream")
+    };
+}
+
+// ------------------------------------------------------------------ cópia em lote no servidor
+// Casca Android (LocalServer): POST /api/template/copy {title} copia o template (template-full
+// ou template) direto dos assets para o projeto SAF aberto, em Java e com várias threads, e
+// personaliza System.json / index.html / game.rmmzproject. Progresso em GET /api/template/status
+// → {done, total, file, state: "idle"|"running"|"done"|"error", error?}. No PC a rota não existe
+// (o devserver responde 404) e a cópia segue arquivo a arquivo.
+export async function serverCopyAvailable() {
+    try {
+        const r = await fetch("/api/template/status", { cache: "no-store" });
+        if (!r.ok) { return false; }
+        const s = await r.json();
+        return !!s && typeof s.state === "string";
+    } catch {
+        return false;
+    }
+}
+
+async function serverCopy(title, onProgress) {
+    const res = await fetch("/api/template/copy", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title })
+    });
+    if (!res.ok) { throw new Error("/api/template/copy: " + res.status + " " + (await res.text().catch(() => ""))); }
+    for (;;) {
+        await new Promise(r => setTimeout(r, 300));
+        const s = await (await fetch("/api/template/status", { cache: "no-store" })).json();
+        if (onProgress && s.total) { onProgress(s.done | 0, s.total | 0, s.file || ""); }
+        if (s.state === "done") { return s.total | 0; }
+        if (s.state === "error") { throw new Error(s.error || s.file || "template copy failed"); }
+    }
 }
 
 // Grava numa pasta escolhida com a File System Access API (Chrome/Edge no PC).
@@ -124,6 +158,9 @@ const escapeHtml = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": 
 // Grava o template em `writer`, personalizando o título como o MZ faz
 // (System.json → gameTitle, <title> do index.html) e criando game.rmmzproject.
 export async function createProject(writer, { title = "", onProgress } = {}) {
+    if (writer.project && await serverCopyAvailable()) {
+        return serverCopy(title, onProgress);
+    }
     const tp = await loadTemplate();
     const files = tp.manifest.files;
     let done = 0;
