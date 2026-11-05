@@ -59,6 +59,9 @@ export async function listFolder(folder) {
 // ------------------------------------------------------------------ importação
 
 function chooseFiles({ accept, multiple = true, directory = false }) {
+    if (directory && window.Android && typeof window.Android.pickFolder === "function") {
+        return chooseAndroidFolder();
+    }
     return new Promise(resolve => {
         const input = el("input", { type: "file", accept, multiple, style: { display: "none" } });
         if (directory) { input.webkitdirectory = true; input.setAttribute("webkitdirectory", ""); }
@@ -67,6 +70,35 @@ function chooseFiles({ accept, multiple = true, directory = false }) {
         input.addEventListener("cancel", () => { if (!settled) { settled = true; resolve([]); input.remove(); } });
         document.body.appendChild(input);
         input.click();
+    });
+}
+
+// Android: o WebView abre o seletor de ARQUIVOS para webkitdirectory (sem caminhos relativos).
+// A casca escolhe a pasta pelo SAF e o servidor local a expõe; devolve objetos com name, size,
+// webkitRelativePath e load() (lido só na hora de copiar).
+function chooseAndroidFolder() {
+    return new Promise(resolve => {
+        window.mzFolderPicked = async name => {
+            window.mzFolderPicked = null;
+            if (!name) { resolve([]); return; }
+            try {
+                const r = await fetch("/api/extfolder/list", { cache: "no-store" });
+                const { files } = await r.json();
+                resolve(files.map(f => ({
+                    name: f.path.slice(f.path.lastIndexOf("/") + 1),
+                    size: f.size,
+                    webkitRelativePath: name + "/" + f.path,
+                    load: () => fetch("/api/extfolder/file?path=" + encodeURIComponent(f.path)).then(res => {
+                        if (!res.ok) { throw new Error(res.status + " " + f.path); }
+                        return res.blob();
+                    })
+                })));
+            } catch (e) {
+                console.error(e);
+                resolve([]);
+            }
+        };
+        window.Android.pickFolder();
     });
 }
 
@@ -142,7 +174,7 @@ export async function importFromFolder(onlyFolder = null) {
         if (onlyFolder && folder !== onlyFolder) { continue; }
         // effects/ inclui texturas (effects/Texture/*.png) usadas pelos .efkefc
         if (!NESTED.has(folder) && !extsFor(folder).includes(extOf(f.name))) { continue; }
-        items.push({ rel, file: f, size: f.size });
+        items.push(f.load ? { rel, load: f.load, size: f.size } : { rel, file: f, size: f.size });
     }
     if (!items.length) {
         await alertBox(api, t("Import", "Dialog_ResourceManager"), onlyFolder

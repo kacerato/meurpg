@@ -200,9 +200,42 @@ public class LocalServer implements Runnable {
         }
     }
 
+    /** Pasta externa (fora do projeto) escolhida pelo editor via Android.pickFolder(); só leitura. */
+    private volatile SafProject extFolder;
+
+    public void setExtFolder(SafProject folder) {
+        extFolder = folder;
+    }
+
     private void api(Request req, OutputStream out) throws IOException {
         SafProject prj = project;
         switch (req.path) {
+            case "/api/extfolder/list": {
+                SafProject ext = extFolder;
+                if (ext == null) {
+                    text(out, 404, "no folder");
+                    return;
+                }
+                json(out, 200, "{\"name\":" + Json.str(ext.getName()) + ",\"files\":" + ext.listRecursiveJson(20000) + "}");
+                return;
+            }
+            case "/api/extfolder/file": {
+                SafProject ext = extFolder;
+                String rel = req.query.get("path");
+                if (ext == null || rel == null || rel.contains("..")) {
+                    text(out, 404, "not found");
+                    return;
+                }
+                SafProject.Entry entry = ext.resolve(rel);
+                if (entry == null || entry.isDir) {
+                    text(out, 404, "not found: " + rel);
+                    return;
+                }
+                try (InputStream in = ext.open(entry)) {
+                    bytes(out, 200, Mime.of(rel), readAll(in), req);
+                }
+                return;
+            }
             case "/api/project": {
                 if (prj == null) {
                     json(out, 404, "{\"error\":\"no_project\"}");

@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
     private static final int REQ_FOLDER_CHOOSER = 4;
     private static final int REQ_DEPLOY_FOLDER = 5;
     private static final int REQ_NEW_PROJECT_LOCATION = 6;
+    private static final int REQ_EXT_FOLDER = 7;
     /** Último Local do Novo projeto (árvore SAF com permissão persistente). */
     private static final String PREF_NEW_PARENT = "newProjectParentUri";
     /** FileChooserParams.MODE_OPEN_FOLDER (constante oculta do SDK): <input webkitdirectory>. */
@@ -216,6 +217,17 @@ public class MainActivity extends Activity {
                 }
             }
             cb.onReceiveValue(result);
+            return;
+        }
+        if (requestCode == REQ_EXT_FOLDER) {
+            String name = null;
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                SafProject folder = new SafProject(getContentResolver(), data.getData());
+                server.setExtFolder(folder);
+                name = folder.getName();
+            }
+            web.evaluateJavascript("window.mzFolderPicked && window.mzFolderPicked("
+                + (name == null ? "null" : LocalServer.Json.str(name)) + ")", null);
             return;
         }
         if (requestCode == REQ_NEW_PROJECT_LOCATION) {
@@ -509,6 +521,18 @@ public class MainActivity extends Activity {
                         launchNewProjectPicker();
                     }
                 }
+            });
+        }
+
+        /** Escolher uma pasta inteira (o WebView ignora webkitdirectory e abre o seletor de arquivos):
+         *  SAF de pasta; o conteúdo fica em /api/extfolder/list e /api/extfolder/file (LocalServer).
+         *  Responde em window.mzFolderPicked(nome | null). Usado pelo DLC e "Importar recursos padrão". */
+        @JavascriptInterface
+        public void pickFolder() {
+            runOnUiThread(() -> {
+                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivityForResult(i, REQ_EXT_FOLDER);
             });
         }
 

@@ -218,6 +218,32 @@ public class SafProject {
         }
     }
 
+    /** Lista recursiva (só arquivos) como JSON [{"path","size"}], até `max` itens. Usada pela pasta
+     *  externa escolhida no Gerenciador de recursos (DLC / Importar recursos padrão). */
+    public String listRecursiveJson(int max) {
+        StringBuilder sb = new StringBuilder("[");
+        int[] count = {0};
+        walk("", rootEntry(), sb, count, max);
+        return sb.append(']').toString();
+    }
+
+    private void walk(String path, Entry dir, StringBuilder sb, int[] count, int max) {
+        for (Entry e : children(path, dir.documentId).values()) {
+            if (count[0] >= max) {
+                return;
+            }
+            String p = path.isEmpty() ? e.name : path + "/" + e.name;
+            if (e.isDir) {
+                walk(p, e, sb, count, max);
+            } else {
+                if (count[0]++ > 0) {
+                    sb.append(',');
+                }
+                sb.append("{\"path\":").append(LocalServer.Json.str(p)).append(",\"size\":").append(e.size).append('}');
+            }
+        }
+    }
+
     public String listJson(String dirPath) {
         Entry dir = resolve(dirPath);
         if (dir == null || !dir.isDir) {
