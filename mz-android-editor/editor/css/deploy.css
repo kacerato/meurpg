@@ -1,0 +1,29 @@
+/* Diálogo Implantação (módulo deploy) */
+.deployDialog .mzDialogBody { display: flex; flex-direction: column; gap: 6px; }
+.deployDialog fieldset.dpGroup { border: 1px solid var(--line2); border-radius: 3px; margin: 0; padding: 4px 10px 8px; }
+.deployDialog fieldset.dpGroup[hidden] { display: none; }
+.deployDialog legend { padding: 0 4px; color: var(--muted); }
+.deployDialog .dpRow { display: flex; align-items: center; gap: 8px; min-height: 36px; }
+.deployDialog .dpRow input { width: 20px; height: 20px; margin: 0; }
+.deployDialog .dpInline { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.deployDialog .dpGrid { display: grid; grid-template-columns: max-content 1fr; gap: 6px 10px; align-items: center; }
+.deployDialog .dpGrid input[type=text], .deployDialog .dpKey input {
+    min-height: 36px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 3px;
+    background: var(--panel2); font: inherit; width: 100%;
+}
+.deployDialog .dpKey { display: flex; gap: 6px; }
+.deployDialog .dpKey .dpSmall { min-width: 40px; }
+.deployDialog .dpHint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.deployDialog .dpProgress { display: flex; align-items: center; gap: 10px; }
+.deployDialog .dpBar { flex: 1; height: 14px; border: 1px solid var(--line); border-radius: 3px; background: var(--panel2); overflow: hidden; }
+.deployDialog .dpBarFill { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.deployDialog .dpBarText { min-width: 140px; text-align: right; font-size: 12px; color: var(--muted); }
+.deployDialog .dpResult { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.deployDialog .dpResult:empty { display: none; }
+.deployDialog .dpResult button.primary { background: var(--accent); border-color: var(--accent); color: #fff; min-height: 36px; }
+.deployDialog .dpLog {
+    flex: 0 0 auto; min-height: 90px; max-height: 160px; overflow: auto; margin: 0;
+    padding: 6px; background: #1e1e1e; color: #d8d8d8; font: 12px/1.35 monospace; border-radius: 3px;
+    white-space: pre-wrap; word-break: break-all;
+}
+.deployDialog .dpLog:empty { display: none; }

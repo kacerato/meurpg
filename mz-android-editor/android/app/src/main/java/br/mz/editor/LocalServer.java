@@ -40,6 +40,17 @@ public class LocalServer implements Runnable {
         this.project = project;
     }
 
+    public SafProject getProject() {
+        return project;
+    }
+
+    // Implantação (rotas /api/deploy/*), ligada pela MainActivity.
+    private volatile Deployer deployer;
+
+    void setDeployer(Deployer d) {
+        this.deployer = d;
+    }
+
     public int start() throws IOException {
         socket = new ServerSocket(0, 16, InetAddress.getByName("127.0.0.1"));
         port = socket.getLocalPort();
@@ -235,8 +246,16 @@ public class LocalServer implements Runnable {
                 json(out, 200, prj.listJson(dir == null ? "" : dir));
                 return;
             }
-            default:
+            default: {
+                Deployer d = deployer;
+                String[] r = d != null && req.path.startsWith("/api/deploy/")
+                    ? d.handle(req.method, req.path, req.query, req.body) : null;
+                if (r != null) {
+                    json(out, Integer.parseInt(r[0]), r[1]);
+                    return;
+                }
                 text(out, 404, "unknown api");
+            }
         }
     }
 
