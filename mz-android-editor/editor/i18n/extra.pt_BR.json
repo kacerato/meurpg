@@ -266,6 +266,7 @@
   "is present": "está presente",
   "max. %1": "máx. %1",
   "min. %1": "mín. %1",
-  "warning: could not read %1: %2": "aviso: não foi possível ler %1: %2"
+  "warning: could not read %1: %2": "aviso: não foi possível ler %1: %2",
+  "Choose the location of the project folder.": "Escolha o local da pasta do projeto."
  }
 }

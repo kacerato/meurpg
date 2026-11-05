@@ -164,3 +164,66 @@ arquivos apagados (404).
 - Salvar como imagem: opção de compartilhar (Android) ou baixar (PC) depois de gravar.
 - Conta-gotas exato também com o botão "A".
 - A árvore (expandir/recolher, `MapInfos.expanded`) é desenhada em `app.js`.
+
+## Atualização (mz-layout, 2026-11-05) — layout, Event List, Novo projeto, atalhos, panorama, DLC
+
+Branch `claude/mz-layout-4ac057`. Testado no navegador (1200×554) e no aparelho (APK, RedMagic, Android 16).
+
+**Coluna esquerda como no MZ (01_03, item 3/4).** `index.html` agora tem `#leftCol` = `#leftTop`
+(paleta; no modo evento, Event List) + `#leftSplit` (divisória) + `#sidebar` (lista de mapas).
+- `buildPanel` põe `#mtPanel` dentro de `#leftTop`; `Palette.setCellSize` ajusta a largura de `#leftCol`.
+- Divisória: `app.js bindLeftColumn` (Pointer Events, mouse e toque; duplo clique volta a 55%);
+  proporção em `localStorage["mzEditor.leftSplit"]` (12–88%). Testada por toque real no aparelho.
+- Botões de ocultar mantidos e lembrados: `btnMaps` (`mzEditor.mapListHidden`) oculta a lista;
+  `mtBtnPalette` (`mzEditor.paletteHidden`) oculta a metade de cima (paleta ou Event List). Só uma
+  metade visível → ocupa a coluna; nenhuma → a coluna some (CSS `:has()` em `editor.css`).
+- A faixa da paleta (Selecionar, Desfazer, Refazer, "A", Camada, −/+) ficou compacta para caber numa linha.
+
+**Event List (01_09_02).** `events/eventmode.js` `_buildList/_renderList`: `#evList` dentro de `#leftTop`;
+no modo evento `#leftTop.eventMode` esconde a paleta e mostra a lista (linhas "001  EV001", listradas).
+Seleção sincronizada sempre (toque/clique na lista centraliza e seleciona; seleção no mapa marca e rola a
+lista). Toque duplo abre o editor. Toque longo (500 ms) ou botão direito abre o mesmo menu de contexto do
+mapa (Editar/Novo, Recortar, Copiar, Colar, Excluir, Criação rápida, Posição inicial). O painel flutuante
+"☰ Eventos do mapa" e o botão da barra do modo evento foram removidos (CSS `.evListPanel` em
+`events.css` ficou sem uso; não mexi por ser de outra sessão).
+
+**Atalhos (01_04).** O manual não lista teclas; li a tabela do `MainMenu.qml` compilado dentro do
+`RPG.exe` (strings UTF-16): New=Ctrl+N, Open=Ctrl+O, Save=Ctrl+S, Editar mapa=Espaço, Novo mapa=Enter,
+Deslocar=Ctrl+T, Gerar masmorra=Ctrl+D, Mapa=F5, Evento=F6, camada seguinte/anterior=Ctrl+Tab /
+Ctrl+Shift+Tab, Zoom=Ctrl++ / Ctrl+- (StandardKey), Tamanho real=Ctrl+0, Banco de dados=F9,
+Plugins=F10, Teste=Ctrl+R, Conteúdo=F1, Evento rápido Transferência/Porta/Tesouro/Pousada=Ctrl+1…4.
+**Ferramentas de desenho, Teste de som, Buscador, Gerenciador de recursos e Gerador não têm tecla no MZ.**
+- Novos: Ctrl++/Ctrl+-/Ctrl+0 (`app.js`), Ctrl+Tab, Ctrl+T, Ctrl+D, Espaço/Enter com a lista em foco
+  (`maptools/index.js bindKeys` → `maptree.js runTreeAction`), Ctrl+1…4 no modo evento (`eventmode.js`).
+- Removido F11 = Teste de som (não existe no MZ); `menubar.js` deixou de mostrar F11 e passou a mostrar
+  Ctrl++/Ctrl+-/Ctrl+0.
+- Teste de jogo: botão "FPS" na `#playBar` chama `Graphics._switchFPSCounter()` (= F2; FPS → ms → oculto).
+
+**Panorama "Mostrar no editor" (01_07_03).** `mapview.js _scrollParallax`: com Repetir horizontal/vertical
+e Sx/Sy ≠ 0, o panorama anda `sx/2` px por quadro (60 fps), como `Game_Map.updateParallax`. Sem
+Repetir continua parado (no jogo ele acompanha a câmera a meia velocidade; no editor fica preso ao mapa).
+
+**Novo projeto no Android (01_02).** Local escolhido no diálogo: "Escolher…" → `Android.pickNewProjectLocation()`
+(SAF, permissão persistente) → `window.mzNewProjectLocationPicked(uri, "/sdcard/…")`; o caminho aparece
+no campo (`<local>/<nome>`). O último Local fica lembrado (`Android.newProjectLocation()`). No OK,
+`Android.newProjectExists(uri, nome)` → "O projeto já existe." no diálogo (sem criar "Nome (1)"); depois
+`Android.newProjectIn(uri, nome, título)` pergunta "Salvar as alterações?" e cria direto, sem abrir o SAF de
+novo. `createNewProjectIn` também recusa pasta existente. Testado: aviso com Project1 existente; criação
+de /sdcard/MZProjects/LayoutTest (cópia do template em ~1 min) e abertura do MAP001.
+
+**Gerenciador de recursos no aparelho (01_05).**
+- Importar (vários arquivos): OK com `MainActivity.onShowFileChooser` (2 PNG → img/parallaxes).
+- DLC e "Importar recursos padrão" sem template: **falhava** — o WebView entrega `mode=1` (vários
+  arquivos) para `webkitdirectory`, então abria o seletor de arquivos e os arquivos vinham sem caminho.
+  Agora `resources.js chooseFiles({directory})` usa `Android.pickFolder()` (SAF de pasta) e o servidor
+  local expõe a pasta: `GET /api/extfolder/list` (lista recursiva) e `/api/extfolder/file?path=`
+  (`LocalServer.java`, `SafProject.listRecursiveJson`). Os arquivos são lidos só na cópia. Testado:
+  DLC/img/pictures/DlcPic.png → projeto (304 559 bytes).
+
+**Ficou de fora / observações**
+- Ctrl+F / F3 / Shift+F3 (Localizar no mapa) existem no MZ e não foram mapeados (não há busca no mapa).
+- "Salvar como imagem" e Fechar projeto não têm tecla no MZ (confirmado na tabela).
+- Ctrl+Tab e Ctrl+T não chegam à página num navegador de PC (o navegador reserva); no WebView funcionam.
+- Numa tentativa do Novo projeto apareceram dois "Salvar as alterações?" empilhados; não reproduzi
+  (instrumentado, `mzConfirmLeave` é chamado uma vez). Se voltar, ver `Bridge.newProjectIn`/`leaveConfirmed`.
+- Telas < 700 px: a coluna inteira vira gaveta sobre o mapa (antes eram dois painéis separados).
