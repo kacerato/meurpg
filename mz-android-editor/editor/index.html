@@ -2,7 +2,17 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta id="vp" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <script>
+        // Celulares em paisagem têm só ~850×390 px CSS: o editor foi desenhado para 1200×560.
+        // Na casca Android, renderiza em 1200 px de largura e reduz para caber (como uma janela de PC).
+        (function () {
+            var narrow = Math.max(screen.width, screen.height) < 1200;
+            if (narrow && /Android/i.test(navigator.userAgent)) {
+                document.getElementById("vp").setAttribute("content", "width=1200, user-scalable=no, viewport-fit=cover");
+            }
+        })();
+    </script>
     <title>MZ Editor</title>
     <link rel="icon" href="img/app.png" type="image/png">
     <link rel="stylesheet" href="css/editor.css">

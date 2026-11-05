@@ -186,6 +186,10 @@ export class MapEdit {
             // A2 colunas 5–8 / A1 pedras e icebergs: decoração na camada 1 sobre a base.
             this.set(x, y, 1, tileId);
             const base = this.get(x, y, 0);
+            if (T.isA1(tileId) && !(T.isA1(base) && T.kindOf(base) === 0)) {
+                // Decoração de A1 exige água rasa (tipo 0) por baixo, como nos mapas oficiais.
+                this.set(x, y, 0, T.makeAutotileId(0, 0));
+            }
             if (this.tileset && this.tileset.mode === 0 && T.isA2(tileId) && T.isA2(base) && !T.isDecorationA(base)) {
                 // Tipo campo: decoração sobre a base da 2ª/4ª coluna troca a base pela 1ª/3ª.
                 const col = (T.kindOf(base) - 16) % 8;

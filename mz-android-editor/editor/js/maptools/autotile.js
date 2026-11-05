@@ -42,8 +42,10 @@ export function autotileType(id) {
 // A1: tipos 2 e 3 (pedras/icebergs sobre o mar); A2: colunas 5–8 (metade direita).
 export function isDecorationA(id) {
     if (isA1(id)) {
+        // Água profunda (1), pedras (2) e icebergs (3) têm bordas transparentes: nos mapas
+        // oficiais ficam sempre na camada 1 sobre a água rasa (tipo 0) na camada 0.
         const k = kindOf(id);
-        return k === 2 || k === 3;
+        return k === 1 || k === 2 || k === 3;
     }
     if (isA2(id)) {
         return (kindOf(id) - 16) % 8 >= 4;
