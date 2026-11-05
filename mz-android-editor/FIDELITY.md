@@ -18,7 +18,7 @@
 
 | Área | OK | Parcial | Ausente | Situação |
 |---|---|---|---|---|
-| Banco de dados (16 abas, 25 traits, 13 effects) | 237 | 12 | 1 | Praticamente completo. Faltam a área [Status] do Teste de batalha e a pintura de tilesets por toque. |
+| Banco de dados (16 abas, 25 traits, 13 effects) | 250 | 0 | 0 | Completo (branch mz-dbplugins): Teste de batalha com [Status] do runtime, tilesets por toque, fórmula com ajuda, fontes, posições arrastáveis. Sobram divergências de layout (Contents em diálogo). |
 | Comandos de evento (105 + 356) | 86 | 19 | 0 | Todos existem. Os parciais são ranges, prévias e menus de texto. |
 | Rota de movimento (45 + diálogo) | 50 | 3 | 0 | — |
 | Eventos (modo, editor, criação rápida, lista, busca) | 55 | 6 | 4 | Ausentes: Aplicar, busca por nome, Ctrl+Enter, desfazer em evento comum. |
@@ -27,7 +27,7 @@
 | Ferramentas (Recursos, Teste de som, Opções) | maioria | vários | `movies/`, Tutoriais | No Android, Importar não funciona (o WebView não tem file chooser). |
 | Jogo (teste de jogo, de batalha, de evento) | — | todos | modo `test` | Roda sem `?test` (sem F9 e sem atravessar obstáculos) e sem salvar antes. |
 | Implantação | Web fiel | — | Windows/macOS | APK é extra. O .zip vem dentro de `www/`. |
-| Plugins (gerenciador, tipos, comando 357) | quase tudo | poucos | Inserir ícone, texto livre | — |
+| Plugins (gerenciador, tipos, comando 357) | quase tudo | poucos | — | Abas [Tipo]/[Texto], Inserir Índice de Ícone/Cor, coluna Valor, Atualizar em lote e menu de contexto feitos (branch mz-dbplugins). Falta `@require`/`@noteParam` na Implantação. |
 | Gerador de personagens | todas as partes | poucos | — | Tamanhos de saída corretos. Importar/Exportar presos à pasta do projeto. |
 
 ## Verificação no editor rodando
@@ -693,7 +693,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Lista de dados à esquerda com ID "0001 Nome" | 01_08 | OK | index.js:152-185 | — |
 | Change Maximum (limite de 2000 para Skills/Items/Weapons/Enemies/Troops e 1000 para os demais) | 01_08 | OK | index.js:221-240; `max` em tabs_items.js:83,116,140,158, tabs_battle.js:96,330 | — (ao reduzir, pede confirmação e apaga, como no manual) |
 | F4 / F5 (item anterior/próximo) | 01_08 | OK | index.js:100-110 | — |
-| Menu de contexto: Copy | 01_08 | OK | index.js:247 (botão, sem menu de contexto) | Usa um clipboard interno da sessão (não o da área de transferência do sistema) |
+| Menu de contexto: Copy | 01_08 | OK | index.js (botão, sem menu de contexto) | Clipboard próprio do banco, persistente (localStorage, `ui.js` `getClip/setClip`); não usa a área de transferência do sistema |
 | Copy múltiplo com Shift | 01_08 | OK | index.js:170-175 e botão "Multi" | — |
 | Paste (sobrescreve) | 01_08 | OK | index.js:253-265 | — |
 | Clear | 01_08 | OK | index.js:267-273 (`BLANK`) | — |
@@ -726,7 +726,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Name | 01_08_02 | OK | tabs_actors.js:247 | — |
 | EXP Curve [...] com Base/Extra/Acceleration A/B | 01_08_02 | OK | tabs_actors.js:198-224 (10–50/0–40/10–50/10–50) | — |
 | Aba "To Next Level" e "Total" | 01_08_02 | OK | tabs_actors.js:213-214; fórmula em common.js:87 `expForLevel` | — |
-| Gráfico de fundo da tabela de EXP | 01_08_02 | Ausente | — | Só lista numérica; sem o gráfico de fundo |
+| Gráfico de fundo da tabela de EXP | 01_08_02 | OK | tabs_actors.js `editExpCurve` (barras dos 99 níveis no modo atual, fundo da tabela) | — |
 | Parameter Curves (miniaturas de 8 gráficos) | 01_08_02 | OK | tabs_actors.js:126-131, 249-259 | — |
 | Janela Parameter Curves com abas por parâmetro, OK/Cancel | 01_08_02 | OK | tabs_actors.js:150-196 | — |
 | Quick Settings A–E | 01_08_02 | OK | tabs_actors.js:177-181; common.js:116-127 (fórmula do RPG.exe, aleatória) | — |
@@ -745,7 +745,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Icon (seletor do IconSet) | 01_08_03 | OK | tabs_items.js:8-17; pickers.js:212 | — |
 | Description | 01_08_03 | OK | tabs_items.js:90 | Não limita a 2 linhas nem mostra pré-visualização |
 | Skill Type (com None) | 01_08_03 | OK | tabs_items.js:91 | — |
-| MP Cost (0–999) | 01_08_03 | Parcial | tabs_items.js:93 | Máximo 9999 em vez de 999 |
+| MP Cost (0–999) | 01_08_03 | OK | tabs_items.js (`max: 999`) | — |
 | TP Cost (0–100) | 01_08_03 | OK | tabs_items.js:94 | — |
 | Occasion (Always/Battle/Menu/Never) | 01_08_03 | OK | common.js:12 `OCCASIONS`; tabs_items.js:96 | — |
 | Scope: Faction (Enemy/Ally/Enemy & Ally/User/None) | 01_08_03 | OK | tabs_items.js:20-42; common.js:59-84 | — |
@@ -762,7 +762,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Required Weapon: Weapon Type 1/2 | 01_08_03 | OK | tabs_items.js:104-106 | — |
 | Damage: Type (None + 6 tipos) | 01_08_03 | OK | common.js:14; tabs_items.js:66 | — |
 | Damage: Element (inclui Normal Attack) | 01_08_03 | OK | tabs_items.js:62, 67 | — |
-| Damage: Formula | 01_08_03 | Parcial | tabs_items.js:59-61, 68 | Sem ajuda/lista de referências (a.atk, v[n]...) nem validação |
+| Damage: Formula | 01_08_03 | OK | tabs_items.js `formulaField`: ajuda oficial (Group_Damage), botão "?" com as referências do manual (x.atk … x.level, v[n]) que inserem no cursor, e validação de sintaxe como o `eval` do runtime | Erros de execução (ex.: `a.xyz`) só aparecem no jogo, como no MZ |
 | Damage: Variance (0–100%) | 01_08_03 | OK | tabs_items.js:69 | — |
 | Damage: Critical Hits (Yes/No) | 01_08_03 | OK | tabs_items.js:70 | — |
 | Desativar campos de dano quando Type = None | 01_08_03 | OK | tabs_items.js:63-71 | — |
@@ -780,7 +780,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Item Type (Regular/Key/Hidden A/Hidden B) | 01_08_04 | OK | common.js:15; tabs_items.js:124 | — |
 | Scope (Faction/Number/Status) | 01_08_04 | OK | tabs_items.js:128 | — |
 | Speed / Success / Repeat / TP Gain / Hit Type / Animation | 01_08_04 | OK | tabs_items.js:130 → `invocationGroup` 48-56 | — |
-| Damage (Type/Element/Variance/Critical/Formula) | 01_08_04 | Parcial | tabs_items.js:131 | A mesma falta de ajuda/validação da fórmula |
+| Damage (Type/Element/Variance/Critical/Formula) | 01_08_04 | OK | tabs_items.js (mesmo `formulaField`) | — |
 | Effects | 01_08_04 | OK | tabs_items.js:132 | — |
 | Notes + Plugin Help | 01_08_04 | OK | tabs_items.js:133 | — |
 
@@ -805,7 +805,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Name | 01_08_06 | OK | tabs_battle.js:102 | — |
 | Image + Hue (pasta enemies/sv_enemies) | 01_08_06 | OK | tabs_battle.js:100-106; pickers.js:141-162 | — |
 | 8 parâmetros (HP 1–999999, MP 0–9999, demais 0–999) | 01_08_06 | OK | tabs_battle.js:107 | — |
-| Rewards: EXP (1–9999999) / Gold (0–9999999) | 01_08_06 | Parcial | tabs_battle.js:108-110 | EXP aceita 0 (mínimo do manual é 1) |
+| Rewards: EXP (1–9999999) / Gold (0–9999999) | 01_08_06 | OK | tabs_battle.js (EXP `min: 1`) | — |
 | Drop Items (3 linhas; None/Item/Weapon/Armor; 1/1–1/1000) | 01_08_06 | OK | tabs_battle.js:65-93, 111-118 | — |
 | Action Patterns: Skill + Rating | 01_08_06 | OK | tabs_battle.js:27-63, 119-126 | — |
 | Condição Always | 01_08_06 | OK | tabs_battle.js:12 | — |
@@ -825,15 +825,15 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Name | 01_08_07 | OK | tabs_battle.js:333 | — |
 | Auto-name | 01_08_07 | OK | tabs_battle.js:137-144, 344 | — |
 | Change Battle Background (fundo 1 e 2, compartilhado) | 01_08_07 | OK | tabs_battle.js:254-263, 345 (grava System.battleback1/2Name) | São dois seletores em sequência, não uma janela com os dois campos lado a lado |
-| Battle Test: abas 1–4, ator, nível, equipamento | 01_08_07 | Parcial | tabs_battle.js:265-300 | Falta a área [Status] com os parâmetros calculados; o equipamento não é filtrado pelos traits do ator/classe e ignora Dual Wield |
+| Battle Test: abas 1–4, ator, nível, equipamento | 01_08_07 | OK | tabs_battle.js `battleTest`; equip.js | Área [Status] = `Game_Actor.param` (base da classe + equipamentos × traits Param, conferido com o runtime no teste); espaços filtrados por traits 51/52/54 de ator e classe; Dual Wield troca o 2º espaço por arma; botão Status Inicial. Não marca nenhum arquivo como alterado |
 | Battle Test: executar (grava Test_*.json e abre ?btest) | 01_08_07 | OK | tabs_battle.js:301-326 | — |
 | Placement View com fundo de batalha | 01_08_07 | OK | tabs_battle.js:179-240 | — |
 | Até 8 inimigos | 01_08_07 | OK | tabs_battle.js:351 | — |
 | Arrastar inimigo para mudar posição | 01_08_07 | OK | tabs_battle.js:206-227 | — |
 | Appear Mid-Battle (clique direito) | 01_08_07 | OK | tabs_battle.js:336-341 (caixa "Appear Halfway") | É caixa de seleção, não menu de contexto |
-| Add (e duplo clique na lista de inimigos) | 01_08_07 | Parcial | tabs_battle.js:349-354 | A lista é um `<select>`; não existe a lista com duplo clique; Add realinha todos |
+| Add (e duplo clique na lista de inimigos) | 01_08_07 | OK | tabs_battle.js (lista "Lista de Inimigos" com toque duplo; `add`) | O novo inimigo entra à direita do último, sem realinhar (Align realinha) |
 | Delete (Remove) | 01_08_07 | OK | tabs_battle.js:355-358 | — |
-| Clear | 01_08_07 | OK | tabs_battle.js:359 | Não pede confirmação |
+| Clear | 01_08_07 | OK | tabs_battle.js | Pede confirmação |
 | Align | 01_08_07 | OK | tabs_battle.js:242-252, 360 | — |
 | Páginas: New / Copy / Paste / Clear Event Page (+ Delete) | 01_08_07 | OK | tabs_battle.js:383-388 | — |
 | Contents (editor de comandos de evento, incluindo os de batalha) | 01_08_07 | OK | eventlist.js:69-95 → events/index.js:27-37 (`editCommandList`; categoria "Battle" em events/commands.js:1458) | A lista na aba só mostra um resumo; a edição acontece num diálogo separado |
@@ -857,7 +857,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Remove at Battle End | 01_08_08 | OK | tabs_battle.js:415 | — |
 | Remove by Restriction | 01_08_08 | OK | tabs_battle.js:415 | — |
 | Auto-removal Timing (None/Action End/Turn End) | 01_08_08 | OK | common.js:20; tabs_battle.js:417 | — |
-| Duration in Turns (mín.–máx., 0–9999) | 01_08_08 | OK | tabs_battle.js:418 | Não desativa os campos quando Timing = None |
+| Duration in Turns (mín.–máx., 0–9999) | 01_08_08 | OK | tabs_battle.js (`syncTurns`) | Desativados com Timing = Nenhum |
 | Remove by Damage (0–100%) | 01_08_08 | OK | tabs_battle.js:419 | — |
 | Remove by Walking (0–9999 passos) | 01_08_08 | OK | tabs_battle.js:420 | — |
 | 4 mensagens (ator, inimigo, persiste, removido) | 01_08_08 | OK | tabs_battle.js:421-425 | — |
@@ -876,7 +876,7 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Rotation (X/Y/Z) | 01_08_09 | OK | tabs_misc.js:80-82 | — |
 | Offset X / Offset Y | 01_08_09 | OK | tabs_misc.js:83-84 | — |
 | Preview: Play | 01_08_09 | OK | animpreview.js:250 | (há também Stop) |
-| Preview: Change Target | 01_08_09 | Parcial | animpreview.js:252-256 | Não grava em `System.battlerName/battlerHue` (o MZ grava) e não oferece Hue; o alvo volta ao padrão ao reabrir |
+| Preview: Change Target | 01_08_09 | OK | animpreview.js `previewGroup` | Grava `System.battlerName/battlerHue` (marca System), seletor com Matiz; o alvo inicial vem do System |
 | Preview: Change Battle Background | 01_08_09 | OK | tabs_misc.js:85-89 → tabs_battle.js:254 | — |
 | Sounds: Frames + File (SE) | 01_08_09 | OK | tabs_misc.js:31-38, 90-97 | — |
 | Flash: Frames / Duration / Color | 01_08_09 | OK | tabs_misc.js:40-59, 98-109; pickers.js:315 | — |
@@ -890,14 +890,14 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Images A1–A5, B–E | 01_08_10 | OK | tabs_misc.js:394-404 | — |
 | Tile List com abas A–E | 01_08_10 | OK | tabs_misc.js:184-222, 364-368 | — |
 | Passage (○ / × / ☆; ☆ só fora da aba A) | 01_08_10 | OK | tabs_misc.js:224-226, 311-316 | — |
-| Passage (4 dir) | 01_08_10 | OK | tabs_misc.js:273-281, 317-322 | Arrastar não pinta neste modo |
+| Passage (4 dir) | 01_08_10 | OK | tabs_misc.js | Arrastar não pinta neste modo (o lado depende do ponto tocado em cada tile) |
 | Ladder | 01_08_10 | OK | tabs_misc.js:119, 229 | — |
 | Bush (com a regra de autotile "floresta") | 01_08_10 | OK | tabs_misc.js:162-181, 298-303 | — |
 | Counter | 01_08_10 | OK | tabs_misc.js:119 | — |
 | Damage Floor | 01_08_10 | OK | tabs_misc.js:119 | — |
 | Terrain Tag (0–7) | 01_08_10 | OK | tabs_misc.js:227, 323-326 | — |
-| Botão direito inverte o ciclo (passagem/terreno) | 01_08_10 | Parcial | tabs_misc.js:375 (caixa "Reverse") | Substituído por uma caixa de seleção persistente |
-| Arrastar com o botão pressionado para pintar | 01_08_10 | Parcial | tabs_misc.js:341-356 | Só com mouse/caneta; no toque, cada toque alterna um tile (o arrasto rola a lista) |
+| Botão direito inverte o ciclo (passagem/terreno) | 01_08_10 | OK | tabs_misc.js `tilePalette` | Botão direito do mouse; no toque, toque longo (500 ms parado) |
+| Arrastar com o botão pressionado para pintar | 01_08_10 | OK | tabs_misc.js `tilePalette` | Mouse e toque (um dedo pinta). A lista rola com dois dedos ou pela faixa à direita |
 | Bits de veículo (barco/navio/aeronave) | 01_08_10 | OK | tabs_misc.js:122-160 | — |
 | Notes + Plugin Help | 01_08_10 | OK | tabs_misc.js:405 | — |
 
@@ -917,10 +917,10 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Game Title | 01_08_12_01 | OK | tabs_system.js:115 | — |
 | Starting Party (adicionar/trocar/excluir) | 01_08_12_01 | OK | tabs_system.js:117-124 | — |
 | Currency | 01_08_12_01 | OK | tabs_system.js:116 | — |
-| Window Color (R/G/B de −255 a 255) | 01_08_12_01 | OK | tabs_system.js:125-136; pickers.js:315-347 | — |
-| Vehicle Images (Boat/Ship/Airship, com None) | 01_08_12_01 | OK | tabs_system.js:137-141 | — |
+| Window Color (R/G/B de −255 a 255) | 01_08_12_01 | OK | tabs_system.js `windowSample`; pickers.js `pickColor` | Amostra desenhada com o `Window.png` do projeto e o tom somado, como o runtime |
+| Vehicle Images (Boat/Ship/Airship, com None) | 01_08_12_01 | OK | tabs_system.js | Conferido no editor: as imagens aparecem (o vazio visto na auditoria não se reproduz) |
 | Starting Positions: Player / Boat / Ship / Airship | 01_08_12_01 | OK | tabs_system.js:29-101, 142-161 | — |
-| Posição: arrastar ícone e apagar com Del | 01_08_12_01 | Parcial | tabs_system.js:78-86 | Define por toque; veículo vai para "(None)" pela lista; não é possível deixar o jogador sem posição (proposital) |
+| Posição: arrastar ícone e apagar com Del | 01_08_12_01 | OK | tabs_system.js `pickPosition` | O marcador arrasta (fora dele o arrasto rola o mapa); botão Excluir e tecla Del apagam a posição de veículos. O jogador sempre tem posição (proposital) |
 | Title Screen: imagens 1 e 2 | 01_08_12_01 | OK | tabs_system.js:163 | — |
 | Draw Game Title | 01_08_12_01 | OK | tabs_system.js:164 | — |
 | Command Window (fundo e posição) | 01_08_12_01 | OK | tabs_system.js:165-169 | — |
@@ -949,8 +949,8 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Game ID | 01_08_12_02 | OK | tabs_system.js:228 | — |
 | Screen Width / Screen Height | 01_08_12_02 | OK | tabs_system.js:229-230 | — |
 | UI Area Width / UI Area Height | 01_08_12_02 | OK | tabs_system.js:231-232 | — |
-| Main Font Filename | 01_08_12_02 | Parcial | tabs_system.js:234 | Campo de texto livre; não há seletor de arquivos de fonts/ |
-| Number Font Filename | 01_08_12_02 | Parcial | tabs_system.js:235 | Idem |
+| Main Font Filename | 01_08_12_02 | OK | tabs_system.js; pickers.js `fontField`/`pickFont` | Campo + "..." com os arquivos de fonts/ e prévia |
+| Number Font Filename | 01_08_12_02 | OK | idem | — |
 | Fallback Font | 01_08_12_02 | OK | tabs_system.js:236 | — |
 | Font Size | 01_08_12_02 | OK | tabs_system.js:233 | — |
 
@@ -1071,9 +1071,9 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | Clicar no plugin abre o diálogo (ON/OFF e parâmetros) | 01_05 | OK | `manager.js:136-142` (toque na linha já selecionada chama `edit`) | No toque precisa de dois toques, por desenho |
 | Interruptor ON/OFF direto na lista ("check button") | 01_11_04 | OK | `manager.js:123-130` | — |
 | Reordenar (arrastar) | prática do MZ | OK | `manager.js:157-218` `bindDrag`, mais ▲/▼ em `move()` `manager.js:256` | — |
-| Menu de contexto Editar / Copiar / Colar / Excluir | Dialog_PluginManager (inferido) | Parcial | Botões na barra `manager.js:355-369`; `copy`/`paste` `manager.js:293-310` | Não há "Recortar" nem menu de contexto (pressionar e segurar). Não há atalhos de teclado (Del, Ctrl+C/V) |
+| Menu de contexto Editar / Recortar / Copiar / Colar / Excluir / Atualizar | Dialog_PluginManager (inferido) | OK | `manager.js` `openMenu`/`bindMenu` (clique direito ou toque longo de 550 ms), botões na barra | Atalhos Del, Ctrl+X/C/V e Enter |
 | Atualizar (relê o .js: descrição e parâmetros, mantendo valores) | 01_11_04 "Refreshing Plugins" | OK | `manager.js:276-291` + `store.js:127-135` `mergeParameters` | — |
-| Atualizar vários com Shift (seleção múltipla) | 01_11_04 | Ausente | Seleção única (`selected`), `manager.js:65` | Seleção múltipla e Atualizar em lote |
+| Atualizar vários com Shift (seleção múltipla) | 01_11_04 | OK | `manager.js` `select(…, "range")`, `targets()`, `update()`; botão Múltipla para o toque | Recortar/Copiar/Excluir também valem para a seleção |
 | Ativar todos / Desativar todos | — | Extra | `manager.js:269-273` | — |
 | Avisos de `@base` (ausente, OFF, abaixo) | spec MZ | OK | `manager.js:33-41` `computeWarnings` | — |
 | Avisos de `@orderAfter` / `@orderBefore` | spec MZ | OK | `manager.js:42-51` | — |
@@ -1088,9 +1088,9 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | `@url` | spec MZ | Extra/OK | `plugindlg.js:98-99` | — |
 | Tabela de parâmetros com árvore por `@parent` | spec MZ | OK | `params.js:28-53` `buildTree`, `params.js:79-131` | — |
 | `@text` como rótulo e `@desc` do selecionado embaixo | spec MZ | OK | `params.js:9`, `plugindlg.js:150` | — |
-| Edição de parâmetro com abas [File] e [Text] | 01_05 | Parcial | Campo "Texto:" nos seletores (`pickers.js:14-19`, usado em DB, arquivo, cor, ícone) | Não há abas. Em `select`/`boolean`/`number` não se digita texto livre (por exemplo `\V[n]`) |
-| Clique direito → "Insert Icon Number" (IconSet Viewer) nos campos de valor | 01_05 | Ausente | NOTES.md:106 confirma. O seletor existe só em eventos (`events/commands.js:1511` `iconPicker`) | Menu de contexto ou botão nos editores `string`/`multiline` |
-| Bloco de idioma (`/*:en`, `/*:`, `@target MZ`) | spec MZ | OK | `parser.js:137-186` | Não usa o idioma da interface (pt) para `/*:ja` etc. (fixo `["en",""]`) |
+| Edição de parâmetro com abas [File] e [Text] | 01_05 | OK | `params.js` `typedDialog` (abas Número/Booleano/Opção + Texto); seletores de arquivo/banco/cor/ícone mantêm o campo Texto | Valor que não cabe no tipo (ex.: `\V[n]`) abre direto na aba Texto. Conferido com ExtraWindow + PluginCommonBase no runtime |
+| Clique direito → "Insert Icon Index" / "Insert Color Index" nos campos de valor | 01_05 | OK | `params.js` `insertTools` (botões abaixo do campo: string, multiline, note, combo e aba Texto) | Insere o número no cursor (IconSet / paleta do Window.png) |
+| Bloco de idioma (`/*:en`, `/*:`, `@target MZ`) | spec MZ | OK | `parser.js` `preferredLangs` | Idioma da interface primeiro (`/*:ja` no editor em japonês, `/*:pt`…), depois `/*:`, depois `/*:en` |
 | Editar mantém parâmetros que não existem mais, até "Atualizar" | comportamento MZ | OK | `plugindlg.js:81-91` | — |
 | Aba "Comandos" (somente leitura) no diálogo Plugin | — | Extra | `plugindlg.js:9-45` | — |
 | Dialog_PluginSettings / PluginSettingBox | QML (só nome) | Indeterminado | — | Não se sabe pelo nome o que é. Não há equivalente evidente |
@@ -1111,7 +1111,7 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | `file` + `@dir` | spec / ParameterEditorFile | OK | `pickers.js:73-207` (subpastas, prévia de imagem e áudio, "(Nenhum)" = "") | Padrão `img` quando falta `@dir` (confirmar no MZ) |
 | `@require` | spec | Parcial | Lido em `parser.js:67`, mas nunca usado | Não marca o arquivo como obrigatório no "Excluir arquivos não utilizados" (`deploy/scan.js` usa outra heurística: valores e `@requiredAssets`) |
 | `actor`, `class`, `skill`, `item`, `weapon`, `armor`, `enemy`, `troop`, `state`, `tileset`, `common_event` | spec / ParameterEditorObject | OK | `parser.js:190-203`, `pickers.js:21-59` (`0001 Nome`, "(Nenhum)" = "0") | — |
-| `animation` | spec / ParameterEditorAnimation | Parcial | Tratado como lista de banco (`pickers.js`) | O QML próprio sugere um seletor com prévia da animação |
+| `animation` | spec / ParameterEditorAnimation | OK | `pickers.js` `pickAnimation` (lista + prévia Effekseer do banco, Reproduzir/Parar) | — |
 | `switch` / `variable` | spec / ParameterEditorSwitch/Variable | OK | `params.js:447-449`, `pickers.js:22-26` | Não é possível renomear switches/variáveis nesse seletor (o seletor de eventos do MZ permite; aqui não verificado) |
 | `color` / `icon` | spec | OK | `pickers.js:220-322` | — |
 | `struct<Nome>` + bloco `/*~struct~Nome:` | spec / ParameterEditorStruct | OK | `parser.js:120-135, 166-184`; `params.js:311-335` | Struct não declarado vira JSON em texto (`params.js:313-315`) |
@@ -1120,7 +1120,7 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | `@base` / `@orderAfter` / `@orderBefore` | spec | OK | `parser.js:7, 107-108`; `manager.js:33-51` | — |
 | `@command` / `@arg` (+ `@text`, `@desc`, `@type` nos args) | spec | OK | `parser.js:95-112` | — |
 | `@noteParam` / `@noteDir` / `@noteType` / `@noteData` / `@noteRequire` | spec (distribuição) | Ausente | NOTES.md:110-111 (ignorados) | Afeta só "Excluir arquivos não utilizados" do deploy |
-| Coluna Valor | Dialog_PluginParameter | Parcial | `params.js:20-23` `displayValue` mostra o texto cru | Ver Divergências (rótulos de `select`/`boolean`/banco) |
+| Coluna Valor | Dialog_PluginParameter | OK | `params.js` `displayValue` | `select` mostra o texto da opção, `boolean` o @on/@off, banco/switch/variável "0001 Nome"; o resto aparece cru |
 
 #### Comando de plugin (357) e MV (356)
 
@@ -1228,20 +1228,20 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Banco de dados (`database/`)
 
-1. **P1** — Teste de batalha (`tabs_battle.js:265-300`):
+1. **P1** — **OK** — Teste de batalha (`tabs_battle.js:265-300`):
    - área [Status] com os parâmetros calculados;
    - equipamento filtrado pelo que ator e classe podem equipar;
    - Dual Wield;
    - não marcar System como alterado.
-2. **P1** — Tilesets: marcar vários tiles arrastando no toque (`tabs_misc.js:340-375`). Reverse deve ser um gesto (toque longo), não um estado.
-3. **P1** — Troops, botão Adicionar:
+2. **P1** — **OK** — Tilesets: marcar vários tiles arrastando no toque (`tabs_misc.js:340-375`). Reverse deve ser um gesto (toque longo), não um estado.
+3. **P1** — **OK** — Troops, botão Adicionar:
    - lista de inimigos com toque duplo, em vez de `<select>`;
    - sem realinhar o grupo (`tabs_battle.js:349-354`).
-4. **P2** — Change Target da prévia de animação deve gravar `System.battlerName/battlerHue` e ter ajuste de Hue (`animpreview.js:252-256`).
-5. **P2** — Fórmula de dano com ajuda e validação de sintaxe (`tabs_items.js:59-61`).
-6. **P2** — Seletor de arquivo para Main/Number Font (`tabs_system.js:234-235`). Posição inicial arrastável e apagável (`tabs_system.js:78-86`).
-7. **P2** — Conferir as Imagens de veículos vazias em Sistema 1 e pôr a amostra de janela na Cor da janela (visto no editor).
-8. **P3** — Gráfico de fundo da tabela de EXP (`tabs_actors.js:198-224`), único item Ausente do banco. Outros ajustes:
+4. **P2** — **OK** — Change Target da prévia de animação deve gravar `System.battlerName/battlerHue` e ter ajuste de Hue (`animpreview.js:252-256`).
+5. **P2** — **OK** — Fórmula de dano com ajuda e validação de sintaxe (`tabs_items.js:59-61`).
+6. **P2** — **OK** — Seletor de arquivo para Main/Number Font (`tabs_system.js:234-235`). Posição inicial arrastável e apagável (`tabs_system.js:78-86`).
+7. **P2** — **OK** — Conferir as Imagens de veículos vazias em Sistema 1 e pôr a amostra de janela na Cor da janela (visto no editor).
+8. **P3** — **OK** — Gráfico de fundo da tabela de EXP (`tabs_actors.js:198-224`), único item Ausente do banco. Outros ajustes:
    - limites: MP Cost até 999, EXP de inimigo a partir de 1;
    - confirmação no Limpar de Troops;
    - Duração em turnos desativada com Timing = Nenhum;
@@ -1249,12 +1249,12 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Plugins (`plugins/`)
 
-1. **P1** — Abas [Arquivo]/[Texto] nos editores de parâmetro: texto livre como `\V[n]` em `select`, `boolean` e `number`.
+1. **P1** — **OK** — Abas [Arquivo]/[Texto] nos editores de parâmetro: texto livre como `\V[n]` em `select`, `boolean` e `number`.
    Os plugins oficiais PluginCommonBase, ExtraWindow e ExtraImage dependem disso.
-2. **P1** — "Inserir número de ícone" nos editores de texto de parâmetro (`params.js:173`).
-3. **P2** — Comando de plugin deve listar só plugins ativados (`events/commands.js:1383`); coluna Valor com rótulos amigáveis (`params.js:20-23`).
+2. **P1** — **OK** — "Inserir número de ícone" nos editores de texto de parâmetro (`params.js:173`).
+3. **P2** — Comando de plugin deve listar só plugins ativados (`events/commands.js:1383`, sessão de eventos); coluna Valor com rótulos amigáveis (`params.js:20-23`) — **OK**.
 4. **P2** — `@require` e `@noteParam`/`@noteDir` no "Excluir arquivos não utilizados" da Implantação, para não apagar arquivos que plugins usam.
-5. **P3** — Atualizar vários plugins de uma vez, menu de contexto do gerenciador, seletor próprio para `@type animation` e bloco de idioma pela interface.
+5. **P3** — **OK** — Atualizar vários plugins de uma vez, menu de contexto do gerenciador, seletor próprio para `@type animation` e bloco de idioma pela interface.
 
 ### Gerador (`generator/`)
 
@@ -1321,16 +1321,13 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
 ### Banco de dados
 
 - **Limites:**
-  - MP Cost 0–9999 (manual: 0–999);
-  - EXP de inimigo a partir de 0 (manual: 1);
   - Gerar curva com mínimo 0 nos parâmetros "outros" (manual: 1);
   - mínimos de Configurações avançadas (640×360, fonte 12–128) são escolha do port.
-- **Troops:** Adicionar realinha o grupo inteiro.
 - **Colar:** com vários itens copiados, cola em sequência e descarta o que passar do fim.
-- **Teste de batalha:** grava `testBattlers` e os `Test_*.json` mesmo sem Aplicar.
+- **Teste de batalha:** grava os `Test_*.json` ao rodar (necessário para o `?btest`); `testBattlers` fica só na memória do System até ele ser salvo.
 - **Contents de Troops e Eventos comuns:** a aba mostra um resumo só de leitura e a edição abre num diálogo. No MZ, a lista é editável na própria janela.
-- **Tilesets:** Reverse é uma caixa persistente; no MZ é o botão direito, por clique.
-- **Clipboards** (páginas de Troops, linhas de tabela) são internos e se perdem ao recarregar.
+- **Tilesets:** o botão direito vira toque longo; a lista rola com dois dedos (um dedo pinta).
+- **Clipboards** (lista de dados, páginas de Troops, linhas de tabela) são próprios do editor e persistem no navegador (localStorage), mas não usam a área de transferência do sistema.
 - **Rótulos:**
   - "Magical Attack" / Magic Attack;
   - "Encounter Half" / Half Encounters;

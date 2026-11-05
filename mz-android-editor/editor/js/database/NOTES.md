@@ -13,6 +13,7 @@ original, interface de toque em paisagem (controles ≥ 36 px, abas roláveis, c
 | `tabs.js` | ordem das 16 abas |
 | `tabs_actors.js` | Actors (equipamento inicial filtrado pelos traits de classe/ator, dual wield), Classes (EXP Curve com abas To Next Level/Total usando a fórmula do runtime, Parameter Curves com gráfico tocável, Quick Settings A–E, Generate Curve, Skills to Learn) |
 | `tabs_items.js` | Skills, Items, Weapons, Armors (Scope em Faction/Number/Status → códigos 0–14 do `Game_Action`, Invocation, Damage, Message com "casts/does/uses *!", Required Weapon, Parameter Changes) |
+| `equip.js` | Regras de equipamento e parâmetros do runtime (`equipSlots`, `canEquip`, `resolveEquips`, `actorParams`), usadas no Equipamento inicial e no Teste de batalha |
 | `tabs_battle.js` | Enemies (imagem com Hue, Drop Items, Action Patterns com as 7 condições), Troops (Placement View com fundo de batalha, arrastar inimigos, Add/Remove/Clear/Align, Appear Halfway, Auto-name, Change BG, Battle Test, Battle Event com páginas, Conditions e Span), States |
 | `tabs_misc.js` | Animations (Effekseer só por nome do arquivo em `effects/`, Sound/Flash Timings), Tilesets (imagens A1–E, Tile List abas A–E com Passage, Passage (4 dir), Ladder, Bush, Counter, Damage Floor, Terrain Tag), Common Events |
 | `tabs_system.js` | System 1 (Starting Party, Window Color, veículos, Starting Positions com mapa desenhado pelo `MapView`/Tilemap do runtime, Title Screen, Command Window, Battle Screen/System, Options, Music, Sounds), System 2 (Menu Commands, Item Categories, [SV] Attack Motions, [SV] Magic Skills, Advanced Settings), Types (5 listas com Change Maximum), Terms |
@@ -34,7 +35,9 @@ original, interface de toque em paisagem (controles ≥ 36 px, abas roláveis, c
 - Campos desconhecidos dos JSON são preservados (edita-se o objeto original);
   bits de veículo dos flags de tileset (0x200/0x400/0x800) são preservados.
 - Battle Test grava `data/Test_*.json` (como o editor do PC) e abre
-  `/project/index.html?btest` no `#playOverlay` existente.
+  `/project/index.html?btest` no `#playOverlay` existente. Editar o diálogo do teste não marca
+  nenhum arquivo como alterado; `System.testBattlers/testTroopId` ficam na memória.
+- Change Target da prévia de animação grava `System.battlerName/battlerHue` e marca System.
 
 ## Integração com outros módulos
 
@@ -105,6 +108,8 @@ todos os selecionados.
 
 - Edição dos comandos de evento: feita pelo módulo events via `api.events.editCommandList`.
 - Menu de contexto (substituído por botões).
+- Clipboards (lista de dados, linhas de tabela, páginas de Tropas) persistem no `localStorage`
+  (`mzEditor.dbClipboard`), mas não usam a área de transferência do sistema.
 
 ## Como testar
 
@@ -117,3 +122,36 @@ Use uma CÓPIA do testproject: OK/Apply gravam em `data/` de verdade.
 Testado em 1280×600: as 16 abas, diálogos (Traits, Effects, curvas, EXP, Action Pattern,
 Drop Item, Conditions, posição inicial, áudio, ícone, rosto), gravação de Actors/Items/
 Tilesets/System conferida no disco, Battle Test chegando em `Scene_Battle`.
+
+## Rodada 3 (FIDELITY.md: prioridades do banco)
+
+- **Teste de batalha** (`tabs_battle.js` `battleTest`, `equip.js`): abas 1–4, Ator, Nível,
+  Status Inicial (nível e equipamento iniciais do ator), Equipamento e área [Status].
+  `equip.js` reproduz o runtime: `equipSlots` (Dual Wield = trait 55 com maior dataId 1 troca o
+  2º espaço por arma), `canEquip` (traits 51/52 de tipo e 54 de selo), `resolveEquips` (o laço de
+  `releaseUnequippableItems`, que descarta o que não serve) e `actorParams` (= `Game_Actor.param`
+  sem estados/buffs: `max(0, base da classe + params dos equipamentos) × traits 21`, arredondado,
+  mínimo 1 no HP). Conferido no `?btest`: valores iguais aos de `$gameParty.members()[i].param()`,
+  inclusive com Dual Wield + Falchion no 2º espaço. O Equipamento inicial dos Atores usa o mesmo
+  filtro (`equipSlotsBox`).
+- **Tilesets** (`tabs_misc.js` `tilePalette`): clicar/tocar muda o valor; arrastar com o botão ou
+  o dedo aplica o mesmo valor por onde passa; botão direito ou toque longo (500 ms parado) inverte
+  o ciclo (passagem ○→☆→×, terreno 7→0). A lista rola com dois dedos ou pela faixa de 40 px à
+  direita do canvas (`touch-action: none` no canvas). Passagem (4 dir.) só altera a célula tocada.
+- **Tropas**: Lista de Inimigos à direita (toque duplo adiciona), Adicionar coloca o inimigo à
+  direita do último sem realinhar, Limpar pede confirmação.
+- **Fórmula de dano** (`tabs_items.js` `formulaField`): dica oficial (Group_Damage), botão "?" com
+  as referências do manual que inserem `a.atk`, `b.def`, `v[1]`... e aviso de erro de sintaxe
+  (compilada como no `eval` do runtime, com `item, a, b, v, sign`).
+- **Sistema**: amostra da Cor da janela desenhada com o `Window.png` do projeto (fundo esticado,
+  tom somado, opacidade 192, moldura 9-fatias); seletor de fontes (`pickFont`, lista de `fonts/`
+  com prévia, grava o nome com extensão); posição inicial com marcador arrastável e Excluir/Del
+  para veículos. As Imagens de veículos aparecem normalmente (o vazio da auditoria não se
+  reproduziu).
+- **Classes**: a tabela da Curva de EXP tem o gráfico de barras no fundo.
+- **Limites**: Custo de MP 0–999; EXP de inimigo a partir de 1; Duração em turnos desativada com
+  Timing = Nenhum.
+
+Testado (devserver com cópia do testproject, 1200×554): Tropas (toque duplo, Adicionar, Teste de
+batalha até `Scene_Battle`), Tilesets (arrasto, toque longo e dois dedos por PointerEvents de toque,
+`Tilesets.json` conferido no disco), fórmula, EXP, Sistema 1/2, Alterar Alvo (System.json no disco).
