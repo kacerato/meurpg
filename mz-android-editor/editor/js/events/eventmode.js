@@ -57,7 +57,10 @@ export class EventMode {
         this.active = on;
         this.container.visible = on;
         this.bar.classList.toggle("hidden", !on);
-        if (!on) { this.listPanel.classList.add("hidden"); }
+        // 01_09_02: no modo evento a paleta de tiles dá lugar à Event List (mesmo lugar, #leftTop)
+        const top = document.getElementById("leftTop");
+        if (top) { top.classList.toggle("eventMode", on); }
+        this._listSel = undefined;
         this.refresh();
     }
     eventAt(x, y) {
@@ -327,14 +330,11 @@ export class EventMode {
             b(t("Quick") + " ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([
                 { label: t("Transfer", "MainMenu") + "…", action: () => this.quick("transfer") }, { label: t("Door", "MainMenu") + "…", action: () => this.quick("door") },
                 { label: t("Treasure", "MainMenu") + "…", action: () => this.quick("treasure") }, { label: t("Inn", "MainMenu") + "…", action: () => this.quick("inn") }], { x: r.left, y: r.top - 200, title: t("Quick Event Creation", "MainMenu") }); }),
-            b(t("Starting Positions", "Group_SystemStarting") + " ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([[t("Player", "Constants"), "player"], [t("Boat", "Constants"), "boat"], [t("Ship", "Constants"), "ship"], [t("Airship", "Constants"), "airship"]].map(([l, k]) => ({ label: l, action: () => this.setStart(k) })), { x: r.left, y: r.top - 200, title: t("Set Starting Position", "MainMenu") }); }),
-            b("☰ " + t("Map Events", "EventListBox"), () => { this.listPanel.classList.toggle("hidden"); this._renderList(); }, t("Map Events", "EventListBox")));
-        this.listPanel = h("div", { class: "evListPanel hidden" });
-        for (const el of [this.bar, this.listPanel]) {
-            el.addEventListener("pointerdown", e => e.stopPropagation());
-            el.addEventListener("wheel", e => e.stopPropagation());
-        }
-        vp.append(this.bar, this.listPanel);
+            b(t("Starting Positions", "Group_SystemStarting") + " ▸", e => { const r = e.currentTarget.getBoundingClientRect(); actionMenu([[t("Player", "Constants"), "player"], [t("Boat", "Constants"), "boat"], [t("Ship", "Constants"), "ship"], [t("Airship", "Constants"), "airship"]].map(([l, k]) => ({ label: l, action: () => this.setStart(k) })), { x: r.left, y: r.top - 200, title: t("Set Starting Position", "MainMenu") }); }));
+        this.bar.addEventListener("pointerdown", e => e.stopPropagation());
+        this.bar.addEventListener("wheel", e => e.stopPropagation());
+        vp.append(this.bar);
+        this._buildList();
         // Barra principal do MZ: Desfazer/Recortar/Copiar/Colar/Excluir agem sobre eventos no modo evento
         // (os handlers do maptools ignoram o modo evento).
         const tb = { btnUndo: () => this.undo(), btnCut: () => this.cut(), btnCopy: () => this.copy(), btnPaste: () => this.paste(), btnDelete: () => this.del() };
@@ -353,24 +353,87 @@ export class EventMode {
         const tbUndo = document.getElementById("btnUndo");
         if (tbUndo && this.active) { tbUndo.disabled = !h.undo.length; }
     }
+    // Event List (01_09_02): "001 EV001" por linha, listras como no MZ. Seleção sincronizada nos dois
+    // sentidos; toque duplo abre o editor; toque longo / botão direito abre o menu do modo evento.
+    _buildList() {
+        this.listRows = h("div", { class: "evlRows" });
+        this.listEl = h("div", { id: "evList" }, this.listRows);
+        const top = document.getElementById("leftTop");
+        (top || document.getElementById("viewport")).appendChild(this.listEl);
+        const rowOf = e => e.target.closest && e.target.closest(".evlRow");
+        let press = null;
+        let lastTap = { id: -1, t: 0 };
+        const select = ev => {
+            this.cursor = { x: ev.x, y: ev.y };
+            this.centerOn(ev.x, ev.y);
+            this.refresh();
+        };
+        const menu = async (ev, cx, cy) => {
+            if (this._listMenuOpen) { return; }
+            this._listMenuOpen = true;
+            select(ev);
+            try { await this.contextMenu(cx, cy); } finally { this._listMenuOpen = false; }
+        };
+        const evOf = row => row && this.map && this.map.events[Number(row.dataset.id)];
+        this.listRows.addEventListener("pointerdown", e => {
+            const ev = evOf(rowOf(e));
+            if (!ev || e.button > 0) { return; }
+            press = { id: e.pointerId, ev, x: e.clientX, y: e.clientY, long: false };
+            press.timer = setTimeout(() => {
+                if (!press) { return; }
+                press.long = true;
+                if (navigator.vibrate) { try { navigator.vibrate(15); } catch (err) { /* ignora */ } }
+                menu(press.ev, press.x, press.y);
+            }, 500);
+        });
+        this.listRows.addEventListener("pointermove", e => {
+            if (press && e.pointerId === press.id && Math.hypot(e.clientX - press.x, e.clientY - press.y) > 8) { clearTimeout(press.timer); press = null; }
+        });
+        const cancel = () => { if (press) { clearTimeout(press.timer); } press = null; };
+        this.listRows.addEventListener("pointercancel", cancel);
+        this.listRows.addEventListener("pointerup", e => {
+            if (!press || e.pointerId !== press.id) { return; }
+            const p = press;
+            cancel();
+            if (p.long) { return; }
+            const now = Date.now();
+            if (lastTap.id === p.ev.id && now - lastTap.t < 420) {
+                lastTap = { id: -1, t: 0 };
+                this.openEvent(p.ev.id);
+                return;
+            }
+            lastTap = { id: p.ev.id, t: now };
+            select(p.ev);
+        });
+        this.listRows.addEventListener("contextmenu", e => {
+            e.preventDefault();
+            const ev = evOf(rowOf(e));
+            if (!ev) { return; }
+            cancel();
+            menu(ev, e.clientX, e.clientY);
+        });
+    }
     _renderList() {
-        if (!this.listPanel || this.listPanel.classList.contains("hidden")) { return; }
-        this.listPanel.innerHTML = "";
-        this.listPanel.append(h("div", { class: "evListPanelTitle" }, t("Map Events", "EventListBox")));
-        const sel = this.selectedEvent;
-        let last = { id: -1, t: 0 };
-        for (const ev of (this.map && this.map.events) || []) {
-            if (!ev) { continue; }
-            const it = h("div", { class: "evListItem" + (sel === ev ? " selected" : "") }, `${String(ev.id).padStart(3, "0")}:${ev.name} (${ev.x},${ev.y})`);
-            it.addEventListener("click", () => {
-                const now = Date.now();
-                if (last.id === ev.id && now - last.t < 400) { this.openEvent(ev.id); return; }
-                last = { id: ev.id, t: now };
-                this.cursor = { x: ev.x, y: ev.y };
-                this.centerOn(ev.x, ev.y);
-                this.refresh();
-            });
-            this.listPanel.append(it);
+        if (!this.listRows) { return; }
+        const sel = this.active ? this.selectedEvent : null;
+        const evs = ((this.map && this.map.events) || []).filter(Boolean);
+        const sig = evs.map(ev => `${ev.id}:${ev.name}:${ev.x},${ev.y}`).join("|");
+        if (sig !== this._listSig) {
+            this._listSig = sig;
+            this.listRows.innerHTML = "";
+            for (const ev of evs) {
+                this.listRows.append(h("div", { class: "evlRow", "data-id": String(ev.id), title: `(${ev.x},${ev.y})` },
+                    `${String(ev.id).padStart(3, "0")}  ${ev.name}`));
+            }
+            this._listSel = undefined;
+        }
+        const selId = sel ? sel.id : 0;
+        if (selId === this._listSel) { return; }
+        this._listSel = selId;
+        for (const row of this.listRows.children) {
+            const on = Number(row.dataset.id) === selId;
+            row.classList.toggle("selected", on);
+            if (on && this.active) { row.scrollIntoView({ block: "nearest" }); }
         }
     }
 
@@ -394,7 +457,7 @@ export class EventMode {
             try { await this.contextMenu(cx, cy); } finally { menuOpen = false; }
         };
         vp.addEventListener("pointerdown", e => {
-            if (!this.active || !this.map || e.target.closest(".evModeBar,.evListPanel")) { return; }
+            if (!this.active || !this.map || e.target.closest(".evModeBar")) { return; }
             pointers.add(e.pointerId);
             if (pointers.size > 1) { // pinça: deixa o MapView cuidar
                 if (g) { clearTimeout(g.timer); if (g.drag) { this.drag = null; this.refresh(); } }

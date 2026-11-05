@@ -359,9 +359,10 @@ export class Palette {
     setCellSize(px) {
         this.cell = px;
         // o painel acompanha a largura da grade (8 colunas + barra de rolagem)
-        const panel = this.container.closest("#mtPanel");
-        if (panel) {
-            panel.style.width = (COLS * px + 14) + "px";
+        // a coluna esquerda (paleta + lista de mapas) acompanha a largura da grade
+        const col = document.getElementById("leftCol") || this.container.closest("#mtPanel");
+        if (col) {
+            col.style.width = (COLS * px + 14) + "px";
         }
         this._layout();
         this.draw();

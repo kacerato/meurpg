@@ -59,10 +59,16 @@
         <button id="btnGrid" class="tb toggle on" title="Map Grid" data-i18n-title="Map Grid" data-i18n-ctx="Group_MapGrid">#</button>
     </header>
     <main id="main">
-        <aside id="sidebar">
-            <div class="sidebarTitle"><img src="img/tree-root.png" alt=""><span id="projectName">—</span></div>
-            <ul id="mapTree"></ul>
-        </aside>
+        <!-- Coluna esquerda do MZ (01_03): paleta de tiles (ou Event List no modo evento) em cima,
+             lista de mapas embaixo, com divisória arrastável (js/app.js bindLeftColumn) -->
+        <div id="leftCol">
+            <div id="leftTop"></div>
+            <div id="leftSplit" role="separator" aria-orientation="horizontal"><span></span></div>
+            <aside id="sidebar">
+                <div class="sidebarTitle"><img src="img/tree-root.png" alt=""><span id="projectName">—</span></div>
+                <ul id="mapTree"></ul>
+            </aside>
+        </div>
         <section id="viewport">
             <canvas id="mapCanvas"></canvas>
             <div id="emptyHint" data-i18n="Select a map">Select a map</div>

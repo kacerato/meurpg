@@ -93,9 +93,13 @@ function buildPanel() {
 
     const pal = document.createElement("div");
     panel.append(strip, pal);
-    const main = $("main");
-    const sidebar = $("sidebar");
-    main.insertBefore(panel, sidebar ? sidebar.nextSibling : main.firstChild);
+    // coluna esquerda do MZ: a paleta fica em cima da lista de mapas (index.html #leftTop)
+    const top = $("leftTop");
+    if (top) {
+        top.insertBefore(panel, top.firstChild);
+    } else {
+        $("main").insertBefore(panel, $("viewport"));
+    }
     S.palette = new Palette(pal, {
         onSelect: brush => {
             S.brush = brush;
@@ -111,17 +115,19 @@ function buildPanel() {
     toggle.className = "tb toggle on";
     toggle.title = t("Show/hide tile palette");
     toggle.innerHTML = '<span class="mtPalIcon"></span>';
-    toggle.addEventListener("click", () => {
-        panel.classList.toggle("hidden");
-        toggle.classList.toggle("on", !panel.classList.contains("hidden"));
-    });
+    // oculta a metade de cima da coluna (paleta, ou Event List no modo evento); lembrado
+    const box = top || panel;
+    const KEY = "mzEditor.paletteHidden";
+    const apply = hidden => {
+        box.classList.toggle("hidden", hidden);
+        toggle.classList.toggle("on", !hidden);
+        try { localStorage.setItem(KEY, hidden ? "1" : "0"); } catch (_) { /* sem storage */ }
+    };
+    toggle.addEventListener("click", () => apply(!box.classList.contains("hidden")));
+    try { if (localStorage.getItem(KEY) === "1") { box.classList.add("hidden"); toggle.classList.remove("on"); } } catch (_) { /* sem storage */ }
     const maps = $("btnMaps");
     if (maps && maps.parentNode) {
         maps.parentNode.insertBefore(toggle, maps.nextSibling);
-    }
-    if (window.matchMedia("(max-width: 700px)").matches) {
-        panel.classList.add("hidden");
-        toggle.classList.remove("on");
     }
     S.panel = panel;
 }

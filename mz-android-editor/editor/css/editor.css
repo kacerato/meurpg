@@ -90,15 +90,54 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
     display: flex;
 }
 
-#sidebar {
-    width: 230px;
+/* Coluna esquerda (01_03): paleta (3) em cima, lista de mapas (4) embaixo. A largura acompanha a
+   grade de 8 colunas da paleta (maptools/palette.js setCellSize); a proporção vem de --split. */
+#leftCol {
+    --split: 55%;
+    width: 270px;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     background: var(--panel2);
     border-right: 1px solid var(--line);
-    overflow: auto;
-    flex: none;
-    transition: margin-left .15s ease;
 }
-#sidebar.hidden { margin-left: -230px; }
+#leftTop {
+    flex: none;
+    height: var(--split);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+#leftTop > * { flex: 1; min-height: 0; }
+#leftTop.hidden { display: none; }
+#leftSplit {
+    flex: none;
+    height: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--panel);
+    border-top: 1px solid var(--line2);
+    border-bottom: 1px solid var(--line2);
+    cursor: row-resize;
+    touch-action: none;
+}
+#leftSplit > span { width: 36px; height: 4px; border-radius: 2px; background: var(--line); }
+#leftSplit.dragging { background: var(--accent-bg); }
+#leftSplit.dragging > span { background: var(--accent); }
+#sidebar {
+    flex: 1;
+    min-height: 0;
+    background: var(--panel2);
+    overflow: auto;
+}
+#sidebar.hidden { display: none; }
+/* só a lista: ocupa a coluna; só a paleta: idem; nenhum dos dois: a coluna some */
+#leftCol:has(> #sidebar.hidden) > #leftTop { flex: 1; height: auto; }
+#leftCol:has(> #sidebar.hidden) > #leftSplit,
+#leftCol:has(> #leftTop.hidden) > #leftSplit,
+#leftCol:has(> #leftTop:empty) > #leftSplit { display: none; }
+#leftCol:has(> #sidebar.hidden):has(> #leftTop.hidden) { display: none; }
+#leftCol:has(> #sidebar.hidden):has(> #leftTop:empty) { display: none; }
 .sidebarTitle {
     display: flex; align-items: center; gap: 6px;
     padding: 6px 8px;
@@ -177,7 +216,7 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
 }
 
 @media (max-width: 700px) {
-    #sidebar { position: absolute; top: 0; bottom: 0; left: 0; z-index: 10; box-shadow: 4px 0 16px rgba(0,0,0,.35); }
+    #leftCol { position: absolute; top: 0; bottom: 0; left: 0; z-index: 10; box-shadow: 4px 0 16px rgba(0,0,0,.35); }
 }
 
 /* Diálogos modais no estilo do MZ (usados por api.openDialog) */
@@ -250,3 +289,20 @@ button.tb img { width: 22px; height: 22px; display: block; image-rendering: auto
 /* Atualizar Corescript */
 .coreGrid { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; padding: 8px 4px; }
 .coreMsg { color: var(--muted); font-size: 12px; padding: 4px; }
+
+/* Event List (01_09_02): substitui a paleta de tiles no modo evento (events/eventmode.js) */
+#leftTop > #evList { display: none; }
+#leftTop.eventMode > #evList { display: flex; }
+#leftTop.eventMode > #mtPanel { display: none; }
+#evList { flex-direction: column; background: var(--panel2); }
+#evList .evlRows { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;
+    background: repeating-linear-gradient(#fff 0 30px, #e8edf3 30px 60px); }
+#evList .evlRow {
+    white-space: pre;
+    height: 30px; line-height: 30px; padding: 0 8px;
+    font-family: "M+ 1m", "M+ 1p", monospace; overflow: hidden; text-overflow: ellipsis;
+    cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+#evList .evlRow.selected { background: var(--accent); color: #fff; }
+#evList .evlRow .evlPos { color: var(--muted); margin-left: 6px; }
+#evList .evlRow.selected .evlPos { color: #dbe8ff; }

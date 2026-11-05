@@ -373,6 +373,68 @@ async function updateCorescript() {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Coluna esquerda do MZ (01_03): paleta/Event List em cima, lista de mapas embaixo, divisória
+// arrastável (mouse ou toque) com a proporção lembrada; "Mostrar/ocultar lista de mapas" lembrado.
+
+const SPLIT_KEY = "mzEditor.leftSplit";
+const MAPS_HIDDEN_KEY = "mzEditor.mapListHidden";
+
+function storeGet(k) { try { return localStorage.getItem(k); } catch (_) { return null; } }
+function storeSet(k, v) { try { localStorage.setItem(k, v); } catch (_) { /* sem storage */ } }
+
+function setLeftSplit(frac) {
+    const f = Math.max(0.12, Math.min(0.88, frac));
+    $("leftCol").style.setProperty("--split", (f * 100).toFixed(2) + "%");
+    return f;
+}
+
+function bindLeftColumn() {
+    const col = $("leftCol");
+    const split = $("leftSplit");
+    const sidebar = $("sidebar");
+    const btn = $("btnMaps");
+    const saved = Number(storeGet(SPLIT_KEY));
+    setLeftSplit(saved > 0 && saved < 1 ? saved : 0.55);
+    const applyMaps = hidden => {
+        sidebar.classList.toggle("hidden", hidden);
+        btn.classList.toggle("on", !hidden);
+    };
+    btn.classList.add("toggle");
+    applyMaps(storeGet(MAPS_HIDDEN_KEY) === "1");
+    btn.addEventListener("click", () => {
+        const hidden = !sidebar.classList.contains("hidden");
+        applyMaps(hidden);
+        storeSet(MAPS_HIDDEN_KEY, hidden ? "1" : "0");
+    });
+    let drag = null;
+    split.addEventListener("pointerdown", e => {
+        if (e.button > 0) { return; }
+        e.preventDefault();
+        const r = col.getBoundingClientRect();
+        const top = $("leftTop").getBoundingClientRect();
+        drag = { id: e.pointerId, y0: e.clientY, h0: top.height, colTop: r.top, colH: r.height - split.offsetHeight, frac: null };
+        split.classList.add("dragging");
+        try { split.setPointerCapture(e.pointerId); } catch (_) { /* ignorado */ }
+    });
+    split.addEventListener("pointermove", e => {
+        if (!drag || e.pointerId !== drag.id) { return; }
+        const h = drag.h0 + (e.clientY - drag.y0);
+        drag.frac = setLeftSplit(h / Math.max(1, drag.colH));
+    });
+    const end = e => {
+        if (!drag || e.pointerId !== drag.id) { return; }
+        if (drag.frac !== null) { storeSet(SPLIT_KEY, String(drag.frac)); }
+        drag = null;
+        split.classList.remove("dragging");
+        if (view && view.resize) { view.resize(); }
+    };
+    split.addEventListener("pointerup", end);
+    split.addEventListener("pointercancel", end);
+    // duplo toque/clique: volta à proporção padrão
+    split.addEventListener("dblclick", () => storeSet(SPLIT_KEY, String(setLeftSplit(0.55))));
+}
+
+// ---------------------------------------------------------------------------------------------
 // Atalhos de teclado do MZ (teclado físico / DeX)
 
 function clickButton(id) {
@@ -490,7 +552,7 @@ async function boot() {
     translateDom();
     bindOptions(api);
     project.isDirtyFile = f => api.isDirtyFile(f);
-    $("btnMaps").addEventListener("click", () => $("sidebar").classList.toggle("hidden"));
+    bindLeftColumn();
     $("btnZoomIn").addEventListener("click", () => { if (view) { view.setZoom(view.zoom * 1.25); updateZoomLabel(); } });
     $("btnZoomOut").addEventListener("click", () => { if (view) { view.setZoom(view.zoom / 1.25); updateZoomLabel(); } });
     $("btnZoomActual").addEventListener("click", () => { if (view) { view.setZoom(1); updateZoomLabel(); } });
