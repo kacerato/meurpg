@@ -68,7 +68,12 @@ async function serverCopy(title, dir, onProgress) {
     const res = await fetch("/api/template/copy", {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, dir })
     });
-    if (!res.ok) { throw new Error("/api/template/copy: " + res.status + " " + (await res.text().catch(() => ""))); }
+    if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        let msg = txt;
+        try { msg = JSON.parse(txt).error || txt; } catch { /* texto puro */ }
+        throw new Error(`/api/template/copy: ${res.status} ${msg}`);
+    }
     for (;;) {
         await new Promise(r => setTimeout(r, 300));
         const s = await (await fetch("/api/template/status", { cache: "no-store" })).json();
