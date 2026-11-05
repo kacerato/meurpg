@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>MZ Editor</title>
+    <link rel="icon" href="img/app.png" type="image/png">
+    <link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+    <!-- Barra de ferramentas na ordem do RPG Maker MZ, com os ícones originais -->
+    <header id="toolbar">
+        <button id="btnMaps" class="tb" title="Mostrar/ocultar lista de mapas"><img src="img/tree-root.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnNew" class="tb" title="Novo projeto (em breve)" disabled><img src="img/toolbar/file-new.png" alt=""></button>
+        <button id="btnOpen" class="tb" title="Abrir projeto"><img src="img/toolbar/file-open.png" alt=""></button>
+        <button id="btnSave" class="tb" title="Salvar projeto (em breve)" disabled><img src="img/toolbar/file-save.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnUndo" class="tb" title="Desfazer (em breve)" disabled><img src="img/toolbar/edit-undo.png" alt=""></button>
+        <button id="btnCut" class="tb" title="Recortar (em breve)" disabled><img src="img/toolbar/edit-cut.png" alt=""></button>
+        <button id="btnCopy" class="tb" title="Copiar (em breve)" disabled><img src="img/toolbar/edit-copy.png" alt=""></button>
+        <button id="btnPaste" class="tb" title="Colar (em breve)" disabled><img src="img/toolbar/edit-paste.png" alt=""></button>
+        <button id="btnDelete" class="tb" title="Excluir (em breve)" disabled><img src="img/toolbar/edit-delete.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnModeMap" class="tb toggle on" title="Modo mapa"><img src="img/toolbar/mode-map.png" alt=""></button>
+        <button id="btnModeEvent" class="tb toggle" title="Modo evento (em breve)" disabled><img src="img/toolbar/mode-event.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnPencil" class="tb toggle" title="Lápis (em breve)" disabled><img src="img/toolbar/draw-pencil.png" alt=""></button>
+        <button id="btnRect" class="tb toggle" title="Retângulo (em breve)" disabled><img src="img/toolbar/draw-rectangle.png" alt=""></button>
+        <button id="btnEllipse" class="tb toggle" title="Elipse (em breve)" disabled><img src="img/toolbar/draw-ellipse.png" alt=""></button>
+        <button id="btnFill" class="tb toggle" title="Preencher (em breve)" disabled><img src="img/toolbar/draw-floodfill.png" alt=""></button>
+        <button id="btnShadow" class="tb toggle" title="Caneta de sombra (em breve)" disabled><img src="img/toolbar/draw-shadowpen.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnZoomIn" class="tb" title="Aumentar zoom"><img src="img/toolbar/scale-zoomin.png" alt=""></button>
+        <button id="btnZoomOut" class="tb" title="Diminuir zoom"><img src="img/toolbar/scale-zoomout.png" alt=""></button>
+        <button id="btnZoomActual" class="tb" title="Tamanho real"><img src="img/toolbar/scale-actualsize.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnDatabase" class="tb" title="Banco de dados (fase 2)" disabled><img src="img/toolbar/tools-database.png" alt=""></button>
+        <button id="btnPlugins" class="tb" title="Gerenciador de plugins (fase 3)" disabled><img src="img/toolbar/tools-pluginmanager.png" alt=""></button>
+        <button id="btnSoundTest" class="tb" title="Teste de som (em breve)" disabled><img src="img/toolbar/tools-soundtest.png" alt=""></button>
+        <button id="btnEventSearch" class="tb" title="Buscar eventos (em breve)" disabled><img src="img/toolbar/tools-eventsearcher.png" alt=""></button>
+        <button id="btnResources" class="tb" title="Gerenciador de recursos (em breve)" disabled><img src="img/toolbar/tools-resourcemanager.png" alt=""></button>
+        <button id="btnGenerator" class="tb" title="Gerador de personagens (fase 3)" disabled><img src="img/toolbar/tools-charactergenerator.png" alt=""></button>
+        <span class="sep"></span>
+        <button id="btnPlay" class="tb" title="Testar jogo"><img src="img/toolbar/game-playtest.png" alt=""></button>
+        <span class="spacer"></span>
+        <button id="btnGrid" class="tb toggle on" title="Grade">#</button>
+    </header>
+    <main id="main">
+        <aside id="sidebar">
+            <div class="sidebarTitle"><img src="img/tree-root.png" alt=""><span id="projectName">—</span></div>
+            <ul id="mapTree"></ul>
+        </aside>
+        <section id="viewport">
+            <canvas id="mapCanvas"></canvas>
+            <div id="emptyHint">Selecione um mapa</div>
+        </section>
+    </main>
+    <footer id="status">
+        <span id="statusMap">—</span>
+        <span id="statusPos"></span>
+        <span class="spacer"></span>
+        <span id="statusMsg"></span>
+        <span id="zoomLabel">100%</span>
+    </footer>
+
+    <div id="playOverlay" hidden>
+        <div id="playBar">
+            <img src="img/toolbar/game-playtest.png" alt="" class="barIcon">
+            <span>Teste de jogo</span>
+            <span class="spacer"></span>
+            <button id="btnPlayReload" title="Reiniciar">↻</button>
+            <button id="btnPlayClose" title="Fechar">✕ Fechar</button>
+        </div>
+        <iframe id="playFrame" allow="autoplay; fullscreen" title="Jogo"></iframe>
+    </div>
+
+    <!-- Runtime do próprio projeto: o editor desenha mapas exatamente como o jogo. -->
+    <script src="/project/js/libs/pixi.js"></script>
+    <script src="/project/js/rmmz_core.js"></script>
+    <script src="/project/js/rmmz_managers.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

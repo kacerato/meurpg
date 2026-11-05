@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mz-editor",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["mz-android-editor/devserver/server.mjs", "--project", "mz-android-editor/testproject", "--port", "8765"],
+      "port": 8765
+    }
+  ]
+}

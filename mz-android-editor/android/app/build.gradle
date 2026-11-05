@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'br.mz.editor'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'br.mz.editor'
+        minSdk 30
+        targetSdk 35
+        versionCode 1
+        versionName '0.1-fase1'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += "$buildDir/editorAssets"
+        }
+    }
+}
+
+// Copia o editor web (../../editor) para assets/editor dentro do APK.
+tasks.register('copyEditorAssets', Copy) {
+    from rootProject.file('../editor')
+    into layout.buildDirectory.dir('editorAssets/editor')
+}
+tasks.named('preBuild') {
+    dependsOn 'copyEditorAssets'
+}
