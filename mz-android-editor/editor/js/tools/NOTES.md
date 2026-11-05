@@ -83,7 +83,16 @@ Resource Manager, Sound Test, Novo projeto, Opções e Ajuda/Sobre. Registro em
   que entra como `assets.srcDirs` → servido em `/template-full/`. Nada disso vai para o git.
   Sem a pasta, o build segue (aviso) e o editor usa o template mínimo.
 - `copyEditorAssets` exclui `template-full/**`, para uma cópia local de teste não duplicar.
-- **Tamanho do APK (debug):** ver "Medições" abaixo.
+- **Medições (5/11/2026, RedMagic 10 Pro, Android 16):** APK debug **125,4 MB** (template-full
+  97 MB, 1311 arquivos com o manifest). Criar o projeto no aparelho (cópia de 1311 arquivos
+  por `PUT /api/file` → SAF): **~8 min**; fica lento em pastas grandes (`audio/se`, 345 arquivos)
+  porque cada gravação do `SafProject` invalida e relista a pasta (custo quadrático) — melhoria
+  possível na casca: cópia em Java direto dos assets, ou não relistar a pasta a cada arquivo.
+  No PC (devserver): ~15 s. Projeto criado roda até o título ("Teste Android") e o MAP001.
+- **Bug da casca (não é deste módulo):** `MainActivity.createNewProjectIn` abre a pasta nova
+  com `buildTreeDocumentUri` (tree URI sem permissão) e toda gravação falha com
+  `SecurityException`. O teste no aparelho foi feito abrindo a pasta criada por "Abrir projeto"
+  e chamando `/?newProject=<título>` (o mesmo caminho que a casca usa depois de criar a pasta).
 - Teste no PC com o caminho completo: copie `RPG/newdata` para `editor/template-full/` (já está
   em `.git/info/exclude` nesta máquina; não commitar) e gere o manifest com o comando do fim deste
   arquivo, trocando `"RPG Maker MZ 1.1.1 newdata"` por `"... (completo)"`. Para simular o Android:
