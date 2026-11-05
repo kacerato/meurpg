@@ -371,7 +371,7 @@ function tilePalette(ts) {
         const { cell, px, py, i } = cellAt(e);
         if (!cell) { return; }
         e.preventDefault();
-        cv.setPointerCapture(e.pointerId);
+        try { cv.setPointerCapture(e.pointerId); } catch (err) { /* ponteiro já liberado */ }
         stroke = { id: e.pointerId, cell, px, py, i, painted: new Set(), fn: null, timer: 0 };
         if (e.pointerType === "touch") {
             const s = stroke;

@@ -321,3 +321,49 @@ export async function pickIcon(api, def, value, title) {
         onOk: () => current
     });
 }
+
+// --- Animação (ParameterEditorAnimation): lista + prévia Effekseer, como no MZ -----------
+
+export async function pickAnimation(api, def, value, title) {
+    const { previewGroup, stopPreview } = await import("../database/animpreview.js");
+    let db;
+    try {
+        const [Animations, System, Enemies] = await Promise.all(["Animations", "System", "Enemies"]
+            .map(f => api.project.readJson(`data/${f}.json`, { fresh: true })));
+        db = { Animations, System, Enemies };
+    } catch {
+        return pickDatabase(api, { ...def, kind: "animation" }, value, title);
+    }
+    const items = [{ label: "(" + t("None", "Constants") + ")", value: "0" },
+        ...db.Animations.map((a, i) => (i && a ? { label: `${pad(i)} ${a.name || ""}`, value: String(i) } : null)).filter(Boolean)];
+    let current = String(value ?? "");
+    let text;
+    const result = await promptDialog(api, {
+        title, width: "1040px", height: PICK_H,
+        build(body, ctx) {
+            const right = el("div", { class: "pgAnimPreview" });
+            const show = id => {
+                stopPreview();
+                right.textContent = "";
+                const anim = db.Animations[Number(id)];
+                if (anim) {
+                    right.append(...previewGroup(db, anim, null));
+                }
+            };
+            const sel = items.findIndex(i => i.value === current || (current === "" && i.value === "0"));
+            const list = touchList({
+                items, selected: sel,
+                onSelect: it => { current = it.value; text.input.value = it.value; show(it.value); },
+                onActivate: it => ctx.accept(it.value)
+            });
+            text = valueRow(current, v => { current = v; });
+            body.classList.add("pgCol");
+            body.append(descBox(def) || "", el("div", { class: "pgSplit" }, list.root, right), text.row);
+            requestAnimationFrame(() => list.select(sel, true));
+            show(current);
+        },
+        onOk: () => current
+    });
+    stopPreview();
+    return result;
+}

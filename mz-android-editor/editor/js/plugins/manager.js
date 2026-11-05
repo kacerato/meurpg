@@ -64,6 +64,8 @@ export async function openPluginManager(api) {
     }
     clearInfoCache();
     let selected = list.length ? 0 : -1;
+    let multi = new Set(selected >= 0 ? [selected] : []);   // seleção múltipla (Shift / Múltipla)
+    let multiMode = false;
     let dirty = false;
     let tbody, warnBox, buttons = {};
     let warnSeq = 0;
@@ -93,21 +95,41 @@ export async function openPluginManager(api) {
         warnBox.hidden = !warns.length;
     }
 
+    // índices afetados por Recortar/Copiar/Excluir/Atualizar (vários com Shift, como no MZ)
+    function targets() {
+        const ids = [...multi].filter(i => i >= 0 && i < list.length).sort((a, b) => a - b);
+        return ids.length ? ids : (selected >= 0 && selected < list.length ? [selected] : []);
+    }
+
     function updateButtons() {
         const has = selected >= 0 && selected < list.length;
         buttons.edit.disabled = !has;
         buttons.del.disabled = !has;
+        buttons.cut.disabled = !has;
         buttons.copy.disabled = !has;
         buttons.paste.disabled = !clipboard;
-        buttons.up.disabled = !has || selected === 0;
-        buttons.down.disabled = !has || selected >= list.length - 1;
+        buttons.up.disabled = !has || selected === 0 || multi.size > 1;
+        buttons.down.disabled = !has || selected >= list.length - 1 || multi.size > 1;
         buttons.update.disabled = !has;
     }
 
-    function select(i, scroll) {
-        selected = i;
-        tbody.querySelectorAll(".pmRow").forEach(r => r.classList.toggle("selected", Number(r.dataset.i ?? -2) === i ||
-            (i === list.length && r.classList.contains("pmEmptyRow"))));
+    function select(i, scroll, how) {
+        if (how === "range" && selected >= 0 && i < list.length) {
+            multi = new Set();
+            for (let k = Math.min(selected, i); k <= Math.max(selected, i); k++) { multi.add(k); }
+        } else if (how === "toggle" && i < list.length) {
+            if (multi.has(i) && multi.size > 1) { multi.delete(i); } else { multi.add(i); }
+            selected = i;
+        } else if (how !== "keep") {
+            multi = new Set(i >= 0 && i < list.length ? [i] : []);
+            selected = i;
+        }
+        if (how !== "range") { selected = i; }
+        tbody.querySelectorAll(".pmRow").forEach(r => {
+            const k = Number(r.dataset.i ?? -2);
+            r.classList.toggle("selected", k === selected || (selected === list.length && r.classList.contains("pmEmptyRow")));
+            r.classList.toggle("multi", k !== selected && multi.has(k));
+        });
         if (scroll) {
             const r = tbody.querySelector(".pmRow.selected");
             if (r) {
@@ -119,6 +141,9 @@ export async function openPluginManager(api) {
 
     function render() {
         tbody.textContent = "";
+        if (!multi.has(selected)) {
+            multi = new Set(selected >= 0 && selected < list.length ? [selected] : []);
+        }
         list.forEach((p, i) => {
             const handle = el("span", { class: "pmHandle", title: t("Drag to reorder"), text: "≡" });
             const status = el("button", { class: "pmStatus" + (p.status ? " on" : ""), text: p.status ? t("ON", "Constants") : t("OFF", "Constants") });
@@ -129,18 +154,27 @@ export async function openPluginManager(api) {
                 render();
                 select(i);
             });
-            const row = el("div", { class: "pmRow" + (i === selected ? " selected" : ""), "data-i": String(i) },
+            const row = el("div", { class: "pmRow" + (i === selected ? " selected" : multi.has(i) ? " multi" : ""), "data-i": String(i) },
                 handle,
                 el("span", { class: "pmName", text: p.name }),
                 el("span", { class: "pmStatusCell" }, status),
                 el("span", { class: "pmDesc", text: p.description || "" }));
-            row.addEventListener("click", () => {
-                if (selected === i) {
+            row.addEventListener("click", ev => {
+                if (longPressed) {
+                    longPressed = false;
+                    return;
+                }
+                if (ev.shiftKey) {
+                    select(i, false, "range");
+                } else if (multiMode) {
+                    select(i, false, "toggle");
+                } else if (selected === i && multi.size <= 1) {
                     edit(i);
                 } else {
                     select(i);
                 }
             });
+            bindMenu(row, i);
             bindDrag(handle, i);
             tbody.appendChild(row);
         });
@@ -149,6 +183,7 @@ export async function openPluginManager(api) {
             el("span", { class: "pmHandle" }), el("span", { class: "pmName", text: "" }),
             el("span", { class: "pmStatusCell" }), el("span", { class: "pmDesc pmHint", text: t("Tap here to add a plugin") }));
         empty.addEventListener("click", () => add(list.length));
+        bindMenu(empty, list.length);
         tbody.appendChild(empty);
         updateButtons();
         refreshWarnings();
@@ -245,13 +280,91 @@ export async function openPluginManager(api) {
     }
 
     async function del() {
-        if (selected < 0 || selected >= list.length) {
+        const ids = targets();
+        if (!ids.length) {
             return;
         }
-        list.splice(selected, 1);
-        selected = Math.min(selected, list.length - 1);
+        for (const i of ids.reverse()) {
+            list.splice(i, 1);
+        }
+        selected = Math.min(ids[ids.length - 1], list.length - 1);
+        multi = new Set(selected >= 0 ? [selected] : []);
         markDirty();
         render();
+    }
+
+    function cut() {
+        copy();
+        del();
+    }
+
+    // Menu de contexto do MZ (clique direito; no toque, toque longo de 550 ms)
+    let longPressed = false;
+    let menuEl = null;
+    function closeMenu() {
+        if (menuEl) {
+            menuEl.remove();
+            menuEl = null;
+        }
+    }
+    function openMenu(x, y, i) {
+        closeMenu();
+        if (i < list.length && !multi.has(i)) {
+            select(i);
+        } else if (i >= list.length) {
+            select(list.length);
+        }
+        const has = i < list.length;
+        const items = [
+            [t("Edit", "StandardPopupMenu") + "...", () => edit(i), false],
+            null,
+            [t("Cut", "BasicConstants"), cut, !has],
+            [t("Copy", "BasicConstants"), copy, !has],
+            [t("Paste", "BasicConstants"), paste, !clipboard],
+            [t("Delete", "BasicConstants"), del, !has],
+            null,
+            [t("Refresh", "Dialog_PluginManager"), update, !has]
+        ];
+        menuEl = el("div", { class: "pmMenu" });
+        for (const it of items) {
+            if (!it) {
+                menuEl.appendChild(el("div", { class: "pmMenuSep" }));
+                continue;
+            }
+            const b = el("button", { text: it[0], disabled: it[2] });
+            b.addEventListener("click", () => { closeMenu(); it[1](); });
+            menuEl.appendChild(b);
+        }
+        d.root.appendChild(menuEl);
+        const r = d.root.getBoundingClientRect(), m = menuEl.getBoundingClientRect();
+        menuEl.style.left = Math.max(0, Math.min(x - r.left, r.width - m.width - 4)) + "px";
+        menuEl.style.top = Math.max(0, Math.min(y - r.top, r.height - m.height - 4)) + "px";
+    }
+    function bindMenu(row, i) {
+        row.addEventListener("contextmenu", ev => {
+            ev.preventDefault();
+            openMenu(ev.clientX, ev.clientY, i);
+        });
+        let timer = 0, start = null;
+        row.addEventListener("pointerdown", ev => {
+            if (ev.pointerType !== "touch") {
+                return;
+            }
+            start = { x: ev.clientX, y: ev.clientY };
+            timer = setTimeout(() => {
+                longPressed = true;
+                openMenu(start.x, start.y, i);
+            }, 550);
+        });
+        const cancel = ev => {
+            if (timer && (ev.type !== "pointermove" || Math.hypot(ev.clientX - start.x, ev.clientY - start.y) > 10)) {
+                clearTimeout(timer);
+                timer = 0;
+            }
+        };
+        row.addEventListener("pointermove", cancel);
+        row.addEventListener("pointerup", cancel);
+        row.addEventListener("pointercancel", cancel);
     }
 
     function move(d) {
@@ -274,26 +387,39 @@ export async function openPluginManager(api) {
     }
 
     // "Atualizar": relê o arquivo e reaplica descrição/parâmetros (mantendo os valores).
+    // Com vários selecionados (Shift), atualiza todos de uma vez, como no MZ.
     async function update() {
-        if (selected < 0 || selected >= list.length) {
+        const ids = targets();
+        if (!ids.length) {
             return;
         }
-        const p = list[selected];
-        const info = await getPluginInfo(p.name, { fresh: true });
-        if (info.missing) {
-            await alertDialog(api, t("Refresh", "Dialog_PluginManager"), t("The plugin \"%1\" cannot be loaded.", "Dialog_PluginManager", p.name));
+        const done = [];
+        for (const i of ids) {
+            const p = list[i];
+            const info = await getPluginInfo(p.name, { fresh: true });
+            if (info.missing) {
+                await alertDialog(api, t("Refresh", "Dialog_PluginManager"), t("The plugin \"%1\" cannot be loaded.", "Dialog_PluginManager", p.name));
+                continue;
+            }
+            p.description = info.plugindesc || "";
+            p.parameters = mergeParameters(info, p.parameters);
+            done.push(p.name);
+        }
+        if (!done.length) {
             return;
         }
-        p.description = info.plugindesc || "";
-        p.parameters = mergeParameters(info, p.parameters);
+        const keep = new Set(multi);
         markDirty();
         render();
-        api.status(t("Plugin %1 refreshed.", null, p.name));
+        multi = keep;
+        select(selected, false, "keep");
+        api.status(t("Plugin %1 refreshed.", null, done.join(", ")));
     }
 
     function copy() {
-        if (selected >= 0 && selected < list.length) {
-            clipboard = clone(list[selected]);
+        const ids = targets();
+        if (ids.length) {
+            clipboard = ids.map(i => clone(list[i]));
             updateButtons();
         }
     }
@@ -303,7 +429,7 @@ export async function openPluginManager(api) {
             return;
         }
         const at = selected >= 0 ? Math.min(selected + 1, list.length) : list.length;
-        list.splice(at, 0, clone(clipboard));
+        list.splice(at, 0, ...clipboard.map(clone));
         selected = at;
         markDirty();
         render();
@@ -358,6 +484,7 @@ export async function openPluginManager(api) {
         B("edit", t("Edit", "StandardPopupMenu"), () => edit()),
         B("del", t("Delete", "BasicConstants"), del),
         el("span", { class: "sep" }),
+        B("cut", t("Cut", "BasicConstants"), cut),
         B("copy", t("Copy", "BasicConstants"), copy),
         B("paste", t("Paste", "BasicConstants"), paste),
         el("span", { class: "sep" }),
@@ -365,6 +492,13 @@ export async function openPluginManager(api) {
         B("down", "▼ " + t("Down", "Constants"), () => move(1)),
         el("span", { class: "sep" }),
         B("update", t("Refresh", "Dialog_PluginManager"), update, t("Reloads the plugin file (description and parameters).")),
+        B("multi", t("Multi", "MZEditor"), () => {
+            multiMode = !multiMode;
+            buttons.multi.classList.toggle("on", multiMode);
+            if (!multiMode) {
+                select(selected);
+            }
+        }, t("Multiple selection (same as Shift + click)", "MZEditor")),
         el("span", { class: "spacer" }),
         B("allOn", t("Turn All ON"), () => setAll(true)),
         B("allOff", t("Turn All OFF"), () => setAll(false)));
@@ -375,5 +509,25 @@ export async function openPluginManager(api) {
     warnBox = el("div", { class: "pmWarnings", hidden: true });
     d.body.classList.add("pgCol", "pmMain");
     d.body.append(bar, el("div", { class: "pmTable" }, head, tbody), warnBox);
+    d.root.addEventListener("pointerdown", ev => { if (menuEl && !menuEl.contains(ev.target)) { closeMenu(); } }, true);
+    // Atalhos do MZ: Del, Ctrl+X/C/V, Enter (só com o gerenciador no topo)
+    const onKey = ev => {
+        if (!d.root.isConnected) {
+            window.removeEventListener("keydown", onKey);
+            return;
+        }
+        const top = [...document.querySelectorAll(".pgDialog")].pop();
+        if (top !== d.root || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement && document.activeElement.tagName)) {
+            return;
+        }
+        const k = ev.key.toLowerCase();
+        if (ev.key === "Escape" && menuEl) { closeMenu(); ev.preventDefault(); }
+        else if (ev.key === "Delete") { del(); ev.preventDefault(); }
+        else if ((ev.ctrlKey || ev.metaKey) && k === "c") { copy(); ev.preventDefault(); }
+        else if ((ev.ctrlKey || ev.metaKey) && k === "x") { cut(); ev.preventDefault(); }
+        else if ((ev.ctrlKey || ev.metaKey) && k === "v") { paste(); ev.preventDefault(); }
+        else if (ev.key === "Enter" && selected >= 0) { edit(selected); ev.preventDefault(); }
+    };
+    window.addEventListener("keydown", onKey);
     render();
 }

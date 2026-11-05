@@ -184,3 +184,18 @@
 .pmWarnings[hidden] { display: none; }
 .pmWarnLine { display: flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 8px; cursor: pointer; }
 .pmWarnLine img { width: 16px; height: 16px; }
+
+/* abas [Tipo]/[Texto] dos editores de parâmetro e ações "Insira Índice de Ícone/Cor" */
+.pgTabPage { min-height: 0; }
+.pgInsertBar { flex-wrap: wrap; }
+.pmRow.multi { background: var(--accent-bg, #dbe7ff); }
+.pgBtn.on { background: var(--accent); color: #fff; }
+/* menu de contexto do gerenciador (clique direito / toque longo) */
+.pmMenu { position: absolute; z-index: 20; min-width: 180px; padding: 4px 0; background: var(--panel2, #fff);
+    border: 1px solid var(--line, #aaa); border-radius: 4px; box-shadow: 0 4px 14px rgba(0,0,0,.25); display: flex; flex-direction: column; }
+.pmMenu button { height: 38px; padding: 0 16px; text-align: left; border: none; background: none; }
+.pmMenu button:hover:not(:disabled) { background: var(--accent); color: #fff; }
+.pmMenu button:disabled { color: #aaa; }
+.pmMenuSep { height: 1px; background: var(--line2, #ddd); margin: 3px 0; }
+.pgAnimPreview { flex: 1 1 50%; display: flex; flex-direction: column; gap: 6px; min-width: 0; overflow: hidden; }
+.pgAnimPreview .dbAnimView { max-width: 100%; }

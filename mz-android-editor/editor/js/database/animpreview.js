@@ -260,7 +260,8 @@ export function previewGroup(ctxDb, anim, changeBattleback, onSystemChanged) {
     const controls = el("div", { class: "dbRow" },
         btn(t("Play", "Layout_MZAnimationEdit"), () => play(anim)),
         btn(t("Stop", "Layout_AudioSelector"), () => { stop(); state.flash = [0, 0, 0, 0]; drawBackground(); render0(); }),
-        btn(t("Change Target", "Layout_MZAnimationEdit") + "...", async () => {
+        // sem changeBattleback (seletor de animação dos plugins): só Play/Stop
+        changeBattleback && btn(t("Change Target", "Layout_MZAnimationEdit") + "...", async () => {
             const folder = state.db.System.optSideView ? "sv_enemies" : "enemies";
             const r = await pickImage({ folder, current: state.target.name, hue: state.target.hue, title: t("Change Target", "Layout_MZAnimationEdit") });
             if (r) {
@@ -270,7 +271,7 @@ export function previewGroup(ctxDb, anim, changeBattleback, onSystemChanged) {
                 await loadBackground();
             }
         }),
-        btn(t("Change Battleback", "Layout_MZAnimationEdit") + "...", async () => { if (await changeBattleback(state.db)) { await loadBackground(); } }));
+        changeBattleback && btn(t("Change Battleback", "Layout_MZAnimationEdit") + "...", async () => { if (await changeBattleback(state.db)) { await loadBackground(); } }));
     return [v.box, controls];
 }
 
