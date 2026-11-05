@@ -158,6 +158,24 @@ export function rowText(list, i, ctx) {
     return pad + r.mark + r.label + (r.value ? "：" + r.value : "");
 }
 
+// Copy as HTML: cada linha como na lista (marca ◆/：, rótulo, valor), com o recuo e as cores das
+// categorias de comando, num bloco <div> com fonte monoespaçada, pronto para colar num fórum/blog.
+const CAT_COLORS = { msg: "#000000", prog: "#c00000", flow: "#0000c0", comment: "#008000", party: "#b84d00", actor: "#b84d00", move: "#7a1a9a", char: "#7a1a9a", pic: "#a0006e", time: "#a0006e", screen: "#a0006e", audio: "#006c80", scene: "#7a6300", system: "#7a6300", map: "#7a6300", battle: "#8a2020", adv: "#505050" };
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+export function rowsHtml(list, a, b, ctx) {
+    const out = [];
+    for (let i = a; i < b; i++) {
+        const r = rowParts(list, i, ctx);
+        const pad = "&nbsp;&nbsp;".repeat(list[i].indent);
+        const color = CAT_COLORS[r.cat] || "#000000";
+        let body;
+        if (r.hidden) { body = esc(r.mark + "　".repeat(Math.max(1, Math.ceil(r.label.length / 2))) + "：" + r.value); }
+        else { body = esc(r.mark + r.label) + (r.value ? esc("：" + r.value) : ""); }
+        out.push(`${pad}<span style="color:${color}">${body}</span><br>`);
+    }
+    return "<div style=\"font-family:monospace;white-space:nowrap\">\n" + out.join("\n") + "\n</div>";
+}
+
 // ---------- widget ----------
 // opts: { list, ctx: {map, mapId, eventId}, onChange }
 export function createCommandList(opts) {
@@ -183,9 +201,10 @@ export function createCommandList(opts) {
             box.append(rowEl);
         });
     };
-    const select = i => {
+    // extend = Shift+clique / Shift+setas (ou botão "Multi"): estende do âncora até i, no mesmo recuo.
+    const select = (i, extend = false) => {
         const u = unitAt(list, i);
-        if (multi && list[anchor] && list[i].code !== 0) {
+        if ((multi || extend) && list[anchor] && list[i].code !== 0) {
             const a = unitAt(list, anchor);
             if (list[a[0]].indent === list[u[0]].indent) {
                 sel = [Math.min(a[0], u[0]), Math.max(a[1], u[1])];
@@ -194,6 +213,18 @@ export function createCommandList(opts) {
             }
         }
         sel = u; anchor = u[0];
+        render();
+    };
+    // Shift+setas: move a ponta oposta ao âncora uma unidade (mesmo recuo do âncora).
+    const extendBy = dir => {
+        if (!list[anchor] || list[anchor].code === 0) { return; }
+        const a = unitAt(list, anchor), ind = list[a[0]].indent;
+        const tip = sel[0] < a[0] ? sel[0] : unitAt(list, sel[1] - 1)[0];
+        let j = dir > 0 ? unitAt(list, tip)[1] : tip - 1;
+        while (dir < 0 && j >= 0 && list[j].indent > ind) { j--; }
+        if (j < 0 || j >= list.length || list[j].indent !== ind || list[j].code === 0) { return; }
+        const u = unitAt(list, j);
+        sel = u[0] < a[0] ? [u[0], a[1]] : [a[0], u[1]];
         render();
     };
     const selected = () => list.slice(sel[0], sel[1]);
@@ -268,11 +299,9 @@ export function createCommandList(opts) {
             if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, t("Copy as Text", "EventCommandListBox"))); } else { alertBox(s, t("Copy as Text", "EventCommandListBox")); }
         },
         copyHtml() {
-            const c = ctx();
-            const text = [];
-            for (let i = sel[0]; i < sel[1]; i++) { text.push(rowText(list, i, c).replace(/&/g, "&amp;").replace(/</g, "&lt;")); }
-            const s = text.join("<br>\n");
-            if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, t("Copy as HTML", "EventCommandListBox"))); }
+            const s = rowsHtml(list, sel[0], sel[1], ctx());
+            const fallback = () => alertBox(s, t("Copy as HTML", "EventCommandListBox"));
+            if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(fallback); } else { fallback(); }
         },
         // "Test": executa no jogo os comandos selecionados (ou a lista toda se só a linha vazia).
         async test() {
@@ -322,9 +351,9 @@ export function createCommandList(opts) {
         if (i < 0 || !pressPos || Math.hypot(e.clientX - pressPos.x, e.clientY - pressPos.y) > 10) { return; }
         const now = Date.now();
         const inSel = i >= sel[0] && i < sel[1];
-        if (lastTap.i === i && now - lastTap.t < 400 && inSel) { lastTap = { i: -1, t: 0 }; api.edit(); return; }
+        if (lastTap.i === i && now - lastTap.t < 400 && inSel && !e.shiftKey) { lastTap = { i: -1, t: 0 }; api.edit(); return; }
         lastTap = { i, t: now };
-        select(i);
+        select(i, e.shiftKey);
     });
     box.addEventListener("pointercancel", () => clearTimeout(pressTimer));
     box.addEventListener("contextmenu", e => { e.preventDefault(); const i = rowIndex(e); if (i >= 0) { select(i); } api.menu(e.clientX, e.clientY); });
@@ -336,6 +365,8 @@ export function createCommandList(opts) {
         else if (mod && e.key === "x") { api.cut(); }
         else if (mod && e.key === "v") { api.paste(); }
         else if (mod && e.key === "a") { e.preventDefault(); api.selectAll(); }
+        else if (e.key === "ArrowDown" && e.shiftKey) { e.preventDefault(); extendBy(1); }
+        else if (e.key === "ArrowUp" && e.shiftKey) { e.preventDefault(); extendBy(-1); }
         else if (e.key === "ArrowDown") { e.preventDefault(); select(Math.min(list.length - 1, sel[1])); }
         else if (e.key === "ArrowUp") { e.preventDefault(); select(Math.max(0, sel[0] - 1)); }
     });

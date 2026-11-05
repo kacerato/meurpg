@@ -2,7 +2,7 @@
 // Códigos = Game_Character.ROUTE_* do runtime (rmmz_objects.js).
 
 import { db, clone } from "./data.js";
-import { h, dialog, field, row, num, txt, sel, chk, switchPick, audioPick, audioText, charIndexPick, area, alertBox, getApi } from "./ui.js";
+import { h, dialog, field, row, num, txt, sel, chk, switchPick, audioPick, audioText, charIndexPick, alertBox, actionMenu, getApi } from "./ui.js";
 import { MiniMap } from "./minimap.js";
 import { t } from "../i18n.js";
 
@@ -74,7 +74,8 @@ function paramDialog(code, params) {
             case 42: { const s = num(p[0] === undefined ? 255 : p[0], { min: 0, max: 255 }); b.append(field(t("Opacity", "MovementCommand42"), s)); get = () => [s.get()]; break; }
             case 43: { const s = sel(BLENDS.map((l, i) => ({ value: i, label: l })), p[0] || 0); b.append(field(t("Blend Mode", "MovementCommand43"), s)); get = () => [s.get()]; break; }
             case 44: { const s = audioPick("se", p[0] || { name: "", volume: 90, pitch: 100, pan: 0 }); b.append(field(t("SE", "MovementCommands"), s)); get = () => [s.get()]; break; }
-            case 45: { const s = area(p[0] || "", { rows: 4, mono: true }); b.append(field(t("Script", "MovementCommand45"), s)); get = () => [s.get()]; break; }
+            // MZ: campo de uma linha (a lista da rota mostra uma linha só).
+            case 45: { const s = txt(String(p[0] || "").replace(/\n/g, " "), { width: "100%" }); s.el.classList.add("mono"); b.append(field(t("Script", "MovementCommand45"), s)); get = () => [s.get().replace(/\n/g, " ")]; break; }
         }
     };
     return dialog({ title, width: "520px", height: "auto", build, onOk: () => ({ v: get() }) }).then(r => r ? r.v : null);
@@ -82,14 +83,17 @@ function paramDialog(code, params) {
 
 export function routeNeedsParams(code) { return !!BUTTON_LABELS[code]; }
 
+let routeClip = null; // comandos de rota copiados (compartilhado entre diálogos + localStorage)
+
 // Abre o diálogo "Movement Route". opts.target: valor do personagem (ou undefined para rota do evento)
 // opts.targets: opções [{value,label}] para o seletor de alvo; opts.showWait: mostra "Wait for Completion".
 // opts.previewStart(target) -> {mapId, x, y, d} | null: posição inicial para a prévia desenhada no mapa.
 export function moveRouteDialog(route, { target, targets, showWait = true, title = t("Movement Route", "Dialog_MovementRoute"), previewStart } = {}) {
     const r = clone(route) || { list: [{ code: 0, parameters: [] }], repeat: false, skippable: false, wait: true };
     if (!r.list.length || r.list[r.list.length - 1].code !== 0) { r.list.push({ code: 0, parameters: [] }); }
-    let selected = r.list.length - 1;
-    let clip = null;
+    let selected = r.list.length - 1; // âncora / linha atual
+    let selEnd = selected;            // outra ponta da seleção (Shift+clique, Shift+setas, Multi)
+    let multi = false;
     let targetSel = null, repeat, skip, wait;
     let mini = null;
     return dialog({
@@ -98,10 +102,10 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
             const list = h("div", { class: "evList evRouteList" });
             const render = () => {
                 list.innerHTML = "";
+                const [a, b] = range();
                 r.list.forEach((c, i) => {
-                    const it = h("div", { class: "evListItem" + (i === selected ? " selected" : "") }, "◇" + routeText(c));
-                    it.addEventListener("click", () => { selected = i; render(); });
-                    it.addEventListener("dblclick", () => editAt(i));
+                    const it = h("div", { class: "evListItem" + (i >= a && i <= b ? " selected" : "") }, "◇" + routeText(c));
+                    it.dataset.i = i;
                     list.append(it);
                 });
                 const s = list.querySelector(".selected");
@@ -142,14 +146,93 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
                 };
                 mini.app.ticker.add(anim);
             };
+            // ---- seleção e edição da lista (como a lista do MZ: Shift+clique, menu, atalhos) ----
+            const range = () => { const a = Math.min(selected, selEnd); let b = Math.max(selected, selEnd); if (b === r.list.length - 1 && a < b) { b--; } return [a, b]; };
+            const selCmds = () => { const [a, b] = range(); return r.list.slice(a, b + 1).filter(c => c.code); };
+            const pick = (i, extend) => { if (extend || multi) { selEnd = i; } else { selected = selEnd = i; } render(); };
+            const ops = {
+                edit: () => editAt(selected),
+                copy: () => { const c = selCmds(); if (c.length) { routeClip = clone(c); try { localStorage.setItem("mzRouteClip", JSON.stringify(routeClip)); } catch (e) { /* ignora */ } } },
+                cut: () => { ops.copy(); ops.del(); },
+                paste: () => {
+                    let c = routeClip;
+                    if (!c) { try { c = JSON.parse(localStorage.getItem("mzRouteClip") || "null"); } catch (e) { c = null; } }
+                    if (!c || !c.length) { return; }
+                    const at = range()[0];
+                    r.list.splice(at, 0, ...clone(c));
+                    selected = selEnd = at + c.length; render();
+                },
+                del: () => {
+                    const [a, b] = range();
+                    if (!r.list.slice(a, b + 1).some(c => c.code)) { return; }
+                    r.list.splice(a, b - a + 1, ...r.list.slice(a, b + 1).filter(c => !c.code));
+                    selected = selEnd = Math.min(a, r.list.length - 1); render();
+                },
+                selectAll: () => { selected = 0; selEnd = r.list.length - 1; render(); },
+                clear: () => { r.list = [{ code: 0, parameters: [] }]; selected = selEnd = 0; render(); }
+            };
+            const menu = async (x, y) => {
+                const has = selCmds().length > 0;
+                const cur = r.list[selected];
+                await actionMenu([
+                    { label: t("Edit", "StandardPopupMenu") + "…", disabled: !cur.code || !routeNeedsParams(cur.code), action: ops.edit },
+                    "-",
+                    { label: t("Cut", "BasicConstants"), disabled: !has, action: ops.cut },
+                    { label: t("Copy", "BasicConstants"), disabled: !has, action: ops.copy },
+                    { label: t("Paste", "BasicConstants"), action: ops.paste },
+                    { label: t("Delete", "BasicConstants"), disabled: !has, action: ops.del },
+                    "-",
+                    { label: t("Select All", "BasicConstants"), action: ops.selectAll },
+                    { label: t("Clear", "BasicConstants"), action: ops.clear }
+                ], { x, y });
+            };
+            // toque = seleciona, duplo toque = editar, toque longo = menu; botão direito = menu.
+            list.tabIndex = 0;
+            let lastTap = { i: -1, t: 0 }, pressTimer = null, pressPos = null, longFired = false;
+            const rowAt = e => { const it = e.target.closest(".evListItem"); return it ? Number(it.dataset.i) : -1; };
+            const inRange = i => { const [a, b] = range(); return i >= a && i <= b; };
+            list.addEventListener("pointerdown", e => {
+                const i = rowAt(e); if (i < 0) { return; }
+                longFired = false; pressPos = { x: e.clientX, y: e.clientY };
+                clearTimeout(pressTimer);
+                if (e.pointerType !== "mouse") { pressTimer = setTimeout(() => { longFired = true; if (!inRange(i)) { pick(i, false); } menu(pressPos.x, pressPos.y); }, 550); }
+            });
+            list.addEventListener("pointermove", e => { if (pressPos && Math.hypot(e.clientX - pressPos.x, e.clientY - pressPos.y) > 10) { clearTimeout(pressTimer); } });
+            list.addEventListener("pointerup", e => {
+                clearTimeout(pressTimer);
+                if (longFired || e.button === 2) { return; }
+                const i = rowAt(e); if (i < 0) { return; }
+                const now = Date.now();
+                if (lastTap.i === i && now - lastTap.t < 400 && !e.shiftKey) { lastTap = { i: -1, t: 0 }; editAt(i); return; }
+                lastTap = { i, t: now };
+                pick(i, e.shiftKey);
+            });
+            list.addEventListener("pointercancel", () => clearTimeout(pressTimer));
+            list.addEventListener("contextmenu", e => { e.preventDefault(); const i = rowAt(e); if (i >= 0 && !inRange(i)) { pick(i, false); } menu(e.clientX, e.clientY); });
+            list.addEventListener("keydown", e => {
+                const mod = e.ctrlKey || e.metaKey;
+                if (e.key === "Enter" && !mod) { e.preventDefault(); ops.edit(); }
+                else if (e.key === "Delete") { e.preventDefault(); ops.del(); }
+                else if (mod && e.key === "c") { e.preventDefault(); ops.copy(); }
+                else if (mod && e.key === "x") { e.preventDefault(); ops.cut(); }
+                else if (mod && e.key === "v") { e.preventDefault(); ops.paste(); }
+                else if (mod && e.key === "a") { e.preventDefault(); ops.selectAll(); }
+                else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                    e.preventDefault();
+                    const d = e.key === "ArrowDown" ? 1 : -1;
+                    const cur = e.shiftKey ? selEnd : selected;
+                    pick(Math.max(0, Math.min(r.list.length - 1, cur + d)), e.shiftKey);
+                }
+            });
             const insert = async code => {
                 let params = [];
                 if (routeNeedsParams(code)) {
                     params = await paramDialog(code, null);
                     if (!params) { return; }
                 }
-                r.list.splice(selected, 0, { code, parameters: params });
-                selected++;
+                const at = range()[0];
+                r.list.splice(at, 0, { code, parameters: params });
+                selected = selEnd = at + 1;
                 render();
             };
             const editAt = async i => {
@@ -164,12 +247,13 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
                 targetSel.onChange(() => updatePreview(true));
                 left.append(field(t("Character", "Constants"), targetSel));
             }
+            const multiBtn = h("button", { type: "button", class: "evBtn toggle", title: t("Select multiple (same as Shift+click)") }, t("Multi-select"));
+            multiBtn.addEventListener("click", () => { multi = !multi; multiBtn.classList.toggle("on", multi); if (!multi) { selEnd = selected; render(); } });
+            const tb = (label, fn) => h("button", { type: "button", class: "evBtn", onclick: fn }, label);
             left.append(list, h("div", { class: "evRow evListTools" },
-                h("button", { type: "button", class: "evBtn", onclick: () => editAt(selected) }, t("Edit", "StandardPopupMenu")),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (r.list[selected].code) { clip = clone(r.list[selected]); } } }, t("Copy", "BasicConstants")),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (clip) { r.list.splice(selected, 0, clone(clip)); selected++; render(); } } }, t("Paste", "BasicConstants")),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (r.list[selected].code) { r.list.splice(selected, 1); render(); } } }, t("Delete", "BasicConstants")),
-                h("button", { type: "button", class: "evBtn", onclick: () => { r.list = [{ code: 0, parameters: [] }]; selected = 0; render(); } }, t("Clear", "BasicConstants"))));
+                tb(t("Edit", "StandardPopupMenu"), () => ops.edit()), tb(t("Cut", "BasicConstants"), () => ops.cut()), tb(t("Copy", "BasicConstants"), () => ops.copy()),
+                tb(t("Paste", "BasicConstants"), () => ops.paste()), tb(t("Delete", "BasicConstants"), () => ops.del()), multiBtn,
+                tb("☰", e => { const rc = e.currentTarget.getBoundingClientRect(); menu(rc.left, rc.bottom); })));
             repeat = chk(t("Repeat Movements", "Layout_MovementRoute"), r.repeat);
             skip = chk(t("Skip If Cannot Move", "Layout_MovementRoute"), r.skippable);
             wait = chk(t("Wait for Completion", "Layout_MovementRoute"), r.wait);

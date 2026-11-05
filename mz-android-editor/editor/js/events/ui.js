@@ -30,7 +30,9 @@ export function h(tag, attrs, ...children) {
 }
 
 // Diálogo modal que resolve com o valor de onOk (ou null ao cancelar/fechar pelo botão voltar).
-export function dialog({ title, width, height, okLabel = t("OK", "BasicConstants"), cancelLabel = t("Cancel", "BasicConstants"), build, onOk, extraButtons, noCancel }) {
+// onApply: acrescenta o botão "Aplicar" (OK / Cancelar / Aplicar, como no MZ); grava sem fechar.
+// Ctrl+Enter em qualquer campo do diálogo equivale a OK (01_10_01, Remarks).
+export function dialog({ title, width, height, okLabel = t("OK", "BasicConstants"), cancelLabel = t("Cancel", "BasicConstants"), build, onOk, onApply, extraButtons, noCancel }) {
     return new Promise(resolve => {
         let done = false;
         const finish = v => { if (!done) { done = true; obs.disconnect(); resolve(v); } };
@@ -46,13 +48,71 @@ export function dialog({ title, width, height, okLabel = t("OK", "BasicConstants
             }
         });
         if (!noCancel) { buttons.push({ label: cancelLabel, onClick: () => finish(null) }); }
+        if (onApply) {
+            buttons.push({
+                label: t("Apply", "BasicConstants"),
+                onClick: () => { Promise.resolve().then(onApply).catch(e => { console.error(e); alertBox(String(e.message || e)); }); return false; }
+            });
+        }
         const dlg = API.openDialog({ title, width, height, buttons });
         dlg.root.classList.add("evDlgRoot");
         dlg.body.classList.add("evDlgBody");
+        dlg.root.addEventListener("keydown", e => {
+            if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && !e.defaultPrevented) {
+                const ok = dlg.root.querySelector(".mzDialogButtons .primary");
+                if (ok) { e.preventDefault(); e.stopPropagation(); ok.click(); }
+            }
+        });
         const obs = new MutationObserver(() => { if (!dlg.root.isConnected) { finish(null); } });
         obs.observe(document.body, { childList: true });
         if (build) { build(dlg.body, dlg); }
     });
+}
+
+// Menu de contexto dos campos de texto do MZ (TextEditPopupMenuEx): Recortar/Copiar/Colar/
+// Selecionar tudo + "Inserir índice de cor", "Inserir índice de ícone" e "Ajuda do plugin".
+// Abre com o botão direito; no toque, pelo botão "⋯" devolvido em .button.
+// opts: { color: () => Promise<n|null>, icon: () => Promise<n|null>, pluginHelp: true, onChange }
+export function textMenu(input, opts = {}) {
+    const insert = s => {
+        const a = input.selectionStart ?? input.value.length, b = input.selectionEnd ?? a;
+        input.setRangeText(s, a, b, "end");
+        input.focus();
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+    const open = async (x, y) => {
+        const a = input.selectionStart, b = input.selectionEnd, has = a !== b;
+        const items = [
+            { label: t("Cut", "BasicConstants"), disabled: !has, action: () => { const s = input.value.slice(a, b); navigator.clipboard?.writeText(s).catch(() => {}); input.setRangeText("", a, b, "end"); input.dispatchEvent(new Event("input", { bubbles: true })); } },
+            { label: t("Copy", "BasicConstants"), disabled: !has, action: () => { navigator.clipboard?.writeText(input.value.slice(a, b)).catch(() => {}); } },
+            { label: t("Paste", "BasicConstants"), action: async () => { try { const s = await navigator.clipboard.readText(); input.setSelectionRange(a, b); insert(s); } catch (e) { /* sem permissão */ } } },
+            { label: t("Select All", "BasicConstants"), action: () => { input.focus(); input.select(); } }
+        ];
+        const extra = [];
+        if (opts.color) { extra.push({ label: t("Insert Color Index", "TextEditPopupMenuEx") + "…", action: async () => { const n = await opts.color(); if (n !== null && n !== undefined) { input.setSelectionRange(a, b); insert(`\\C[${n}]`); } } }); }
+        if (opts.icon) { extra.push({ label: t("Insert Icon Index", "TextEditPopupMenuEx") + "…", action: async () => { const n = await opts.icon(); if (n !== null && n !== undefined) { input.setSelectionRange(a, b); insert(`\\I[${n}]`); } } }); }
+        if (opts.pluginHelp !== false) { extra.push({ label: t("Plugin Help", "TextEditPopupMenuEx") + "…", action: () => openPluginHelpFor(input) }); }
+        await actionMenu([...items, "-", ...extra], { x, y });
+    };
+    input.addEventListener("contextmenu", e => {
+        if (e.pointerType === "touch") { return; } // toque longo mantém a seleção nativa; usa o botão ⋯
+        e.preventDefault();
+        open(e.clientX, e.clientY);
+    });
+    const button = h("button", { type: "button", class: "evBtn evTextMenuBtn", title: t("Plugin Help", "TextEditPopupMenuEx") }, "⋯");
+    button.addEventListener("click", e => { e.preventDefault(); const r = button.getBoundingClientRect(); open(r.left, r.bottom); });
+    return { button, open, insert };
+}
+
+// "Ajuda do plugin" reaproveita o diálogo do Banco de dados (database/pluginhelp.js): mostra o @help
+// dos plugins ativos e insere a tag escolhida no campo (num objeto-espelho ligado ao campo).
+async function openPluginHelpFor(input) {
+    const dbui = await import("../database/ui.js");
+    if (!dbui.getApi()) { dbui.setApi(API); }
+    const { openPluginHelp } = await import("../database/pluginhelp.js");
+    const mirror = { v: input.value };
+    await openPluginHelp(mirror, "v", input);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
 const NONE = () => "(" + t("None", "Constants") + ")";
@@ -610,15 +670,19 @@ export function facePick(name, index) {
 
 // ---------- Tom de cor / cor ----------
 const TONE_PRESETS = [[t("Normal", "Layout_ColorTone"), [0, 0, 0, 0]], [t("Dark", "Layout_ColorTone"), [-68, -68, -68, 0]], [t("Sepia", "Layout_ColorTone"), [34, -34, -68, 170]], [t("Sunset", "Layout_ColorTone"), [68, -34, -34, 0]], [t("Night", "Layout_ColorTone"), [-68, -68, 0, 68]]];
-export function tonePick(tone, { gray = true, color = false } = {}) {
+// opts.preview(canvas, tone): desenha a prévia real (cena/imagem/janela tingida) no lugar da amostra.
+export function tonePick(tone, { gray = true, color = false, preview = null } = {}) {
     const tn = clone(tone) || [0, 0, 0, 0];
     const lim = color ? [0, 255] : [-255, 255];
     const r = slider(tn[0], lim[0], lim[1]), g = slider(tn[1], lim[0], lim[1]), b = slider(tn[2], lim[0], lim[1]);
     const k = slider(tn[3], 0, color ? 255 : 255);
-    const sw = h("div", { class: "evSwatch" });
+    const sw = preview ? h("canvas", { class: "evTonePreview" }) : h("div", { class: "evSwatch" });
+    let pending = false;
     const upd = () => {
         const v = [r.get(), g.get(), b.get(), k.get()];
-        if (color) {
+        if (preview) {
+            if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; Promise.resolve(preview(sw, [r.get(), g.get(), b.get(), gray ? k.get() : 0])).catch(e => console.warn(e)); }); }
+        } else if (color) {
             sw.style.background = `rgba(${v[0]},${v[1]},${v[2]},${v[3] / 255})`;
         } else {
             const base = 128;

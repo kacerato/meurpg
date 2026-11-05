@@ -145,11 +145,15 @@
 .evMsgText { font-size: 16px; line-height: 1.6; min-height: 140px; background-image: linear-gradient(90deg, transparent calc(100% - 1px), #e0a0a0 0); background-size: 100% 100%; }
 .evMsgPreview { background: #000; padding: 6px; border-radius: 3px; }
 .evMsgPreview.hidden { display: none; }
-.evMsgWin { display: flex; gap: 10px; background: linear-gradient(#24486f, #10203a); border: 2px solid #ccc; border-radius: 4px; padding: 10px; min-height: 160px; }
-.evMsgFace { width: 144px; height: 144px; flex: none; }
-.evMsgLines { font-family: "M+ 1p", sans-serif; font-size: 22px; line-height: 36px; color: #fff; text-shadow: 1px 1px 2px #000; white-space: pre; overflow: hidden; }
-.evMsgIcon { width: 32px; height: 32px; vertical-align: middle; }
-.evMsgName { display: inline-block; background: linear-gradient(#24486f, #10203a); color: #fff; border: 2px solid #ccc; border-radius: 4px; padding: 2px 12px; margin-bottom: 2px; font-size: 18px; }
+.evMsgPvCanvas { display: block; width: 100%; height: auto; margin-bottom: 6px; image-rendering: auto; }
+.evTonePreview { width: 360px; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 3px; flex: none; background: #000; }
+.evBattlebackWrap { display: flex; gap: 8px; height: min(60vh, 520px); }
+.evBattlebackWrap > .evFileList { width: 180px; flex: none; }
+.evBattlebackCanvas { width: 100%; height: auto; display: block; }
+.evTextWithMenu { display: flex; gap: 4px; align-items: flex-start; }
+.evTextWithMenu > textarea, .evTextWithMenu > input { flex: 1; min-width: 0; }
+.evTextMenuBtn { flex: none; min-width: 36px; }
+.evRouteList:focus, .evCmdList:focus { outline: 1px dotted var(--line); }
 .evColorGrid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
 .evColorCell { height: 40px; color: #fff; text-shadow: 0 0 2px #000; border: 2px solid transparent; }
 .evColorCell.on { border-color: #f00; }
