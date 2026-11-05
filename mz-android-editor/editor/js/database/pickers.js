@@ -361,3 +361,45 @@ export function imageButton(obj, key, folder, o = {}) {
 }
 
 export { num };
+
+// Arquivo de fonte de fonts/ (Main/Number Font Filename): grava o nome com extensão, como o MZ.
+const FONT_EXTS = ["woff", "woff2", "ttf", "otf"];
+export async function pickFont(current = "", title) {
+    const entries = await getApi().project.list("fonts").catch(() => []);
+    const names = (entries || []).filter(e => !e.dir).map(e => typeof e === "string" ? e : e.name)
+        .filter(n => FONT_EXTS.includes(n.slice(n.lastIndexOf(".") + 1).toLowerCase())).sort((a, b) => a.localeCompare(b));
+    const state = { name: current };
+    const sample = el("div", { class: "dbFontSample", text: "AaBbCc 0123456789\nあいうえお 漢字" });
+    const show = async () => {
+        if (!state.name) { sample.style.fontFamily = ""; return; }
+        const fam = "dbFontPreview_" + state.name.replace(/\W/g, "_");
+        try {
+            if (![...document.fonts].some(f => f.family === fam)) {
+                const ff = new FontFace(fam, `url("/project/fonts/${encodeURIComponent(state.name)}")`);
+                document.fonts.add(await ff.load());
+            }
+            sample.style.fontFamily = `"${fam}", sans-serif`;
+        } catch (e) { sample.style.fontFamily = ""; }
+    };
+    const ok = await modal({
+        title: title || t("Main Font Filename", "Group_SystemAdvanced"), width: "760px", height: "460px",
+        build: b => {
+            b.classList.add("dbPickBody");
+            b.appendChild(fileListPane(names, current, v => { state.name = v; show(); }, false));
+            b.appendChild(el("div", { class: "dbPickRight" }, sample));
+            show();
+        }
+    });
+    return ok ? state.name : null;
+}
+
+// Campo de texto + "..." que abre pickFont.
+export function fontField(obj, key, title) {
+    const input = el("input", { type: "text", class: "dbText", value: obj[key] ?? "" });
+    input.addEventListener("input", () => { obj[key] = input.value; changed(); });
+    const b = btn("...", async () => {
+        const r = await pickFont(obj[key], title);
+        if (r !== null && r !== obj[key]) { obj[key] = r; input.value = r; changed(); }
+    }, "small");
+    return el("div", { class: "dbInline" }, input, b);
+}

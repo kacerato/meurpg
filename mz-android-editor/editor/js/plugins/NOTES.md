@@ -25,9 +25,13 @@ Botão `btnPlugins`. CSS em `editor/css/plugins.css` (injetado por `index.js`).
 - O botão ON/OFF na coluna Status liga e desliga o plugin direto na lista.
 - Para reordenar, arraste pela alça `≡` (pointer events, toque e mouse, com rolagem automática)
   ou use ▲ Subir / ▼ Descer.
-- Botões: Adicionar, Editar, Excluir, Copiar, Colar, Subir, Descer, Atualizar (relê o arquivo:
-  descrição + parâmetros, mantendo os valores dos parâmetros que ainda existem), Ativar todos,
-  Desativar todos.
+- Botões: Adicionar, Editar, Excluir, Recortar, Copiar, Colar, Subir, Descer, Atualizar (relê o
+  arquivo: descrição + parâmetros, mantendo os valores dos parâmetros que ainda existem), Múltipla,
+  Ativar todos, Desativar todos.
+- Seleção múltipla: Shift + clique (intervalo, como no MZ) ou o botão Múltipla no toque.
+  Atualizar, Recortar, Copiar e Excluir valem para todos os selecionados.
+- Menu de contexto (clique direito; toque longo de 550 ms): Editar, Recortar, Copiar, Colar,
+  Excluir, Atualizar. Atalhos: Del, Ctrl+X/C/V, Enter.
 - Avisos (painel amarelo e ⚠ na linha):
   - arquivo inexistente;
   - plugin sem `@target MZ` (MV);
@@ -47,10 +51,18 @@ Botão `btnPlugins`. CSS em `editor/css/plugins.css` (injetado por `index.js`).
 - Escolher outro arquivo recarrega os padrões. Ao editar uma entrada, os valores gravados são
   mantidos, inclusive os de parâmetros que não existem mais, até usar "Atualizar".
 
-**Bloco de idioma**: usa `/*:en`, depois `/*:` sem sufixo, depois qualquer bloco, sempre
-preferindo os que têm `@target MZ`. Para structs vale o mesmo idioma do cabeçalho.
+**Bloco de idioma** (`parser.js` `preferredLangs`): idioma da interface primeiro (`/*:ja_JP`,
+`/*:ja`; em pt_BR, `/*:pt_BR`, `/*:pt`), depois `/*:` sem sufixo, depois `/*:en`, depois qualquer
+bloco, sempre preferindo os que têm `@target MZ`. Para structs vale o mesmo idioma do cabeçalho.
 
 **Editores por tipo** (todos gravam string):
+- Abas [Tipo]/[Texto] (Dialog_PluginParameter, `params.js` `typedDialog`): `number` (Número),
+  `boolean` (Booleano) e `select` (Opção) têm uma segunda aba Texto que aceita qualquer valor, como
+  `\V[n]`/`\S[n]` (usado por PluginCommonBase, ExtraWindow, ExtraImage). Um valor que não cabe no
+  tipo abre direto na aba Texto. Os seletores de arquivo/banco/cor/ícone mantêm o campo "Texto:".
+- "Insira Índice de Ícone" / "Insira Índice de Cor" (TextEditPopupMenuEx): botões abaixo dos
+  campos de texto (string, multiline, note, combo e aba Texto); inserem o número no cursor.
+- Listas (`tipo[]`): "Editar como texto" edita o JSON da lista inteira.
 - `string` (e tipos desconhecidos, como `text`): campo de uma linha.
 - `multiline_string`: área de texto.
 - `note`: área de texto; o valor é gravado como `JSON.stringify(texto)`, como no MZ.
@@ -63,11 +75,15 @@ preferindo os que têm `@target MZ`. Para structs vale o mesmo idioma do cabeça
   botões tocar/parar para áudio. Grava sem extensão, e com `sub/nome` quando está numa subpasta.
   "(Nenhum)" grava `""`.
 - Tipos de banco de dados: `actor`, `class`, `skill`, `item`, `weapon`, `armor`, `enemy`, `troop`,
-  `state`, `animation`, `tileset`, `common_event`. Lista `0001 Nome` lida de `data/*.json`;
+  `state`, `tileset`, `common_event`. Lista `0001 Nome` lida de `data/*.json`;
   "(Nenhum)" grava `"0"`.
 - `switch` / `variable`: nomes de `System.json`.
 - `color`: paleta 0–31 lida dos pixels de `img/system/Window.png`.
 - `icon`: grade de `IconSet.png`.
+- `animation`: lista com prévia Effekseer (Reproduzir/Parar), reaproveitando
+  `database/animpreview.js` (alvo = `System.battlerName`).
+- Coluna Valor (`displayValue`): `select` mostra o texto da `@option`, `boolean` o `@on`/`@off`,
+  banco/switch/variável "0001 Nome" (nomes lidos uma vez por abertura); o resto aparece cru.
 - `struct<Nome>`: sub-diálogo com a tabela dos campos de `~struct~Nome`; grava JSON (só os
   campos declarados, na ordem). Se o struct não estiver declarado, edita o JSON como texto.
 - `tipo[]`: editor de lista (Adicionar, Editar, Excluir, Subir, Descer); grava JSON de um array
@@ -103,13 +119,11 @@ Também ficam disponíveis em `api.plugins` depois do `register`: `open`, `list`
   especificação pública do MZ e o comportamento observado nos plugins oficiais.
 - Valores padrão de `@min` / `@max` sem anotação: sem limite.
 - `@type location` e `@type map` (versões > 1.1.1) são tratados como `string`.
-- "Inserir número de ícone" pelo menu de contexto dos campos de texto não foi feito. O tipo
-  `icon` tem seletor próprio.
-- Seleção múltipla para "Atualizar" vários plugins de uma vez (Shift no MZ) não foi feita:
-  atualiza o selecionado.
 - `@noteParam` / `@noteDir` / `@noteType` / `@noteData` / `@noteRequire` são ignorados. Servem
   à exclusão de arquivos não usados na distribuição, que não existe neste editor.
-- A coluna Valor mostra o valor gravado (texto cru). Os editores mostram a forma amigável.
+- "Insira Índice de Ícone/Cor" insere só o número (não `\I[n]`); confirmar no MZ de PC.
+- `\V[n]` dentro de struct não é convertido pelo PluginCommonBase (ele devolve structs crus):
+  comportamento do plugin, igual no MZ.
 
 ## Sugestões para a API (promover para api.js)
 
@@ -147,3 +161,8 @@ editado.
 
 Obs.: o MZ pausa o jogo quando a janela não tem foco (`SceneManager.isGameActive`). No pane
 oculto do navegador de teste foi preciso avançar os quadros à mão.
+
+Rodada 3 (2026-11-05, cópia do testproject com PluginCommonBase, ExtraWindow e ExtraImage):
+Atualizar em lote (Shift) preencheu os três; ExtraWindow → Window List → X = `\V[1]` pela aba
+Texto, "Abrir/Fechar" = `\S[1]`, texto com "Insira Índice de Ícone"; `plugins.js` gravado e o
+jogo chegou ao título com a janela extra criada, sem erro. Seletor de `@type animation` com prévia.

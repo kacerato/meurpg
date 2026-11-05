@@ -1,7 +1,9 @@
 // Parser das anotações de plugin do RPG Maker MZ.
 // Lê os blocos de comentário `/*: ... */` (cabeçalho do plugin) e `/*~struct~Nome: ... */`
-// (estruturas), escolhendo o bloco do idioma do editor (`:en`, depois sem sufixo, depois
-// qualquer um) e preferindo os blocos marcados com `@target MZ`.
+// (estruturas), escolhendo o bloco do idioma da interface (`:ja`, `:pt`…, depois sem sufixo,
+// depois `:en`, depois qualquer um) e preferindo os blocos marcados com `@target MZ`.
+
+import { currentLanguage } from "../i18n.js";
 
 const PLUGIN_TAGS = new Set(["plugindesc", "author", "help", "url", "target"]);
 const LIST_TAGS = new Set(["base", "orderAfter", "orderBefore"]);
@@ -154,7 +156,18 @@ function pickBlock(blocks, langs) {
 // Interpreta o arquivo inteiro de um plugin.
 // Devolve {name, found, isMZ, plugindesc, author, help, url, base, orderAfter, orderBefore,
 //          params, commands, structs: {Nome: [params]}}.
-export function parsePlugin(text, name = "", langs = ["en", ""]) {
+// Idiomas preferidos pelo idioma da interface, como no MZ: "/*:ja" no editor em japonês etc.;
+// o bloco padrão "/*:" (inglês por convenção) vem em seguida.
+export function preferredLangs(ui = currentLanguage()) {
+    const out = [];
+    if (ui && ui !== "en") {
+        out.push(ui, ui.split("_")[0]);
+    }
+    out.push("", "en");
+    return [...new Set(out)];
+}
+
+export function parsePlugin(text, name = "", langs = preferredLangs()) {
     const blocks = splitBlocks(text || "");
     const pluginBlocks = blocks.filter(b => b.kind === "plugin");
     const head = pickBlock(pluginBlocks, langs);

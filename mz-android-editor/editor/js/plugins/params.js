@@ -4,7 +4,7 @@
 
 import { typeInfo, defaultsOf, DATABASE_TYPES } from "./parser.js";
 import { el, promptDialog, touchList } from "./ui.js";
-import { pickDatabase, pickFile, pickColor, pickIcon } from "./pickers.js";
+import { pickDatabase, pickFile, pickColor, pickIcon, pickAnimation } from "./pickers.js";
 import { t } from "../i18n.js";
 
 const label = def => def.text || def.name;
@@ -17,9 +17,51 @@ function parseJson(v, fallback) {
     }
 }
 
-// Texto exibido na coluna Valor (o valor gravado, numa linha).
-export function displayValue(def, value) {
+// Nomes do banco/switches/variáveis para a coluna Valor (carregados uma vez por sessão do diálogo).
+const nameCache = new Map();
+function lookupName(api, kind, id, onLoaded) {
+    if (!api || !api.project) {
+        return undefined;
+    }
+    let entry = nameCache.get(kind);
+    if (!entry) {
+        const file = kind === "switch" || kind === "variable" ? "data/System.json" : DATABASE_TYPES[kind];
+        entry = { names: null, waiting: new Set() };
+        nameCache.set(kind, entry);
+        api.project.readJson(file, { fresh: true }).then(data => {
+            entry.names = kind === "switch" ? data.switches || [] : kind === "variable" ? data.variables || []
+                : (data || []).map(d => (d ? d.name || "" : ""));
+        }).catch(() => { entry.names = []; }).finally(() => {
+            setTimeout(() => nameCache.delete(kind), 2000);
+            entry.waiting.forEach(fn => fn());
+            entry.waiting.clear();
+        });
+    }
+    if (!entry.names) {
+        if (onLoaded) { entry.waiting.add(onLoaded); }
+        return undefined;
+    }
+    return entry.names[id];
+}
+
+// Texto exibido na coluna Valor, numa linha. Como no MZ, select mostra o texto da @option,
+// boolean o @on/@off, e tipos do banco "0001 Nome"; o que não casar aparece cru (ex.: \V[5]).
+// lookup(kind, id) → nome (opcional; sem ele, ids aparecem como número).
+export function displayValue(def, value, lookup) {
     const v = value == null ? "" : String(value);
+    const ti = typeInfo(def.type);
+    if (ti.kind === "select") {
+        const o = (def.options || []).find(x => x.value === v);
+        if (o) { return o.text; }
+    } else if (ti.kind === "boolean") {
+        if (v === "true") { return def.on || t("ON", "Constants"); }
+        if (v === "false") { return def.off || t("OFF", "Constants"); }
+    } else if ((DATABASE_TYPES[ti.kind] || ti.kind === "switch" || ti.kind === "variable") && /^\d+$/.test(v)) {
+        const id = Number(v);
+        if (id === 0) { return "(" + t("None", "Constants") + ")"; }
+        const name = lookup ? lookup(ti.kind, id) : undefined;
+        return name === undefined ? v : `${String(id).padStart(4, "0")} ${name}`;
+    }
     return v.replace(/\r?\n/g, " ↵ ");
 }
 
@@ -66,6 +108,10 @@ export class ParamTable {
         this.collapsed = new Set();
         this.selected = null;
         this.root = el("div", { class: "pgTable" });
+        let pending = false;
+        this.lookup = (kind, id) => lookupName(api, kind, id, () => {
+            if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; this.render(); }); }
+        });
         this.render();
     }
 
@@ -98,7 +144,7 @@ export class ParamTable {
                 const row = el("div", { class: "pgTRow" + (this.selected === def.name ? " selected" : "") },
                     el("span", { class: "pgCName", style: { paddingLeft: 4 + depth * 18 + "px" } }, tog,
                         el("span", { text: label(def) })),
-                    el("span", { class: "pgCValue", text: displayValue(def, this.values[def.name]) }));
+                    el("span", { class: "pgCValue", text: displayValue(def, this.values[def.name], this.lookup) }));
                 if (has) {
                     tog.addEventListener("click", ev => {
                         ev.stopPropagation();
@@ -171,6 +217,31 @@ export function editParamSet(api, { title, defs, values, structs, desc }) {
 
 // --- Editores ---------------------------------------------------------------------------
 
+// Campo de texto com as ações do menu de contexto do MZ (TextEditPopupMenuEx): Insira Índice de
+// Ícone / de Cor. No toque, viram botões abaixo do campo. Inserem o número no cursor.
+function insertTools(api, input) {
+    const insert = s => {
+        const a = input.selectionStart ?? input.value.length, b = input.selectionEnd ?? a;
+        input.value = input.value.slice(0, a) + s + input.value.slice(b);
+        input.focus();
+        input.setSelectionRange(a + s.length, a + s.length);
+        input.dispatchEvent(new Event("input"));
+    };
+    const iconLabel = t("Insert Icon Index", "TextEditPopupMenuEx");
+    const colorLabel = t("Insert Color Index", "TextEditPopupMenuEx");
+    return el("div", { class: "pgBar pgInsertBar" },
+        el("button", { class: "pgBtn", text: iconLabel + "...", onclick: async () => { const n = await pickIcon(api, null, "0", iconLabel); if (n != null) { insert(n); } } }),
+        el("button", { class: "pgBtn", text: colorLabel + "...", onclick: async () => { const n = await pickColor(api, null, "0", colorLabel); if (n != null) { insert(n); } } }));
+}
+
+function textInput(value, multiline) {
+    const input = multiline
+        ? el("textarea", { class: "pgTextarea", spellcheck: "false" })
+        : el("input", { type: "text", class: "pgInput" });
+    input.value = value;
+    return input;
+}
+
 function textEditor(api, def, value, title, multiline) {
     let input;
     return promptDialog(api, {
@@ -180,14 +251,51 @@ function textEditor(api, def, value, title, multiline) {
             if (def.desc) {
                 body.appendChild(el("div", { class: "pgDesc", text: def.desc }));
             }
-            input = multiline
-                ? el("textarea", { class: "pgTextarea", spellcheck: "false" })
-                : el("input", { type: "text", class: "pgInput" });
-            input.value = value;
-            body.appendChild(input);
+            input = textInput(value, multiline);
+            body.append(input, insertTools(api, input));
             setTimeout(() => input.focus(), 0);
         },
         onOk: () => input.value
+    });
+}
+
+// Dialog_PluginParameter: editor do tipo numa aba ([Número], [Booleano], [Opção]…) e a aba
+// [Texto], que aceita qualquer texto (ex.: \V[n], usado por PluginCommonBase e companhia).
+// o.build(page, accept, value) monta a aba do tipo e devolve () => valor atual.
+// o.fits(value): o valor cabe no editor do tipo? Se não, abre direto na aba Texto.
+function typedDialog(api, def, value, title, o) {
+    let mode = -1, cur = value, getTyped = null, text = null;
+    return promptDialog(api, {
+        title, width: o.width || "640px", height: o.height || "auto",
+        build(body, ctx) {
+            body.classList.add("pgCol");
+            if (def.desc) {
+                body.appendChild(el("div", { class: "pgDesc", text: def.desc }));
+            }
+            const bar = el("div", { class: "pgTabs" });
+            const page = el("div", { class: "pgCol pgTabPage" });
+            const show = m => {
+                if (m === mode) {
+                    return;
+                }
+                if (mode === 0) { cur = getTyped(); } else if (mode === 1) { cur = text.value; }
+                mode = m;
+                [...bar.children].forEach((b, i) => b.classList.toggle("on", i === m));
+                page.textContent = "";
+                if (m === 0) {
+                    getTyped = o.build(page, v => ctx.accept(v), cur);
+                } else {
+                    text = textInput(cur, false);
+                    page.append(text, insertTools(api, text));
+                    setTimeout(() => text.focus(), 0);
+                }
+            };
+            [o.label, t("Text", "Dialog_PluginParameter")].forEach((name, i) =>
+                bar.appendChild(el("button", { class: "pgTab", text: name, onclick: () => show(i) })));
+            body.append(bar, page);
+            show(o.fits(value) ? 0 : 1);
+        },
+        onOk: () => (mode === 0 ? getTyped() : text.value)
     });
 }
 
@@ -203,18 +311,14 @@ function numberEditor(api, def, value, title) {
         n = Math.min(max, Math.max(min, n));
         return dec > 0 ? n.toFixed(dec) : String(Math.round(n));
     };
-    let input;
-    return promptDialog(api, {
-        title, width: "560px", height: "auto",
-        build(body) {
-            body.classList.add("pgCol");
-            if (def.desc) {
-                body.appendChild(el("div", { class: "pgDesc", text: def.desc }));
-            }
-            input = el("input", { type: "number", class: "pgInput pgNumber", step: dec ? String(Math.pow(10, -dec)) : "1" });
+    return typedDialog(api, def, value, title, {
+        label: t("Number", "Dialog_PluginParameter"),
+        fits: v => String(v).trim() === "" || isFinite(Number(String(v).trim())),
+        build(page, accept, v) {
+            const input = el("input", { type: "number", class: "pgInput pgNumber", step: dec ? String(Math.pow(10, -dec)) : "1" });
             if (isFinite(min)) { input.min = String(min); }
             if (isFinite(max)) { input.max = String(max); }
-            input.value = value === "" ? "" : value;
+            input.value = String(v).trim() !== "" && isFinite(Number(v)) ? v : "";
             const step = d => {
                 const n = Number(input.value) || 0;
                 input.value = norm(n + d * Math.pow(10, -dec));
@@ -223,67 +327,61 @@ function numberEditor(api, def, value, title) {
             const plus = el("button", { class: "pgBtn pgSpin", text: "+", onclick: () => step(1) });
             const range = [isFinite(min) ? t("min. %1", null, min) : "", isFinite(max) ? t("max. %1", null, max) : "",
                 dec ? t("%1 decimal places", null, dec) : ""].filter(Boolean).join(" · ");
-            body.append(el("div", { class: "pgSpinRow" }, minus, input, plus),
+            page.append(el("div", { class: "pgSpinRow" }, minus, input, plus),
                 range ? el("div", { class: "pgHint", text: range }) : "");
             setTimeout(() => input.focus(), 0);
-        },
-        onOk: () => norm(input.value)
+            return () => norm(input.value);
+        }
     });
 }
 
 function choiceEditor(api, def, value, title, choices) {
-    let current = value;
-    return promptDialog(api, {
-        title, width: "640px", height: choices.length > 6 ? "560px" : "auto",
-        build(body, ctx) {
-            body.classList.add("pgCol");
-            if (def.desc) {
-                body.appendChild(el("div", { class: "pgDesc", text: def.desc }));
-            }
-            let sel = choices.findIndex(c => c.value === value);
+    return typedDialog(api, def, value, title, {
+        label: t("Option", "Dialog_PluginParameter"), width: "640px", height: choices.length > 5 ? "560px" : "auto",
+        fits: v => v === "" || choices.some(c => c.value === v),
+        build(page, accept, v) {
+            let current = v;
+            let sel = choices.findIndex(c => c.value === v);
             const items = choices.slice();
-            if (sel < 0 && value !== "") {
-                items.push({ label: value, value, className: "pgUnknown" });
+            if (sel < 0 && v !== "") {
+                items.push({ label: v, value: v, className: "pgUnknown" });
                 sel = items.length - 1;
             }
             const list = touchList({
                 items, selected: sel,
                 onSelect: it => { current = it.value; },
-                onActivate: it => ctx.accept(it.value)
+                onActivate: it => accept(it.value)
             });
-            body.appendChild(list.root);
+            page.appendChild(list.root);
             requestAnimationFrame(() => list.select(sel, true));
-        },
-        onOk: () => current
+            return () => current;
+        }
     });
 }
 
 function booleanEditor(api, def, value, title) {
-    let current = value === "true" ? "true" : value === "false" ? "false" : value;
-    return promptDialog(api, {
-        title, width: "560px", height: "auto",
-        build(body, ctx) {
-            body.classList.add("pgCol");
-            if (def.desc) {
-                body.appendChild(el("div", { class: "pgDesc", text: def.desc }));
-            }
-            const mk = (v, text) => {
-                const b = el("button", { class: "pgRadio" + (current === v ? " on" : ""), text });
+    return typedDialog(api, def, value, title, {
+        label: t("Boolean", "Dialog_PluginParameter"),
+        fits: v => v === "true" || v === "false" || v === "",
+        build(page, accept, v) {
+            let current = v === "false" ? "false" : "true";
+            const mk = (val, text) => {
+                const b = el("button", { class: "pgRadio" + (current === val ? " on" : ""), text });
                 b.addEventListener("click", () => {
-                    if (current === v) {
-                        ctx.accept(v);
+                    if (current === val) {
+                        accept(val);
                         return;
                     }
-                    current = v;
+                    current = val;
                     row.querySelectorAll(".pgRadio").forEach(x => x.classList.remove("on"));
                     b.classList.add("on");
                 });
                 return b;
             };
             const row = el("div", { class: "pgRadioRow" }, mk("true", def.on || t("ON", "Constants")), mk("false", def.off || t("OFF", "Constants")));
-            body.appendChild(row);
-        },
-        onOk: () => current
+            page.appendChild(row);
+            return () => current;
+        }
     });
 }
 
@@ -297,13 +395,14 @@ function comboEditor(api, def, value, title) {
                 body.appendChild(el("div", { class: "pgDesc", text: def.desc }));
             }
             input = el("input", { type: "text", class: "pgInput", value });
+            const tools = insertTools(api, input);
             const items = def.options.map(o => ({ label: o.text, value: o.text }));
             const list = touchList({
                 items, selected: items.findIndex(i => i.value === value),
                 onSelect: it => { input.value = it.value; },
                 onActivate: it => ctx.accept(it.value)
             });
-            body.append(input, list.root);
+            body.append(input, tools, list.root);
         },
         onOk: () => input.value
     });
@@ -367,7 +466,8 @@ async function arrayEditor(api, def, value, title, ctx, elementType) {
     const elemDef = { ...def, type: elementType, default: "" };
     let list;
     const refresh = (sel = list.selected) => {
-        list.setItems(items.map((v, i) => ({ label: displayValue(elemDef, v) || " ", sub: String(i + 1), value: v })), sel);
+        const lk = (k, id) => lookupName(api, k, id, () => refresh());
+        list.setItems(items.map((v, i) => ({ label: displayValue(elemDef, v, lk) || " ", sub: String(i + 1), value: v })), sel);
     };
     const editAt = async i => {
         const v = await editValue(api, elemDef, items[i], ctx, `${label(def)} [${i + 1}]`);
@@ -415,6 +515,17 @@ async function arrayEditor(api, def, value, title, ctx, elementType) {
                 }),
                 el("button", { class: "pgBtn", text: "▲ " + t("Up", "Constants"), onclick: () => move(-1) }),
                 el("button", { class: "pgBtn", text: "▼ " + t("Down", "Constants"), onclick: () => move(1) }),
+                // ParameterEditorList "Editar como texto": a lista inteira como JSON
+                el("button", {
+                    class: "pgBtn", text: t("Edit as Text", "ParameterEditorList"), onclick: async () => {
+                        const r = await textEditor(api, def, JSON.stringify(items), t("Edit as Text", "ParameterEditorList"), true);
+                        const arr = r == null ? null : parseJson(r, null);
+                        if (Array.isArray(arr)) {
+                            items.splice(0, items.length, ...arr.map(x => (typeof x === "string" ? x : JSON.stringify(x))));
+                            refresh(-1);
+                        }
+                    }
+                }),
                 el("span", { class: "spacer" }),
                 el("span", { class: "pgHint", text: elementType }));
             body.append(bar, list.root);
@@ -445,6 +556,7 @@ export async function editValue(api, def, value, ctx = {}, title) {
         case "file": return pickFile(api, def, v, ttl);
         case "color": return pickColor(api, def, v, ttl);
         case "icon": return pickIcon(api, def, v, ttl);
+        case "animation": return pickAnimation(api, def, v, ttl);
         case "switch":
         case "variable":
             return pickDatabase(api, { ...def, kind: ti.kind }, v, ttl);

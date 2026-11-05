@@ -1,7 +1,7 @@
 // Abas System 1, System 2, Types e Terms (todas editam data/System.json).
 import { el, num, text, sel, chk, fld, grp, grid, btn, tableList, modal, changed, pad, askNumber, confirmBox, radios } from "./ui.js";
 import { idOptions, nameOf, typeOptions, PARAMS } from "./common.js";
-import { pickSheet, pickColor, audioField, charThumb, imageButton } from "./pickers.js";
+import { pickSheet, pickColor, audioField, charThumb, imageButton, fontField, loadImage } from "./pickers.js";
 import { imageBox } from "./tabs_actors.js";
 import { MapView } from "../mapview.js";
 import { t } from "../i18n.js";
@@ -53,11 +53,22 @@ async function pickPosition(api, pos, allowNone) {
         view._applyView();
         updateMarker();
     };
+    // Apagar (Del no MZ): veículo fica sem posição inicial. O jogador sempre precisa de uma.
+    let listRef = null;
+    const erase = () => {
+        state.mapId = 0; state.x = 0; state.y = 0;
+        if (listRef) { listRef.querySelectorAll(".sel").forEach(x => x.classList.remove("sel")); const f = listRef.firstChild; if (f) { f.classList.add("sel"); } }
+        updateMarker();
+        return false;
+    };
+    const onDel = e => { if (e.key === "Delete" && allowNone) { erase(); } };
+    window.addEventListener("keydown", onDel);
     const ok = await modal({
         title: t("Location", "Dialog_Location"), width: "1000px", height: "580px",
+        extraButtons: allowNone ? [{ label: t("Delete", "BasicConstants"), onClick: erase }] : [],
         build: (b, dlg) => {
             b.classList.add("dbPickBody");
-            const list = el("div", { class: "dbPickList" });
+            const list = listRef = el("div", { class: "dbPickList" });
             const items = [...(allowNone ? [[0, "(" + t("None", "Constants") + ")"]] : []), ...infos.filter(Boolean).sort((a, b2) => a.order - b2.order).map(i => [i.id, `${pad(i.id, 3)}:${i.name}`])];
             for (const [id, label] of items) {
                 const r = el("div", { class: "dbPickItem" + (id === state.mapId ? " sel" : ""), text: label });
@@ -75,16 +86,34 @@ async function pickPosition(api, pos, allowNone) {
             requestAnimationFrame(() => {
                 view = new MapView(canvas, vp);
                 marker = new PIXI.Graphics();
-                let down = null;
-                vp.addEventListener("pointerdown", e => { down = { x: e.clientX, y: e.clientY }; });
-                vp.addEventListener("pointerup", e => {
-                    if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 8 || !view.mapData) { return; }
+                let down = null, drag = false;
+                const tileAt = e => {
                     const r = vp.getBoundingClientRect();
                     const z = view.zoom;
                     const x = Math.floor((e.clientX - r.left - view.world.position.x + view.scrollX) / (48 * z));
                     const y = Math.floor((e.clientY - r.top - view.world.position.y + view.scrollY) / (48 * z));
-                    if (x >= 0 && y >= 0 && x < view.mapData.width && y < view.mapData.height) { state.x = x; state.y = y; updateMarker(); }
-                });
+                    return x >= 0 && y >= 0 && view.mapData && x < view.mapData.width && y < view.mapData.height ? { x, y } : null;
+                };
+                // Como no MZ, o marcador pode ser arrastado; tocar em outro tile também o move.
+                // Arrastar fora do marcador continua rolando o mapa (MapView).
+                vp.addEventListener("pointerdown", e => {
+                    down = { x: e.clientX, y: e.clientY };
+                    const p = view && view.mapData && state.mapId ? tileAt(e) : null;
+                    drag = !!(p && p.x === state.x && p.y === state.y);
+                    if (drag) { e.stopPropagation(); vp.setPointerCapture(e.pointerId); }
+                }, true);
+                vp.addEventListener("pointermove", e => {
+                    if (!drag) { return; }
+                    e.stopPropagation();
+                    const p = tileAt(e);
+                    if (p && (p.x !== state.x || p.y !== state.y)) { state.x = p.x; state.y = p.y; updateMarker(); }
+                }, true);
+                vp.addEventListener("pointerup", e => {
+                    if (drag) { drag = false; e.stopPropagation(); return; }
+                    if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 8 || !view.mapData) { return; }
+                    const p = tileAt(e);
+                    if (p) { state.x = p.x; state.y = p.y; updateMarker(); }
+                }, true);
                 loadMap();
                 const s = list.querySelector(".sel");
                 if (s) { s.scrollIntoView({ block: "center" }); }
@@ -98,7 +127,38 @@ async function pickPosition(api, pos, allowNone) {
             cleanup.observe(document.body, { childList: true });
         }
     });
+    window.removeEventListener("keydown", onDel);
     return ok ? state : null;
+}
+
+// Amostra de janela como o runtime (Window._refreshBack/_refreshFrame): fundo = Window.png (0,0,96,96)
+// esticado, opacidade 192, com o tom somado (Bitmap.adjustTone/ColorFilter); moldura 9-fatias de (96,0,96,96).
+export function windowSample(tone, w, h) {
+    const cv = el("canvas", { class: "dbWinSample" });
+    cv.width = w; cv.height = h;
+    loadImage("system", "Window").then(img => {
+        if (!img) { return; }
+        const g = cv.getContext("2d");
+        const back = document.createElement("canvas");
+        back.width = w - 4; back.height = h - 4;
+        const bg = back.getContext("2d");
+        bg.drawImage(img, 0, 0, 96, 96, 0, 0, back.width, back.height);
+        const d = bg.getImageData(0, 0, back.width, back.height);
+        for (let i = 0; i < d.data.length; i += 4) {
+            for (let k = 0; k < 3; k++) { d.data[i + k] = Math.max(0, Math.min(255, d.data[i + k] + (tone[k] || 0))); }
+        }
+        bg.putImageData(d, 0, 0);
+        g.globalAlpha = 192 / 255;
+        g.drawImage(back, 2, 2);
+        g.globalAlpha = 1;
+        const m = 24, sx = 96, s = 96;
+        const part = (x, y, pw, ph, dx, dy, dw, dh) => g.drawImage(img, sx + x, y, pw, ph, dx, dy, dw, dh);
+        part(0, 0, m, m, 0, 0, m, m); part(s - m, 0, m, m, w - m, 0, m, m);
+        part(0, s - m, m, m, 0, h - m, m, m); part(s - m, s - m, m, m, w - m, h - m, m, m);
+        part(m, 0, s - 2 * m, m, m, 0, w - 2 * m, m); part(m, s - m, s - 2 * m, m, m, h - m, w - 2 * m, m);
+        part(0, m, m, s - 2 * m, 0, m, m, h - 2 * m); part(s - m, m, m, s - 2 * m, w - m, m, m, h - 2 * m);
+    });
+    return cv;
 }
 
 const VEHICLES = [["boat", t("Boat", "Constants")], ["ship", t("Ship", "Constants")], ["airship", t("Airship", "Constants")]];
@@ -132,12 +192,10 @@ export const system1Tab = {
         const toneBtn = btn("", async () => {
             const v = await pickColor(sys.windowTone.slice(0, 3), "tone", t("Window Color", "Dialog_WindowColor"), 3);
             if (v) { sys.windowTone = [v[0], v[1], v[2], sys.windowTone[3] || 0]; changed(); paintTone(); }
-        }, "dbPickBtn");
+        }, "dbPickBtn dbToneBtn");
         const paintTone = () => {
-            const c = [0x40, 0x60, 0x80].map((b, i) => Math.max(0, Math.min(255, b + sys.windowTone[i])));
-            toneBtn.textContent = sys.windowTone.slice(0, 3).join(", ");
-            toneBtn.style.background = `rgb(${c.join(",")})`;
-            toneBtn.style.color = "#fff";
+            toneBtn.innerHTML = "";
+            toneBtn.append(windowSample(sys.windowTone, 150, 44), el("span", { text: sys.windowTone.slice(0, 3).join(", ") }));
         };
         paintTone();
         left.appendChild(grp(t("Window Color", "Edit_X_System1"), toneBtn));
@@ -238,8 +296,8 @@ export const system2Tab = {
             fld(t("UI Area Width", "Group_SystemAdvanced") + ":", num(adv, "uiAreaWidth", { min: 640, max: 4000 })),
             fld(t("UI Area Height", "Group_SystemAdvanced") + ":", num(adv, "uiAreaHeight", { min: 360, max: 4000 })),
             fld(t("Font Size", "Group_SystemAdvanced") + ":", num(adv, "fontSize", { min: 12, max: 128 })),
-            fld(t("Main Font Filename", "Group_SystemAdvanced") + ":", text(adv, "mainFontFilename")),
-            fld(t("Number Font Filename", "Group_SystemAdvanced") + ":", text(adv, "numberFontFilename")),
+            fld(t("Main Font Filename", "Group_SystemAdvanced") + ":", fontField(adv, "mainFontFilename", t("Main Font Filename", "Group_SystemAdvanced"))),
+            fld(t("Number Font Filename", "Group_SystemAdvanced") + ":", fontField(adv, "numberFontFilename", t("Number Font Filename", "Group_SystemAdvanced"))),
             fld(t("Fallback Fonts", "Group_SystemAdvanced") + ":", text(adv, "fallbackFonts"), { span: 2 })
         ];
         if ("windowOpacity" in adv) { advFields.push(fld(t("Window Opacity", "MZEditor") + ":", num(adv, "windowOpacity", { min: 0, max: 255 }))); }

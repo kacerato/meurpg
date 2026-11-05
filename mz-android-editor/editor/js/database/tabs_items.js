@@ -1,5 +1,5 @@
 // Abas Skills, Items, Weapons, Armors.
-import { el, num, text, area, sel, fld, grp, grid, btn, changed } from "./ui.js";
+import { el, num, text, area, sel, fld, grp, grid, btn, changed, modal, radios } from "./ui.js";
 import { PARAMS, OCCASIONS, HIT_TYPES, DAMAGE_TYPES, ITEM_TYPES, idOptions, typeOptions, decodeScope, encodeScope } from "./common.js";
 import { traitsList, effectsList } from "./traits.js";
 import { pickIcon, iconCanvas } from "./pickers.js";
@@ -56,17 +56,66 @@ function invocationGroup(db, o, isSkill) {
         fld(t("Animation", "Constants") + ":", sel(o, "animationId", animationOptions(db, true), { number: true }))));
 }
 
+// Fórmula: o runtime faz eval(formula) com item, a, b, v e sign no escopo (Game_Action.evalDamageFormula).
+// Aqui só se confere a sintaxe; erros de execução (a.xyz) aparecem no jogo, como no MZ.
+export function formulaError(f) {
+    try { new Function("item", "a", "b", "v", "sign", "return (" + String(f || "0") + "\n);"); return ""; }
+    catch (e) { return e.message; }
+}
+const FORMULA_REFS = () => [["atk", PARAMS[2]], ["def", PARAMS[3]], ["mat", PARAMS[4]], ["mdf", PARAMS[5]], ["agi", PARAMS[6]],
+    ["luk", PARAMS[7]], ["mhp", PARAMS[0]], ["mmp", PARAMS[1]], ["hp", t("HP", "Constants")], ["mp", t("MP", "Constants")],
+    ["tp", t("TP", "Constants")], ["level", t("Level", "Constants")]];
+
+function formulaField(d) {
+    const formula = text(d, "formula", { onInput: () => check() });
+    formula.classList.add("mono");
+    formula.title = t("Formula for calculating basic damage. The attacker is expressed with [a], the target with [b]. Both are followed by a dot[.] to enable referancing of the statuses shown below. For example, [a.atk] is referancing the [Attack Power] parameter of the user.", "Group_Damage");
+    const warn = el("div", { class: "dbFormulaErr" });
+    const check = () => {
+        const err = formulaError(d.formula);
+        warn.textContent = err ? t("Syntax error: %1", "MZEditor", err) : "";
+        formula.classList.toggle("bad", !!err);
+    };
+    const insert = s => {
+        const a = formula.selectionStart ?? formula.value.length, b = formula.selectionEnd ?? a;
+        formula.value = formula.value.slice(0, a) + s + formula.value.slice(b);
+        formula.focus();
+        formula.setSelectionRange(a + s.length, a + s.length);
+        formula.dispatchEvent(new Event("input"));
+    };
+    const help = btn("?", async () => {
+        const who = { v: "a" };
+        await modal({
+            title: t("Formula", "Group_Damage"), width: "620px", cancelLabel: null,
+            build: b => {
+                b.appendChild(el("div", { class: "dbMsg", text: formula.title }));
+                b.appendChild(radios(who, "v", [["a", "a"], ["b", "b"]]));
+                const g = el("div", { class: "dbFormulaRefs" });
+                for (const [k, label] of FORMULA_REFS()) {
+                    g.appendChild(btn(`x.${k}  ${label}`, () => insert(`${who.v}.${k}`), "small"));
+                }
+                g.appendChild(btn(`v[n]  ${t("Variable", "Constants")}`, () => insert("v[1]"), "small"));
+                b.appendChild(g);
+            }
+        });
+    }, "small");
+    check();
+    const wrap = el("div", { class: "dbFormula" }, el("div", { class: "dbInline" }, formula, help), warn);
+    wrap.controls = [formula, help];
+    return wrap;
+}
+
 function damageGroup(db, o) {
     const d = o.damage;
-    const formula = text(d, "formula");
-    formula.classList.add("mono");
+    const formulaBox = formulaField(d);
+    const formula = formulaBox.controls[0];
     const elements = [[-1, t("Normal Attack", "Group_Damage")], ...typeOptions(db.System.elements, t("None", "Constants"))];
     const off = () => d.type === 0;
     const controls = [];
     const g = grp(t("Damage", "Group_Damage"), grid(2,
         fld(t("Type", "Constants") + ":", sel(d, "type", DAMAGE_TYPES, { number: true, onChange: () => controls.forEach(c => { c.disabled = off(); }) })),
         fld(t("Element", "Group_Damage") + ":", controls[controls.push(sel(d, "elementId", elements, { number: true })) - 1]),
-        fld(t("Formula", "Group_Damage") + ":", controls[controls.push(formula) - 1], { span: 2 }),
+        fld(t("Formula", "Group_Damage") + ":", (controls.push(formula, formulaBox.controls[1]), formulaBox), { span: 2 }),
         fld(t("Variance", "Group_Damage") + ":", [controls[controls.push(num(d, "variance", { min: 0, max: 100 })) - 1], "%"]),
         fld(t("Critical Hits", "Group_Damage") + ":", controls[controls.push(sel(d, "critical", [[true, t("Yes", "BasicConstants")], [false, t("No", "BasicConstants")]])) - 1])));
     controls.forEach(c => { c.disabled = off(); });
@@ -91,7 +140,7 @@ export const skillsTab = {
             fld(t("Description", "Constants") + ":", area(s, "description", { rows: 2 }), { span: 2 }),
             fld(t("Skill Type", "Edit_Skills") + ":", sel(s, "stypeId", typeOptions(sys.skillTypes, t("None", "Constants")), { number: true })),
             el("div", { class: "dbInline2" },
-                fld(t("MP Cost", "Edit_Skills") + ":", num(s, "mpCost", { min: 0, max: 9999 })),
+                fld(t("MP Cost", "Edit_Skills") + ":", num(s, "mpCost", { min: 0, max: 999 })),
                 fld(t("TP Cost", "Edit_Skills") + ":", num(s, "tpCost", { min: 0, max: 100 }))),
             fld(t("Scope", "Constants") + ":", scopeField(s), { span: 2 }),
             fld(t("Occasion", "Edit_Skills") + ":", sel(s, "occasion", OCCASIONS, { number: true })))));

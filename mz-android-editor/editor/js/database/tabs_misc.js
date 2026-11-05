@@ -87,7 +87,7 @@ export const animationsTab = {
             const ok = await changeBattleback(db);
             if (ok) { ctx.touch("System"); }
             return ok;
-        })));
+        }, () => ctx.touch("System"))));
         right.appendChild(grp(t("Sound", "Group_AnimationSound"), tableList({
             columns: [{ title: t("Frame", "Group_AnimationSound"), width: "70px" }, { title: t("Filename", "Group_AnimationSound"), width: "1fr" }],
             items: a.soundTimings,
@@ -237,7 +237,6 @@ function tilePalette(ts) {
     const scroll = el("div", { class: "dbTileScroll" }, cv);
     const tabBar = el("div", { class: "dbTabs small" });
     const modeBar = el("div", { class: "dbTileModes" });
-    const rev = { v: false };
     let cells = [];
     const imgs = [];
 
@@ -304,15 +303,16 @@ function tilePalette(ts) {
         }
         recomputeVehicleBits(ts);
     };
-    // calcula a transformação a partir da célula tocada; o arrasto aplica o mesmo resultado
-    const transformFor = (cell, px, py) => {
+    // calcula a transformação a partir da célula tocada; o arrasto aplica o mesmo resultado.
+    // reverse = botão direito do MZ (toque longo aqui): inverte o ciclo de passagem/terreno.
+    const transformFor = (cell, px, py, reverse) => {
         const f = ts.flags[cell.ids[0]] || 0;
         const isA = ui.tab === 0;
         switch (ui.mode) {
             case "passage": {
                 const cur = f & 0x10 ? 2 : (f & 0x0f) === 0x0f ? 1 : 0;
                 const n = isA ? 2 : 3;
-                const next = (cur + (rev.v ? n - 1 : 1)) % n;
+                const next = (cur + (reverse ? n - 1 : 1)) % n;
                 return v => next === 0 ? v & ~0x1f : next === 1 ? (v & ~0x10) | 0x0f : (v & ~0x0f) | 0x10;
             }
             case "passage4": {
@@ -322,7 +322,7 @@ function tilePalette(ts) {
                 return v => set ? v | bit : v & ~bit;
             }
             case "terrain": {
-                const next = ((f >> 12) + (rev.v ? 7 : 1)) % 8;
+                const next = ((f >> 12) + (reverse ? 7 : 1)) % 8;
                 return v => (v & 0x0fff) | (next << 12);
             }
             default: {
@@ -338,29 +338,76 @@ function tilePalette(ts) {
         const i = Math.floor(y / T) * 8 + Math.floor(x / T);
         return { cell: cells[i], px: x % T, py: y % T, i };
     };
-    // Toque: um toque alterna (arrastar rola a lista). Mouse/caneta: arrastar pinta.
-    let paint = null, painted = null;
+    // Como no MZ: clicar muda o valor; arrastar com o botão pressionado aplica o mesmo valor às
+    // células por onde passa; botão direito inverte o ciclo. No toque: um dedo arrasta e pinta,
+    // toque longo (500 ms parado) = botão direito, dois dedos (ou a faixa à direita) rolam a lista.
+    const LONG_MS = 500;
+    let stroke = null;          // { id, cell, px, py, i, painted:Set, fn, timer }
+    let pan = null;             // rolagem com dois dedos
+    const touches = new Map();
+    const applyCell = (s, cell, i) => {
+        if (!cell || s.painted.has(i)) { return; }
+        s.painted.add(i);
+        setFlags(cell, s.fn);
+    };
+    const begin = (s, reverse) => {
+        s.fn = transformFor(s.cell, s.px, s.py, reverse);
+        applyCell(s, s.cell, s.i);
+        changed(); drawMarks();
+    };
+    const cancelStroke = () => { if (stroke) { clearTimeout(stroke.timer); stroke = null; } };
+    cv.addEventListener("contextmenu", e => e.preventDefault());
     cv.addEventListener("pointerdown", e => {
-        if (e.pointerType === "touch") { return; }
+        if (e.pointerType === "touch") {
+            touches.set(e.pointerId, e.clientY);
+            if (touches.size >= 2) {
+                // segundo dedo: desfaz nada (o 1º toque ainda não pintou se não arrastou) e passa a rolar
+                if (stroke && !stroke.fn) { cancelStroke(); }
+                stroke = null;
+                pan = { y: [...touches.values()].reduce((a, b) => a + b, 0) / touches.size, top: scroll.scrollTop };
+                return;
+            }
+        }
         const { cell, px, py, i } = cellAt(e);
         if (!cell) { return; }
-        paint = transformFor(cell, px, py);
-        painted = new Set([i]);
-        setFlags(cell, paint); changed(); drawMarks();
-        cv.setPointerCapture(e.pointerId);
+        e.preventDefault();
+        try { cv.setPointerCapture(e.pointerId); } catch (err) { /* ponteiro já liberado */ }
+        stroke = { id: e.pointerId, cell, px, py, i, painted: new Set(), fn: null, timer: 0 };
+        if (e.pointerType === "touch") {
+            const s = stroke;
+            s.timer = setTimeout(() => { if (stroke === s && !s.fn) { begin(s, true); if (navigator.vibrate) { navigator.vibrate(15); } } }, LONG_MS);
+        } else {
+            begin(stroke, e.button === 2);
+        }
     });
     cv.addEventListener("pointermove", e => {
-        if (!paint || ui.mode === "passage4") { return; }
+        if (e.pointerType === "touch" && touches.has(e.pointerId)) { touches.set(e.pointerId, e.clientY); }
+        if (pan) {
+            const y = [...touches.values()].reduce((a, b) => a + b, 0) / Math.max(1, touches.size);
+            scroll.scrollTop = pan.top - (y - pan.y);
+            return;
+        }
+        if (!stroke || stroke.id !== e.pointerId) { return; }
         const { cell, i } = cellAt(e);
-        if (cell && !painted.has(i)) { painted.add(i); setFlags(cell, paint); drawMarks(); }
+        if (!stroke.fn) {
+            if (i === stroke.i) { return; }       // ainda na célula inicial: pode virar toque longo
+            clearTimeout(stroke.timer);
+            begin(stroke, false);
+        }
+        if (ui.mode === "passage4") { return; }   // 4 direções: só a célula tocada (o lado depende do ponto)
+        applyCell(stroke, cell, i);
+        drawMarks();
     });
-    cv.addEventListener("pointerup", () => { paint = null; });
-    cv.addEventListener("click", e => {
-        if (e.pointerType !== "touch" && !(e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents)) { return; }
-        const { cell, px, py } = cellAt(e);
-        if (!cell) { return; }
-        setFlags(cell, transformFor(cell, px, py)); changed(); drawMarks();
-    });
+    const end = e => {
+        touches.delete(e.pointerId);
+        if (pan) { if (!touches.size) { pan = null; } return; }
+        if (!stroke || stroke.id !== e.pointerId) { return; }
+        clearTimeout(stroke.timer);
+        if (!stroke.fn && e.type === "pointerup") { begin(stroke, false); }   // toque curto
+        stroke = null;
+    };
+    cv.addEventListener("pointerup", end);
+    cv.addEventListener("pointercancel", end);
 
     ["A", "B", "C", "D", "E"].forEach((L, i) => {
         const b = btn(L, () => { ui.tab = i; [...tabBar.children].forEach((x, j) => x.classList.toggle("on", j === i)); draw(); scroll.scrollTop = 0; });
@@ -373,7 +420,6 @@ function tilePalette(ts) {
         if (id === ui.mode) { b.classList.add("on"); }
         modeBar.appendChild(b);
     }
-    modeBar.appendChild(chk(rev, "v", t("Reverse", "MZEditor")));
     wrap.append(el("div", { class: "dbTileMain" }, el("div", { class: "dbTileLeft" }, scroll, tabBar), modeBar));
     wrap.redraw = draw;
     draw();

@@ -4,6 +4,7 @@ import { PARAMS, idOptions, nameOf, expForLevel, generateCurve, quickCurve, PARA
 import { traitsList } from "./traits.js";
 import { openPluginHelp } from "./pluginhelp.js";
 import { pickSheet, pickImage, faceThumb, charThumb, svThumb } from "./pickers.js";
+import { traitsOf, equipSlots, slotCandidates } from "./equip.js";
 import { t } from "../i18n.js";
 
 export function cols(host) {
@@ -29,43 +30,33 @@ export function imageBox(label, makeThumb, onPick) {
 
 // ------------------------------------------------------------------ Actors
 
-function hasDualWield(...owners) {
-    return owners.some(o => o && (o.traits || []).some(tr => tr.code === 55 && tr.dataId === 1));
-}
-function allowed(owners, code) {
-    const s = new Set();
-    for (const o of owners) { for (const tr of (o && o.traits) || []) { if (tr.code === code) { s.add(tr.dataId); } } }
-    return s;
-}
-
-function equipmentGroup(db, a) {
+// Espaços de equipamento filtrados como o runtime (equip.js): tipo de arma/armadura permitido
+// por ator + classe, tipo de equipamento não selado, Dual Wield trocando o 2º espaço por arma.
+// equips: array a editar; onChange opcional.
+export function equipSlotsBox(db, getOwners, equips, o = {}) {
     const sys = db.System;
     const box = el("div", { class: "dbEquip" });
     const render = () => {
         box.innerHTML = "";
-        const cls = db.Classes[a.classId];
-        const owners = [a, cls];
-        const dual = hasDualWield(a, cls);
-        const wOk = allowed(owners, 51), aOk = allowed(owners, 52);
-        const nSlots = Math.max(1, sys.equipTypes.length - 1);
-        while (a.equips.length < nSlots) { a.equips.push(0); }
+        const traits = traitsOf(getOwners());
+        const slots = equipSlots(db, traits);
+        const nSlots = Math.max(1, slots.length);
+        while (equips.length < nSlots) { equips.push(0); }
         for (let i = 0; i < nSlots; i++) {
-            const etype = dual && i === 1 ? 1 : i + 1;
-            let opts;
-            if (etype === 1) {
-                opts = idOptions(db.Weapons, t("None", "Constants")).filter(([id]) => !id || id === a.equips[i] || wOk.has(db.Weapons[id]?.wtypeId));
-            } else {
-                opts = idOptions(db.Armors, t("None", "Constants")).filter(([id]) => !id || id === a.equips[i] ||
-                    (db.Armors[id] && db.Armors[id].etypeId === etype && aOk.has(db.Armors[id].atypeId)));
-            }
+            const etype = slots[i] || i + 1;
+            const opts = slotCandidates(db, traits, etype, equips[i], arr => idOptions(arr, t("None", "Constants")));
             box.appendChild(el("div", { class: "dbEquipRow" },
                 el("div", { class: "dbEquipType", text: sys.equipTypes[etype] || "" }),
-                sel(a.equips, i, opts, { number: true })));
+                sel(equips, i, opts, { number: true, onChange: o.onChange })));
         }
     };
     render();
     box.refresh = render;
     return box;
+}
+
+function equipmentGroup(db, a) {
+    return equipSlotsBox(db, () => [a, db.Classes[a.classId]], a.equips);
 }
 
 export const actorsTab = {
@@ -200,13 +191,25 @@ async function editExpCurve(c) {
     const p = { base: c.expParams[0], extra: c.expParams[1], a: c.expParams[2], b: c.expParams[3] };
     let mode = 0;
     const table = el("div", { class: "dbExpTable" });
+    // gráfico de fundo da tabela (como no MZ): barras dos 99 níveis no modo atual
+    const graph = document.createElement("canvas");
+    graph.width = 594; graph.height = 200;
     const render = () => {
         const arr = [p.base, p.extra, p.a, p.b];
         table.innerHTML = "";
+        const vals = [];
         for (let lv = 1; lv < 100; lv++) {
             const v = mode === 0 ? (lv < 99 ? expForLevel(arr, lv + 1) - expForLevel(arr, lv) : 0) : expForLevel(arr, lv);
+            vals.push(v);
             table.appendChild(el("div", { class: "dbExpCell" }, el("b", { text: "L" + lv + ": " }), String(v)));
         }
+        const g = graph.getContext("2d");
+        g.clearRect(0, 0, graph.width, graph.height);
+        const max = Math.max(1, ...vals);
+        const bw = graph.width / 99;
+        g.fillStyle = "rgba(60,120,232,.22)";
+        vals.forEach((v, i) => { const h = v / max * graph.height; g.fillRect(i * bw, graph.height - h, Math.ceil(bw), h); });
+        table.style.backgroundImage = `url(${graph.toDataURL()})`;
     };
     const ok = await modal({
         title: t("EXP Curve", "Dialog_ExpCurve"), width: "760px", height: "560px",
