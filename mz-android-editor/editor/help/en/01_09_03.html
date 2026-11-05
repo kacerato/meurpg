@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Map Event Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Map Event Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Map Event Settings">
+        <span>Map Event Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Events</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Events</a></li>
+				<li>&gt;</li>
+				<li>Map Event Settings</li>
+			</ul>
+			<img src="assets/img/common/cha09.webp" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Map Event Settings</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">Common Settings and Event Page Controls</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_09_03_img01.webp" alt=""/>
+			</div>
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h3>
+						ID (Displayed in Title Bar)
+					</h3>
+					<p>The event&#39;s unique ID number. IDs will be automatically set for each map in the order that they are created. This ID is used for occasions such as specifying events using variables.</p>
+				</li>
+				<li>
+					<h3>
+						Name
+					</h3>
+					<p>The name of the map event. This field is only used in the editor and does not affect the game. A name that uses the ID will automatically be entered when an event is created. If necessary, change the name of the event to something more easily identifiable.
+					</p>
+				</li>
+				<li>
+					<h3>
+						Memo
+					</h3>
+					<p>
+						A text area where you can freely enter notes.
+					</p>
+				</li>
+				<li>
+					<h3>
+						Event Page ID
+					</h3>
+					<p>The event page ID included in the event. By clicking a tab, you can switch to the event page that you wish to edit.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3--sub">
+				Event Page Control Buttons
+			</h3>
+			<p>The buttons located near the top of the window can be used to perform actions such as creating or deleting event pages. The functions of each button are as follows.</p>
+			<dl class="dl--default pb30px border--bottom">
+				<dt>New Event Page </dt>
+				<dd>Creates a new consecutively numbered event page following the one that is currently being edited. Each additional new event page will have an ID that increases by 1 each time one is created.</dd>
+				<dt>Copy Event Page</dt>
+				<dd>Copies the contents of the event page currently being edited to the clipboard.</dd>
+				<dt>Paste Event Page </dt>
+				<dd>Adds (inserts) a new event page using the information in the clipboard. A new ID will be generated using the ID that follows the event page currently being edited. Each event page added will have an ID that increases by 1 each time it is created.</dd>
+				<dt>Delete Event Page </dt>
+				<dd>Deletes the event page that is currently being edited. The ID for each event page that follows the one that was deleted will have its ID decreased by 1.</dd>
+				<dt>Clear Event Page </dt>
+				<dd>Deletes the entire contents of the event page currently being edited (returns it to its initial state).</dd>
+			</dl>
+
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">Event Page Settings</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_09_03_img02.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">
+				Appearance Conditions
+			</h3>
+			<p class="text--sub">Conditions for the Map Event to appear on the map based on the settings of this event page. Enable what will be used as the conditions within the [Switch], [Variable], [Self Switch], [Item], and [Actor] settings, and set the criteria to be evaluated. <br/><br/>Leave the condition settings disabled if you want to have an event occur regardless of the conditions. If multiple conditions are set, an event will only occur if all conditions are met. If the conditions of multiple event pages are met, the event with the highest ID value will be used. Conversely, an event will not occur if there are no pages which meet the conditions set.
+			</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>Switch</h4>
+					<p>The event will occur when the specified switch is set to ON.</p>
+				</li>
+				<li>
+					<h4>Variable </h4>
+					<p>The event will occur when the specified variable is greater than the fixed value.</p>
+				</li>
+				<li>
+					<h4>Self Switch </h4>
+					<p>The event will occur when the specified self switch is set to ON.</p>
+				</li>
+				<li>
+					<h4>Item </h4>
+					<p>The event will occur when a party possesses the specified item.</p>
+				</li>
+				<li>
+					<h4>Actor </h4>
+					<p>The event will occur when the specified actor is in the party.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				Images
+			</h3>
+			<p class="text">Images that are displayed when an event occurs on a map. To specify an image, click the file list (left) and image (right) in order in the [Select an Image] window that appears when you double-click inside the frame. <br/><br/>No image will be visible on the map if an image is not set. Select [(None)] located in the very top of the file list in the [Select an Image] window to delete the image you have set.
+			</p>
+
+			<h3 class="title--h3">
+				Autonomous Movement
+			</h3>
+			<p class="text--sub">Specifies how the Map Event will move based on the [Type], [Speed], and [Frequency] settings. [Speed] determines the speed at which a Map Event moves. The greater the number, the faster it will move. [Frequency] is the interval at which the map event moves. The greater the number, the shorter the movement interval will be. You can choose from the following 4 types of movements in [Type].</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>Fixed</h4>
+					<p>The map event will not move.</p>
+				</li>
+				<li>
+					<h4>Random </h4>
+					<p>The map event will move around at random.</p>
+				</li>
+				<li>
+					<h4>Approach </h4>
+					<p>The map event moves towards the location of the player.</p>
+				</li>
+				<li>
+					<h4>Custom </h4>
+					<p>The map event follows a specified route. You can specify the route in the window that appears when you click [Set Movement Route]. For more information, please refer to [<a href="01_10_06_01.html">Set Movement Route</a>].</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				Options
+			</h3>
+			<p class="text--sub">How the image will be displayed. Enable the items to apply as necessary.</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>Walking Animation</h4>
+					<p>Displays animation when moving. Use when you want to display characters and animals as walking.</p>
+				</li>
+				<li>
+					<h4>Stepping Animation </h4>
+					<p>Displays the stepping animation while a character is stopped. Used for things such as displaying water surfaces or fire.</p>
+				</li>
+				<li>
+					<h4>Direction Fix </h4>
+					<p>Prevents the direction that the image is facing from changing while moving.</p>
+				</li>
+				<li>
+					<h4>Through </h4>
+					<p>Allows you to pass through terrain and events that cannot normally be passed through.</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				Priority
+			</h3>
+			<p class="text--sub">Choose from the options below in order to specify the priority of how players and other events are displayed when stacked on top of one another. The image that is on top will be prioritized and displayed when events and players can overlap.</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>Below characters</h4>
+					<p>Players and so on will be able to move on top of this event. However, if a tile is selected in [Images], whether or not the player can move on top of that tile depends on the settings of the tile.</p>
+				</li>
+				<li>
+					<h4>Same as characters</h4>
+					<p>Will be at the same height as characters, and it will not be possible to go through this event.</p>
+				</li>
+				<li>
+					<h4>Above characters</h4>
+					<p>Players and so on will be able to move beneath this event.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				Triggers
+			</h3>
+			<p class="text--sub">Choose the timing for when the [Contents] of an event that occurs on the map will be processed from the following options.</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>Action Button</h4>
+					<p>When the player is adjacent to the event and presses the action button while facing in the direction of that event (or when overlapping an event where overlapping is possible).</p>
+				</li>
+				<li>
+					<h4>Player Touch</h4>
+					<p>When the player touches the event (or overlaps an event where overlapping is possible), or presses the action button while in that state.</p>
+				</li>
+				<li>
+					<h4>Event Touch</h4>
+					<p>When an event makes contact (or overlaps where overlapping is possible) with a player via the autonomous movement of the event, or when in the same state as in [Player Touch].</p>
+				</li>
+				<li>
+					<h4>Autorun</h4>
+					<p>When the event appears after meeting appearance conditions.</p>
+				</li>
+				<li>
+					<h4>Parallel</h4>
+					<p>
+						When the event appears after meeting appearance conditions, contents of the event will be repeatedly processed. <br/>Can be processed even when other events are being executed.
+					</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				Contents
+			</h3>
+			<p>List of the processes that will be run when the [Trigger] is activated. For more information, please refer to the following [Editing Contents] section.</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p03">Editing Contents</h2>
+			<h3 class="title--h3">
+				Viewing the Contents of the List
+			</h3>
+			<p class="text">
+				Processes added to the game while playing are edited using commands called [Event Commands]. <br/><br/>Event commands will be processed in order from the top item in the list and will be reflected in the game being played. Rows with a [◆] in the list indicate a registered event command. Rows with a [:] display the settings of event commands and indicate the position of where the flow of processes will be branched.
+			</p>
+
+			<h3 class="title--h3">
+				Additional Event Commands
+			</h3>
+			<p class="text">Double-click the row with a [◆] to add an event command to the list. Select the event command to use in the window that appears, then define the details (excluding some parts) of the process. Double-clicking a row which already has an event command will insert a new event command in that position.</p>
+
+			<h3 class="title--h3">
+				Context Menu Controls
+			</h3>
+			<p class="text--sub">Registered event commands will be displayed using a [◆]. Right-clicking this row will cause a menu to appear where you can perform actions such as copy and delete. The available action are as follows.</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>New</h4>
+					<p>Insert a new event command at the selected position.</p>
+				</li>
+				<li>
+					<h4>Edit</h4>
+					<p>Re-edit the settings of the event command in the row that is selected.</p>
+				</li>
+				<li>
+					<h4>Cut</h4>
+					<p>Copies the contents of the selected row to the clipboard, then deletes it from the list.</p>
+				</li>
+				<li>
+					<h4>Copy</h4>
+					<p>Copies the contents of the selected row to the clipboard.</p>
+				</li>
+				<li>
+					<h4>Paste</h4>
+					<p>Inserts the contents of the clipboard to the row that is selected.</p>
+				</li>
+				<li>
+					<h4>Delete</h4>
+					<p>Deletes the event command in the row that is selected.</p>
+				</li>
+				<li>
+					<h4>Select All</h4>
+					<p>Selects everything in the list as items to be edited.</p>
+				</li>
+				<li>
+					<h4>Copy as Text</h4>
+					<p>Copies the selected lines of text to the clipboard.</p>
+				</li>
+				<li>
+					<h4>Copy as HTML Tags</h4>
+					<p>Copies the HTML of the selected lines of text to the clipboard.</p>
+				</li>
+				<li>
+					<h4>Test</h4>
+					<p>Tests the selected event in the game screen.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				Selecting Multiple Items at Once
+			</h3>
+			<p>With one of the rows in the list selected, clicking another row while holding down the [Shift] key will select all the event commands (blocks that have a [◆]) within that range. Right-clicking those items selected (highlighted in blue) will allow you to perform actions to all the items at once via a context menu. However, you can only select the items which are in the same branch when including branch processes.</p>
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

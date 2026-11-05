@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Map Data Controls</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Map Data Controls</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Map Data Controls">
+        <span>Map Data Controls</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Map</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_07.html">Map</a></li>
+				<li>&gt;</li>
+				<li>Map Data Controls</li>
+			</ul>
+			<img src="assets/img/common/cha07.webp" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1 mb30px">Map Data Controls</h1>
+
+		<p class="text--lead">Right-clicking Map Data items in the Map List allows you to do things such as change settings and copy. The functions of each item are as follows.</p>
+
+		<div class="section">
+			<h2 class="title--h2">Controls via the Context Menu</h2>
+			<p class="text">Right-clicking Map Data items in the Map List allows you to do things such as change settings and copy. The functions of each item are as follows.</p>
+			<ul class="ul--2c--line--align">
+				<li>
+					<h3>Edit </h3>
+					<p>Opens the Map Properties window. For more information regarding items that can be configured, please see [<a href="01_07_03.html">Map Properties</a>].</p>
+				</li>
+				<li>
+					<h3>New</h3>
+					<p>Adds new map data. For more information regarding items that can be configured, please see [<a href="01_07_03.html">Map Properties</a>].</p>
+				</li>
+				<li>
+					<h3 class="title--h3--sub">Load</h3>
+					<p class="mb10px">New map data is created based on sample data. Click the data name on the list in the displayed window, confirm the details, and click [OK].</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_02_img01.webp" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>Copy</h3>
+					<p>Copies map data to the clipboard.</p>
+				</li>
+				<li>
+					<h3>Paste </h3>
+					<p>Adds map data currently in the clipboard.</p>
+				</li>
+				<li>
+					<h3>Delete</h3>
+					<p>Deletes map data.</p>
+				</li>
+				<li>
+					<h3>Shift </h3>
+					<p>Shifts the placement of all tiles on the map. Specify the shift direction and number of tiles.</p>
+				</li>
+				<li>
+					<h3>Generate Dungeon</h3>
+					<p>Automatically generates a maze form map. Please see [<a href="01_05.html#p06">How to Use Aid Tools</a>] for more information.</p>
+				</li>
+				<li>
+					<h3>Save as Image</h3>
+					<p>Saves the currently selected map in an image format.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">Group Maps</h2>
+						<p>By dragging map data in the Map List onto other map data, the data will appear at the end of the latter&#39;s map data. Just like grouping the interior maps of buildings under the map of a town, it is convenient for grouping and managing map data. By dragging a map which has been moved to the end of the list to the folder containing the project name, you can move it to the top. <br/> <br/> This hierarchical display only changes the way that things are displayed on the Map List. This will in no way affect the design or settings of the map.
+					</p>
+				</div>
+				<img src="assets/img/01_07_02_img04.webp" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

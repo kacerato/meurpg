@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Tileset Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Tileset Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Tileset Settings">
+        <span>Tileset Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Database</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Database</a></li>
+				<li>&gt;</li>
+				<li>Tileset Settings</li>
+			</ul>
+			<img src="assets/img/common/cha08.webp" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">Tileset Settings</h1>
+
+		<div class="section">
+			<h2 class="title--h2">This Data&#39;s Role</h2>
+			<p class="text--sub">
+				Tilesets are data consisting of &quot;Tiles&quot; used to design a single map. They&#39;re created by assigning images to be used as tiles and their in-game behaviors, such as whether characters can pass through them or not. <br/> <br/>Original images created for the map can be used as well by creating tilesets which use those images, and assigning them to the map data. <br/> <br/>Additionally, whether or not vehicles (boats/large ships) can pass through tiles is determined by their position within the tileset. Please see [<a href="01_11_01.html">Asset Standards</a>] for more information. <br/>Planes are able to travel over all tiles. However, they are only able to land on tiles which can be walked on.
+			</p>
+			<p class="mb10px">
+				*Planes cannot land on the locations subject to the following conditions even if the tiles can be walked on.
+			</p>
+			<ul class="ul">
+				<li>Bush Elements</li>
+				<li>Tileset A1</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_10_img01.webp" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				Basic Settings
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						Name
+					</h4>
+					<p>The name of the tileset. This property is only used in the editor and does not affect the game. </p>
+				</li>
+				<li>
+					<h4>
+						Mode
+					</h4>
+					<p>The purpose of the tileset. This primarily influences <a href="01_07_01.html#p01">Lower Layer Tile Special Specifications</a> and <a href="01_07_03.html#p01">Handling Battle Backgrounds</a>. <br/>In general, please choose [Field Type] for tiles which represent the overworld (such as ocean and land), and [Area Type] for all other situations.
+				</p></li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				Images
+			</h3>
+			<p class="text">Settings for the image files used in tiles. Specify the file you want to use for each type (Sets A through E) in the [Select an Image] window that appears when you press the button for each. The image&#39;s contents will be displayed in the [Tile List] on the right.</p>
+
+			<h3 class="title--h3">
+				Tile List
+			</h3>
+			<p class="text--sub">The tile images set in [Image] will be displayed here. By clicking tabs [A] through [E] below, you can switch the images displayed. The tiles for the images specified in [A1] through [A5] in the [Image] section on the [A] tab will be displayed in order. <br/> <br/>Marks representing the current parameter values in the settings editing mode will be displayed on top of each tile. You can change these parameter values by clicking them. <br/> Additionally, for items with 3 or more types of setting values (passage, terrain tags), pressing the right button will reverse the direction from that of the left button. <br/>By moving your cursor with the button held, you can change the settings for the tiles that your cursor moves through.
+			</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						Passage
+					</h4>
+					<p>Switch to the editing mode where you can set whether a tile can be entered or not. Tiles marked with a [○] can be entered, while ones marked with an [×] cannot. Those which have a [☆] can also be entered, however this is used for hiding characters behind buildings (only possible in tabs other than [A]).</p>
+				</li>
+				<li>
+					<h4>
+						Passage (4 Dir)
+					</h4>
+					<p>Switch to the editing mode where you can set the direction(s) from which a tile can be entered. Use [Passage: Block] to create tiles that can be passed through only from a specific direction. For example, when you set the edge of a tile that represents a cliff as impassable, characters will be unable to move between that tile and the next tile, creating a sense of height. <br/> <br/>Directional marks shown in the tile list indicate that it is possible to move from that direction, while no mark means the tile is impassable from that direction. Moreover, by changing the parameters of the [Passage] setting, these settings will change automatically.
+					</p>
+				</li>
+				<li>
+					<h4>
+						Ladder
+					</h4>
+					<p>Switch to the editing mode for ladder settings. When you add this setting, the direction a character using this tile faces will be locked to up, giving the appearance of going up and down things like ladders and ropes. <br/> <br/>Click the marks in the Tile List to change tiles to enable/disable this setting. A mark (ladder) will be displayed on tiles which have this setting.
+					</p>
+				</li>
+				<li>
+					<h4>
+						Damage Floor
+					</h4>
+					<p>Switch to the editing mode for Damage Floors. When a tile is given this setting, characters will receive damage when crossing this tile. This can be used for representing dangerous terrain like poisonous swamps or trees with thorns. <br/> <br/>Click the marks in the Tile List to change tiles to enable/disable this setting. A mark (two triangles) will be displayed on tiles which have this setting.
+					</p>
+				</li>
+				<li>
+					<h4>
+						Bush
+					</h4>
+					<p class="mb5px">Switch to the editing mode for bush settings. When a tile has this setting, the bottom 12 pixels of characters crossing this tile will appear half transparent, as if their feet are being hidden by dense grass. <br/> <br/>However, some tiles will not become half transparent depending on the image when giving this setting to tiles in [A1] through [A4]. <br/> <br/>Click the marks in the Tile List to change tiles to enable/disable this setting. A mark (two wavy lines) will be displayed on tiles which have this setting.
+					</p>
+					<div class="img--center--half mt10px">
+						<img src="assets/img/01_08_10_img02.webp" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h4>
+						Counter
+					</h4>
+					<p class="mb5px">Switch to the editing mode for counter settings. When a tile is given this setting, it will start events even when a character and event are not immediately adjacent to one another, allowing you to create settings such as those where a character speaks to someone with a desk between them. <br/> <br/>Also, when applying these settings to tiles in [A2], tiles having this element will be adjusted 12 pixels downward. <br/> <br/>Click the marks in the Tile List to change tiles to enable/disable this setting. A mark (a diamond) will be displayed on tiles which have this setting.
+					</p>
+					<div class="img--center--half mt10px">
+						<img src="assets/img/01_08_10_img03.webp" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h4>
+						Terrain Tag
+					</h4>
+					<p>You can assign values between 0 and 7 to each tile. No specific uses are defined. This value can be retrieved by using the [Get Location Info] event command. Retrieved terrain tags located in upper layers other than zero will be prioritized.
+					</p>
+				</li>
+				<li>
+					<h4 id="renew01">
+						Notes
+					</h4>
+					<p>Used to make notes while making your game. <br/>Right-click to show the menu and choose [Plugin Help...] to display the Plugin Help information.</p>
+				</li>
+			</ul>
+
+
+
+
+
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Picture</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Picture</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Picture">
+        <span>Picture</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Picture</li>
+			</ul>
+			<img src="assets/img/common/cha10.webp" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Picture</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Show Picture</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img01.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Displays a picture (static image) on the screen.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Picture: Number</h4>
+					<p>Specify a control number (from 1 to 100) to link to the image.</p>
+				</li>
+				<li>
+					<h4>Picture: Image</h4>
+					<p>Specify the image to be displayed.</p>
+				</li>
+				<li>
+					<h4>Position</h4>
+					<p>Specify the display position of the image. First, select the [Origin Point] of the image. This can be set to the [Upper Left] or [Center] of the screen. After doing so, specify the offset position using coordinates. The origin point is (0, 0). When using [Direct Designation], enter in coordinates (from -9999 to 9999) for the horizontal position [X] and the vertical position [Y]. To specify the location coordinates using variables, select [Designation with Variables], then specify the variables for [X] and [Y].</p>
+				</li>
+				<li>
+					<h4>Scale</h4>
+					<p>Specify the percentage to scale the image (between -2000 and 2000% with 100% being the original size) using the [Width] and [Height] fields. <br/>Note: by setting the value to a negative, the image can be reversed.</p>
+				</li>
+				<li>
+					<h4>Blend</h4>
+					<p>Specify the opacity (0 to 255) of the image under [Opacity]. The smaller the value, the more transparent the image will be. A value of 0 will result in nothing being displayed. Specify how to blend the image colors when changing the opacity of the image under [Blending Mode].
+						</p><ul class="ul">
+							<li>[Normal] ・・・ Displayed as normal.</li>
+							<li>[Additive] ・・・ Displayed in a whiter color.</li>
+							<li>[Multiply] ・・・ Displayed in a darker color.</li>
+							<li>[Screen] ・・・ Displayed in a brighter color.</li>
+						</ul>
+					<p></p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>Up to 100 images can be displayed at once. The higher the control number, the higher it will be prioritized when displayed.</li>
+				<li>If there are multiple images with the same control number, only the most recent image to be displayed will be visible. (All earlier images will be erased.)</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Move Picture</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img02.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Moves the currently displayed image.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Picture: Number</h4>
+					<p>Specify the control number (from 1 to 100) for the target image.</p>
+				</li>
+				<li>
+					<h4>Easing</h4>
+					<p>Specify the acceleration and deceleration of movement.</p>
+					<ul class="ul">
+						<li>Fixed Speed</li>
+						<li>Start slow</li>
+						<li>Stop slow</li>
+						<li>Start slow and stop slow</li>
+					</ul>
+				</li>
+				<li>
+					<h4>Position</h4>
+					<p>Specify the end position of the image after it has been moved. First, select the [Origin Point] of the image. This can be set to the [Upper Left] or [Center] of the screen. Next, specify the offset position using coordinates. The origin point is (0, 0). When using [Direct Designation], enter in coordinates (from -9999 to 9999) for the horizontal position [X] and the vertical position [Y]. To specify the location coordinates using variables, select [Designation with Variables], then specify the variables for [X] and [Y].</p>
+				</li>
+				<li>
+					<h4>Scale</h4>
+					<p>Specify the percentage to scale the image after it has been moved (between -2000 and 2000% with 100% being the original size) using the [Width] and [Height] fields. <br/>Note: by setting the value to a negative, the image can be reversed.</p>
+				</li>
+				<li>
+					<h4>Blend</h4>
+					<p>Specify the opacity (0 to 255) of the image after it has been moved under [Opacity]. The smaller the value, the more transparent the image will be. A value of 0 will result in nothing being displayed. Specify how to blend the image colors when changing the opacity of the image under [Blending Mode].
+						</p><ul class="ul">
+							<li>[Normal] ・・・ Displayed as normal.</li>
+							<li>[Additive] ・・・ Displayed in a whiter color.</li>
+							<li>[Multiply] ・・・ Displayed in a darker color.</li>
+							<li>[Screen] ・・・ Displayed in a brighter color.</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>Duration</h4>
+					<p>Specify the amount of time moving the image will take in number of frames (from 1 to 999). One frame is equal to 1/60th of a second.</p>
+				</li>
+				<li>
+					<h4>Wait for Completion</h4>
+					<p>When enabled, processing will wait for this event command to finish.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Rotate Picture</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img03.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Rotates the displayed image.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Picture: Number</h4>
+					<p>Specify the control number (from 1 to 100) for the target image.</p>
+				</li>
+				<li>
+					<h4>Rotation: Speed</h4>
+					<p>Specify the rotation speed (-90 to 90). A positive number will rotate clockwise. A negative number will rotate counterclockwise. Set to 0 to stop rotation.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>The rotation axis (center point) will be set to the origin that was specified for the target image when it was last displayed/moved.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Tint Picture</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img04.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the color tone of the displayed image.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Picture: ID</h4>
+					<p>Specify the control number (from 1 to 100) for the target image.</p>
+				</li>
+				<li>
+					<h4>Color Tone</h4>
+					<p>Specifies the amount of [Red], [Green], and [Blue] to add (-255 to 255). Set the strength of the gray scale filter (0 to 255) by changing the [Gray] value. The higher the value, the stronger the overall color tone will be. Check the color tone using the preview area on the right.</p>
+				</li>
+				<li>
+					<h4>Duration</h4>
+					<p>Specify the amount of time changing the tint of the image will take in number of frames (1 to 999). One frame is equal to 1/60th of a second.</p>
+				</li>
+				<li>
+					<h4>Wait for Completion</h4>
+					<p>When enabled, processing will wait for this event command to finish.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>The new color tone will remain in effect until updated again using this event command.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Erase Picture</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img05.webp" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Erases the displayed image.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Picture: ID</h4>
+					<p>Specify the control number (from 1 to 100) of the image to be deleted.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>
