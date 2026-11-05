@@ -1,0 +1,1530 @@
+{
+"step": 11,
+"title": {
+"ja_JP": "ステップ11：イベント応用３：扉",
+"en": "Step 11: Event Application 3: Door",
+"zh_CN": "步骤 11：事件应用 3：门"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 10?",
+"ja_JP": "ステップ１０を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 10 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 10 project.",
+"ja_JP": "ステップ１０のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 10 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 10 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ１０のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 10 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step11",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In step 11, we're going to make a setup\nthat opens a door when a lever is operated.",
+"ja_JP": "ステップ１１では、切替スイッチを操作すると\n扉が開く仕組みを作成します。",
+"zh_CN": "在步骤 11 中，我们将制作一个\n能通过操作操作杆打开门的设定。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Place the door at a corner (30,15) \nnear the switch at (28,16).",
+"ja_JP": "扉は、座標(30,15)に、\nスイッチは近くの隅(28,16)に配置することにします。",
+"zh_CN": "把门放置在角落（30,15）， \n靠近开关的位置（28,16）。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll place the switch first. \nDouble-click on the coordinates (28,16).",
+"ja_JP": "まず切替スイッチを配置します。\n座標(28,16)にカーソルを合わせ、そこでダブルクリック。",
+"zh_CN": "我们要先设置开关。 \n双击坐标（28,16）。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 105,
+"y": 32,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter \"Door Lever\" as the name.",
+"ja_JP": "名前を「扉開閉スイッチ」と入力。",
+"zh_CN": "输入“操作杆”为名称。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 54,
+"y": 425,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 92,
+"y": 259,
+"windowKey": "ImageSelector",
+"condition": "list,36",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll to the bottom of the list\nand click !Switch1.",
+"ja_JP": "リストを一番下までスクロールし、\n!Switch1 をクリック。",
+"zh_CN": "滚动至列表底端，\n然后单击“!Switch1”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 290,
+"y": 19,
+"windowKey": "ImageSelector",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the image in the middle of the top row of the levers furthest to the left in the upper half.",
+"ja_JP": "上段一番左のスイッチの、真ん中の一番上をクリック。",
+"zh_CN": "单击上半部分最左边，操作杆顶行中间的图像。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 572,
+"y": 430,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 30,
+"y": 605,
+"windowKey": "EventEditorMain",
+"condition": "checked,directionFix,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Direction Fix\".",
+"ja_JP": "「向き固定」にチェック。",
+"zh_CN": "勾选“固定朝向”。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 522,
+"y": 140,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll set up the content. \nThe content will be the door opening operation. \nDouble click the first line.",
+"ja_JP": "次は実行内容です。\nドアを開ける操作になります。\n一番上の行をダブルクリック。",
+"zh_CN": "接着我们要设置其内容。 \n内容是打开门的操作。 \n双击第一行。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 141,
+"y": 250,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Control Switches...\".",
+"ja_JP": "「スイッチの操作」をクリック。",
+"zh_CN": "单击“开关操作……”。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 227,
+"y": 48,
+"windowKey": "EventCommand",
+"condition": "windowState,VariableSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the switch number.",
+"ja_JP": "スイッチの番号をクリック。",
+"zh_CN": "单击开关编号。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 292,
+"y": 56,
+"windowKey": "VariableSelector",
+"condition": "list,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll be handling the second switch here. \nClick on 0002 from the list.",
+"ja_JP": "ここでは2番のスイッチを扱います。\nリストの2番(0002)をクリックしてください。",
+"zh_CN": "我们将使用第二个开关。 \n单击列表中的 0002。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 292,
+"y": 446,
+"windowKey": "VariableSelector",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the name, and enter it as\nDungeon Door.",
+"ja_JP": "名前をクリックし、『ダンジョンの扉』\nと入力してください。",
+"zh_CN": "单击其名字，输入\n“地牢门”。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 181,
+"y": 503,
+"windowKey": "VariableSelector",
+"condition": "windowState,VariableSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 212,
+"y": 183,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the Switch is set to \"Single\", \"0002 Dungeon Door\",\nand that the Operation is set to on,\nand click OK.",
+"ja_JP": "スイッチが「単独」「0002 ダンジョンの扉」、\n操作が「ON」になっていることを確認して、\nＯＫをクリック。",
+"zh_CN": "确保开关被设置为“单个” “0002 地牢门”，\n并且操作已设为“开启”，\n然后单击 OK。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 453,
+"y": 152,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we'll set the noise when the door opens. \nDouble click the next line.",
+"ja_JP": "次は扉が開く音を設定します。\n次の行をダブルクリック。",
+"zh_CN": "接着我们要设置门打开时的声音。 \n双击下一行。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 54,
+"y": 16,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the tab to go to page 2.",
+"ja_JP": "タブをクリックして２ページ目に切り替えてください。",
+"zh_CN": "单击标签打开第 2 页。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 375,
+"y": 514,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Play SE...\".",
+"ja_JP": "「SEの演奏…」をクリック。",
+"zh_CN": "单击“播放 SE……”。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 61,
+"y": 24,
+"windowKey": "EventCommand",
+"condition": "list,97",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll along the line to find Door1,\nand click it.",
+"ja_JP": "リストをスクロールして Door1 を見つけて\nクリック。",
+"zh_CN": "沿着列表滚动找到“Door1”，\n然后单击它。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 199,
+"y": 432,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the SE (sound effect).",
+"ja_JP": "ＯＫをクリックして SE(効果音)を確定。",
+"zh_CN": "单击 OK 设置 SE（音效）。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 462,
+"y": 32,
+"windowKey": "EventEditorMain",
+"condition": "action,New Event Page,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done with setup for page 1. \nClick \"New Event Page\" and create page 2.",
+"ja_JP": "これで１ページ目の設定は完了です。\n「ＥＶページ作成」をクリックし２ページ目を作成。",
+"zh_CN": "现在我们已经设置好第 1 页。 \n单击“新建事件页”创建第 2 页。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 33,
+"y": 140,
+"windowKey": "EventEditorMain",
+"condition": "checked,conditions.switch1Valid,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We will set up page 2. \nClick \"Switch\" in Condition.",
+"ja_JP": "２ページ目の設定を行います。\n出現条件の「スイッチ」をチェック。",
+"zh_CN": "我们要设置第 2 页。 \n单击出现条件的“开关”。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 216,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "windowState,VariableSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll change the switch number. \nClick the switch number.",
+"ja_JP": "スイッチ番号を変更します。\nスイッチ番号をクリック。",
+"zh_CN": "我们将更改开关编号。 \n单击开关编号。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 176,
+"y": 494,
+"windowKey": "VariableSelector",
+"condition": "windowState,VariableSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that 0002 is selected and click OK.",
+"ja_JP": "0002番が選択されているのを確認してＯＫをクリック。",
+"zh_CN": "确保 0002 已被选择，然后单击 OK。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 72,
+"y": 440,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 95,
+"y": 258,
+"windowKey": "ImageSelector",
+"condition": "list,36",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll to the bottom of the list, and click !Switch1.",
+"ja_JP": "リストを一番下までスクロールし、!Switch1 をクリック。",
+"zh_CN": "滚动至列表底端，然后单击“!Switch1”。"
+}
+},
+{
+"id": 39,
+"folder": false,
+"x": 290,
+"y": 99,
+"windowKey": "ImageSelector",
+"condition": "list,25",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the middle switch in the 3rd row of the levers furthest to the left in the top half. \nThis is the lever pushed to the opposite direction of the one in page 1.",
+"ja_JP": "上段一番左のスイッチの３段目の真ん中をクリック。\nこれは１ページ目とは逆の方向に倒したスイッチです。",
+"zh_CN": "单击上半部分最左边，操作杆第三排中间的开关。 \n这是按在第 1 页反方向的操作杆。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 569,
+"y": 426,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 33,
+"y": 608,
+"windowKey": "EventEditorMain",
+"condition": "checked,directionFix,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Just like with page 1, check off \"Direction Fix\".",
+"ja_JP": "１ページ目同様、「向き固定」にチェック。",
+"zh_CN": "跟第 1 页一样，勾选“固定朝向”。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 579,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next is content input. \nThe content will be the door closing operation. \nDouble click the first line.",
+"ja_JP": "次は実行内容の入力です。\nドアを閉める操作になります。\n一番上の行をダブルクリック。",
+"zh_CN": "接着是输入内容。 \n内容是关门的操作。 \n双击第一行。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 57,
+"y": 16,
+"windowKey": "EventCommandSelect",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure you're on the page 2 tab.",
+"ja_JP": "タブが２ページ目になっているのを確認。",
+"zh_CN": "确保你在第 2 页的标签上。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": 144,
+"y": 322,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommandSelect,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Gather Followers\".",
+"ja_JP": "「隊列メンバーの集合」をクリックしてください。",
+"zh_CN": "单击“集合队列成员”。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": 462,
+"y": 131,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "\"Gather Followers\" is a command that will gather the party members to the leader. We'll execute this to prevent party members from getting trapped in the door that appears.",
+"ja_JP": "「隊列メンバーの集合」は、先頭メンバーの上に後のメンバーが集合するコマンドです。現れた扉にメンバーが挟まれてしまうのを防ぐために実行します。",
+"zh_CN": "“集合队列成员”是一个指令，它能召集队伍成员到队长身边。我们将执行此操作来防止队伍成员被困在出现的门内。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 516,
+"y": 155,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 369,
+"y": 520,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Play SE...\".",
+"ja_JP": "「SEの演奏…」をクリック。",
+"zh_CN": "单击“播放 SE……”。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 70,
+"y": 28,
+"windowKey": "EventCommand",
+"condition": "list,97",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Find Door1 from the list and click.",
+"ja_JP": "リストから Door1 を見つけ出してクリック。",
+"zh_CN": "从列表中找到并单击“Door1”。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 193,
+"y": 427,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 513,
+"y": 177,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 27,
+"y": 25,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Go to the Page 1 tab.",
+"ja_JP": "タブを１ページ目に切り替えます。",
+"zh_CN": "打开第 1 页的标签。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 141,
+"y": 247,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Control Switches...\".",
+"ja_JP": "「スイッチの操作」をクリック。",
+"zh_CN": "单击“开关操作……”。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 206,
+"y": 45,
+"windowKey": "EventCommand",
+"condition": "windowState,VariableSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the switch number.",
+"ja_JP": "スイッチの番号をクリック。",
+"zh_CN": "单击开关编号。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 175,
+"y": 491,
+"windowKey": "VariableSelector",
+"condition": "windowState,VariableSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that 0002 is selected\nand click OK.",
+"ja_JP": "0002番が選択されていることを確認して\nＯＫをクリック。",
+"zh_CN": "确保 0002 已被选择，\n然后单击 OK。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 152,
+"y": 150,
+"windowKey": "EventCommand",
+"condition": "radioButton,RadioButton,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"OFF\" in Operation.",
+"ja_JP": "操作の「OFF」をクリック。",
+"zh_CN": "单击操作中的“关闭”。"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 179,
+"y": 183,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that the switch is set to \"Single\" \"0002\", and that the Operation is \"OFF\"\nand click OK.",
+"ja_JP": "スイッチが「単独」「0002 ダンジョンの扉」、\n操作が「OFF」になっていることを確認して、\nＯＫをクリック。",
+"zh_CN": "确保开关被设置为“单个” “0002”，并且操作为“关闭”，\n然后单击 OK。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 564,
+"y": 164,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now the on and off switch is complete. \n\"Play SE\" and \"Control Switch\" are in reverse order,\nbut the order doesn't matter for this.",
+"ja_JP": "これで切替スイッチ完成です。\n「SEの演奏」と「スイッチの操作」の順番が逆ですが\nこれは、どちらが先でもかまわないということです。",
+"zh_CN": "现在打开和关闭的开关已经完成。 \n“播放 SE”和“操作开关”次序颠倒，\n但是在其次序在这里并不重要。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 774,
+"y": 683,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the event.",
+"ja_JP": "ＯＫをクリックして、イベントを確定。",
+"zh_CN": "单击 OK 设置事件。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 861,
+"y": 575,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we'll make the door. \nFind the coordinates (30,15).",
+"ja_JP": "扉を作成します。\n座標(30,15)を見つけてください。",
+"zh_CN": "现在我们要制作门。 \n找到坐标（30,15）。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 1380,
+"y": 410,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click (30,15).",
+"ja_JP": "(30,15)をダブルクリック。",
+"zh_CN": "双击（30,15）。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 84,
+"y": 45,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter \"Lever-Operated Door\" for the name.",
+"ja_JP": "名前を「スイッチで開閉する扉」と入力。",
+"zh_CN": "输入“用操作杆操作的门”为名字。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 69,
+"y": 444,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 104,
+"y": 357,
+"windowKey": "ImageSelector",
+"condition": "list,27",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click !Door1 from the list.",
+"ja_JP": "リストから !Door1 をクリック。",
+"zh_CN": "单击列表中的“!Door1”。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 269,
+"y": 27,
+"windowKey": "ImageSelector",
+"condition": "list,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select the middle door from the top row of the group furthest to the left in the top half.",
+"ja_JP": "上段の一番左、一番上の真ん中の画像をクリック。",
+"zh_CN": "选择上半部分最左边一群，顶行中间的门。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 563,
+"y": 429,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 33,
+"y": 608,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Direction Fix\".",
+"ja_JP": "「向き固定」にチェック。",
+"zh_CN": "勾选“固定朝向”。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 522,
+"y": 134,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the first line in \"Contents\".",
+"ja_JP": "実行内容の一番上の行をダブルクリック。",
+"zh_CN": "双击“执行内容”中的第一行。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 120,
+"y": 82,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "选择“显示文字……”。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 266,
+"y": 38,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Simply enter: \n\"You cannot pass.\"",
+"ja_JP": "『通れない。』\nとだけ入力してください。",
+"zh_CN": "随意输入： \n“无法通行。”"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 419,
+"y": 203,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 453,
+"y": 33,
+"windowKey": "EventEditorMain",
+"condition": "action,New Event Page,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done with setup for page 1. \nWith \"New Event Page\", create page 2.",
+"ja_JP": "これで１ページ目は完了です。\n「EVページ作成」で、２ページ目を作成。",
+"zh_CN": "现在我们已经设置好第 1 页。 \n使用“新建事件页”创建第 2 页。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 36,
+"y": 135,
+"windowKey": "EventEditorMain",
+"condition": "checked,conditions.switch1Valid,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "This will be the opened door. \nCheck off \"Switch\" in Condition.",
+"ja_JP": "扉が開かれた状態です。\n出現条件の「スイッチ」にチェック。",
+"zh_CN": "该设置为打开后的门。 \n单击出现条件里的“开关”。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 222,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "windowState,VariableSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the switch number.",
+"ja_JP": "スイッチの番号をクリック。",
+"zh_CN": "单击开关编号。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": 185,
+"y": 491,
+"windowKey": "VariableSelector",
+"condition": "windowState,VariableSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Make sure that 0002 is selected from the list\nand click OK.",
+"ja_JP": "「0002 ダンジョンの扉」が選択されている事を確認し、\nＯＫをクリック。",
+"zh_CN": "确保列表中的 0002 已被选择，\n然后单击 OK。"
+}
+},
+{
+"id": 75,
+"folder": false,
+"x": 777,
+"y": 683,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "That's all we need to do for page 2's setup. \nThis is because this is a \"nothing\" state, where the door has disappeared. \nClick OK and set the event.",
+"ja_JP": "これだけで２ページ目の設定は完了です。\n扉が消えた「何もない」状態だからです。\nＯＫをクリックしてイベントを確定。",
+"zh_CN": "第 2 页的设定这样就可以了。 \n这是因为该状态属于“无”，也就是门已消失的状态。 \n单击 OK 设置事件。"
+}
+},
+{
+"id": 79,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindowClient_mapEditorView",
+"condition": "windowState,Menu,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click the created event and select \"Copy\".",
+"ja_JP": "作成したイベントを右クリックし、「コピー」を選択。",
+"zh_CN": "右击已创建的事件，并选择“复制”。"
+}
+},
+{
+"id": 80,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindowClient_mapEditorView",
+"condition": "action,editPaste",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Select the coordinates (31,15) to the right. \nRight-click and select \"Paste\".",
+"ja_JP": "右隣の座標(31,15)を選択して、\n右クリック「貼り付け」を実行。",
+"zh_CN": "选择右边的坐标（31,15）。 \n右击后选择“粘贴”。"
+}
+},
+{
+"id": 76,
+"folder": false,
+"x": 105,
+"y": 26,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now preparation is complete. \nSave the project.",
+"ja_JP": "これで準備は完了です。\nプロジェクトを保存。",
+"zh_CN": "一切已准备就绪。 \n保存项目。"
+}
+},
+{
+"id": 77,
+"folder": false,
+"x": 1050,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Run a playtest. \nPull the lever and check that the door opens and closes.",
+"ja_JP": "テストプレイを行います。\nスイッチを切り替え、扉の開閉を確認してください。",
+"zh_CN": "测试一下游戏。 \n拉操作杆，确认门能打开也能关闭。"
+}
+},
+{
+"id": 78,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. \nPlease do challenge yourself to even more complex events.",
+"ja_JP": "お疲れ様でした。\nより複雑なイベントにも挑戦してみてください。",
+"zh_CN": "做得好。 \n请挑战自己，制作更多跟复杂的事件。"
+}
+}
+]
+}

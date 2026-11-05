@@ -1,0 +1,192 @@
+[
+ {
+  "step": 1,
+  "file": "step1.json",
+  "title": {
+   "ja_JP": "ステップ１：マップの基礎",
+   "en": "Step 1: Map Basics",
+   "zh_CN": "步骤 1：地图基础"
+  },
+  "count": 85
+ },
+ {
+  "step": 2,
+  "file": "step2.json",
+  "title": {
+   "ja_JP": "ステップ２：イベントの基礎（会話）",
+   "en": "Step 2: Event Basics (Dialogue)",
+   "zh_CN": "步骤 2：事件基础（对话）"
+  },
+  "count": 61
+ },
+ {
+  "step": 3,
+  "file": "step3.json",
+  "title": {
+   "ja_JP": "ステップ３：イベントの移動１",
+   "en": "Step 3: Event Transfer 1",
+   "zh_CN": "步骤 3：事件场所移动 1"
+  },
+  "count": 60
+ },
+ {
+  "step": 4,
+  "file": "step4.json",
+  "title": {
+   "ja_JP": "ステップ４：イベントの移動２",
+   "en": "Step 4: Event Transfer 2",
+   "zh_CN": "步骤 4：事件场所移动 2"
+  },
+  "count": 70
+ },
+ {
+  "step": 5,
+  "file": "step5.json",
+  "title": {
+   "ja_JP": "ステップ５：スイッチと条件分岐前編",
+   "en": "Step 5: Switches and Conditional Branching Part 1",
+   "zh_CN": "步骤 5：开关和分支条件 第 1 部"
+  },
+  "count": 102
+ },
+ {
+  "step": 6,
+  "file": "step6.json",
+  "title": {
+   "ja_JP": "ステップ６：スイッチと条件分岐後編",
+   "en": "Step 6: Switches and Conditional Branching Part 2",
+   "zh_CN": "步骤 6：开关和分支条件 第 2 部"
+  },
+  "count": 36
+ },
+ {
+  "step": 7,
+  "file": "step7.json",
+  "title": {
+   "ja_JP": "ステップ７：宝箱とセルフスイッチ",
+   "en": "Step 7: Treasure and Self-Switches",
+   "zh_CN": "步骤 7：宝箱和独立开关"
+  },
+  "count": 72
+ },
+ {
+  "step": 8,
+  "file": "step8.json",
+  "title": {
+   "ja_JP": "ステップ８：ショップの作成",
+   "en": "Step 8: Creating Shops",
+   "zh_CN": "步骤 8：设置商店"
+  },
+  "count": 84
+ },
+ {
+  "step": 9,
+  "file": "step9.json",
+  "title": {
+   "ja_JP": "ステップ９：イベント応用１：立て札",
+   "en": "Step 9: Event Application 1: Notice Board",
+   "zh_CN": "步骤 9：事件应用 1：布告栏"
+  },
+  "count": 46
+ },
+ {
+  "step": 10,
+  "file": "step10.json",
+  "title": {
+   "ja_JP": "ステップ10：イベント応用２：動く岩",
+   "en": "Step 10: Event Application 2: Moving Rock",
+   "zh_CN": "步骤 10：事件应用 2：移动岩石"
+  },
+  "count": 52
+ },
+ {
+  "step": 11,
+  "file": "step11.json",
+  "title": {
+   "ja_JP": "ステップ11：イベント応用３：扉",
+   "en": "Step 11: Event Application 3: Door",
+   "zh_CN": "步骤 11：事件应用 3：门"
+  },
+  "count": 80
+ },
+ {
+  "step": 12,
+  "file": "step12.json",
+  "title": {
+   "ja_JP": "ステップ12：データベースの基礎１",
+   "en": "Step 12: Database Basics 1",
+   "zh_CN": "步骤 12：数据库基础 1"
+  },
+  "count": 90
+ },
+ {
+  "step": 13,
+  "file": "step13.json",
+  "title": {
+   "ja_JP": "ステップ13：データベースの基礎２",
+   "en": "Step 13: Database Basics 2",
+   "zh_CN": "步骤 13：数据库基础 2"
+  },
+  "count": 89
+ },
+ {
+  "step": 14,
+  "file": "step14.json",
+  "title": {
+   "ja_JP": "ステップ14：ダメージ床",
+   "en": "Step 14: Damaging Floors",
+   "zh_CN": "步骤 14：有害地形"
+  },
+  "count": 69
+ },
+ {
+  "step": 15,
+  "file": "step15.json",
+  "title": {
+   "ja_JP": "ステップ15：回復とセーブ",
+   "en": "Step 15: Healing and Saving",
+   "zh_CN": "步骤 15：恢复和储存"
+  },
+  "count": 67
+ },
+ {
+  "step": 16,
+  "file": "step16.json",
+  "title": {
+   "ja_JP": "ステップ16：シンボルエンカウント",
+   "en": "Step 16: Symbol Encounters",
+   "zh_CN": "步骤 16：标志遇敌"
+  },
+  "count": 167
+ },
+ {
+  "step": 17,
+  "file": "step17.json",
+  "title": {
+   "ja_JP": "ステップ17：敵キャラ（ボス）の設定",
+   "en": "Step 17: Enemy Character (Boss) Settings",
+   "zh_CN": "步骤 17：敌人角色（Boss）设定"
+  },
+  "count": 148
+ },
+ {
+  "step": 18,
+  "file": "step18.json",
+  "title": {
+   "ja_JP": "ステップ18：エンディング作成",
+   "en": "Step 18: Creating an Ending",
+   "zh_CN": "步骤 18：设置结局"
+  },
+  "count": 113
+ },
+ {
+  "step": 19,
+  "file": "step19.json",
+  "title": {
+   "ja_JP": "ステップ19：タイトル画面の編集",
+   "en": "Step 19: Editing the Title Screen",
+   "zh_CN": "步骤 19：编辑标题画面"
+  },
+  "count": 34
+ }
+]

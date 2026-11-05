@@ -1,0 +1,694 @@
+{
+"step": 6,
+"title": {
+"ja_JP": "ステップ６：スイッチと条件分岐後編",
+"en": "Step 6: Switches and Conditional Branching Part 2",
+"zh_CN": "步骤 6：开关和分支条件 第 2 部"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 5?",
+"ja_JP": "ステップ５を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 5 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 5 project.",
+"ja_JP": "ステップ５のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 5 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 5 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ５のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 5 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読み込み完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step6",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project loads.",
+"ja_JP": "読み込みが終わるまで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step, we'll change up the previous step and learn more about conditional branching.",
+"ja_JP": "このステップでは、前のステップを改変し、条件分岐についてより深く学びます。",
+"zh_CN": "在这个步骤中，我们将改变上一步的设定，并了解关于分支条件的更多信息。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In Step 5 we used a switch to determine if conditions were met. \nHowever, it's also possible to determine if the player has a potion or not without using switches. \nLet's try it for ourselves.",
+"ja_JP": "ステップ５ではスイッチで判定しました。\n一方、スイッチを使わず直接「ポーションを持っているかどうか」で判定することも可能です。\n実際に作ってみましょう。",
+"zh_CN": "在步骤 5，我们使用了开关来判断是否已满足条件。 \n但是，无需使用开关也能判断玩家是否拥有药水。 \n我们尝试一下吧。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click PotionWoman (10,18).",
+"ja_JP": "薬をくれる女性(10,18)をダブルクリック。",
+"zh_CN": "双击供药水的女人（10,18）。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 57,
+"y": 86,
+"windowKey": "EventEditorMain",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Open page 2.",
+"ja_JP": "２ページ目を開きます。",
+"zh_CN": "打开第 2 页。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 30,
+"y": 134,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We're going to change the appearance condition from Switch to Item. \nRemove the check from Switch.",
+"ja_JP": "出現条件をスイッチからアイテムに変更します。\nスイッチのチェックをはずします。",
+"zh_CN": "我们要把出现条件从开关更改为物品。 \n取消勾选“开关”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 50,
+"y": 300,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off Item.",
+"ja_JP": "アイテムにチェックを入れます。",
+"zh_CN": "勾选“物品”。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 200,
+"y": 293,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Change to \"0007 Potion\".",
+"ja_JP": "「0007 ポーション」に変更します。",
+"zh_CN": "更改为“0007 药水”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 231,
+"y": 290,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "With that, this event will be triggered when the player is holding a potion.",
+"ja_JP": "これでポーションを所持している時にこのイベントが有効になります。",
+"zh_CN": "如此一来，本事件会在玩家持有药水的时候被触发。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 24,
+"y": 77,
+"windowKey": "EventEditorMain",
+"condition": "list,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Open page 1.",
+"ja_JP": "１ページ目を開きます。",
+"zh_CN": "打开第 1 页。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 519,
+"y": 197,
+"windowKey": "EventEditorMain",
+"condition": "action,menuDelete",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we no longer need the \"Control Switch\", so we'll delete it. \nThis can be done by right clicking and selecting \"Delete\".",
+"ja_JP": "「スイッチの操作」は不要になったので、削除します。\n右クリックで「削除」を選択。",
+"zh_CN": "现在我们已经不再需要“开关操作”，所以我们要删除它。 \n右击然后选择“删除”。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 774,
+"y": 683,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we've set her to give you a potion any time that you don't have one. \nClick OK and it will be set.",
+"ja_JP": "これで「ポーションを持っていない時に何度でもくれる」ようになりました。\nＯＫをクリックし、確定。",
+"zh_CN": "现在她已被设定为无论你是否拥有药水都会给你药水了。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, double click the man who judges whether or not you have a potion (11,18).",
+"ja_JP": "次に薬の所持を判定する男性(11,18)をダブルクリック。",
+"zh_CN": "接下来，双击鉴定你是否拥有药水的男人（11,18）。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 504,
+"y": 137,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommand,open",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll change the condition in the conditional branch. \nRight click and select \"Edit...\".",
+"ja_JP": "条件分岐の条件を変更します。\n右クリックで「編集…」を選択。",
+"zh_CN": "我们将在分支条件中更改条件。 \n右击后选择“编辑……”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 132,
+"y": 17,
+"windowKey": "EventCommand",
+"condition": "tabView,tabview,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the tab for the 4th page and open it.",
+"ja_JP": "タブの４ページ目をクリックして開きます。",
+"zh_CN": "单击第 4 页的标签，将其打开。"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 48,
+"y": 95,
+"windowKey": "EventCommand",
+"condition": "radioButton,RadioButton,8",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check off \"Item\".",
+"ja_JP": "アイテムをチェックします。",
+"zh_CN": "勾选“物品”。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 210,
+"y": 92,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Change to \"0007 Potion\".",
+"ja_JP": "アイテム「0007 ポーション」に変更してください。",
+"zh_CN": "更改为“0007 药水”。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 315,
+"y": 353,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the changes.",
+"ja_JP": "ＯＫをクリックして変更を確定。",
+"zh_CN": "单击 OK 设置变更。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": 666,
+"y": 134,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now the condition is \"the party possesses a potion\".",
+"ja_JP": "条件が「パーティがポーションを持っている」になりました。",
+"zh_CN": "现在的条件是“该方拥有药水”。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": 789,
+"y": 686,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we're done editing the event. \nClick OK and it will be set.",
+"ja_JP": "これでイベントの編集は完了です。\nＯＫをクリックして確定。",
+"zh_CN": "我们已完成编辑该事件。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 96,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Save your project before running a playtest.",
+"ja_JP": "テストプレイの前に、プロジェクトを保存してください。",
+"zh_CN": "进行测试之前先存档吧。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 1050,
+"y": 26,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Run a play test, and check the events. \nPay attention to whether you can receive another potion \nafter getting a potion and losing it by talking to the child.",
+"ja_JP": "実際にテストプレイを行い、確認してください。\nポーションを貰った後、子供に話しかけ失うと\nまた貰えるようになった点に注目。",
+"zh_CN": "测试游戏，确认所有事件。 \n在获得药水后或与小孩对话失去药水后， \n留意你是否能再次获得药水。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Once you're done with the playtest, there's some more explanation.",
+"ja_JP": "テストプレイが終わったら解説を行います。",
+"zh_CN": "测试完后，还有一些东西得向你解说。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "We learned that by making a condition that generates items, we can perform different actions than with a switch.",
+"ja_JP": "アイテムを発生条件にすることで、スイッチと異なる動作をするのが分かりました。",
+"zh_CN": "我们已经知道了制作可以产生物品的条件可以让我们执行与开关不同的行动。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "To create a situation where once you get an item you can never get it again, we use switches,\nand for a situation where you can receive the item continually it's best to branch using items.",
+"ja_JP": "「一度手に入れたら二度と手に入らない」時はスイッチで、\n「何度でも貰える」場合はアイテムで分岐すると良いと分かります。",
+"zh_CN": "我们使用开关来创建一个获得物品之后就无法再次获得的情况；\n我们使用物品分支来创建一个可以重复获得物品的情况。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "There are still many other conditions you can specify,\nso please try them out for yourself to learn about them. \nBut the one you will have the most opportunities to use is the switch.",
+"ja_JP": "指定できる条件は、まだまだ多数ありますが、\n今後、実際に使いながら学んでください。\nただし一番使う機会が多いのはスイッチです。",
+"zh_CN": "除此之外还有很多你可以指定的条件，\n因此请尝试一番以了解它们。 \n但是你最有机会使用的将是开关。"
+}
+}
+]
+}

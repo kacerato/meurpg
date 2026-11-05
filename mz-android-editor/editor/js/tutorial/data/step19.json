@@ -1,0 +1,656 @@
+{
+"step": 19,
+"title": {
+"ja_JP": "ステップ19：タイトル画面の編集",
+"en": "Step 19: Editing the Title Screen",
+"zh_CN": "步骤 19：编辑标题画面"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 18?",
+"ja_JP": "ステップ１８を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 18 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 18 project.",
+"ja_JP": "ステップ１８のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 18 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 18 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ１８のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 18 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクトの読込完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step19",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了まで、お待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成が完了しました。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step, as a final touch,\nwe'll deal with the title screen.",
+"ja_JP": "このステップでは最後の仕上げとして、\nタイトル画面を扱います。",
+"zh_CN": "在这个步骤中，作为润色，\n我们将对标题画面做处理。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 774,
+"y": 24,
+"windowKey": "MainWindow",
+"condition": "windowState,DatabaseMain,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First, let's adjust the game title screen. \nPlease open the database.",
+"ja_JP": "まずはゲームタイトル画面を調整します。\nデータベースを開いてください。",
+"zh_CN": "首先，让我们调整游戏的标题画面吧。 \n请打开数据库。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 54,
+"y": 412,
+"windowKey": "DatabaseMain",
+"condition": "list,12",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the \"System1\" tab.",
+"ja_JP": "「システム1」タブをクリックしてください。",
+"zh_CN": "单击“系统 1”标签。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 396,
+"y": 58,
+"windowKey": "DatabaseMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "First we'll edit the game title. \nEnter a title that you like.",
+"ja_JP": "まずはゲームタイトルを変更します。\n好きな名前を入力してください。",
+"zh_CN": "我们要先编辑游戏标题。 \n输入一个你喜欢的标题。"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 553,
+"y": 80,
+"windowKey": "DatabaseMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, let's change the title screen image. \nClick Images.",
+"ja_JP": "次は、タイトル画面の画像を変更しましょう。\n画像をクリックしてください。",
+"zh_CN": "接着，让我们更改标题画面的图像。 \n单击“图像”。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 209,
+"y": 254,
+"windowKey": "ImageSelector",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "For title screens, you can combine two images. We'll select an image from the list on the left as a base,\nand an accent from the list on the right. \nCombine whatever images you like.",
+"ja_JP": "タイトル画面は、２枚の画像の重ね合わせが可能です。左のリストでベースとなる画像を、\n右のリストで装飾を選択します。\n好きな画像を組み合わせてください。",
+"zh_CN": "制作标题画面，你可以结合两个图像。我们将从左侧列表中选一个图像作为基础，\n然后从右侧列表选一个特色图像。 \n你可以结合任何你喜欢的图像。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 662,
+"y": 432,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Once you found images you like,\nclick OK to set them.",
+"ja_JP": "気に入った画像が見つかったら\nＯＫをクリックして確定。",
+"zh_CN": "找到你喜欢的图像后，\n单击 OK 设置它们。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 1000,
+"y": 80,
+"windowKey": "DatabaseMain",
+"condition": "windowState,AudioSelector,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "You can change the title BGM from the topmost line\nof the music list. Double click it.",
+"ja_JP": "タイトルのBGMは、音楽のリストの一番上の行で\n変更できます。ダブルクリックしてください。",
+"zh_CN": "你可以通过音乐列表最顶行\n更改标题 BGM。双击它。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 62,
+"y": 433,
+"windowKey": "AudioSelector",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Play them and sample them. If you change the pitch, the feel of the song will change, so compare and contrast.",
+"ja_JP": "再生して試聴してください。ピッチを操作すると曲の感じが変わるので、聴き比べてみてください。",
+"zh_CN": "播放并采样。如果你更改它的音调，音乐的感觉也会随之改变，你可以互相对照和比较。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 200,
+"y": 424,
+"windowKey": "AudioSelector",
+"condition": "windowState,AudioSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Once you found something you like,\nclick OK to set it. \nIf nothing is really doing it for you, go back to Theme6.",
+"ja_JP": "気に入った曲が見つかったら、\nＯＫをクリックして確定。\n特にない場合は「キャンセル」をクリックしてください。",
+"zh_CN": "找到你喜欢的音乐后，\n单击 OK 设置它。 \n如果没有你喜欢的音乐，就使用“Theme6”。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 600,
+"y": 150,
+"windowKey": "DatabaseMain",
+"condition": "windowState,TitleCommandWindow,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, we'll change the position of the title screen's command window. \nClick on the command window.",
+"ja_JP": "次は、タイトル画面のコマンドウィンドウの位置を変更します。\nコマンドウィンドウをクリック。",
+"zh_CN": "接下来，我们将更改标题画面的命令窗口的位置。 \n单击命令窗口。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 150,
+"y": 30,
+"windowKey": "TitleCommandWindow",
+"condition": "click,",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's shift the title command to the bottom right. \nClick on the parameter's Offset X.",
+"ja_JP": "実際に、タイトルコマンドを右下にずらすことにします。\nパラメータの オフセット X をクリック。",
+"zh_CN": "我们把标题命令移到右下方吧。 \n单击参数的“偏移 X 值”。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "TitleCommandWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "A positive value in \"Offset X\" shifts it to the right, a negative value shifts it to the left. \nWe'll shift it 200 pixels to the right this time. \nInput \"200\".",
+"ja_JP": "「オフセットX」は正の値だと右に、負の値だと左にずれます。\n今回は右に200ピクセル移動することにします。\n「200」と入力してください。",
+"zh_CN": "“偏移 X 值”若是正值，就会让它往右移；若是负值，就会让它往左移。 \n这次我们要把它往右移 200 像素。 \n输入“200”。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 250,
+"y": 30,
+"windowKey": "TitleCommandWindow",
+"condition": "click,",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next, click on Offset Y.",
+"ja_JP": "次は オフセットY をクリック。",
+"zh_CN": "接着，单击“偏移 Y 值”。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "TitleCommandWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "A positive value in \"Offset Y\" shifts it down, a negative value shifts it up. \nWe'll shift it 40 pixels down this time. \nInput \"40\".",
+"ja_JP": "「オフセットY」は正の値だと下に、負の値だと上にずれます。\n今回は下に40ピクセル移動することにします。\n「40」と入力してください。",
+"zh_CN": "“偏移 Y 值”若是正值，就会让它往下移；若是负值，就会让它往上移。 \n这次我们要把它往下移 40 像素。 \n输入“40”。"
+}
+},
+{
+"id": 38,
+"folder": false,
+"x": 150,
+"y": 80,
+"windowKey": "TitleCommandWindow",
+"condition": "windowState,PluginParameter,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "When you're done with the input, click OK and set it.",
+"ja_JP": "入力が終わったらＯＫをクリックして確定。",
+"zh_CN": "输入完成后，单击 OK 设置它。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 903,
+"y": 688,
+"windowKey": "DatabaseMain",
+"condition": "windowState,DatabaseMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the changes\nand close the database.",
+"ja_JP": "ＯＫをクリックして、これまでの変更を確定し\nデータベースを閉じます。",
+"zh_CN": "单击 OK 设置变更，\n然后关闭数据库。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "ApplicationWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We've finished editing the title screen.",
+"ja_JP": "これでタイトル画面変更は完了です。",
+"zh_CN": "我们已编辑完标题画面。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 105,
+"y": 18,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now we'll run a playtest,\nso please save the project first.",
+"ja_JP": "それでは、テストプレイを行いますので\n先にプロジェクトを保存してください。",
+"zh_CN": "现在我们将进行游戏测试，\n所以请先保存项目。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 1050,
+"y": 21,
+"windowKey": "MainWindow",
+"condition": "windowState,GamePlayer,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Start a playtest. \nPlease check and see\nhow the title screen has changed.",
+"ja_JP": "テストプレイを開始してください。\nタイトル画面がどう変更されたか\n確認してください。",
+"zh_CN": "开始测试游戏。 \n请确认并观察\n标题画面的变更。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. You've now completed this tutorial. Like a house with no doors or an empty field,\nthere is still room to grow. \nPlease try to come up with ways to innovate on your own.",
+"ja_JP": "お疲れさまでした。これでチュートリアルは終了です。\nまだ、扉のない家や、何もないフィールドなど、\n改良の余地はあるでしょう。\n皆さんご自身で工夫して改良してみてください。",
+"zh_CN": "做得好。你已完成本教程。就像一个没有门的房子、一片空旷的草地，\n还有很多可以进步的空间。 \n请尽量尝试各种方法，开创出自己的风格。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Additionally, on the RPG Maker MZ official site, there are courses for beginners. Please read them and further enrich your knowledge.",
+"ja_JP": "また、ツクールMZの公式サイトには、\n初心者講座があります。\nこれを読んで、より知識を深めて行ってください。",
+"zh_CN": "此外，在 RPG Maker MZ 的官方网站上也有针对初学者的讲座。请详阅它们，并进一步丰富你的知识。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please enjoy the game production.",
+"ja_JP": "ぜひゲーム制作を楽しんでください。",
+"zh_CN": "请享受游戏制作！"
+}
+}
+]
+}

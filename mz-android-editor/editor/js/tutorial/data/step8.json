@@ -1,0 +1,1606 @@
+{
+"step": 8,
+"title": {
+"ja_JP": "ステップ８：ショップの作成",
+"en": "Step 8: Creating Shops",
+"zh_CN": "步骤 8：设置商店"
+},
+"items": [
+{
+"id": 1,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "WARNING: During a tutorial, if you execute a command other than the one the tutorial indicates to, you can go to the Help>Stop tutorial to stop the current tutorial and start over.",
+"ja_JP": "※注意※指定外の動作を行ってチュートリアルが進行してしまった場合、「ヘルプ」から「チュートリアル停止」を選択することで、またチュートリアルを最初からやり直すことができます。",
+"zh_CN": "注：在教程中，若你执行了不属于教程指示的命令，可以打开“帮助”选择“停止教程”以停止当前教程，并重新开始。"
+}
+},
+{
+"id": 2,
+"folder": false,
+"x": 432,
+"y": 212,
+"windowKey": "MainWindow",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 3,
+"jumpNo": 6,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Do you have the project we finished in step 7?",
+"ja_JP": "ステップ７を完了したプロジェクトを持っていますか？",
+"zh_CN": "你是否持有我们通过步骤 7 完成的项目？"
+}
+},
+{
+"id": 3,
+"folder": false,
+"x": 69,
+"y": 3,
+"windowKey": "MainWindow",
+"condition": "action,fileOpen,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Loading the step 7 project.",
+"ja_JP": "ステップ７のプロジェクトを読み込みます。",
+"zh_CN": "读取步骤 7 的项目。"
+}
+},
+{
+"id": 4,
+"folder": false,
+"x": 400,
+"y": 113,
+"windowKey": "FileDialog",
+"condition": "action,Project Loaded,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Please select the step 7 project. \nProjects are in the Games folder in My Documents.",
+"ja_JP": "ステップ７のプロジェクトを選択。\nプロジェクトはドキュメントのGamesフォルダにあります。",
+"zh_CN": "请选择步骤 7 的项目。 \n所有项目都在我的文件夹中的游戏文件夹中。"
+}
+},
+{
+"id": 5,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Project loaded.",
+"ja_JP": "プロジェクト読み込み完了。",
+"zh_CN": "项目已载入。"
+}
+},
+{
+"id": 6,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will load the data required to start this step.",
+"ja_JP": "それではこのステップの開始に必要なデータを読み込みます。",
+"zh_CN": "现在我们要加载开始这个步骤所需的数据。"
+}
+},
+{
+"id": 7,
+"folder": false,
+"x": 27,
+"y": 17,
+"windowKey": "MainWindow",
+"condition": "action,fileNew,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click New Project.",
+"ja_JP": "プロジェクトの新規作成をクリック。",
+"zh_CN": "单击“新建项目”。"
+}
+},
+{
+"id": 8,
+"folder": false,
+"x": 337,
+"y": 125,
+"windowKey": "NewProject",
+"condition": "windowState,Copying,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "presetData,step8",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Input the project name and game title, then click OK.",
+"ja_JP": "プロジェクトの名前とゲームタイトルを入力しOKをクリック。",
+"zh_CN": "输入项目名称和游戏标题，然后按 OK。"
+}
+},
+{
+"id": 9,
+"folder": false,
+"x": 0,
+"y": 0,
+"windowKey": "Copying",
+"condition": "windowState,Copying,close",
+"icon": "wait",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Please hold on while the project finishes loading.",
+"ja_JP": "プロジェクトの読込完了までお待ちください。",
+"zh_CN": "项目正在加载中，请耐心等候。"
+}
+},
+{
+"id": 10,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click",
+"icon": "eye",
+"jump": 11,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "New project created.",
+"ja_JP": "プロジェクトの新規作成完了。",
+"zh_CN": "新项目已建成。"
+}
+},
+{
+"id": 11,
+"folder": false,
+"x": 400,
+"y": 80,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now we will start the tutorial.",
+"ja_JP": "それでは、チュートリアルを始めます。",
+"zh_CN": "现在我们要开始教程。"
+}
+},
+{
+"id": 12,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "In this step we will create an inn and an item shop.",
+"ja_JP": "このステップでは宿屋と道具屋を作成します。",
+"zh_CN": "在这个步骤中，我们将创建一个旅店和一个物品商店。"
+}
+},
+{
+"id": 13,
+"folder": false,
+"x": 141,
+"y": 52,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Normal Town.",
+"ja_JP": "\"普通の町\"をクリック。",
+"zh_CN": "单击“普通小镇”。"
+}
+},
+{
+"id": 14,
+"folder": false,
+"x": 777,
+"y": 239,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The inn is a building with a yellow roof right of the town center.",
+"ja_JP": "宿屋は町の中央の右にある黄色の屋根の建物にします。",
+"zh_CN": "旅馆是一个黄色屋顶的建筑物，位于小镇中心的右边。"
+}
+},
+{
+"id": 15,
+"folder": false,
+"x": 165,
+"y": 49,
+"windowKey": "MapEditTreeBox",
+"condition": "windowState,MapLoader,open",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "As in Step 1, we'll use a sample map for the interior map of the inn. \nRight click Normal Town and select \"Load...\".",
+"ja_JP": "宿屋の内装マップは、ステップ１と同様、サンプルマップを使います。\n\"普通の町\"を右クリックし、「ロード…」を選択。",
+"zh_CN": "如步骤 1，我们将使用地图范例来制作旅店的内部地图。 \n右击“普通小镇”，然后选择“载入……”。"
+}
+},
+{
+"id": 16,
+"folder": false,
+"x": 149,
+"y": 0,
+"windowKey": "MapLoader",
+"condition": "list,40",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Scroll a bit down the list to find and click \"Inn 1F\".",
+"ja_JP": "リストを少し下にスクロールし\"宿屋1F\"を見つけ、クリック。",
+"zh_CN": "滚动至列表下方，寻找并单击“旅馆 1F”"
+}
+},
+{
+"id": 17,
+"folder": false,
+"x": 527,
+"y": 468,
+"windowKey": "MapLoader",
+"condition": "windowState,MapLoader,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK.",
+"ja_JP": "ＯＫをクリック。",
+"zh_CN": "单击 OK。"
+}
+},
+{
+"id": 18,
+"folder": false,
+"x": 120,
+"y": 68,
+"windowKey": "MapEditTreeBox",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now a map has been created a level under \"Normal Town\". \nYou can created a layered map structure like this.",
+"ja_JP": "\"普通の町\"の下部にマップが作成されました。\nこのように、マップは階層構造にできます。",
+"zh_CN": "现在已在“普通小镇”下方创建了一个地图。 \n你可以像这样创建地图分层构造。"
+}
+},
+{
+"id": 19,
+"folder": false,
+"x": 660,
+"y": 750,
+"windowKey": "MainWindow",
+"condition": "windowState,QuickTransfer,open",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next let's connect the maps. \nRight click the inn's entrance (10,19)\nand select Quick Event Creation > Transfer.",
+"ja_JP": "次にマップを繋ぎます。\n宿屋の出口(10,19)を右クリックし、\nイベントの簡単作成 > 移動…を選択。",
+"zh_CN": "接着，把地图连接起来吧。 \n右击旅店入口（10,19），\n然后选择“快速创建事件”>“移动”。"
+}
+},
+{
+"id": 20,
+"folder": false,
+"x": 132,
+"y": 45,
+"windowKey": "QuickTransfer",
+"condition": "windowState,Location,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click and edit the location.",
+"ja_JP": "場所をクリックします。",
+"zh_CN": "单击并编辑该位置。"
+}
+},
+{
+"id": 21,
+"folder": false,
+"x": 174,
+"y": 58,
+"windowKey": "Location",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Normal Town.",
+"ja_JP": "\"普通の町\"をクリック。",
+"zh_CN": "单击“普通小镇”。"
+}
+},
+{
+"id": 22,
+"folder": false,
+"x": 850,
+"y": 430,
+"windowKey": "Location",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click in front of the yellow building right of the town center.",
+"ja_JP": "町の中央の右にある黄色の建物の手前をクリック。",
+"zh_CN": "单击小镇中心右边黄色建筑物的前面。"
+}
+},
+{
+"id": 23,
+"folder": false,
+"x": 966,
+"y": 667,
+"windowKey": "Location",
+"condition": "windowState,Location,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the location.",
+"ja_JP": "ＯＫをクリックして場所を確定。",
+"zh_CN": "单击 OK 设置位置。"
+}
+},
+{
+"id": 24,
+"folder": false,
+"x": 117,
+"y": 38,
+"windowKey": "QuickTransfer",
+"condition": "yesNo",
+"icon": "eye",
+"jump": 26,
+"jumpNo": 25,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Is the location set to Normal Town (23,17)?",
+"ja_JP": "場所は　普通の町 (23,17)　になっていますか？",
+"zh_CN": "位置是否已设在普通小镇（23,17）？"
+}
+},
+{
+"id": 25,
+"folder": false,
+"x": 111,
+"y": 38,
+"windowKey": "QuickTransfer",
+"condition": "click",
+"icon": "eye",
+"jump": 20,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Then let's redo the location settings.",
+"ja_JP": "それでは、場所設定をやりなおしましょう。",
+"zh_CN": "那就重新设置位置设定吧。"
+}
+},
+{
+"id": 26,
+"folder": false,
+"x": 225,
+"y": 77,
+"windowKey": "QuickTransfer",
+"condition": "windowState,QuickTransfer,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK. The event will be created.",
+"ja_JP": "ＯＫをクリック。イベントが作成されます。",
+"zh_CN": "单击 OK。事件将被创建。"
+}
+},
+{
+"id": 27,
+"folder": false,
+"x": 162,
+"y": 49,
+"windowKey": "MapEditTreeBox",
+"condition": "list,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next we make the entrance from the town to the inn. \nClick Normal Town.",
+"ja_JP": "次は町から宿屋への入口作成です。\n\"普通の町\"をクリック。",
+"zh_CN": "接下来我们要制作从小镇到旅店的入口。 \n单击“普通小镇”。"
+}
+},
+{
+"id": 28,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Find the coordinates (23,16), the entrance to the inn building.",
+"ja_JP": "宿屋となる建物の入口、座標(23,16)を見つけて下さい。",
+"zh_CN": "找到旅店入口坐标（23,16）。"
+}
+},
+{
+"id": 29,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "action,eventEdit",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right-click (23,16) and select Edit.",
+"ja_JP": "(23,16)で右クリックし、編集を選択。",
+"zh_CN": "右击（23,16）并选择编辑。"
+}
+},
+{
+"id": 30,
+"folder": false,
+"x": 550,
+"y": 150,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double-click the topmost line of Contents.",
+"ja_JP": "実行内容の一番上の行をダブルクリック。",
+"zh_CN": "双击执行内容的最顶行。"
+}
+},
+{
+"id": 84,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,1",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Go to Page 2 of Event Commands.",
+"ja_JP": "イベントコマンドの2ページ目を選択。",
+"zh_CN": "打开事件指令的第2页。"
+}
+},
+{
+"id": 85,
+"folder": false,
+"x": 150,
+"y": 460,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Transfer.",
+"ja_JP": "場所移動をクリック。",
+"zh_CN": "单击“场所移动”。"
+}
+},
+{
+"id": 86,
+"folder": false,
+"x": 100,
+"y": 50,
+"windowKey": "EventCommand",
+"condition": "windowState,Location,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the location's Direct Designation.",
+"ja_JP": "場所の直接指定をクリック。",
+"zh_CN": "单击该位置的“直接指定”。"
+}
+},
+{
+"id": 31,
+"folder": false,
+"x": 150,
+"y": 57,
+"windowKey": "Location",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click Inn 1F.",
+"ja_JP": "\"宿屋1F\"をクリック。",
+"zh_CN": "单击旅馆 1F。"
+}
+},
+{
+"id": 32,
+"folder": false,
+"x": 546,
+"y": 460,
+"windowKey": "Location",
+"condition": "mouseEvent,Map,click",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on the exit of the inn at (10,18).",
+"ja_JP": "宿屋の出入口(10,18)をクリック。",
+"zh_CN": "单击旅馆出口（10,18）。"
+}
+},
+{
+"id": 33,
+"folder": false,
+"x": 957,
+"y": 678,
+"windowKey": "Location",
+"condition": "windowState,Location,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the location.",
+"ja_JP": "ＯＫをクリックして場所を確定。",
+"zh_CN": "单击 OK 设置位置。"
+}
+},
+{
+"id": 34,
+"folder": false,
+"x": 300,
+"y": 150,
+"windowKey": "QuickTransfer",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Make sure the location is (10,18) or beside it and click OK.",
+"ja_JP": "場所が(10,18) となっているか確認しＯＫをクリック。",
+"zh_CN": "确保位置为（10,18）或在其旁边，然后单击 OK。"
+}
+},
+{
+"id": 35,
+"folder": false,
+"x": 800,
+"y": 680,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,ok",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "This links the town and inn together. \nClick OK.",
+"ja_JP": "これで、町と宿屋がつながりました。\nOKをクリック。",
+"zh_CN": "这将会把旅馆和小镇连接起来。 \n单击 OK。"
+}
+},
+{
+"id": 40,
+"folder": false,
+"x": 171,
+"y": 73,
+"windowKey": "MapEditTreeBox",
+"condition": "list,3",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Next up is the event in the inn. Click Inn 1F.",
+"ja_JP": "次は宿屋内のイベントです。\"宿屋1F\"をクリック。",
+"zh_CN": "接下来是设置旅馆中的事件。单击旅馆 1F。"
+}
+},
+{
+"id": 41,
+"folder": false,
+"x": 650,
+"y": 400,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "To create the inn event, \nfirst find the counter at (10,9) that faces the entrance.",
+"ja_JP": "宿屋イベントを作ります。\n入口正面のカウンター(10,9)を見つけます。",
+"zh_CN": "要创建旅馆事件， \n得先找到面向入口的柜台（10,9）。"
+}
+},
+{
+"id": 42,
+"folder": false,
+"x": 650,
+"y": 400,
+"windowKey": "MainWindow",
+"condition": "windowState,QuickInn,open",
+"icon": "rightClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Right click on (10,9)\nand select\nQuick Event Creation > Inn.",
+"ja_JP": "(10,9)を右クリックし\nイベントの簡単作成 > 宿屋…を選択。",
+"zh_CN": "右击（10,9），\n然后选择\n选择“快速创建事件”>“旅馆”。"
+}
+},
+{
+"id": 43,
+"folder": false,
+"x": 63,
+"y": 164,
+"windowKey": "QuickInn",
+"condition": "windowState,QuickInn,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "This time we won't change the image or price. \nClick OK and it will be set.",
+"ja_JP": "画像と料金は今回は変更しません。\nＯＫをクリックして確定。",
+"zh_CN": "这次我们将不改变图像或价格。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 44,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Now the inn event is complete. \nNext is the item shop.",
+"ja_JP": "これで宿屋イベント完成です。\n次は道具屋です。",
+"zh_CN": "旅馆事件的设置这样就完成了。 \n接着是物品商店。"
+}
+},
+{
+"id": 45,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "For this, we'll make a traveling merchant staying at the inn into an item shop.",
+"ja_JP": "今回は「宿屋に滞在している行商人」を道具屋にします。",
+"zh_CN": "为此，我们需要把住在旅店的旅行商人做成物品商店。"
+}
+},
+{
+"id": 46,
+"folder": false,
+"x": 550,
+"y": 450,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make the merchant's coordinates in the guest room (7,11). \nClick to find those coordinates.",
+"ja_JP": "行商人の座標は客室の(7,11)にします。\nクリックでその座標を見つけてください。",
+"zh_CN": "我们把商人的坐标设置在客室（7,11）。 \n单击找寻该坐标。"
+}
+},
+{
+"id": 47,
+"folder": false,
+"x": 550,
+"y": 450,
+"windowKey": "MainWindow",
+"condition": "windowState,EventEditorMain,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double-click (7,11).",
+"ja_JP": "座標(7,11)をダブルクリック。",
+"zh_CN": "双击（7,11）。"
+}
+},
+{
+"id": 48,
+"folder": false,
+"x": 87,
+"y": 44,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Name the event TravelingMerchant.",
+"ja_JP": "イベントの名前を「行商人」にしてください。",
+"zh_CN": "把事件命名为“旅行商人”。"
+}
+},
+{
+"id": 49,
+"folder": false,
+"x": 66,
+"y": 416,
+"windowKey": "EventEditorMain",
+"condition": "windowState,ImageSelector,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click Image.",
+"ja_JP": "画像をダブルクリック。",
+"zh_CN": "双击“图像”。"
+}
+},
+{
+"id": 50,
+"folder": false,
+"x": 119,
+"y": 264,
+"windowKey": "ImageSelector",
+"condition": "list,12",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Let's pick someone who looks like a merchant. \nClick People3.",
+"ja_JP": "行商人らしい画像を選びます。\nPeople3 をクリック。",
+"zh_CN": "选一个看起来像商人的人吧。 \n单击“People3”。"
+}
+},
+{
+"id": 51,
+"folder": false,
+"x": 300,
+"y": 174,
+"windowKey": "ImageSelector",
+"condition": "list,49",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Pick the man facing downward furthest to the left in the bottom row.",
+"ja_JP": "下段一番左の下向きの画像をクリックして選択。",
+"zh_CN": "选择在底端行最左边，面朝下的男人。"
+}
+},
+{
+"id": 52,
+"folder": false,
+"x": 548,
+"y": 429,
+"windowKey": "ImageSelector",
+"condition": "windowState,ImageSelector,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the image.",
+"ja_JP": "ＯＫをクリックして画像を確定。",
+"zh_CN": "单击 OK 设置图像。"
+}
+},
+{
+"id": 53,
+"folder": false,
+"x": 606,
+"y": 131,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "For the event content, we're going to set it so that you can shop after he greets you. \nDouble click the first line in \"Contents\".",
+"ja_JP": "実行内容は行商人の挨拶の後買い物、という流れにします。\n実行内容の一番上の行をダブルクリック。",
+"zh_CN": "关于事件内容，我们将把它设定成在他向你打招呼后便能逛商店。 \n双击“执行内容”中的第一行。"
+}
+},
+{
+"id": 36,
+"folder": false,
+"x": 30,
+"y": 0,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on the first page of the tab.",
+"ja_JP": "タブの１ページ目をクリック。",
+"zh_CN": "单击标签第一页。"
+}
+},
+{
+"id": 54,
+"folder": false,
+"x": 156,
+"y": 73,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 55,
+"folder": false,
+"x": 299,
+"y": 44,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter: \"I'm a traveling merchant. \nPlease buy something.\"",
+"ja_JP": "『私は旅する行商人です。何か買ってください。』\nと入力。",
+"zh_CN": "输入：“我是个旅行商人。 \n请购买些东西。”"
+}
+},
+{
+"id": 56,
+"folder": false,
+"x": 413,
+"y": 212,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 57,
+"folder": false,
+"x": 558,
+"y": 183,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 58,
+"folder": false,
+"x": 102,
+"y": 28,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,2",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the page 3 tab.",
+"ja_JP": "タブの３ページ目をクリック。",
+"zh_CN": "单击第 3 页的标签。"
+}
+},
+{
+"id": 59,
+"folder": false,
+"x": 153,
+"y": 103,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Shop Processing\".",
+"ja_JP": "「ショップの処理…」をクリック。",
+"zh_CN": "单击“商店处理”。"
+}
+},
+{
+"id": 60,
+"folder": false,
+"x": 101,
+"y": 39,
+"windowKey": "EventCommand",
+"condition": "windowState,Merchandise,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We're going to add merchandise for sale to this list. \nDouble click the first line. \nThe merchandise selection window will appear.",
+"ja_JP": "このリストに、売り物の商品を追加していきます。\n一番上の行をダブルクリック。\n商品選択ウィンドウが出ます。",
+"zh_CN": "我们将从在此列表添加售卖的商品。 \n双击第一行。 \n商品选项的窗口就会出现。"
+}
+},
+{
+"id": 37,
+"folder": false,
+"x": 150,
+"y": 50,
+"windowKey": "Merchandise",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click on Item. \nSelect \"0007 Potion\".",
+"ja_JP": "アイテムをクリック。\n「0007 ポーション」を選択。",
+"zh_CN": "单击“物品”。 \n选择“0007 药水”。"
+}
+},
+{
+"id": 61,
+"folder": false,
+"x": 154,
+"y": 245,
+"windowKey": "Merchandise",
+"condition": "windowState,Merchandise,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Check that \"Item\" is checked and set to \"Potion\"\nand click OK.",
+"ja_JP": "「アイテム」「0007 ポーション」がチェックされているのを確認し、ＯＫをクリック。",
+"zh_CN": "确认“物品”已被勾选，并被设为“药水”，\n然后单击 OK。"
+}
+},
+{
+"id": 62,
+"folder": false,
+"x": 80,
+"y": 59,
+"windowKey": "EventCommand",
+"condition": "windowState,Merchandise,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 63,
+"folder": false,
+"x": 145,
+"y": 43,
+"windowKey": "Merchandise",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make the second item Magic Water.",
+"ja_JP": "アイテムを「0010 マジックウォーター」にします。",
+"zh_CN": "我们要制作的第二个物品是魔力水。"
+}
+},
+{
+"id": 64,
+"folder": false,
+"x": 154,
+"y": 247,
+"windowKey": "Merchandise",
+"condition": "windowState,Merchandise,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 65,
+"folder": false,
+"x": 116,
+"y": 80,
+"windowKey": "EventCommand",
+"condition": "windowState,Merchandise,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 66,
+"folder": false,
+"x": 151,
+"y": 43,
+"windowKey": "Merchandise",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make the third item Dispel Herb.",
+"ja_JP": "アイテムを「0012 ディスペルハーブ」にします。",
+"zh_CN": "我们要制作的第三个物品是驱除草本。"
+}
+},
+{
+"id": 67,
+"folder": false,
+"x": 154,
+"y": 247,
+"windowKey": "Merchandise",
+"condition": "windowState,Merchandise,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and it will be set.",
+"ja_JP": "ＯＫをクリックして確定。",
+"zh_CN": "单击 OK 后选项就会被设置。"
+}
+},
+{
+"id": 68,
+"folder": false,
+"x": 89,
+"y": 98,
+"windowKey": "EventCommand",
+"condition": "windowState,Merchandise,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Double click the next line.",
+"ja_JP": "次の行をダブルクリック。",
+"zh_CN": "双击下一行。"
+}
+},
+{
+"id": 69,
+"folder": false,
+"x": 169,
+"y": 40,
+"windowKey": "Merchandise",
+"condition": "click,",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We'll make the 11th item Stimulant.",
+"ja_JP": "アイテムを「0011 スティミュラント]\nにします。",
+"zh_CN": "我们要制作的第 11 个物品是兴奋剂。"
+}
+},
+{
+"id": 70,
+"folder": false,
+"x": 154,
+"y": 247,
+"windowKey": "Merchandise",
+"condition": "windowState,Merchandise,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK and set the items.",
+"ja_JP": "ＯＫをクリックしてアイテムを確定。",
+"zh_CN": "单击 OK 设置物品。"
+}
+},
+{
+"id": 71,
+"folder": false,
+"x": 107,
+"y": 293,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "We're done adding goods to sell. \nClick OK and it will be set.",
+"ja_JP": "売り物の追加は完了です。\nＯＫをクリックし、確定。",
+"zh_CN": "我们已经设置好售卖用的物品了。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 72,
+"folder": false,
+"x": 591,
+"y": 179,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The items and equipment you can select here for the shop\nare registered in a \"database\", which will be explained later.",
+"ja_JP": "ショップで選択可能なアイテムや装備は\n後に説明する「データベース」で登録されています。",
+"zh_CN": "你能从这里选择放入商店的物品和装备\n都登录在“数据库”内，稍后再为你详细说明。"
+}
+},
+{
+"id": 73,
+"folder": false,
+"x": 591,
+"y": 179,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "The price is also determined by the database\nand when the player sells items, they will be bought for half their value. \nIf the price is zero, the merchant will not buy the item.",
+"ja_JP": "また、値段も「データベース」で決められており、\n売る場合、半値買取になります。\n値段がゼロだと、買い取ってもらえません。",
+"zh_CN": "价格也由数据库判定，\n当玩家售卖物品时，它将以半价被购入。 \n当价格为零时，商人则不会购买该物品。"
+}
+},
+{
+"id": 74,
+"folder": false,
+"x": 591,
+"y": 179,
+"windowKey": "EventEditorMain",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "That's it for this explanation. We can get back to work.",
+"ja_JP": "説明は以上。作業を続けます。",
+"zh_CN": "说明到这里就结束了。我们继续设置吧。"
+}
+},
+{
+"id": 75,
+"folder": false,
+"x": 507,
+"y": 260,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventCommandSelect,open",
+"icon": "doubleClick",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Lastly, let's make a message for after the player is done shopping. \nDouble click the next line.",
+"ja_JP": "最後に、買い物後のメッセージ作成です。\n次の行をダブルクリック。",
+"zh_CN": "最后，制作一个玩家结束购物后的信息。 \n双击下一行。"
+}
+},
+{
+"id": 76,
+"folder": false,
+"x": 27,
+"y": 13,
+"windowKey": "EventCommandSelect",
+"condition": "tabView,tabview,0",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click the tab to go to page 1.",
+"ja_JP": "タブをクリックして１ページ目に移動します。",
+"zh_CN": "单击标签打开第 1 页。"
+}
+},
+{
+"id": 77,
+"folder": false,
+"x": 165,
+"y": 82,
+"windowKey": "EventCommandSelect",
+"condition": "windowState,EventCommand,open",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click \"Show Text...\".",
+"ja_JP": "「文章の表示…」をクリック。",
+"zh_CN": "单击“显示文字……”。"
+}
+},
+{
+"id": 78,
+"folder": false,
+"x": 287,
+"y": 35,
+"windowKey": "EventCommand",
+"condition": "click,",
+"icon": "keyboard",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Enter: \"Thank you. \nCome by again sometime.\"",
+"ja_JP": "『ありがとうございました。またよろしくお願いします。』\nと入力。",
+"zh_CN": "输入：“感谢您的光临。 \n欢迎下次再来。”"
+}
+},
+{
+"id": 79,
+"folder": false,
+"x": 416,
+"y": 209,
+"windowKey": "EventCommand",
+"condition": "windowState,EventCommand,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Click OK to set the text.",
+"ja_JP": "ＯＫをクリックして文章を確定。",
+"zh_CN": "单击 OK 设置文本。"
+}
+},
+{
+"id": 80,
+"folder": false,
+"x": 792,
+"y": 686,
+"windowKey": "EventEditorMain",
+"condition": "windowState,EventEditorMain,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now the traveling merchant event is complete. \nClick OK and it will be set.",
+"ja_JP": "これで行商人イベントは完成です。\nＯＫをクリックして確定します。",
+"zh_CN": "现在旅行商人事件的设置已完成。 \n单击 OK 后就能完成设置。"
+}
+},
+{
+"id": 81,
+"folder": false,
+"x": 108,
+"y": 20,
+"windowKey": "MainWindow",
+"condition": "action,fileSave,close",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now our inn and item shop are finished. \nSave the project.",
+"ja_JP": "これで宿屋と道具屋は完成です。\nプロジェクトを保存。",
+"zh_CN": "现在我们的旅店和物品商店也设置好了。 \n保存项目。"
+}
+},
+{
+"id": 82,
+"folder": false,
+"x": 1050,
+"y": 23,
+"windowKey": "MainWindow",
+"condition": "action,gamePlaytest",
+"icon": "click",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": true,
+"prohibited": false,
+"text": {
+"en": "Now let's run a playtest. \nSince your starting gold will be zero, test it out after you get the gold from the chest and grass patch we made in the last step.",
+"ja_JP": "それではテストプレイを行います。\n最初は所持金ゼロなので、前ステップで作った宝箱などでお金を手に入れてから試してみてください。",
+"zh_CN": "做个测试吧。 \n由于你的初始金钱为零，从上一个步骤我们设置的宝箱和草地上取得金钱后再做测试。"
+}
+},
+{
+"id": 83,
+"folder": false,
+"x": -9999,
+"y": -9999,
+"windowKey": "MainWindow",
+"condition": "click,",
+"icon": "eye",
+"jump": -1,
+"jumpNo": -1,
+"command": "",
+"showArrow": false,
+"prohibited": false,
+"text": {
+"en": "Well done. This is the end of Step 8.",
+"ja_JP": "お疲れ様でした。これでステップ８は終了です。",
+"zh_CN": "做得好。步骤 8 到这里就结束了。"
+}
+}
+]
+}

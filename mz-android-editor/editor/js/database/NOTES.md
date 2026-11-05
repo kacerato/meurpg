@@ -155,3 +155,23 @@ Tilesets/System conferida no disco, Battle Test chegando em `Scene_Battle`.
 Testado (devserver com cópia do testproject, 1200×554): Tropas (toque duplo, Adicionar, Teste de
 batalha até `Scene_Battle`), Tilesets (arrasto, toque longo e dois dedos por PointerEvents de toque,
 `Tilesets.json` conferido no disco), fórmula, EXP, Sistema 1/2, Alterar Alvo (System.json no disco).
+
+## Rodada 4: Seletor de objetos (Opções) e animações do MV
+
+- **Seletor de objetos** (Opções → Seletor de objetos, `localStorage["mzEditor.options"].objectSelector`):
+  `common.js` marca as listas de objetos do jogo (`idOptions`, `switchOptions`, `asObjects`, com o tipo
+  registrado por `registerKinds(db)` ao abrir o banco) e `ui.js sel()` escolhe o controle:
+  Dropdown = `<select>`; Extended = campo com "…" que abre a janela **Seleção de Objeto**
+  (`pickObject`, Dialog_GameObjectSelector: título do tipo — Personagens, Classes, Habilidades... —, Lista de
+  Grupo com faixas de 20 IDs e Lista de Dados; valores especiais como Nenhum/Ataque normal num grupo próprio
+  no topo; toque duplo confirma); Smart = Dropdown abaixo de 100 objetos (`api.tools.objectSelectorMode`).
+  Interruptores (Tropas → Condições, Eventos comuns) abrem sempre o Seletor de Switch (campos "…" do MZ).
+  Tipos (elementos, tipos de arma...) continuam listas suspensas, como no MZ. Vale para todos os formulários,
+  Traits/Effects, equipamento inicial (lista filtrada mantém o tipo) e Ação/Drop de inimigos.
+  Aproximação: faixas de 20 por grupo (as do Seletor de Variável do MZ); o tamanho exato da faixa do
+  Dialog_GameObjectSelector não foi lido do bytecode.
+- **Animações do MV** (`frames`): a aba Animações mostra só o nome e um aviso (o runtime as reproduz com
+  `Sprite_AnimationMV`; o MZ não as edita). Antes o formulário MZ era montado sobre elas.
+- Testado (1200×554): Extended em Classe/Equipamento/Animação de habilidade (grupo "Ataque Normal / Nenhum" +
+  7 faixas), escolha por toque duplo grava e marca "Banco de Dados *"; Smart: Habilidades (235) → Extended,
+  Classes (8) → Dropdown; Dropdown → `<select>`.

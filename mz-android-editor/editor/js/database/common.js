@@ -30,13 +30,29 @@ export const AUTO_REMOVAL = [[0, t("None", "Constants")], [1, t("Action End", "E
 export const FILES = ["Actors", "Classes", "Skills", "Items", "Weapons", "Armors", "Enemies", "Troops",
     "States", "Animations", "Tilesets", "CommonEvents", "System"];
 
+// Tipo de cada array do banco aberto ("Actors", "Skills"...), registrado pelo index.js ao carregar:
+// as listas de objeto seguem a opção "Seletor de objetos" (ui.js `sel`) e o título do diálogo
+// Estendido vem daqui (Dialog_GameObjectSelector).
+const KINDS = new WeakMap();
+export function registerKinds(db) {
+    for (const [k, v] of Object.entries(db)) { if (Array.isArray(v)) { KINDS.set(v, k); } }
+}
+export function kindOf(arr) { return (arr && KINDS.get(arr)) || "objects"; }
+// Marca uma lista [[valor, rótulo]...] como lista de objetos do jogo.
+export function asObjects(list, kind) {
+    Object.defineProperty(list, "objectKind", { value: kind || "objects", enumerable: false, configurable: true });
+    return list;
+}
+
 // Opções "0001 Nome" a partir de um array do banco (índice 0 = null).
-export function idOptions(arr, none) {
+// O resultado é marcado como lista de objetos (Opções → Seletor de objetos).
+// Um array filtrado pode informar o tipo em `kind`.
+export function idOptions(arr, none, kind) {
     const out = none !== undefined && none !== false ? [[0, none]] : [];
     for (let i = 1; i < (arr || []).length; i++) {
         out.push([i, pad(i) + " " + (arr[i] ? arr[i].name || "" : "")]);
     }
-    return out;
+    return asObjects(out, kind || kindOf(arr));
 }
 
 // Opções a partir de uma lista de tipos do System (elements, skillTypes ...), índice 0 vazio.
@@ -57,7 +73,7 @@ export function nameOf(arr, id, none = t("None", "Constants")) {
 export function switchOptions(sys) {
     const out = [];
     for (let i = 1; i < Math.max(sys.switches.length, 2); i++) { out.push([i, pad(i) + " " + (sys.switches[i] || "")]); }
-    return out;
+    return asObjects(out, "switches");
 }
 
 // --------------------------------------------------------------------- Escopo (MZ: Faction / Number / Status)

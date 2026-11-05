@@ -1,7 +1,7 @@
 // Módulo "database": diálogo Banco de dados do RPG Maker MZ (16 abas).
 // Contrato: SESSIONS.md. Liga o botão btnDatabase; grava data/*.json e emite db:changed.
 import { el, btn, setApi, setChangedHook, modal, fld, num, confirmBox, alertBox, pad, getClip, setClip } from "./ui.js";
-import { FILES, BLANK } from "./common.js";
+import { FILES, BLANK, registerKinds } from "./common.js";
 import { TABS } from "./tabs.js";
 import { stopAudio } from "./pickers.js";
 import { t } from "../i18n.js";
@@ -31,6 +31,7 @@ async function loadAll(api) {
     await Promise.all(FILES.map(async f => {
         db[f] = structuredClone(await api.project.readJson(`data/${f}.json`, { fresh: true }));
     }));
+    registerKinds(db);
     return db;
 }
 
