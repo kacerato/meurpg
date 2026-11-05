@@ -1,6 +1,8 @@
 // Acesso ao banco de dados do projeto para o módulo events (nomes de switches, itens, atores...).
 // Tudo é carregado uma vez em `db.load()` e mantido em memória; `db:changed` recarrega o arquivo.
 
+import { t } from "../i18n.js";
+
 const FILES = {
     actors: "Actors", classes: "Classes", skills: "Skills", items: "Items", weapons: "Weapons",
     armors: "Armors", enemies: "Enemies", troops: "Troops", states: "States", animations: "Animations",
@@ -47,7 +49,7 @@ export const db = {
         return info ? info.name : "MAP" + this.pad(id, 3);
     },
     // Itens de uma lista do banco como opções [{value, label}] com o formato "0001 Nome" do MZ.
-    options(list, { none = false, noneLabel = "None" } = {}) {
+    options(list, { none = false, noneLabel = t("None", "Constants") } = {}) {
         const out = none ? [{ value: 0, label: noneLabel }] : [];
         const arr = this[list] || [];
         for (let i = 1; i < arr.length; i++) {
@@ -57,7 +59,7 @@ export const db = {
         return out;
     },
     nameListOptions(names, { none = false } = {}) {
-        const out = none ? [{ value: 0, label: "None" }] : [];
+        const out = none ? [{ value: 0, label: t("None", "Constants") }] : [];
         for (let i = 1; i < (names || []).length; i++) {
             out.push({ value: i, label: this.pad(i) + " " + (names[i] || "") });
         }

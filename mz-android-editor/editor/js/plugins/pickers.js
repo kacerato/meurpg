@@ -3,6 +3,7 @@
 
 import { DATABASE_TYPES } from "./parser.js";
 import { el, promptDialog, touchList, pad } from "./ui.js";
+import { t } from "../i18n.js";
 
 const PICK_W = "760px";
 const PICK_H = "560px";
@@ -14,7 +15,7 @@ function descBox(def) {
 function valueRow(value, onInput) {
     const input = el("input", { type: "text", class: "pgInput", value });
     input.addEventListener("input", () => onInput && onInput(input.value));
-    const row = el("div", { class: "pgValueRow" }, el("label", { text: "Texto:" }), input);
+    const row = el("div", { class: "pgValueRow" }, el("label", { text: t("Text", "Dialog_PluginParameter") + ":" }), input);
     return { row, input };
 }
 
@@ -36,7 +37,7 @@ export async function pickDatabase(api, def, value, title) {
     } catch (e) {
         entries = [];
     }
-    const items = [{ label: "(Nenhum)", value: "0" },
+    const items = [{ label: "(" + t("None", "Constants") + ")", value: "0" },
         ...entries.map(e => ({ label: `${pad(e.id)} ${e.name}`, value: String(e.id) }))];
     let current = String(value ?? "");
     let text;
@@ -106,8 +107,8 @@ export async function pickFile(api, def, value, title) {
         if (IMAGE_EXT.test(file) && !/(_|rpgmvp)$/i.test(file)) {
             preview.appendChild(el("img", { src: url, alt: "" }));
         } else if (AUDIO_EXT.test(file) && !/(_|rpgmvo)$/i.test(file)) {
-            const play = el("button", { class: "pgBtn", text: "▶ Tocar" });
-            const stop = el("button", { class: "pgBtn", text: "■ Parar" });
+            const play = el("button", { class: "pgBtn", text: "▶ " + t("Play", "Layout_AudioSelector") });
+            const stop = el("button", { class: "pgBtn", text: "■ " + t("Stop", "Layout_AudioSelector") });
             play.addEventListener("click", () => {
                 stopAudio();
                 audio = new Audio(url);
@@ -144,7 +145,7 @@ export async function pickFile(api, def, value, title) {
         files.sort((a, b) => a.localeCompare(b));
         const items = [];
         if (!sub) {
-            items.push({ label: "(Nenhum)", value: "", kind: "none" });
+            items.push({ label: "(" + t("None", "Constants") + ")", value: "", kind: "none" });
         } else {
             items.push({ label: "📁 ..", value: null, kind: "up", className: "pgDirRow" });
         }
@@ -309,7 +310,7 @@ export async function pickIcon(api, def, value, title) {
                 });
                 wrap.append(sheet, mark);
             } else {
-                wrap.textContent = "img/system/IconSet.png não encontrado.";
+                wrap.textContent = t("%1 not found.", null, "img/system/IconSet.png");
             }
             text = valueRow(current, v => { current = v.trim(); place(); });
             body.classList.add("pgCol");

@@ -1,18 +1,19 @@
 // Tabelas do gerador de personagens, extraídas do bytecode QML compilado dentro do RPG.exe
 // do MZ 1.1.1 (qrc:/qml/CharacterGenerator/CharacterGeneratorData.qml — ver NOTES.md).
 // Os valores e a ordem são exatamente os do original.
+import { t } from "../i18n.js";
 
 export const LAYERGROUP_LIST = [
     "face", "fronthair", "rearhair", "beard", "ears", "eyes", "eyebrows", "nose", "mouth",
     "facialmark", "beastears", "tail", "wing", "clothing", "cloak", "acca", "accb", "glasses"
 ];
 
-// Textos (tradução oficial pt_BR do MZ, contexto CharacterGeneratorData).
+// Textos (fonte do MZ traduzida por t(), contexto CharacterGeneratorData).
 export const LAYERGROUP_TEXT = {
-    face: "Rosto", fronthair: "Franja", rearhair: "Cabelo", beard: "Barba", ears: "Orelhas",
-    eyes: "Olhos", eyebrows: "Sobrancelhas", nose: "Nariz", mouth: "Boca", facialmark: "Marca Facial",
-    beastears: "Orelhas de Animais", tail: "Cauda", wing: "Asa", clothing: "Vestimenta", cloak: "Capa",
-    acca: "Acessório 1", accb: "Acessório 2", glasses: "Óculos"
+    face: t("Face", "CharacterGeneratorData"), fronthair: t("Front Hair", "CharacterGeneratorData"), rearhair: t("Rear Hair", "CharacterGeneratorData"), beard: t("Beard", "CharacterGeneratorData"), ears: t("Ears", "CharacterGeneratorData"),
+    eyes: t("Eyes", "CharacterGeneratorData"), eyebrows: t("Eyebrows", "CharacterGeneratorData"), nose: t("Nose", "CharacterGeneratorData"), mouth: t("Mouth", "CharacterGeneratorData"), facialmark: t("Facial Mark", "CharacterGeneratorData"),
+    beastears: t("Beast Ears", "CharacterGeneratorData"), tail: t("Tail", "CharacterGeneratorData"), wing: t("Wing", "CharacterGeneratorData"), clothing: t("Clothing", "CharacterGeneratorData"), cloak: t("Cloak", "CharacterGeneratorData"),
+    acca: t("Accessory 1", "CharacterGeneratorData"), accb: t("Accessory 2", "CharacterGeneratorData"), glasses: t("Glasses", "CharacterGeneratorData")
 };
 
 // Ordem de desenho (de baixo para cima) por tipo de imagem.
@@ -40,14 +41,14 @@ export const SKIN_MASK = "#F9C19D";
 export const EYE_MASK = "#2C80CB";
 
 export const COLOR_TEXT = {
-    "#F9C19D": "Cor da Pele", "#2C80CB": "Cor dos Olhos", "#FCCB0A": "Cor do Cabelo", "#B892C5": "Cor Secundária",
-    "#009296": "Cor da Marca Facial", "#D3CEC7": "Cor Orelhas Animais",
-    "#AE8682": "Cor Principal", "#FE9D1E": "Cor Secundária", "#1C76D0": "Cor Terciária", "#D9A404": "Cor Quaternária",
-    "#D8AC00": "Cor Principal", "#A30708": "Cor Secundária",
-    "#D3CEC2": "Cor Principal", "#DA346E": "Cor Secundária", "#A4C911": "Cor Terciária",
-    "#C78407": "Cor Principal", "#C0D3D2": "Cor Secundária", "#4155B6": "Cor Terciária", "#BA3B45": "Cor Quaternária",
-    "#999999": "Cor Principal", "#CCBAD2": "Cor Secundária", "#607E4B": "Cor Terciária",
-    "#E6D6BD": "Cor da Cauda", "#A7D6D6": "Cor da Asa"
+    "#F9C19D": t("Skin Color", "CharacterGeneratorData"), "#2C80CB": t("Eye Color", "CharacterGeneratorData"), "#FCCB0A": t("Hair Color", "CharacterGeneratorData"), "#B892C5": t("Sub Color", "CharacterGeneratorData"),
+    "#009296": t("Facial Mark Color", "CharacterGeneratorData"), "#D3CEC7": t("Beast Ears Color", "CharacterGeneratorData"),
+    "#AE8682": t("Main Color", "CharacterGeneratorData"), "#FE9D1E": t("Sub Color 1", "CharacterGeneratorData"), "#1C76D0": t("Sub Color 2", "CharacterGeneratorData"), "#D9A404": t("Sub Color 3", "CharacterGeneratorData"),
+    "#D8AC00": t("Main Color", "CharacterGeneratorData"), "#A30708": t("Sub Color", "CharacterGeneratorData"),
+    "#D3CEC2": t("Main Color", "CharacterGeneratorData"), "#DA346E": t("Sub Color 1", "CharacterGeneratorData"), "#A4C911": t("Sub Color 2", "CharacterGeneratorData"),
+    "#C78407": t("Main Color", "CharacterGeneratorData"), "#C0D3D2": t("Sub Color 1", "CharacterGeneratorData"), "#4155B6": t("Sub Color 2", "CharacterGeneratorData"), "#BA3B45": t("Sub Color 3", "CharacterGeneratorData"),
+    "#999999": t("Main Color", "CharacterGeneratorData"), "#CCBAD2": t("Sub Color 1", "CharacterGeneratorData"), "#607E4B": t("Sub Color 2", "CharacterGeneratorData"),
+    "#E6D6BD": t("Tail Color", "CharacterGeneratorData"), "#A7D6D6": t("Wing Color", "CharacterGeneratorData")
 };
 
 // Tipos de paleta: 0 = grad_hair, 1 = grad_eyes, 2 = grad_skin, 3 = grad_common.
@@ -125,14 +126,14 @@ export const SETTINGS_VERSION = "2.0.0";
 
 // Diálogos de exportação: tamanho da folha e de cada célula; pasta de destino no projeto.
 export const EXPORTS = {
-    face: { title: "Imagem do rosto", folder: "img/faces", overallWidth: 576, overallHeight: 288, imageWidth: 144, imageHeight: 144 },
-    tv: { title: "Personagem Andando", folder: "img/characters", overallWidth: 576, overallHeight: 384, imageWidth: 144, imageHeight: 192 },
-    tvd: { title: "Personagem Caído", folder: "img/characters", overallWidth: 576, overallHeight: 384, imageWidth: 144, imageHeight: 48 },
-    sv: { title: "Personagem Lutando", folder: "img/sv_actors", overallWidth: 576, overallHeight: 384, imageWidth: 576, imageHeight: 384 }
+    face: { title: t("Face Image", "Layout_CharacterGenerator"), folder: "img/faces", overallWidth: 576, overallHeight: 288, imageWidth: 144, imageHeight: 144 },
+    tv: { title: t("Walking Character", "Layout_CharacterGenerator"), folder: "img/characters", overallWidth: 576, overallHeight: 384, imageWidth: 144, imageHeight: 192 },
+    tvd: { title: t("Damaged Character", "Layout_CharacterGenerator"), folder: "img/characters", overallWidth: 576, overallHeight: 384, imageWidth: 144, imageHeight: 48 },
+    sv: { title: t("Battler", "Layout_CharacterGenerator"), folder: "img/sv_actors", overallWidth: 576, overallHeight: 384, imageWidth: 576, imageHeight: 384 }
 };
 
 export const GENDERS = [
-    { key: "male", text: "Homem" },
-    { key: "female", text: "Mulher" },
-    { key: "kid", text: "Criança" }
+    { key: "male", text: t("Male", "Dialog_CharacterGenerator") },
+    { key: "female", text: t("Female", "Dialog_CharacterGenerator") },
+    { key: "kid", text: t("Kid", "Dialog_CharacterGenerator") }
 ];

@@ -4,8 +4,26 @@
     {
       "name": "mz-editor",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["mz-android-editor/devserver/server.mjs", "--project", "mz-android-editor/testproject", "--port", "8765"],
+      "runtimeArgs": [
+        "mz-android-editor/devserver/server.mjs",
+        "--project",
+        "mz-android-editor/testproject",
+        "--port",
+        "8765"
+      ],
       "port": 8765
+    },
+    {
+      "name": "mz-i18n",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "mz-android-editor/devserver/server.mjs",
+        "--project",
+        "C:/Users/jamaa/Downloads/RPG AUTORIZADO PRO LUCAS/mz-android-editor/testproject",
+        "--port",
+        "8787"
+      ],
+      "port": 8787
     }
   ]
 }

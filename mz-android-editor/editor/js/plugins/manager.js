@@ -5,6 +5,7 @@
 import { loadPluginList, savePluginList, getPluginInfo, clearInfoCache, mergeParameters } from "./store.js";
 import { openPluginDialog } from "./plugindlg.js";
 import { el, alertDialog, confirmDialog } from "./ui.js";
+import { t } from "../i18n.js";
 
 let clipboard = null;
 
@@ -21,32 +22,32 @@ export async function computeWarnings(list) {
             return;
         }
         if (info.missing) {
-            out.push({ index: i, text: `${p.name}: o arquivo js/plugins/${p.name}.js não existe.` });
+            out.push({ index: i, text: t("The plugin \"%1\" cannot be loaded.", "Dialog_PluginManager", p.name) });
             return;
         }
         if (!info.isMZ) {
-            out.push({ index: i, text: `${p.name}: plugin de RPG Maker MV (sem "@target MZ").` });
+            out.push({ index: i, text: t("The plugin \"%1\" may not support %2.", "Dialog_PluginManager", p.name, "RPG Maker MZ") });
         }
         if (!p.status) {
             return;
         }
         for (const b of info.base) {
             if (!index.has(b)) {
-                out.push({ index: i, text: `${p.name}: requer o plugin base "${b}", que não está na lista.` });
+                out.push({ index: i, text: t("The plugin \"%1\" requires the base plugin \"%2\".", "Dialog_PluginManager", p.name, b) });
             } else if (!list[index.get(b)].status) {
-                out.push({ index: i, text: `${p.name}: requer o plugin base "${b}", que está desativado.` });
+                out.push({ index: i, text: t("The plugin \"%1\" requires the base plugin \"%2\".", "Dialog_PluginManager", p.name, b) });
             } else if (index.get(b) > i) {
-                out.push({ index: i, text: `${p.name}: o plugin base "${b}" deve ficar acima dele.` });
+                out.push({ index: i, text: t("The plugin \"%1\" must be ordered after \"%2\".", "Dialog_PluginManager", p.name, b) });
             }
         }
         for (const a of info.orderAfter) {
             if (index.has(a) && index.get(a) > i && !info.base.includes(a)) {
-                out.push({ index: i, text: `${p.name}: deve ficar abaixo de "${a}".` });
+                out.push({ index: i, text: t("The plugin \"%1\" must be ordered after \"%2\".", "Dialog_PluginManager", p.name, a) });
             }
         }
         for (const b of info.orderBefore) {
             if (index.has(b) && index.get(b) < i) {
-                out.push({ index: i, text: `${p.name}: deve ficar acima de "${b}".` });
+                out.push({ index: i, text: t("The plugin \"%1\" must be ordered before \"%2\".", "Dialog_PluginManager", p.name, b) });
             }
         }
     });
@@ -58,7 +59,7 @@ export async function openPluginManager(api) {
     try {
         list = clone(await loadPluginList());
     } catch (e) {
-        await alertDialog(api, "Gerenciador de plugins", String(e.message || e));
+        await alertDialog(api, t("Plugin Manager", "Dialog_PluginManager"), String(e.message || e));
         return;
     }
     clearInfoCache();
@@ -119,8 +120,8 @@ export async function openPluginManager(api) {
     function render() {
         tbody.textContent = "";
         list.forEach((p, i) => {
-            const handle = el("span", { class: "pmHandle", title: "Arrastar para reordenar", text: "≡" });
-            const status = el("button", { class: "pmStatus" + (p.status ? " on" : ""), text: p.status ? "ON" : "OFF" });
+            const handle = el("span", { class: "pmHandle", title: t("Drag to reorder"), text: "≡" });
+            const status = el("button", { class: "pmStatus" + (p.status ? " on" : ""), text: p.status ? t("ON", "Constants") : t("OFF", "Constants") });
             status.addEventListener("click", ev => {
                 ev.stopPropagation();
                 p.status = !p.status;
@@ -146,7 +147,7 @@ export async function openPluginManager(api) {
         // Linha vazia no fim: tocar adiciona (no MZ: duplo clique em uma linha vazia).
         const empty = el("div", { class: "pmRow pmEmptyRow" + (selected === list.length ? " selected" : "") },
             el("span", { class: "pmHandle" }), el("span", { class: "pmName", text: "" }),
-            el("span", { class: "pmStatusCell" }), el("span", { class: "pmDesc pmHint", text: "Toque aqui para adicionar um plugin" }));
+            el("span", { class: "pmStatusCell" }), el("span", { class: "pmDesc pmHint", text: t("Tap here to add a plugin") }));
         empty.addEventListener("click", () => add(list.length));
         tbody.appendChild(empty);
         updateButtons();
@@ -280,14 +281,14 @@ export async function openPluginManager(api) {
         const p = list[selected];
         const info = await getPluginInfo(p.name, { fresh: true });
         if (info.missing) {
-            await alertDialog(api, "Atualizar", `Arquivo js/plugins/${p.name}.js não encontrado.`);
+            await alertDialog(api, t("Refresh", "Dialog_PluginManager"), t("The plugin \"%1\" cannot be loaded.", "Dialog_PluginManager", p.name));
             return;
         }
         p.description = info.plugindesc || "";
         p.parameters = mergeParameters(info, p.parameters);
         markDirty();
         render();
-        api.status(`Plugin ${p.name} atualizado.`);
+        api.status(t("Plugin %1 refreshed.", null, p.name));
     }
 
     function copy() {
@@ -314,19 +315,19 @@ export async function openPluginManager(api) {
             await savePluginList(list);
             dirty = false;
             api.emit("plugins:changed", { list: clone(list) });
-            api.status("js/plugins.js gravado (" + list.length + " plugins).");
+            api.status(t("%1 saved (%2 plugins).", null, "js/plugins.js", list.length));
             return true;
         } catch (e) {
-            await alertDialog(api, "Erro", String(e.message || e));
+            await alertDialog(api, t("Plugin Manager", "Dialog_PluginManager"), String(e.message || e));
             return false;
         }
     }
 
     const d = api.openDialog({
-        title: "Gerenciador de plugins", width: "1260px", height: "590px",
+        title: t("Plugin Manager", "Dialog_PluginManager"), width: "1260px", height: "590px",
         buttons: [
             {
-                label: "OK", primary: true, onClick: () => {
+                label: t("OK", "BasicConstants"), primary: true, onClick: () => {
                     if (!dirty) {
                         return true;
                     }
@@ -335,16 +336,16 @@ export async function openPluginManager(api) {
                 }
             },
             {
-                label: "Cancelar", onClick: () => {
+                label: t("Cancel", "BasicConstants"), onClick: () => {
                     if (!dirty) {
                         return true;
                     }
-                    confirmDialog(api, "Gerenciador de plugins", "Descartar as alterações feitas na lista de plugins?")
+                    confirmDialog(api, t("Plugin Manager", "Dialog_PluginManager"), t("Discard changes to the plugins?", "Dialog_PluginManager"))
                         .then(ok => ok && d.close());
                     return false;
                 }
             },
-            { label: "Aplicar", onClick: () => { if (dirty) { save(); } return false; } }
+            { label: t("Apply", "BasicConstants"), onClick: () => { if (dirty) { save(); } return false; } }
         ]
     });
     d.root.classList.add("pgDialog");
@@ -353,23 +354,23 @@ export async function openPluginManager(api) {
         return buttons[key];
     };
     const bar = el("div", { class: "pgBar" },
-        B("add", "Adicionar", () => add()),
-        B("edit", "Editar", () => edit()),
-        B("del", "Excluir", del),
+        B("add", t("Add", "Edit_Troops"), () => add()),
+        B("edit", t("Edit", "StandardPopupMenu"), () => edit()),
+        B("del", t("Delete", "BasicConstants"), del),
         el("span", { class: "sep" }),
-        B("copy", "Copiar", copy),
-        B("paste", "Colar", paste),
+        B("copy", t("Copy", "BasicConstants"), copy),
+        B("paste", t("Paste", "BasicConstants"), paste),
         el("span", { class: "sep" }),
-        B("up", "▲ Subir", () => move(-1)),
-        B("down", "▼ Descer", () => move(1)),
+        B("up", "▲ " + t("Up", "Constants"), () => move(-1)),
+        B("down", "▼ " + t("Down", "Constants"), () => move(1)),
         el("span", { class: "sep" }),
-        B("update", "Atualizar", update, "Reler o arquivo do plugin (descrição e parâmetros)"),
+        B("update", t("Refresh", "Dialog_PluginManager"), update, t("Reloads the plugin file (description and parameters).")),
         el("span", { class: "spacer" }),
-        B("allOn", "Ativar todos", () => setAll(true)),
-        B("allOff", "Desativar todos", () => setAll(false)));
+        B("allOn", t("Turn All ON"), () => setAll(true)),
+        B("allOff", t("Turn All OFF"), () => setAll(false)));
     const head = el("div", { class: "pmRow pmHead" },
-        el("span", { class: "pmHandle" }), el("span", { class: "pmName", text: "Nome" }),
-        el("span", { class: "pmStatusCell", text: "Status" }), el("span", { class: "pmDesc", text: "Descrição" }));
+        el("span", { class: "pmHandle" }), el("span", { class: "pmName", text: t("Name", "Constants") }),
+        el("span", { class: "pmStatusCell", text: t("Status", "Dialog_PluginManager") }), el("span", { class: "pmDesc", text: t("Description", "Constants") }));
     tbody = el("div", { class: "pmBody" });
     warnBox = el("div", { class: "pmWarnings", hidden: true });
     d.body.classList.add("pgCol", "pmMain");

@@ -4,6 +4,7 @@
 // grupo inicial; Game_Map.setupStartingEvent roda $testEvent no interpretador.
 
 import { clone } from "./data.js";
+import { t } from "../i18n.js";
 
 const DB_FILES = ["Actors", "Classes", "Skills", "Items", "Weapons", "Armors", "Enemies", "Troops",
     "States", "Animations", "Tilesets", "CommonEvents", "System", "MapInfos"];
@@ -16,7 +17,7 @@ export async function runEventTest(api, cmds) {
     const list = cmds.map(c => ({ ...clone(c), indent: c.indent - base }));
     const last = list[list.length - 1];
     if (!(last && last.code === 0 && last.indent === 0)) { list.push({ code: 0, indent: 0, parameters: [] }); }
-    api.status("Preparando teste do evento…");
+    api.status(t("Preparing event test…"));
     const written = [];
     for (const f of DB_FILES) {
         const data = await api.project.readJson("data/" + f + ".json", { fresh: true });

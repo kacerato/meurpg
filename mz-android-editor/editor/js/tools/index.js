@@ -1,6 +1,7 @@
 // Módulo "tools": Resource Manager, Sound Test, Novo projeto, Opções e Ajuda/Sobre.
 // Contrato: mz-android-editor/SESSIONS.md. Expõe api.tools para os outros módulos.
 import { el } from "./ui.js";
+import { t } from "../i18n.js";
 import * as resources from "./resources.js";
 import * as soundtest from "./soundtest.js";
 import * as options from "./options.js";
@@ -26,20 +27,20 @@ function toolbarButton(id, icon, title, onClick) {
 function buildMenu(api) {
     const bar = document.getElementById("toolbar");
     if (!bar || document.getElementById("btnToolsMenu")) { return; }
-    const help = toolbarButton("btnHelpContents", "img/toolbar/help-contents.png", "Conteúdo da ajuda", () => openHelp(api));
-    const menuBtn = el("button", { id: "btnToolsMenu", class: "tb tlMenuBtn", title: "Menu", type: "button" }, "☰");
-    const about = toolbarButton("btnHelpAbout", "img/toolbar/help-about.png", "Sobre", () => openAbout(api));
+    const help = toolbarButton("btnHelpContents", "img/toolbar/help-contents.png", t("Contents", "MainMenu"), () => openHelp(api));
+    const menuBtn = el("button", { id: "btnToolsMenu", class: "tb tlMenuBtn", title: t("Menu", "EventCommand135"), type: "button" }, "☰");
+    const about = toolbarButton("btnHelpAbout", "img/toolbar/help-about.png", t("About", "MainMenu"), () => openAbout(api));
     bar.append(el("span", { class: "sep" }), help, about, menuBtn);
 
     const items = [
-        ["img/toolbar/file-new.png", "Novo projeto…", () => openNewProject(api)],
-        ["img/toolbar/tools-resourcemanager.png", "Resource Manager…", () => resources.openResourceManager()],
-        ["img/toolbar/tools-soundtest.png", "Sound Test…", () => soundtest.openSoundTest()],
+        ["img/toolbar/file-new.png", t("New Project", "MainMenu") + "…", () => openNewProject(api)],
+        ["img/toolbar/tools-resourcemanager.png", t("Resource Manager", "MainMenu") + "…", () => resources.openResourceManager()],
+        ["img/toolbar/tools-soundtest.png", t("Sound Test", "MainMenu") + "…", () => soundtest.openSoundTest()],
         null,
-        ["", "⚙ Opções…", () => options.openOptions()],
+        ["", "⚙ " + t("Options", "MainMenu") + "…", () => options.openOptions()],
         null,
-        ["img/toolbar/help-contents.png", "Conteúdo da ajuda", () => openHelp(api)],
-        ["img/toolbar/help-about.png", "Sobre o MZ Editor…", () => openAbout(api)]
+        ["img/toolbar/help-contents.png", t("Contents", "MainMenu"), () => openHelp(api)],
+        ["img/toolbar/help-about.png", t("About %1", "Dialog_About", "MZ Editor") + "…", () => openAbout(api)]
     ];
     const menu = el("div", { class: "tlMenu", hidden: true });
     for (const it of items) {
@@ -70,9 +71,9 @@ export async function register(api) {
     soundtest.init(api);
     options.init(api);
 
-    api.bindToolbar("btnResources", () => resources.openResourceManager(), "Resource Manager");
-    api.bindToolbar("btnSoundTest", () => soundtest.openSoundTest(), "Sound Test");
-    api.bindToolbar("btnNew", () => openNewProject(api), "Novo projeto");
+    api.bindToolbar("btnResources", () => resources.openResourceManager(), t("Resource Manager", "MainMenu"));
+    api.bindToolbar("btnSoundTest", () => soundtest.openSoundTest(), t("Sound Test", "MainMenu"));
+    api.bindToolbar("btnNew", () => openNewProject(api), t("New Project", "MainMenu"));
     buildMenu(api);
 
     api.tools = {

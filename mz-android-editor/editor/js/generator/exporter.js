@@ -6,6 +6,7 @@ import { EXPORTS } from "./data.js";
 import { decodePng, encodePng, createImage } from "./png.js";
 import { blit, imageToCanvas } from "./composer.js";
 import { el, promptText, pickFile, message, confirmBox, hasProject } from "./ui.js";
+import { t } from "../i18n.js";
 
 export function openExporter(api, type, image) {
     if (!image) { return; }
@@ -31,22 +32,22 @@ export function openExporter(api, type, image) {
         title: cfg.title,
         width: "min(640px, 98vw)",
         height: "min(580px, 98vh)",
-        buttons: [{ label: "Fechar" }]
+        buttons: [{ label: t("Close", "BasicConstants") }]
     });
     d.root.querySelector(".mzDialog").classList.add("genExpDialog");
 
     const top = el("div", "gen-expTop");
-    const btnImport = el("button", "", "Importar…");
-    btnImport.title = "Carrega uma imagem base de um arquivo.";
-    const btnExport = el("button", "", "Exportar…");
-    btnExport.title = "Salvar a imagem como arquivo.";
+    const btnImport = el("button", "", t("Import", "Dialog_CharacterExporter") + "…");
+    btnImport.title = t("Loads a base image from a file.", "Dialog_CharacterExporter");
+    const btnExport = el("button", "", t("Export", "Dialog_CharacterExporter") + "…");
+    btnExport.title = t("Saves the image to a file.", "Dialog_CharacterExporter");
     top.append(btnImport, btnExport);
     let fmtBtns = [];
     if (type === "tv") {
         // Folha comum (8 personagens) ou personagem único com prefixo $ (rmmz: ImageManager.isBigCharacter).
         const seg = el("div", "gen-seg");
-        fmtBtns = [["sheet", "Folha (8)"], ["single", "Único ($)"]].map(([k, t]) => {
-            const b = el("button", "", t);
+        fmtBtns = [["sheet", t("Sheet (8)")], ["single", t("Single ($)")]].map(([k, label]) => {
+            const b = el("button", "", label);
             b.dataset.k = k;
             b.addEventListener("click", () => {
                 state.single = k === "single";
@@ -115,10 +116,10 @@ export function openExporter(api, type, image) {
     btnImport.addEventListener("click", async () => {
         if (!(await hasProject(api))) { return; }
         const path = await pickFile(api, {
-            title: "Importar",
+            title: t("Import", "Dialog_CharacterExporter"),
             dirs: [cfg.folder],
             filter: n => n.toLowerCase().endsWith(".png"),
-            hint: "Carrega uma imagem base de um arquivo.",
+            hint: t("Loads a base image from a file.", "Dialog_CharacterExporter"),
             thumbs: true
         });
         if (!path) { return; }
@@ -127,7 +128,7 @@ export function openExporter(api, type, image) {
             if (!res.ok) { throw new Error(String(res.status)); }
             const img = await decodePng(await res.arrayBuffer());
             if (img.width < cfg.imageWidth || img.height < cfg.imageHeight) {
-                throw new Error(`a imagem (${img.width}×${img.height}) é menor que uma célula (${cfg.imageWidth}×${cfg.imageHeight})`);
+                throw new Error(t("The image (%1×%2) is smaller than one cell (%3×%4).", null, img.width, img.height, cfg.imageWidth, cfg.imageHeight));
             }
             state.base = img;
             state.baseName = path.split("/").pop();
@@ -135,7 +136,7 @@ export function openExporter(api, type, image) {
             state.cx = 0; state.cy = 0;
             redraw();
         } catch (e) {
-            await message(api, "Importar", "Não foi possível carregar " + path + ": " + e.message);
+            await message(api, t("Import", "Dialog_CharacterExporter"), t("Unable to read file %1.", "ProjectManager", path) + "\n" + e.message);
         }
     });
 
@@ -143,10 +144,10 @@ export function openExporter(api, type, image) {
         if (!(await hasProject(api))) { return; }
         let def = state.baseName ? state.baseName.replace(/\.png$/i, "") : defaultName(type, state.single);
         let name = await promptText(api, {
-            title: "Exportar",
-            label: `Nome do arquivo (${cfg.folder}/):`,
+            title: t("Export", "Dialog_CharacterExporter"),
+            label: t("File name (%1):", null, cfg.folder + "/"),
             value: def,
-            hint: type === "tv" && state.single ? "Personagem único: o nome deve começar com $." : "Salvar a imagem como arquivo."
+            hint: type === "tv" && state.single ? t("Single character: the name must start with $.") : t("Saves the image to a file.", "Dialog_CharacterExporter")
         });
         if (!name) { return; }
         name = name.replace(/\.png$/i, "").replace(/[\\/:*?"<>|]/g, "_");
@@ -157,7 +158,7 @@ export function openExporter(api, type, image) {
             const res = await fetch("/api/list?dir=" + encodeURIComponent(cfg.folder), { cache: "no-store" });
             if (res.ok) { exists = (await res.json()).some(e => e.name === name + ".png"); }
         } catch (e) { /* pasta inexistente */ }
-        if (exists && !(await confirmBox(api, "Exportar", `O arquivo ${path} já existe. Sobrescrever?`))) {
+        if (exists && !(await confirmBox(api, t("Export", "Dialog_CharacterExporter"), t("The file %1 already exists. Overwrite?", null, path)))) {
             return;
         }
         try {
@@ -169,10 +170,10 @@ export function openExporter(api, type, image) {
             state.baseName = name + ".png";
             state.base = sheetImage();
             redraw();
-            api.status("Imagem exportada: " + path);
+            api.status(t("Image exported: %1", null, path));
             api.emit("resource:changed", { path });
         } catch (e) {
-            await message(api, "Exportar", "Falha ao gravar " + path + ": " + e.message);
+            await message(api, t("Export", "Dialog_CharacterExporter"), t("Unable to write to file %1.", "ProjectManager", path) + "\n" + e.message);
         }
     });
 

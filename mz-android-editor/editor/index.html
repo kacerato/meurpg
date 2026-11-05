@@ -20,41 +20,41 @@
 <body>
     <!-- Barra de ferramentas na ordem do RPG Maker MZ, com os ícones originais -->
     <header id="toolbar">
-        <button id="btnMaps" class="tb" title="Mostrar/ocultar lista de mapas"><img src="img/tree-root.png" alt=""></button>
+        <button id="btnMaps" class="tb" title="Show/hide map list" data-i18n-title="Show/hide map list"><img src="img/tree-root.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnNew" class="tb" title="Novo projeto (em breve)" disabled><img src="img/toolbar/file-new.png" alt=""></button>
-        <button id="btnOpen" class="tb" title="Abrir projeto"><img src="img/toolbar/file-open.png" alt=""></button>
-        <button id="btnSave" class="tb" title="Salvar projeto (em breve)" disabled><img src="img/toolbar/file-save.png" alt=""></button>
+        <button id="btnNew" class="tb" title="New Project" data-i18n-title="New Project" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/file-new.png" alt=""></button>
+        <button id="btnOpen" class="tb" title="Open Project" data-i18n-title="Open Project" data-i18n-ctx="MainMenu"><img src="img/toolbar/file-open.png" alt=""></button>
+        <button id="btnSave" class="tb" title="Save Project" data-i18n-title="Save Project" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/file-save.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnUndo" class="tb" title="Desfazer (em breve)" disabled><img src="img/toolbar/edit-undo.png" alt=""></button>
-        <button id="btnCut" class="tb" title="Recortar (em breve)" disabled><img src="img/toolbar/edit-cut.png" alt=""></button>
-        <button id="btnCopy" class="tb" title="Copiar (em breve)" disabled><img src="img/toolbar/edit-copy.png" alt=""></button>
-        <button id="btnPaste" class="tb" title="Colar (em breve)" disabled><img src="img/toolbar/edit-paste.png" alt=""></button>
-        <button id="btnDelete" class="tb" title="Excluir (em breve)" disabled><img src="img/toolbar/edit-delete.png" alt=""></button>
+        <button id="btnUndo" class="tb" title="Undo" data-i18n-title="Undo" data-i18n-ctx="BasicConstants" disabled><img src="img/toolbar/edit-undo.png" alt=""></button>
+        <button id="btnCut" class="tb" title="Cut" data-i18n-title="Cut" data-i18n-ctx="BasicConstants" disabled><img src="img/toolbar/edit-cut.png" alt=""></button>
+        <button id="btnCopy" class="tb" title="Copy" data-i18n-title="Copy" data-i18n-ctx="BasicConstants" disabled><img src="img/toolbar/edit-copy.png" alt=""></button>
+        <button id="btnPaste" class="tb" title="Paste" data-i18n-title="Paste" data-i18n-ctx="BasicConstants" disabled><img src="img/toolbar/edit-paste.png" alt=""></button>
+        <button id="btnDelete" class="tb" title="Delete" data-i18n-title="Delete" data-i18n-ctx="BasicConstants" disabled><img src="img/toolbar/edit-delete.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnModeMap" class="tb toggle on" title="Modo mapa"><img src="img/toolbar/mode-map.png" alt=""></button>
-        <button id="btnModeEvent" class="tb toggle" title="Modo evento (em breve)" disabled><img src="img/toolbar/mode-event.png" alt=""></button>
+        <button id="btnModeMap" class="tb toggle on" title="Map" data-i18n-title="Map" data-i18n-ctx="MainMenu"><img src="img/toolbar/mode-map.png" alt=""></button>
+        <button id="btnModeEvent" class="tb toggle" title="Event" data-i18n-title="Event" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/mode-event.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnPencil" class="tb toggle" title="Lápis (em breve)" disabled><img src="img/toolbar/draw-pencil.png" alt=""></button>
-        <button id="btnRect" class="tb toggle" title="Retângulo (em breve)" disabled><img src="img/toolbar/draw-rectangle.png" alt=""></button>
-        <button id="btnEllipse" class="tb toggle" title="Elipse (em breve)" disabled><img src="img/toolbar/draw-ellipse.png" alt=""></button>
-        <button id="btnFill" class="tb toggle" title="Preencher (em breve)" disabled><img src="img/toolbar/draw-floodfill.png" alt=""></button>
-        <button id="btnShadow" class="tb toggle" title="Caneta de sombra (em breve)" disabled><img src="img/toolbar/draw-shadowpen.png" alt=""></button>
+        <button id="btnPencil" class="tb toggle" title="Pencil" data-i18n-title="Pencil" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/draw-pencil.png" alt=""></button>
+        <button id="btnRect" class="tb toggle" title="Rectangle" data-i18n-title="Rectangle" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/draw-rectangle.png" alt=""></button>
+        <button id="btnEllipse" class="tb toggle" title="Ellipse" data-i18n-title="Ellipse" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/draw-ellipse.png" alt=""></button>
+        <button id="btnFill" class="tb toggle" title="Flood Fill" data-i18n-title="Flood Fill" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/draw-floodfill.png" alt=""></button>
+        <button id="btnShadow" class="tb toggle" title="Shadow Pen" data-i18n-title="Shadow Pen" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/draw-shadowpen.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnZoomIn" class="tb" title="Aumentar zoom"><img src="img/toolbar/scale-zoomin.png" alt=""></button>
-        <button id="btnZoomOut" class="tb" title="Diminuir zoom"><img src="img/toolbar/scale-zoomout.png" alt=""></button>
-        <button id="btnZoomActual" class="tb" title="Tamanho real"><img src="img/toolbar/scale-actualsize.png" alt=""></button>
+        <button id="btnZoomIn" class="tb" title="Zoom In" data-i18n-title="Zoom In" data-i18n-ctx="MainMenu"><img src="img/toolbar/scale-zoomin.png" alt=""></button>
+        <button id="btnZoomOut" class="tb" title="Zoom Out" data-i18n-title="Zoom Out" data-i18n-ctx="MainMenu"><img src="img/toolbar/scale-zoomout.png" alt=""></button>
+        <button id="btnZoomActual" class="tb" title="Actual Size" data-i18n-title="Actual Size" data-i18n-ctx="MainMenu"><img src="img/toolbar/scale-actualsize.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnDatabase" class="tb" title="Banco de dados (fase 2)" disabled><img src="img/toolbar/tools-database.png" alt=""></button>
-        <button id="btnPlugins" class="tb" title="Gerenciador de plugins (fase 3)" disabled><img src="img/toolbar/tools-pluginmanager.png" alt=""></button>
-        <button id="btnSoundTest" class="tb" title="Teste de som (em breve)" disabled><img src="img/toolbar/tools-soundtest.png" alt=""></button>
-        <button id="btnEventSearch" class="tb" title="Buscar eventos (em breve)" disabled><img src="img/toolbar/tools-eventsearcher.png" alt=""></button>
-        <button id="btnResources" class="tb" title="Gerenciador de recursos (em breve)" disabled><img src="img/toolbar/tools-resourcemanager.png" alt=""></button>
-        <button id="btnGenerator" class="tb" title="Gerador de personagens (fase 3)" disabled><img src="img/toolbar/tools-charactergenerator.png" alt=""></button>
+        <button id="btnDatabase" class="tb" title="Database" data-i18n-title="Database" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/tools-database.png" alt=""></button>
+        <button id="btnPlugins" class="tb" title="Plugin Manager" data-i18n-title="Plugin Manager" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/tools-pluginmanager.png" alt=""></button>
+        <button id="btnSoundTest" class="tb" title="Sound Test" data-i18n-title="Sound Test" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/tools-soundtest.png" alt=""></button>
+        <button id="btnEventSearch" class="tb" title="Event Searcher" data-i18n-title="Event Searcher" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/tools-eventsearcher.png" alt=""></button>
+        <button id="btnResources" class="tb" title="Resource Manager" data-i18n-title="Resource Manager" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/tools-resourcemanager.png" alt=""></button>
+        <button id="btnGenerator" class="tb" title="Character Generator" data-i18n-title="Character Generator" data-i18n-ctx="MainMenu" disabled><img src="img/toolbar/tools-charactergenerator.png" alt=""></button>
         <span class="sep"></span>
-        <button id="btnPlay" class="tb" title="Testar jogo"><img src="img/toolbar/game-playtest.png" alt=""></button>
+        <button id="btnPlay" class="tb" title="Playtest" data-i18n-title="Playtest" data-i18n-ctx="MainMenu"><img src="img/toolbar/game-playtest.png" alt=""></button>
         <span class="spacer"></span>
-        <button id="btnGrid" class="tb toggle on" title="Grade">#</button>
+        <button id="btnGrid" class="tb toggle on" title="Map Grid" data-i18n-title="Map Grid" data-i18n-ctx="Group_MapGrid">#</button>
     </header>
     <main id="main">
         <aside id="sidebar">
@@ -63,7 +63,7 @@
         </aside>
         <section id="viewport">
             <canvas id="mapCanvas"></canvas>
-            <div id="emptyHint">Selecione um mapa</div>
+            <div id="emptyHint" data-i18n="Select a map">Select a map</div>
         </section>
     </main>
     <footer id="status">
@@ -77,12 +77,12 @@
     <div id="playOverlay" hidden>
         <div id="playBar">
             <img src="img/toolbar/game-playtest.png" alt="" class="barIcon">
-            <span>Teste de jogo</span>
+            <span data-i18n="Playtest" data-i18n-ctx="MainMenu">Playtest</span>
             <span class="spacer"></span>
-            <button id="btnPlayReload" title="Reiniciar">↻</button>
-            <button id="btnPlayClose" title="Fechar">✕ Fechar</button>
+            <button id="btnPlayReload" title="Restart" data-i18n-title="Restart">↻</button>
+            <button id="btnPlayClose" title="Close" data-i18n-title="Close" data-i18n-ctx="BasicConstants">✕ <span data-i18n="Close" data-i18n-ctx="BasicConstants">Close</span></button>
         </div>
-        <iframe id="playFrame" allow="autoplay; fullscreen" title="Jogo"></iframe>
+        <iframe id="playFrame" allow="autoplay; fullscreen" title="Game"></iframe>
     </div>
 
     <!-- Runtime do próprio projeto: o editor desenha mapas exatamente como o jogo. -->

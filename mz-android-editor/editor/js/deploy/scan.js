@@ -13,6 +13,9 @@
 // img/system/ é sempre mantido. Pastas fora de img/audio/effects nunca são excluídas.
 // Erra para o lado de MANTER: um nome citado em qualquer lugar mantém o arquivo.
 
+import { t } from "../i18n.js";
+
+
 const QUOTED = /(["'`])((?:\\.|(?!\1)[^\\\n]){1,200})\1/g;
 const NOTE_TAG = /<([^<>:\n]+):([^<>\n]+)>/g;
 
@@ -103,7 +106,7 @@ export async function findUsedFiles(files, { readText, readBytes, log }) {
         try {
             addValue(refs, JSON.parse(await readText(f)));
         } catch (e) {
-            log(`aviso: não foi possível ler ${f}: ${e.message}`);
+            log(t("warning: could not read %1: %2", null, f, e.message));
         }
     }
     // 2) plugins ativos
@@ -129,7 +132,7 @@ export async function findUsedFiles(files, { readText, readBytes, log }) {
             addSourceLiterals(refs, await readText(f));
         }
     }
-    log(`${refs.size} nomes referenciados (dados, ${plugins.length} plugin(s) ativo(s), runtime)`);
+    log(t("%1 referenced names (data, %2 active plugin(s), runtime)", null, refs.size, plugins.length));
 
     const isReferenced = f => {
         const noExt = stripExt(f);

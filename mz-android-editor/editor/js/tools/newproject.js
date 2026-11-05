@@ -4,6 +4,7 @@
 // grandes (img/characters, audio/...) são um pacote opcional, importado depois pelo
 // Resource Manager → "Importar recursos padrão".
 import { el, modal, alertBox, progressDialog } from "./ui.js";
+import { t } from "../i18n.js";
 
 const TEMPLATE_BASE = new URL("../../template/", import.meta.url);
 
@@ -158,14 +159,14 @@ export async function openNewProject(api) {
 
     let locText;
     if (android) {
-        locText = "(pasta escolhida pelo aparelho)";
+        locText = t("(folder chosen on the device)");
     } else if (canPickDir) {
-        locText = "(clique em Escolher…)";
+        locText = t("(click Choose…)");
     } else {
-        locText = "(será baixado como .zip)";
+        locText = t("(will be downloaded as a .zip)");
     }
     loc.value = locText;
-    const choose = el("button", { class: "tlBtn", type: "button", disabled: android || !canPickDir }, "Escolher…");
+    const choose = el("button", { class: "tlBtn", type: "button", disabled: android || !canPickDir }, t("Choose…"));
     choose.addEventListener("click", async () => {
         try {
             parentDir = await window.showDirectoryPicker({ id: "mzNewProject", mode: "readwrite" });
@@ -175,27 +176,30 @@ export async function openNewProject(api) {
     name.addEventListener("input", () => { if (parentDir) { loc.value = parentDir.name + "\\" + name.value; } });
 
     const ok = await modal(api, {
-        title: "New Project", width: "620px", height: "auto", cls: "tlNewDlg",
+        title: t("New Project", "Dialog_NewProject"), width: "620px", height: "auto", cls: "tlNewDlg",
         build: b => {
             b.append(
                 el("div", { class: "tlForm" },
-                    el("label", { text: "Nome:" }), name,
-                    el("label", { text: "Título do jogo:" }), title,
-                    el("label", { text: "Local:" }), el("div", { class: "tlRow tlGrow" }, loc, choose)),
+                    el("label", { text: t("Name", "Constants") + ":", title: t("Name of the project folder.", "Dialog_NewProject") }), name,
+                    el("label", { text: t("Game Title", "Dialog_NewProject") + ":", title: t("Title of the game.", "Dialog_NewProject") }), title,
+                    el("label", { text: t("Location", "Dialog_NewProject") + ":", title: t("Location to create the project folder.", "Dialog_NewProject") }),
+                    el("div", { class: "tlRow tlGrow" }, loc, choose)),
                 el("div", { class: "tlHint" },
-                    manifest ? `Template: ${manifest.files.length + 1} arquivos (${(manifest.total / 1048576).toFixed(1)} MB). ` : "Template indisponível. ",
-                    "Imagens e áudios padrão (personagens, tilesets, músicas…) são opcionais: copie depois em Resource Manager → Importar recursos padrão."),
+                    (manifest ? t("Template: %1 files (%2 MB).", null, manifest.files.length + 1, (manifest.total / 1048576).toFixed(1)) : t("Template unavailable.")) + " ",
+                    t("Default images and audio (characters, tilesets, music…) are optional: copy them later in Resource Manager → Import Default Resources.")),
                 err);
         },
         buttons: [
             {
-                label: "OK", primary: true, value: true, onClick: () => {
-                    if (!validName(name.value.trim())) { err.textContent = "Nome de pasta inválido."; return false; }
-                    if (!manifest && !android) { err.textContent = "Template não encontrado (editor/template/manifest.json)."; return false; }
+                label: t("OK", "BasicConstants"), primary: true, value: true, onClick: () => {
+                    const nm = name.value.trim();
+                    if (!nm) { err.textContent = t("Name is empty.", "Dialog_NewProject"); return false; }
+                    if (!validName(nm)) { err.textContent = t("Invalid folder name."); return false; }
+                    if (!manifest && !android) { err.textContent = t("Template not found (%1).", null, "editor/template/manifest.json"); return false; }
                     return true;
                 }
             },
-            { label: "Cancelar", value: false }
+            { label: t("Cancel", "BasicConstants"), value: false }
         ]
     });
     if (!ok) { return; }
@@ -207,35 +211,35 @@ export async function openNewProject(api) {
         window.Android.newProject(projName, gameTitle);
         return;
     }
-    const prog = progressDialog(api, "Criando projeto…");
+    const prog = progressDialog(api, t("Creating project…"));
     try {
         if (parentDir) {
             let target;
             try {
                 await parentDir.getDirectoryHandle(projName, { create: false });
                 prog.close();
-                await alertBox(api, "New Project", `A pasta "${projName}" já existe em ${parentDir.name}. Escolha outro nome.`, "warning");
+                await alertBox(api, t("New Project", "Dialog_NewProject"), t("The project already exists.", "Dialog_NewProject") + "\n" + parentDir.name + "\\" + projName, "warning");
                 return;
             } catch { target = await parentDir.getDirectoryHandle(projName, { create: true }); }
-            await createProject(dirWriter(target), { title: gameTitle, onProgress: (d, t, f) => prog.set(d, t, f) });
+            await createProject(dirWriter(target), { title: gameTitle, onProgress: (d, n, f) => prog.set(d, n, f) });
             prog.close();
-            await alertBox(api, "New Project",
-                `Projeto criado em ${parentDir.name}\\${projName}.\n\n` +
-                "Para editá-lo no PC, reinicie o servidor com:\n" +
-                `node devserver/server.mjs --project "<caminho>\\${projName}"\n\n` +
-                "Para os recursos padrão, abra o Resource Manager → Importar recursos padrão e escolha a pasta newdata do RPG Maker MZ.");
+            await alertBox(api, t("New Project", "Dialog_NewProject"),
+                t("Project created in %1.", null, parentDir.name + "\\" + projName) + "\n\n" +
+                t("To edit it on the PC, restart the server with:") + "\n" +
+                `node devserver/server.mjs --project "<path>\\${projName}"\n\n` +
+                t("For the default resources, open Resource Manager → Import Default Resources and choose the newdata folder of RPG Maker MZ."));
         } else {
             const zip = zipWriter(projName);
-            await createProject(zip, { title: gameTitle, onProgress: (d, t, f) => prog.set(d, t, f) });
+            await createProject(zip, { title: gameTitle, onProgress: (d, n, f) => prog.set(d, n, f) });
             prog.close();
             download(zip.finish(), projName + ".zip");
-            await alertBox(api, "New Project",
-                `Foi baixado ${projName}.zip com o projeto novo.\n\n` +
-                "Extraia o .zip numa pasta (no Android, por exemplo, em Documentos/RPG) e use “Abrir projeto”.\n" +
-                "Alternativa: copie manualmente a pasta template do editor (editor/template) e renomeie-a.");
+            await alertBox(api, t("New Project", "Dialog_NewProject"),
+                t("%1 with the new project has been downloaded.", null, projName + ".zip") + "\n\n" +
+                t("Extract the .zip into a folder (on Android, e.g. in Documents/RPG) and use “%1”.", null, t("Open Project", "ProjectManager")) + "\n" +
+                t("Alternatively, manually copy the editor's template folder (editor/template) and rename it."));
         }
     } catch (e) {
         prog.close();
-        await alertBox(api, "New Project", "Falha ao criar o projeto: " + e.message, "warning");
+        await alertBox(api, t("New Project", "Dialog_NewProject"), t("Failed to create a new project.", "ProjectManager") + "\n" + e.message, "warning");
     }
 }

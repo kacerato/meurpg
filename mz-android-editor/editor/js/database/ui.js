@@ -1,6 +1,7 @@
 // Widgets de formulário do Banco de dados (toque, ≥36px). Sem frameworks.
 // Todos os widgets ligados a dados escrevem direto no objeto e chamam `changed()`,
 // que o index.js aponta para "marcar o arquivo da aba atual como alterado".
+import { t } from "../i18n.js";
 
 let changedHook = () => {};
 let apiRef = null;
@@ -82,12 +83,12 @@ export function text(obj, key, o = {}) {
 }
 
 export function area(obj, key, o = {}) {
-    const t = el("textarea", { class: "dbArea", rows: o.rows || 3 });
-    t.value = obj[key] ?? "";
-    if (o.mono) { t.classList.add("mono"); }
-    t.addEventListener("input", () => { obj[key] = t.value; changed(); o.onInput && o.onInput(t.value); });
-    t.refresh = () => { t.value = obj[key] ?? ""; };
-    return t;
+    const ta = el("textarea", { class: "dbArea", rows: o.rows || 3 });
+    ta.value = obj[key] ?? "";
+    if (o.mono) { ta.classList.add("mono"); }
+    ta.addEventListener("input", () => { obj[key] = ta.value; changed(); o.onInput && o.onInput(ta.value); });
+    ta.refresh = () => { ta.value = obj[key] ?? ""; };
+    return ta;
 }
 
 // options: [[valor, rótulo], ...]. Valores numéricos são preservados como número.
@@ -184,7 +185,7 @@ export function btn(label, onClick, cls) {
 
 // Abre um diálogo modal (via api.openDialog) e devolve Promise<boolean>.
 // build(body) monta o conteúdo; validate() pode devolver false para manter aberto.
-export function modal({ title, width, height, build, validate, okLabel = "OK", cancelLabel = "Cancel", extraButtons }) {
+export function modal({ title, width, height, build, validate, okLabel = t("OK", "BasicConstants"), cancelLabel = t("Cancel", "BasicConstants"), extraButtons }) {
     return new Promise(resolve => {
         let done = false;
         const finish = v => { if (!done) { done = true; resolve(v); } };
@@ -209,7 +210,7 @@ export function alertBox(message, title = "MZ Editor") {
 }
 
 export function confirmBox(message, title = "MZ Editor") {
-    return modal({ title, width: "440px", okLabel: "OK", build: b => b.appendChild(el("div", { class: "dbMsg", text: message })) });
+    return modal({ title, width: "440px", build: b => b.appendChild(el("div", { class: "dbMsg", text: message })) });
 }
 
 // Pergunta um número. Devolve o número ou null.
@@ -275,11 +276,11 @@ export function tableList(o) {
     };
     const tools = el("div", { class: "dbTTools" });
     const tool = (label, fn) => tools.appendChild(btn(label, fn, "small"));
-    if (!o.fixed) { tool("New", () => edit(o.items.length)); }
-    tool("Edit", () => { if (selected >= 0) { edit(selected); } });
+    if (!o.fixed) { tool(t("New", "StandardPopupMenu"), () => edit(o.items.length)); }
+    tool(t("Edit", "StandardPopupMenu"), () => { if (selected >= 0) { edit(selected); } });
     if (!o.fixed) {
-        tool("Copy", () => { if (selected >= 0 && selected < o.items.length) { clip.set(o.clipKey || "x", structuredClone(o.items[selected])); } });
-        tool("Paste", () => {
+        tool(t("Copy", "BasicConstants"), () => { if (selected >= 0 && selected < o.items.length) { clip.set(o.clipKey || "x", structuredClone(o.items[selected])); } });
+        tool(t("Paste", "BasicConstants"), () => {
             const c = clip.get(o.clipKey || "x");
             if (c) {
                 const at = selected >= 0 && selected <= o.items.length ? selected : o.items.length;
@@ -287,7 +288,7 @@ export function tableList(o) {
                 selected = at; notify(); render();
             }
         });
-        tool("Delete", () => {
+        tool(t("Delete", "BasicConstants"), () => {
             if (selected >= 0 && selected < o.items.length) {
                 o.items.splice(selected, 1);
                 selected = Math.min(selected, o.items.length - 1); notify(); render();

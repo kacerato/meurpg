@@ -1,23 +1,31 @@
-// Constantes e listas de opções compartilhadas entre as abas (rótulos do editor MZ em inglês).
+// Constantes e listas de opções compartilhadas entre as abas (rótulos do editor MZ, traduzidos por t()).
 import { pad } from "./ui.js";
+import { t } from "../i18n.js";
 
-export const PARAMS = ["Max HP", "Max MP", "Attack", "Defense", "M.Attack", "M.Defense", "Agility", "Luck"];
-export const XPARAMS = ["Hit Rate", "Evasion Rate", "Critical Rate", "Critical Evasion", "Magic Evasion",
-    "Magic Reflection", "Counter Attack", "HP Regeneration", "MP Regeneration", "TP Regeneration"];
-export const SPARAMS = ["Target Rate", "Guard Effect", "Recovery Effect", "Pharmacology", "MP Cost Rate",
-    "TP Charge Rate", "Physical Damage", "Magic Damage", "Floor Damage", "Experience"];
-export const SPECIAL_FLAGS = ["Auto Battle", "Guard", "Substitute", "Preserve TP"];
-export const COLLAPSE = ["Normal", "Boss", "Instant", "No Disappear"];
-export const PARTY_ABILITY = ["Encounter Half", "Encounter None", "Cancel Surprise", "Raise Preemptive", "Gold Double", "Drop Item Double"];
-export const OCCASIONS = [[0, "Always"], [1, "Battle Screen"], [2, "Menu Screen"], [3, "Never"]];
-export const HIT_TYPES = [[0, "Certain Hit"], [1, "Physical Attack"], [2, "Magical Attack"]];
-export const DAMAGE_TYPES = [[0, "None"], [1, "HP Damage"], [2, "MP Damage"], [3, "HP Recover"], [4, "MP Recover"], [5, "HP Drain"], [6, "MP Drain"]];
-export const ITEM_TYPES = [[1, "Regular Item"], [2, "Key Item"], [3, "Hidden Item A"], [4, "Hidden Item B"]];
-export const RESTRICTIONS = [[0, "None"], [1, "Attack an enemy"], [2, "Attack anyone"], [3, "Attack an ally"], [4, "Cannot move"]];
-export const SV_MOTIONS = [[0, "Normal"], [1, "Abnormal"], [2, "Sleep"], [3, "Dead"]];
-export const SV_OVERLAYS = [[0, "None"], [1, "Poison"], [2, "Blind"], [3, "Silence"], [4, "Rage"], [5, "Confusion"],
-    [6, "Fascination"], [7, "Sleep"], [8, "Paralyze"], [9, "Curse"], [10, "Fear"]];
-export const AUTO_REMOVAL = [[0, "None"], [1, "Action End"], [2, "Turn End"]];
+export const PARAMS = [t("Max HP", "Constants"), t("Max MP", "Constants"), t("Attack", "Constants"), t("Defense", "Constants"),
+    t("M.Attack", "Constants"), t("M.Defense", "Constants"), t("Agility", "Constants"), t("Luck", "Constants")];
+export const XPARAMS = [t("Hit Rate", "Constants"), t("Evasion Rate", "Constants"), t("Critical Rate", "Constants"),
+    t("Critical Evasion", "Constants"), t("Magic Evasion", "Constants"), t("Magic Reflection", "Constants"),
+    t("Counter Attack", "Constants"), t("HP Regeneration", "Constants"), t("MP Regeneration", "Constants"), t("TP Regeneration", "Constants")];
+export const SPARAMS = [t("Target Rate", "Constants"), t("Guard Effect", "Constants"), t("Recovery Effect", "Constants"),
+    t("Pharmacology", "Constants"), t("MP Cost Rate", "Constants"), t("TP Charge Rate", "Constants"),
+    t("Physical Damage", "Constants"), t("Magic Damage", "Constants"), t("Floor Damage", "Constants"), t("Experience", "Constants")];
+export const SPECIAL_FLAGS = [t("Auto Battle", "Constants"), t("Guard", "Constants"), t("Substitute", "Constants"), t("Preserve TP", "Constants")];
+export const COLLAPSE = [t("Normal", "Constants"), t("Boss", "Constants"), t("Instant", "Constants"), t("No Disappear", "Constants")];
+export const PARTY_ABILITY = [t("Encounter Half", "Constants"), t("Encounter None", "Constants"), t("Cancel Surprise", "Constants"),
+    t("Raise Preemptive", "Constants"), t("Gold Double", "Constants"), t("Drop Item Double", "Constants")];
+export const OCCASIONS = [[0, t("Always", "Constants")], [1, t("Battle Screen", "Constants")], [2, t("Menu Screen", "Constants")], [3, t("Never", "Constants")]];
+export const HIT_TYPES = [[0, t("Certain Hit", "Group_Invocation")], [1, t("Physical Attack", "Group_Invocation")], [2, t("Magical Attack", "Group_Invocation")]];
+export const DAMAGE_TYPES = [[0, t("None", "Constants")], [1, t("HP Damage", "Group_Damage")], [2, t("MP Damage", "Group_Damage")],
+    [3, t("HP Recover", "Group_Damage")], [4, t("MP Recover", "Group_Damage")], [5, t("HP Drain", "Group_Damage")], [6, t("MP Drain", "Group_Damage")]];
+export const ITEM_TYPES = [[1, t("Regular Item", "Constants")], [2, t("Key Item", "Constants")], [3, t("Hidden Item A", "Constants")], [4, t("Hidden Item B", "Constants")]];
+export const RESTRICTIONS = [[0, t("None", "Constants")], [1, t("Attack an enemy", "Edit_States")], [2, t("Attack anyone", "Edit_States")],
+    [3, t("Attack an ally", "Edit_States")], [4, t("Cannot move", "Edit_States")]];
+export const SV_MOTIONS = [[0, t("Normal", "Edit_States")], [1, t("Abnormal", "Edit_States")], [2, t("Sleep", "Edit_States")], [3, t("Dead", "Edit_States")]];
+export const SV_OVERLAYS = [[0, t("None", "Constants")], [1, t("Poison", "Edit_States")], [2, t("Blind", "Edit_States")], [3, t("Silence", "Edit_States")],
+    [4, t("Rage", "Edit_States")], [5, t("Confusion", "Edit_States")], [6, t("Charm", "Edit_States")], [7, t("Sleep", "Edit_States")],
+    [8, t("Paralysis", "Edit_States")], [9, t("Curse", "Edit_States")], [10, t("Fear", "Edit_States")]];
+export const AUTO_REMOVAL = [[0, t("None", "Constants")], [1, t("Action End", "Edit_States")], [2, t("Turn End", "Edit_States")]];
 
 export const FILES = ["Actors", "Classes", "Skills", "Items", "Weapons", "Armors", "Enemies", "Troops",
     "States", "Animations", "Tilesets", "CommonEvents", "System"];
@@ -40,7 +48,7 @@ export function typeOptions(list, none) {
     return out;
 }
 
-export function nameOf(arr, id, none = "None") {
+export function nameOf(arr, id, none = t("None", "Constants")) {
     if (!id) { return none; }
     const o = arr && arr[id];
     return o ? o.name || "" : "?" + id;
@@ -79,9 +87,10 @@ export function encodeScope(d) {
         default: return 0;
     }
 }
-export const SCOPE_TEXT = ["None", "1 Enemy", "All Enemies", "1 Random Enemy", "2 Random Enemies", "3 Random Enemies",
-    "4 Random Enemies", "1 Ally", "All Allies", "1 Ally (Dead)", "All Allies (Dead)", "The User",
-    "1 Ally (Unconditional)", "All Allies (Unconditional)", "Enemies & Allies"];
+export const SCOPE_TEXT = [t("None", "Constants"), t("1 Enemy", "Constants"), t("All Enemies", "Constants"), t("1 Random Enemy", "Constants"),
+    t("2 Random Enemies", "Constants"), t("3 Random Enemies", "Constants"), t("4 Random Enemies", "Constants"), t("1 Ally", "Constants"),
+    t("All Allies", "Constants"), t("1 Ally (Dead)", "Constants"), t("All Allies (Dead)", "Constants"), t("The User", "Constants"),
+    t("1 Ally (UNC)", "Constants"), t("All Allies (UNC)", "Constants"), t("All Enemies & Allies", "Constants")];
 
 // --------------------------------------------------------------------- Curva de EXP (Game_Actor.expForLevel)
 export function expForLevel(p, level) {

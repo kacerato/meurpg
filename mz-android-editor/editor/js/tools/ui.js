@@ -1,4 +1,5 @@
-// Utilitários de interface do módulo tools (sem dependências).
+// Utilitários de interface do módulo tools.
+import { t } from "../i18n.js";
 
 export function el(tag, attrs = {}, ...children) {
     const e = document.createElement(tag);
@@ -30,7 +31,7 @@ export function modal(api, opts) {
     return new Promise(resolve => {
         let done = false;
         const finish = v => { if (!done) { done = true; resolve(v); } };
-        const buttons = (opts.buttons || [{ label: "OK", primary: true, value: true }, { label: "Cancelar", value: false }])
+        const buttons = (opts.buttons || [{ label: t("OK", "BasicConstants"), primary: true, value: true }, { label: t("Cancel", "BasicConstants"), value: false }])
             .map(b => ({
                 label: b.label, primary: b.primary,
                 onClick: () => {
@@ -54,7 +55,7 @@ export async function confirmBox(api, title, message) {
     return modal(api, {
         title, width: "440px", height: "auto", cls: "tlSmall",
         build: b => b.appendChild(el("div", { class: "tlMsg" }, el("img", { src: "img/question.png", alt: "" }), el("div", { text: message }))),
-        buttons: [{ label: "OK", primary: true, value: true }, { label: "Cancelar", value: false }]
+        buttons: [{ label: t("OK", "BasicConstants"), primary: true, value: true }, { label: t("Cancel", "BasicConstants"), value: false }]
     });
 }
 
@@ -62,7 +63,7 @@ export async function alertBox(api, title, message, icon = "information") {
     return modal(api, {
         title, width: "480px", height: "auto", cls: "tlSmall",
         build: b => b.appendChild(el("div", { class: "tlMsg" }, el("img", { src: `img/${icon}.png`, alt: "" }), el("div", { class: "tlPre", text: message }))),
-        buttons: [{ label: "OK", primary: true, value: true }]
+        buttons: [{ label: t("OK", "BasicConstants"), primary: true, value: true }]
     });
 }
 

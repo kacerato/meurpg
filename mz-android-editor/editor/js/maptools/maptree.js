@@ -7,6 +7,7 @@ import { openMapProperties, newMapData } from "./properties.js";
 import { openSampleLoader } from "./sampleloader.js";
 import { openShiftDialog, openSaveImageDialog } from "./mapimage.js";
 import { openDungeonDialog } from "./dungeon.js";
+import { t } from "../i18n.js";
 
 const pad3 = n => String(n).padStart(3, "0");
 export const mapPath = id => `data/Map${pad3(id)}.json`;
@@ -69,7 +70,7 @@ export async function createMap(parentId, source) {
     let probe = 1;
     while (list[probe]) { probe++; }
     if (probe > 999) {
-        api.status("Não é possível criar mais mapas.");
+        api.status(t("Cannot create any more maps.", "MapEditTreeBox"));
         return null;
     }
     let map;
@@ -80,7 +81,7 @@ export async function createMap(parentId, source) {
     } else {
         const cur = ctx.S.cur;
         map = newMapData(cur ? cur.map.tilesetId : 1);
-        const r = await openMapProperties(api, { title: "Propriedades do Mapa", map, info: { name } });
+        const r = await openMapProperties(api, { title: t("Map Properties", "Dialog_MapProperties"), map, info: { name } });
         if (!r) { return null; }
         map = r.map;
         resizeMapData(map, r.width, r.height);
@@ -88,14 +89,14 @@ export async function createMap(parentId, source) {
     }
     const info = insertInfo(list, parentId, name);
     if (!info) {
-        api.status("Não é possível criar mais mapas.");
+        api.status(t("Cannot create any more maps.", "MapEditTreeBox"));
         return null;
     }
     await api.project.writeJson(mapPath(info.id), map);
     await saveInfos(list);
     api.emit("map:changed", { id: info.id });
     await api.selectMap(info.id);
-    api.status(`Mapa ${pad3(info.id)} criado`);
+    api.status(t("Map %1 created", null, pad3(info.id)));
     return info;
 }
 
@@ -114,7 +115,7 @@ export async function editMapProperties(id) {
     if (r.width !== map.width || r.height !== map.height) {
         resizeMapData(map, r.width, r.height);
     }
-    edit.recordFull("Propriedades do Mapa", before);
+    edit.recordFull(t("Map Properties", "Dialog_MapProperties"), before);
     if (info.name !== r.name) {
         info.name = r.name;
         await saveInfos(list);
@@ -133,7 +134,7 @@ function confirm(api, text) {
             title: "RPG Maker MZ",
             width: "420px",
             height: "180px",
-            buttons: [{ label: "Sim", primary: true, onClick: () => resolve(true) }, { label: "Não", onClick: () => resolve(false) }]
+            buttons: [{ label: t("Yes", "BasicConstants"), primary: true, onClick: () => resolve(true) }, { label: t("No", "BasicConstants"), onClick: () => resolve(false) }]
         });
         dlg.body.textContent = text;
     });
@@ -144,7 +145,7 @@ export async function deleteMap(id) {
     const list = await infos();
     const info = list[id];
     if (!info) { return; }
-    if (!(await confirm(api, `Deletar ${info.name}?`))) { return; }
+    if (!(await confirm(api, t("Delete %1?", "MapEditTreeBox", info.name)))) { return; }
     const ids = [id, ...descendants(list, id)];
     for (const d of ids) {
         list[d] = null;
@@ -156,7 +157,7 @@ export async function deleteMap(id) {
     renumber(list);
     await saveInfos(list);
     api.emit("maps:changed", { infos: list, removed: ids });
-    api.status(`Mapa excluído (${ids.length})`);
+    api.status(t("Map deleted (%1)", null, ids.length));
     if (ids.includes(api.currentMapId)) {
         const first = list.find(Boolean);
         if (first) { await api.selectMap(first.id); }
@@ -181,31 +182,31 @@ function showTreeMenu(x, y, id) {
     menu.id = "mtTreeMenu";
     const sep = () => { const d = document.createElement("div"); d.className = "mtMenuSep"; menu.appendChild(d); };
     const items = [
-        ["Editar…", () => editMapProperties(id), !id],
-        ["Novo…", () => createMap(id), false],
-        ["Carregar…", async () => {
+        [t("Edit", "StandardPopupMenu") + "…", () => editMapProperties(id), !id],
+        [t("New", "StandardPopupMenu") + "…", () => createMap(id), false],
+        [t("Load", "MainMenu") + "…", async () => {
             const r = await openSampleLoader(api);
             if (r) { await createMap(id, r); }
         }, false],
         null,
-        ["Copiar", async () => {
+        [t("Copy", "BasicConstants"), async () => {
             const list = await infos();
             const map = await api.project.map(id);
             S.mapClipboard = { map: JSON.parse(JSON.stringify(map)), info: { ...list[id] } };
-            api.status("Mapa copiado");
+            api.status(t("Map copied"));
         }, !id],
-        ["Colar", () => createMap(id, S.mapClipboard), !S.mapClipboard],
-        ["Excluir", () => deleteMap(id), !id],
+        [t("Paste", "BasicConstants"), () => createMap(id, S.mapClipboard), !S.mapClipboard],
+        [t("Delete", "BasicConstants"), () => deleteMap(id), !id],
         null,
-        ["Deslocar…", async () => {
+        [t("Shift", "MainMenu") + "…", async () => {
             const e = await openForEdit(id);
             if (e) { await openShiftDialog(api, e, ctx.afterBulkEdit); }
         }, !id],
-        ["Gerar Masmorra…", async () => {
+        [t("Generate Dungeon", "MainMenu") + "…", async () => {
             const e = await openForEdit(id);
             if (e) { await openDungeonDialog(api, e, ctx.afterBulkEdit); }
         }, !id],
-        ["Salvar como Imagem…", async () => {
+        [t("Save as Image", "MainMenu") + "…", async () => {
             const e = await openForEdit(id);
             if (e) { await openSaveImageDialog(api, e); }
         }, !id]
@@ -320,7 +321,7 @@ function bindDrag(tree, sidebar) {
         const ok = row ? moveInfo(list, d.id, Number(row.dataset.id), where(row, e.clientY)) : moveInfo(list, d.id, 0, "inside");
         if (ok) {
             await saveInfos(list);
-            api.status("Mapa movido");
+            api.status(t("Map moved"));
         }
     };
 

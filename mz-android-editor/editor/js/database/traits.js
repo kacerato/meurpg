@@ -1,6 +1,7 @@
 // Traits (Game_BattlerBase.TRAIT_*) e Effects (Game_Action.EFFECT_*): listas e diálogos.
 import { el, num, sel, tabs, tableList, modal } from "./ui.js";
 import { PARAMS, XPARAMS, SPARAMS, SPECIAL_FLAGS, COLLAPSE, PARTY_ABILITY, idOptions, typeOptions, nameOf } from "./common.js";
+import { t } from "../i18n.js";
 
 const pct = v => Math.round(v * 100 * 100) / 100;
 const typeName = (list, i) => (list && list[i]) || "";
@@ -18,29 +19,50 @@ function optionLists(db) {
         wtypes: () => typeOptions(s.weaponTypes),
         atypes: () => typeOptions(s.armorTypes),
         etypes: () => typeOptions(s.equipTypes),
-        slot: () => [[1, "Dual Wield"]],
+        slot: () => [[1, t("Dual Wield", "Constants")]],
         special: () => SPECIAL_FLAGS.map((n, i) => [i, n]),
         collapse: () => COLLAPSE.map((n, i) => [i, n]),
         party: () => PARTY_ABILITY.map((n, i) => [i, n]),
         commons: () => idOptions(db.CommonEvents),
-        escape: () => [[0, "Escape"]],
-        statesAtk: () => [[0, "Normal Attack"], ...idOptions(db.States)]
+        escape: () => [[0, t("Escape", "Constants")]],
+        statesAtk: () => [[0, t("Normal Attack", "Dialog_Effects")], ...idOptions(db.States)]
     };
 }
 
 // value: "rate" (×%, 0..1000), "plus" (+%, -100..100), "plus1000" (+%, 0..1000), "int", "pct100" (%, 0..100)
+// linha: [code, rótulo no diálogo, lista, tipo, rótulo na lista]
 const TRAIT_TABS = [
-    ["Rate", [[11, "Element Rate", "elements", "rate"], [12, "Debuff Rate", "params", "rate"],
-        [13, "State Rate", "states", "rate"], [14, "State Resist", "states", null]]],
-    ["Param", [[21, "Parameter", "params", "rate"], [22, "Ex-Parameter", "xparams", "plus"], [23, "Sp-Parameter", "sparams", "rate"]]],
-    ["Attack", [[31, "Attack Element", "elements", null], [32, "Attack State", "states", "plus1000"],
-        [33, "Attack Speed", null, "speed"], [34, "Attack Times +", null, "times"], [35, "Attack Skill", "skills", null]]],
-    ["Skill", [[41, "Add Skill Type", "stypes", null], [42, "Seal Skill Type", "stypes", null],
-        [43, "Add Skill", "skills", null], [44, "Seal Skill", "skills", null]]],
-    ["Equip", [[51, "Equip Weapon", "wtypes", null], [52, "Equip Armor", "atypes", null],
-        [53, "Lock Equip", "etypes", null], [54, "Seal Equip", "etypes", null], [55, "Slot Type", "slot", null]]],
-    ["Other", [[61, "Action Times +", null, "pct100"], [62, "Special Flag", "special", null],
-        [63, "Collapse Effect", "collapse", null], [64, "Party Ability", "party", null]]]
+    [t("Rates", "Dialog_Traits"), [
+        [11, t("Element Rate", "Dialog_Traits"), "elements", "rate", t("Element Rate", "Group_Traits")],
+        [12, t("Debuff Rate", "Dialog_Traits"), "params", "rate", t("Debuff Rate", "Group_Traits")],
+        [13, t("State Rate", "Dialog_Traits"), "states", "rate", t("State Rate", "Group_Traits")],
+        [14, t("State Resist", "Dialog_Traits"), "states", null, t("State Resist", "Group_Traits")]]],
+    [t("Param", "Dialog_Traits"), [
+        [21, t("Parameter", "Dialog_Traits"), "params", "rate", t("Parameter", "Group_Traits")],
+        [22, t("Ex-Parameter", "Dialog_Traits"), "xparams", "plus", t("Ex-Parameter", "Group_Traits")],
+        [23, t("Sp-Parameter", "Dialog_Traits"), "sparams", "rate", t("Sp-Parameter", "Group_Traits")]]],
+    [t("Attack", "Dialog_Traits"), [
+        [31, t("Attack Element", "Dialog_Traits"), "elements", null, t("Attack Element", "Group_Traits")],
+        [32, t("Attack State", "Dialog_Traits"), "states", "plus1000", t("Attack State", "Group_Traits")],
+        [33, t("Attack Speed", "Dialog_Traits"), null, "speed", t("Attack Speed", "Group_Traits")],
+        [34, t("Attack Times +", "Dialog_Traits"), null, "times", t("Attack Times +", "Group_Traits")],
+        [35, t("Attack Skill", "Dialog_Traits"), "skills", null, t("Attack Skill", "Group_Traits")]]],
+    [t("Skill", "Constants"), [
+        [41, t("Add Skill Type", "Dialog_Traits"), "stypes", null, t("Add Skill Type", "Group_Traits")],
+        [42, t("Seal Skill Type", "Dialog_Traits"), "stypes", null, t("Seal Skill Type", "Group_Traits")],
+        [43, t("Add Skill", "Dialog_Traits"), "skills", null, t("Add Skill", "Group_Traits")],
+        [44, t("Seal Skill", "Dialog_Traits"), "skills", null, t("Seal Skill", "Group_Traits")]]],
+    [t("Equip", "Dialog_Traits"), [
+        [51, t("Equip Weapon", "Dialog_Traits"), "wtypes", null, t("Equip Weapon", "Group_Traits")],
+        [52, t("Equip Armor", "Dialog_Traits"), "atypes", null, t("Equip Armor", "Group_Traits")],
+        [53, t("Lock Equip", "Dialog_Traits"), "etypes", null, t("Lock Equip", "Group_Traits")],
+        [54, t("Seal Equip", "Dialog_Traits"), "etypes", null, t("Seal Equip", "Group_Traits")],
+        [55, t("Slot Type", "Dialog_Traits"), "slot", null, t("Slot Type", "Group_Traits")]]],
+    [t("Other", "Dialog_Traits"), [
+        [61, t("Action Times +", "Dialog_Traits"), null, "pct100", t("Action Times +", "Group_Traits")],
+        [62, t("Special Flag", "Dialog_Traits"), "special", null, t("Special Flag", "Group_Traits")],
+        [63, t("Collapse Effect", "Dialog_Traits"), "collapse", null, t("Collapse Effect", "Group_Traits")],
+        [64, t("Party Ability", "Dialog_Traits"), "party", null, t("Party Ability", "Group_Traits")]]]
 ];
 const TRAIT_DEF = new Map(TRAIT_TABS.flatMap(([, rows]) => rows.map(r => [r[0], r])));
 
@@ -60,33 +82,33 @@ function traitValueControl(v, kind) {
     }
 }
 
-export function traitText(db, t) {
-    const def = TRAIT_DEF.get(t.code);
-    if (!def) { return ["Code " + t.code, `${t.dataId} / ${t.value}`]; }
+export function traitText(db, tr) {
+    const def = TRAIT_DEF.get(tr.code);
+    if (!def) { return [t("Code %1", "MZEditor", tr.code), `${tr.dataId} / ${tr.value}`]; }
     const s = db.System;
-    const [, label, list, kind] = def;
+    const [, , list, kind, label] = def;
     let data = "";
     switch (list) {
-        case "elements": data = typeName(s.elements, t.dataId); break;
-        case "params": data = PARAMS[t.dataId] || ""; break;
-        case "xparams": data = XPARAMS[t.dataId] || ""; break;
-        case "sparams": data = SPARAMS[t.dataId] || ""; break;
-        case "states": data = nameOf(db.States, t.dataId); break;
-        case "skills": data = nameOf(db.Skills, t.dataId); break;
-        case "stypes": data = typeName(s.skillTypes, t.dataId); break;
-        case "wtypes": data = typeName(s.weaponTypes, t.dataId); break;
-        case "atypes": data = typeName(s.armorTypes, t.dataId); break;
-        case "etypes": data = typeName(s.equipTypes, t.dataId); break;
-        case "slot": data = t.dataId === 1 ? "Dual Wield" : "Normal"; break;
-        case "special": data = SPECIAL_FLAGS[t.dataId] || ""; break;
-        case "collapse": data = COLLAPSE[t.dataId] || ""; break;
-        case "party": data = PARTY_ABILITY[t.dataId] || ""; break;
+        case "elements": data = typeName(s.elements, tr.dataId); break;
+        case "params": data = PARAMS[tr.dataId] || ""; break;
+        case "xparams": data = XPARAMS[tr.dataId] || ""; break;
+        case "sparams": data = SPARAMS[tr.dataId] || ""; break;
+        case "states": data = nameOf(db.States, tr.dataId); break;
+        case "skills": data = nameOf(db.Skills, tr.dataId); break;
+        case "stypes": data = typeName(s.skillTypes, tr.dataId); break;
+        case "wtypes": data = typeName(s.weaponTypes, tr.dataId); break;
+        case "atypes": data = typeName(s.armorTypes, tr.dataId); break;
+        case "etypes": data = typeName(s.equipTypes, tr.dataId); break;
+        case "slot": data = tr.dataId === 1 ? t("Dual Wield", "Constants") : t("Normal", "Constants"); break;
+        case "special": data = SPECIAL_FLAGS[tr.dataId] || ""; break;
+        case "collapse": data = COLLAPSE[tr.dataId] || ""; break;
+        case "party": data = PARTY_ABILITY[tr.dataId] || ""; break;
     }
     switch (kind) {
-        case "rate": data += ` * ${pct(t.value)}%`; break;
-        case "plus": case "plus1000": data += ` + ${pct(t.value)}%`; break;
-        case "speed": case "times": data = String(t.value); break;
-        case "pct100": data = pct(t.value) + "%"; break;
+        case "rate": data += ` * ${pct(tr.value)}%`; break;
+        case "plus": case "plus1000": data += ` + ${pct(tr.value)}%`; break;
+        case "speed": case "times": data = String(tr.value); break;
+        case "pct100": data = pct(tr.value) + "%"; break;
     }
     return [label, data.trim()];
 }
@@ -127,7 +149,7 @@ async function codeDialog({ title, tabDefs, item, makeVals, controls, opts }) {
 export function editTrait(db, trait) {
     const opts = optionLists(db);
     return codeDialog({
-        title: "Traits", tabDefs: TRAIT_TABS, item: trait, opts,
+        title: t("Traits", "Dialog_Traits"), tabDefs: TRAIT_TABS, item: trait, opts,
         makeVals: (r, cur) => {
             const first = r[2] ? (opts[r[2]]()[0] || [0])[0] : 0;
             return cur ? { dataId: cur.dataId, value: cur.value } : { dataId: first, value: defaultTraitValue(r[3]) };
@@ -138,11 +160,11 @@ export function editTrait(db, trait) {
 
 export function traitsList(db, owner, o = {}) {
     return tableList({
-        columns: [{ title: "Type", width: "42%" }, { title: "Content", width: "1fr" }],
+        columns: [{ title: t("Type", "Constants"), width: "42%" }, { title: t("Content", "Group_Traits"), width: "1fr" }],
         items: owner.traits,
-        cells: t => traitText(db, t),
+        cells: tr => traitText(db, tr),
         create: () => editTrait(db, null),
-        edit: t => editTrait(db, t),
+        edit: tr => editTrait(db, tr),
         clipKey: "trait",
         height: o.height,
         onChange: o.onChange
@@ -152,12 +174,23 @@ export function traitsList(db, owner, o = {}) {
 // ------------------------------------------------------------------- Effects
 
 const EFFECT_TABS = [
-    ["Recover", [[11, "Recover HP", null, "hp"], [12, "Recover MP", null, "mp"], [13, "Gain TP", null, "tp"]]],
-    ["State", [[21, "Add State", "statesAtk", "rate"], [22, "Remove State", "states", "rate"]]],
-    ["Param", [[31, "Add Buff", "params", "turns"], [32, "Add Debuff", "params", "turns"],
-        [33, "Remove Buff", "params", null], [34, "Remove Debuff", "params", null]]],
-    ["Other", [[41, "Special Effect", "escape", null], [42, "Grow", "params", "grow"],
-        [43, "Learn Skill", "skills", null], [44, "Common Event", "commons", null]]]
+    [t("Recover", "Dialog_Effects"), [
+        [11, t("Recover HP", "Dialog_Effects"), null, "hp", t("Recover HP", "Group_Effects")],
+        [12, t("Recover MP", "Dialog_Effects"), null, "mp", t("Recover MP", "Group_Effects")],
+        [13, t("Gain TP", "Dialog_Effects"), null, "tp", t("Gain TP", "Group_Effects")]]],
+    [t("State", "Constants"), [
+        [21, t("Add State", "Dialog_Effects"), "statesAtk", "rate", t("Add State", "Group_Effects")],
+        [22, t("Remove State", "Dialog_Effects"), "states", "rate", t("Remove State", "Group_Effects")]]],
+    [t("Param", "Dialog_Effects"), [
+        [31, t("Add Buff", "Dialog_Effects"), "params", "turns", t("Add Buff", "Group_Effects")],
+        [32, t("Add Debuff", "Dialog_Effects"), "params", "turns", t("Add Debuff", "Group_Effects")],
+        [33, t("Remove Buff", "Dialog_Effects"), "params", null, t("Remove Buff", "Group_Effects")],
+        [34, t("Remove Debuff", "Dialog_Effects"), "params", null, t("Remove Debuff", "Group_Effects")]]],
+    [t("Other", "Dialog_Effects"), [
+        [41, t("Special Effect", "Dialog_Effects"), "escape", null, t("Special Effect", "Group_Effects")],
+        [42, t("Grow", "Dialog_Effects"), "params", "grow", t("Grow", "Group_Effects")],
+        [43, t("Learn Skill", "Dialog_Effects"), "skills", null, t("Learn Skill", "Group_Effects")],
+        [44, t("Common Event", "Constants"), "commons", null, t("Common Event", "Constants")]]]
 ];
 const EFFECT_DEF = new Map(EFFECT_TABS.flatMap(([, rows]) => rows.map(r => [r[0], r])));
 
@@ -167,7 +200,7 @@ function effectControls(v, kind) {
         case "mp": return [num(v, "value1", { scale: 100, min: -100, max: 100, float: true }), " % + ", num(v, "value2", { min: -9999, max: 9999 })];
         case "tp": return [num(v, "value1", { min: 0, max: 100 })];
         case "rate": return [num(v, "value1", { scale: 100, min: 0, max: 1000, float: true }), " %"];
-        case "turns": return [num(v, "value1", { min: 1, max: 1000 }), " turns"];
+        case "turns": return [num(v, "value1", { min: 1, max: 1000 }), " " + t("turns", "Dialog_Effects")];
         case "grow": return ["+ ", num(v, "value1", { min: 1, max: 1000 })];
         default: return [];
     }
@@ -175,14 +208,14 @@ function effectControls(v, kind) {
 
 export function effectText(db, e) {
     const def = EFFECT_DEF.get(e.code);
-    if (!def) { return ["Code " + e.code, `${e.dataId} / ${e.value1} / ${e.value2}`]; }
-    const [, label, list, kind] = def;
+    if (!def) { return [t("Code %1", "MZEditor", e.code), `${e.dataId} / ${e.value1} / ${e.value2}`]; }
+    const [, , list, kind, label] = def;
     let data = "";
     if (list === "params") { data = PARAMS[e.dataId] || ""; }
-    else if (list === "states" || list === "statesAtk") { data = e.dataId === 0 && list === "statesAtk" ? "Normal Attack" : nameOf(db.States, e.dataId); }
+    else if (list === "states" || list === "statesAtk") { data = e.dataId === 0 && list === "statesAtk" ? t("Normal Attack", "Group_Effects") : nameOf(db.States, e.dataId); }
     else if (list === "skills") { data = nameOf(db.Skills, e.dataId); }
     else if (list === "commons") { data = nameOf(db.CommonEvents, e.dataId); }
-    else if (list === "escape") { data = "Escape"; }
+    else if (list === "escape") { data = t("Escape", "Constants"); }
     switch (kind) {
         case "hp": case "mp": {
             const parts = [];
@@ -193,7 +226,7 @@ export function effectText(db, e) {
         }
         case "tp": data = String(e.value1); break;
         case "rate": data += ` ${pct(e.value1)}%`; break;
-        case "turns": data += ` ${e.value1} turns`; break;
+        case "turns": data += ` ${e.value1} ${t("turns", "Group_Effects")}`; break;
         case "grow": data += ` + ${e.value1}`; break;
     }
     return [label, data.trim()];
@@ -203,7 +236,7 @@ export function editEffect(db, eff) {
     const opts = optionLists(db);
     const defaults = { hp: [0, 0], mp: [0, 0], tp: [0, 0], rate: [1, 0], turns: [5, 0], grow: [1, 0] };
     return codeDialog({
-        title: "Effects", tabDefs: EFFECT_TABS, item: eff, opts,
+        title: t("Effects", "Dialog_Effects"), tabDefs: EFFECT_TABS, item: eff, opts,
         makeVals: (r, cur) => {
             if (cur) { return { dataId: cur.dataId, value1: cur.value1, value2: cur.value2 }; }
             const d = defaults[r[3]] || [0, 0];
@@ -216,7 +249,7 @@ export function editEffect(db, eff) {
 
 export function effectsList(db, owner, o = {}) {
     return tableList({
-        columns: [{ title: "Type", width: "42%" }, { title: "Content", width: "1fr" }],
+        columns: [{ title: t("Type", "Constants"), width: "42%" }, { title: t("Content", "Group_Effects"), width: "1fr" }],
         items: owner.effects,
         cells: e => effectText(db, e),
         create: () => editEffect(db, null),

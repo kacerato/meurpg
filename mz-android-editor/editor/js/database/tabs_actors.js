@@ -4,6 +4,7 @@ import { PARAMS, idOptions, nameOf, expForLevel, generateCurve, quickCurve, PARA
 import { traitsList } from "./traits.js";
 import { openPluginHelp } from "./pluginhelp.js";
 import { pickSheet, pickImage, faceThumb, charThumb, svThumb } from "./pickers.js";
+import { t } from "../i18n.js";
 
 export function cols(host) {
     const left = el("div", { class: "dbCol" });
@@ -14,7 +15,7 @@ export function cols(host) {
 
 export function noteGroup(obj, rows = 5) {
     const ta = area(obj, "note", { rows });
-    return grp("Note", ta, el("div", { class: "dbRow" }, btn("Plugin Help...", () => openPluginHelp(obj, "note", ta), "small")));
+    return grp(t("Note", "Constants"), ta, el("div", { class: "dbRow" }, btn(t("Plugin Help", "TextEditPopupMenuEx") + "...", () => openPluginHelp(obj, "note", ta), "small")));
 }
 
 // Caixa de imagem tocável (rótulo + miniatura).
@@ -29,11 +30,11 @@ export function imageBox(label, makeThumb, onPick) {
 // ------------------------------------------------------------------ Actors
 
 function hasDualWield(...owners) {
-    return owners.some(o => o && (o.traits || []).some(t => t.code === 55 && t.dataId === 1));
+    return owners.some(o => o && (o.traits || []).some(tr => tr.code === 55 && tr.dataId === 1));
 }
 function allowed(owners, code) {
     const s = new Set();
-    for (const o of owners) { for (const t of (o && o.traits) || []) { if (t.code === code) { s.add(t.dataId); } } }
+    for (const o of owners) { for (const tr of (o && o.traits) || []) { if (tr.code === code) { s.add(tr.dataId); } } }
     return s;
 }
 
@@ -52,9 +53,9 @@ function equipmentGroup(db, a) {
             const etype = dual && i === 1 ? 1 : i + 1;
             let opts;
             if (etype === 1) {
-                opts = idOptions(db.Weapons, "None").filter(([id]) => !id || id === a.equips[i] || wOk.has(db.Weapons[id]?.wtypeId));
+                opts = idOptions(db.Weapons, t("None", "Constants")).filter(([id]) => !id || id === a.equips[i] || wOk.has(db.Weapons[id]?.wtypeId));
             } else {
-                opts = idOptions(db.Armors, "None").filter(([id]) => !id || id === a.equips[i] ||
+                opts = idOptions(db.Armors, t("None", "Constants")).filter(([id]) => !id || id === a.equips[i] ||
                     (db.Armors[id] && db.Armors[id].etypeId === etype && aOk.has(db.Armors[id].atypeId)));
             }
             box.appendChild(el("div", { class: "dbEquipRow" },
@@ -68,35 +69,35 @@ function equipmentGroup(db, a) {
 }
 
 export const actorsTab = {
-    id: "actors", label: "Actors", file: "Actors", max: 1000,
+    id: "actors", label: t("Actors", "DatabaseMain"), desc: t("Data for player-controlled party members.", "DatabaseMain"), file: "Actors", max: 1000,
     form(ctx, a, host) {
         const db = ctx.db;
         const [left, right] = cols(host);
         const equip = equipmentGroup(db, a);
-        left.appendChild(grp("General Settings", grid(2,
-            fld("Name:", text(a, "name", { onInput: () => ctx.refreshRow() })),
-            fld("Nickname:", text(a, "nickname")),
-            fld("Class:", sel(a, "classId", idOptions(db.Classes), { number: true, onChange: () => equip.refresh() })),
+        left.appendChild(grp(t("General Settings", "Constants"), grid(2,
+            fld(t("Name", "Constants") + ":", text(a, "name", { onInput: () => ctx.refreshRow() })),
+            fld(t("Nickname", "Edit_Actors") + ":", text(a, "nickname")),
+            fld(t("Class", "Constants") + ":", sel(a, "classId", idOptions(db.Classes), { number: true, onChange: () => equip.refresh() })),
             el("div", { class: "dbInline2" },
-                fld("Initial Level:", num(a, "initialLevel", { min: 1, max: 99 })),
-                fld("Max Level:", num(a, "maxLevel", { min: 1, max: 99 }))),
-            fld("Profile:", area(a, "profile", { rows: 2 }), { span: 2 }))));
-        left.appendChild(grp("Images", el("div", { class: "dbImgRow" },
-            imageBox("Face:", () => faceThumb(a.faceName, a.faceIndex, 96), async () => {
+                fld(t("Initial Level", "Edit_Actors") + ":", num(a, "initialLevel", { min: 1, max: 99 })),
+                fld(t("Max Level", "Edit_Actors") + ":", num(a, "maxLevel", { min: 1, max: 99 }))),
+            fld(t("Profile", "Edit_Actors") + ":", area(a, "profile", { rows: 2 }), { span: 2 }))));
+        left.appendChild(grp(t("Images", "Edit_Actors"), el("div", { class: "dbImgRow" },
+            imageBox(t("Face", "Constants") + ":", () => faceThumb(a.faceName, a.faceIndex, 96), async () => {
                 const r = await pickSheet({ kind: "face", name: a.faceName, index: a.faceIndex });
                 if (r) { a.faceName = r.name; a.faceIndex = r.index; return true; }
             }),
-            imageBox("Character:", () => charThumb(a.characterName, a.characterIndex, 96), async () => {
+            imageBox(t("Character", "Constants") + ":", () => charThumb(a.characterName, a.characterIndex, 96), async () => {
                 const r = await pickSheet({ kind: "character", name: a.characterName, index: a.characterIndex });
                 if (r) { a.characterName = r.name; a.characterIndex = r.index; return true; }
             }),
-            imageBox("[SV] Battler:", () => svThumb(a.battlerName, 96), async () => {
+            imageBox(t("[SV] Battler", "Constants") + ":", () => svThumb(a.battlerName, 96), async () => {
                 const r = await pickImage({ folder: "sv_actors", current: a.battlerName });
                 if (r) { a.battlerName = r.name; return true; }
             }))));
-        left.appendChild(grp("Initial Equipment", equip));
+        left.appendChild(grp(t("Initial Equipment", "Edit_Actors"), equip));
         const traits = traitsList(db, a, { onChange: () => equip.refresh() });
-        right.appendChild(grp("Traits", traits));
+        right.appendChild(grp(t("Traits", "Group_Traits"), traits));
         right.appendChild(noteGroup(a));
     }
 };
@@ -133,15 +134,15 @@ function curveThumb(c, i) {
 async function generateCurveDialog(i, values) {
     const o = { v1: values[1], v99: values[99], g: GROWTH_NORMAL };
     const ok = await modal({
-        title: "Generate Curve", width: "460px",
+        title: t("Generate Curve", "Dialog_GenerateCurve"), width: "460px",
         build: b => {
             b.appendChild(grid(2,
-                fld("Level 1:", num(o, "v1", { min: PARAM_MIN[i], max: PARAM_MAX[i] })),
-                fld("Level 99:", num(o, "v99", { min: PARAM_MIN[i], max: PARAM_MAX[i] }))));
+                fld(t("Level 1", "Dialog_GenerateCurve") + ":", num(o, "v1", { min: PARAM_MIN[i], max: PARAM_MAX[i] })),
+                fld(t("Level 99", "Dialog_GenerateCurve") + ":", num(o, "v99", { min: PARAM_MIN[i], max: PARAM_MAX[i] }))));
             const s = el("input", { type: "range", min: GROWTH_MIN, max: GROWTH_MAX, step: 1, value: o.g, class: "dbRange" });
             s.addEventListener("input", () => { o.g = Number(s.value); });
-            b.appendChild(grp("Growth Type", s, el("div", { class: "dbGrowthLabels" },
-                el("span", { text: "Fast" }), el("span", { text: "Normal" }), el("span", { text: "Slow" }))));
+            b.appendChild(grp(t("Growth Type", "Dialog_GenerateCurve"), s, el("div", { class: "dbGrowthLabels" },
+                el("span", { text: t("Fast", "Dialog_GenerateCurve") }), el("span", { text: t("Normal", "Dialog_GenerateCurve") }), el("span", { text: t("Slow", "Dialog_GenerateCurve") }))));
         }
     });
     return ok ? generateCurve(o.v1, o.v99, o.g, values) : null;
@@ -151,7 +152,7 @@ async function editParamCurves(c, initial) {
     const params = structuredClone(c.params);
     const state = { level: 1 };
     const ok = await modal({
-        title: "Parameter Curves", width: "780px", height: "560px",
+        title: t("Parameter Curves", "Dialog_ParameterCurves"), width: "780px", height: "560px",
         build: body => {
             body.appendChild(tabs(PARAMS.map((name, i) => ({
                 title: name,
@@ -174,15 +175,15 @@ async function editParamCurves(c, initial) {
                     };
                     cv.addEventListener("pointerdown", e => { cv.setPointerCapture(e.pointerId); pick(e); });
                     cv.addEventListener("pointermove", e => { if (e.buttons) { pick(e); } });
-                    const quick = el("div", { class: "dbRow" }, el("span", { text: "Quick Setting:" }),
+                    const quick = el("div", { class: "dbRow" }, el("span", { text: t("Quick Setting", "Dialog_ParameterCurves") + ":" }),
                         ...["A", "B", "C", "D", "E"].map((L, k) => btn(L, () => {
                             params[i] = quickCurve(i, k, params[i]);
                             val.v = params[i][lv.v]; valInput.refresh(); redraw();
                         }, "small")));
                     page.append(quick,
                         el("div", { class: "dbCurveWrap" }, cv),
-                        el("div", { class: "dbRow" }, fld("Level:", lvInput), fld("Value:", valInput),
-                            btn("Generate Curve...", async () => {
+                        el("div", { class: "dbRow" }, fld(t("Level", "Constants") + ":", lvInput), fld(t("Value", "Dialog_ParameterCurves") + ":", valInput),
+                            btn(t("Generate Curve", "Dialog_ParameterCurves") + "...", async () => {
                                 const r = await generateCurveDialog(i, params[i]);
                                 if (r) { params[i] = r; val.v = params[i][lv.v]; valInput.refresh(); redraw(); }
                             })));
@@ -208,15 +209,15 @@ async function editExpCurve(c) {
         }
     };
     const ok = await modal({
-        title: "EXP Curve", width: "760px", height: "560px",
+        title: t("EXP Curve", "Dialog_ExpCurve"), width: "760px", height: "560px",
         build: b => {
-            b.appendChild(tabs([{ title: "To Next Level", build: pg => { mode = 0; render(); pg.appendChild(table); } },
-                { title: "Total", build: pg => { mode = 1; render(); pg.appendChild(table); } }]));
+            b.appendChild(tabs([{ title: t("To Next Level", "Dialog_ExpCurve"), build: pg => { mode = 0; render(); pg.appendChild(table); } },
+                { title: t("Total", "Dialog_ExpCurve"), build: pg => { mode = 1; render(); pg.appendChild(table); } }]));
             b.appendChild(grid(4,
-                fld("Base Value:", num(p, "base", { min: 10, max: 50, onChange: render })),
-                fld("Extra Value:", num(p, "extra", { min: 0, max: 40, onChange: render })),
-                fld("Acceleration A:", num(p, "a", { min: 10, max: 50, onChange: render })),
-                fld("Acceleration B:", num(p, "b", { min: 10, max: 50, onChange: render }))));
+                fld(t("Base Value", "Dialog_ExpCurve") + ":", num(p, "base", { min: 10, max: 50, onChange: render })),
+                fld(t("Extra Value", "Dialog_ExpCurve") + ":", num(p, "extra", { min: 0, max: 40, onChange: render })),
+                fld(t("Acceleration A", "Dialog_ExpCurve") + ":", num(p, "a", { min: 10, max: 50, onChange: render })),
+                fld(t("Acceleration B", "Dialog_ExpCurve") + ":", num(p, "b", { min: 10, max: 50, onChange: render }))));
         }
     });
     if (ok) { c.expParams = [p.base, p.extra, p.a, p.b]; changed(); }
@@ -226,26 +227,26 @@ async function editExpCurve(c) {
 async function editLearning(db, l) {
     const o = l ? { ...l } : { level: 1, note: "", skillId: 1 };
     const ok = await modal({
-        title: "Learning", width: "520px",
+        title: t("Learnable Skills", "Dialog_SkillsToLearn"), width: "520px",
         build: b => b.appendChild(grid(2,
-            fld("Level:", num(o, "level", { min: 1, max: 99 })),
-            fld("Skill:", sel(o, "skillId", idOptions(db.Skills), { number: true })),
-            fld("Note:", text(o, "note"), { span: 2 })))
+            fld(t("Level", "Constants") + ":", num(o, "level", { min: 1, max: 99 })),
+            fld(t("Skill", "Constants") + ":", sel(o, "skillId", idOptions(db.Skills), { number: true })),
+            fld(t("Note", "Constants") + ":", text(o, "note"), { span: 2 })))
     });
     return ok ? o : null;
 }
 
 export const classesTab = {
-    id: "classes", label: "Classes", file: "Classes", max: 1000,
+    id: "classes", label: t("Classes", "DatabaseMain"), desc: t("Data that determines roles of actors within the party.", "DatabaseMain"), file: "Classes", max: 1000,
     form(ctx, c, host) {
         const db = ctx.db;
         const [left, right] = cols(host);
         const expText = () => `${c.expParams.join(", ")}`;
         const expBtn = btn("", async () => { if (await editExpCurve(c)) { expBtn.textContent = expText(); } }, "dbPickBtn");
         expBtn.textContent = expText();
-        left.appendChild(grp("General Settings", grid(2,
-            fld("Name:", text(c, "name", { onInput: () => ctx.refreshRow() })),
-            fld("EXP Curve:", expBtn))));
+        left.appendChild(grp(t("General Settings", "Constants"), grid(2,
+            fld(t("Name", "Constants") + ":", text(c, "name", { onInput: () => ctx.refreshRow() })),
+            fld(t("EXP Curve", "Edit_Classes") + ":", expBtn))));
         const curves = el("div", { class: "dbCurves" });
         const paintCurves = () => {
             curves.innerHTML = "";
@@ -256,16 +257,16 @@ export const classesTab = {
             });
         };
         paintCurves();
-        left.appendChild(grp("Parameter Curves", curves));
-        left.appendChild(grp("Skills to Learn", tableList({
-            columns: [{ title: "Level", width: "70px" }, { title: "Skill", width: "1fr" }, { title: "Note", width: "1fr" }],
+        left.appendChild(grp(t("Parameter Curves", "Edit_Classes"), curves));
+        left.appendChild(grp(t("Learnable Skills", "Group_SkillsToLearn"), tableList({
+            columns: [{ title: t("Level", "Constants"), width: "70px" }, { title: t("Skill", "Constants"), width: "1fr" }, { title: t("Note", "Constants"), width: "1fr" }],
             items: c.learnings,
-            cells: l => ["Lv " + String(l.level).padStart(2, " "), nameOf(db.Skills, l.skillId), l.note],
+            cells: l => [t("Lv", "NewDataMaker") + " " + String(l.level).padStart(2, " "), nameOf(db.Skills, l.skillId), l.note],
             create: () => editLearning(db, null),
             edit: l => editLearning(db, l),
             clipKey: "learning"
         })));
-        right.appendChild(grp("Traits", traitsList(db, c)));
+        right.appendChild(grp(t("Traits", "Group_Traits"), traitsList(db, c)));
         right.appendChild(noteGroup(c));
     }
 };

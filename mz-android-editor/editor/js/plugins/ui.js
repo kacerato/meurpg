@@ -1,5 +1,7 @@
 // Pequenos utilitários de interface do módulo plugins (diálogos com Promise, listas de toque).
 
+import { t } from "../i18n.js";
+
 export function el(tag, attrs = {}, ...children) {
     const e = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) {
@@ -30,7 +32,7 @@ export function el(tag, attrs = {}, ...children) {
 // Diálogo modal que devolve uma Promise.
 //   build(body, ctx)  monta o conteúdo; ctx.accept(valor) fecha com valor; ctx.close() cancela.
 //   onOk()            devolve o valor (undefined = não fecha).
-export function promptDialog(api, { title, width, height, build, onOk, okLabel = "OK", extraButtons = [] }) {
+export function promptDialog(api, { title, width, height, build, onOk, okLabel = t("OK", "BasicConstants"), extraButtons = [] }) {
     return new Promise(resolve => {
         let done = false;
         const finish = v => {
@@ -51,7 +53,7 @@ export function promptDialog(api, { title, width, height, build, onOk, okLabel =
                     return true;
                 }
             },
-            { label: "Cancelar", onClick: () => finish(null) }
+            { label: t("Cancel", "BasicConstants"), onClick: () => finish(null) }
         ];
         const d = api.openDialog({ title, width, height, buttons });
         d.root.classList.add("pgDialog");

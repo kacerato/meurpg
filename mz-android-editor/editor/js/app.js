@@ -2,6 +2,7 @@ import { Project, patchImageManagerForProject, PROJECT_BASE } from "./project.js
 import { MapView } from "./mapview.js";
 import { api } from "./api.js";
 import { loadModules } from "./modules.js";
+import { t, translateDom, bindOptions } from "./i18n.js";
 
 const $ = id => document.getElementById(id);
 
@@ -47,11 +48,11 @@ function buildTree(infos) {
 
 async function selectMap(id) {
     try {
-        setStatus("Carregando mapa…");
+        setStatus(t("Loading map…"));
         const [map, tilesets] = await Promise.all([project.map(id), project.tilesets()]);
         const tileset = tilesets[map.tilesetId];
         if (!tileset) {
-            throw new Error("Tileset " + map.tilesetId + " não existe");
+            throw new Error(t("Tileset %1 does not exist", null, map.tilesetId));
         }
         currentMapId = id;
         api.currentMapId = id;
@@ -75,7 +76,7 @@ async function selectMap(id) {
 function updateMapStatus(id, map, tileset) {
     const events = (map.events || []).filter(Boolean).length;
     const ts = tileset ? tileset.name : "";
-    $("statusMap").textContent = `Mapa ${String(id).padStart(3, "0")} · ${map.width}×${map.height} · ${ts} · ${events} eventos`;
+    $("statusMap").textContent = t("Map %1 · %2×%3 · %4 · %5 events", null, String(id).padStart(3, "0"), map.width, map.height, ts, events);
 }
 
 async function refreshMapTree() {
@@ -112,6 +113,8 @@ function createView() {
 }
 
 async function boot() {
+    translateDom();
+    bindOptions(api);
     $("btnMaps").addEventListener("click", () => $("sidebar").classList.toggle("hidden"));
     $("btnZoomIn").addEventListener("click", () => { if (view) { view.setZoom(view.zoom * 1.25); updateZoomLabel(); } });
     $("btnZoomOut").addEventListener("click", () => { if (view) { view.setZoom(view.zoom / 1.25); updateZoomLabel(); } });
@@ -131,7 +134,7 @@ async function boot() {
         $("btnOpen").addEventListener("click", () => android.pickProject());
     } else {
         $("btnOpen").disabled = true;
-        $("btnOpen").title = "Abrir projeto (no PC, passe --project ao servidor)";
+        $("btnOpen").title = t("Open Project (on the PC, pass --project to the server)");
     }
     $("btnZoomActual").addEventListener("click", () => { if (view) { view.setZoom(1); updateZoomLabel(); } });
     window.mzBack = () => {
@@ -155,23 +158,23 @@ async function boot() {
             info = await project.open();
         } catch (e) {
             $("emptyHint").textContent = android
-                ? "Nenhum projeto aberto. Toque em “Abrir projeto” e escolha a pasta do projeto RPG Maker MZ."
-                : "Nenhum projeto aberto (" + e.message + ")";
+                ? t("No project is open. Tap “%1” and choose the RPG Maker MZ project folder.", null, t("Open Project", "MainMenu"))
+                : t("No project is open (%1)", null, e.message);
             return;
         }
         // Novo projeto (casca Android): a pasta acabou de ser criada vazia; copia o template antes de tudo.
         const newTitle = new URLSearchParams(location.search).get("newProject");
         if (newTitle !== null) {
-            $("emptyHint").textContent = "Criando projeto…";
+            $("emptyHint").textContent = t("Creating project…");
             try {
                 const np = await import("./tools/newproject.js");
                 await np.createProject(np.apiWriter(project), {
                     title: newTitle,
-                    onProgress: (done, total, file) => { $("emptyHint").textContent = `Criando projeto… ${done}/${total} ${file}`; }
+                    onProgress: (done, total, file) => { $("emptyHint").textContent = `${t("Creating project…")} ${done}/${total} ${file}`; }
                 });
             } catch (e) {
                 console.error(e);
-                $("emptyHint").textContent = "Falha ao criar o projeto: " + (e.message || e);
+                $("emptyHint").textContent = t("Failed to create the project: %1", null, e.message || e);
                 return;
             }
             location.replace(location.pathname);

@@ -5,6 +5,7 @@ import { CMD, pickCommand } from "./commands.js";
 import { clone } from "./data.js";
 import { h, actionMenu, alertBox, getApi } from "./ui.js";
 import { runEventTest } from "./etest.js";
+import { t } from "../i18n.js";
 
 const E = indent => ({ code: 0, indent, parameters: [] });
 const BLOCK_END = { 111: 412, 112: 413, 102: 404, 301: 604 };
@@ -142,13 +143,13 @@ export function rowParts(list, i, ctx) {
         const ownDef = hd && hd.cont === c.code ? hd : null;
         return { mark: "：", label, hidden: true, value: ownDef && ownDef.contText ? ownDef.contText(c.parameters) : String(c.parameters[0]), cat: hd ? hd.cat : "" };
     }
-    if (!d) { return { mark: "◆", label: "Unknown Command", value: String(c.code) + " " + JSON.stringify(c.parameters) }; }
+    if (!d) { return { mark: "◆", label: t("Undefined Command", "EventCommands"), value: String(c.code) + " " + JSON.stringify(c.parameters) }; }
     const [label, value] = safeText(d, c, ctx);
     if (d.branch) { return { mark: "：", label: value ? label + " " + value : label, value: "", cat: d.cat, branch: true }; }
     return { mark: "◆", label, value, cat: d.cat };
 }
 function safeText(d, c, ctx) {
-    try { return d.text(c.parameters || [], ctx); } catch (e) { return [d.name, "?"]; }
+    try { return d.text(c.parameters || [], ctx); } catch (e) { return [t(d.name, "EventCommands"), "?"]; }
 }
 export function rowText(list, i, ctx) {
     const r = rowParts(list, i, ctx);
@@ -264,14 +265,14 @@ export function createCommandList(opts) {
             const text = [];
             for (let i = sel[0]; i < sel[1]; i++) { text.push(rowText(list, i, c)); }
             const s = text.join("\n");
-            if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, "Copy as Text")); } else { alertBox(s, "Copy as Text"); }
+            if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, t("Copy as Text", "EventCommandListBox"))); } else { alertBox(s, t("Copy as Text", "EventCommandListBox")); }
         },
         copyHtml() {
             const c = ctx();
             const text = [];
             for (let i = sel[0]; i < sel[1]; i++) { text.push(rowText(list, i, c).replace(/&/g, "&amp;").replace(/</g, "&lt;")); }
             const s = text.join("<br>\n");
-            if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, "Copy as HTML")); }
+            if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, t("Copy as HTML", "EventCommandListBox"))); }
         },
         // "Test": executa no jogo os comandos selecionados (ou a lista toda se só a linha vazia).
         async test() {
@@ -283,19 +284,19 @@ export function createCommandList(opts) {
             const c = list[sel[0]];
             const empty = !c || c.code === 0;
             await actionMenu([
-                { label: "New…", action: () => api.newCommand() },
-                { label: "Edit…", disabled: empty || (CMD[c.code] && CMD[c.code].noParams), action: () => api.edit() },
+                { label: t("New", "StandardPopupMenu") + "…", action: () => api.newCommand() },
+                { label: t("Edit", "StandardPopupMenu") + "…", disabled: empty || (CMD[c.code] && CMD[c.code].noParams), action: () => api.edit() },
                 "-",
-                { label: "Cut", disabled: empty, action: () => api.cut() },
-                { label: "Copy", disabled: empty, action: () => api.copy() },
-                { label: "Paste", action: () => api.paste() },
-                { label: "Delete", disabled: empty, action: () => api.del() },
+                { label: t("Cut", "BasicConstants"), disabled: empty, action: () => api.cut() },
+                { label: t("Copy", "BasicConstants"), disabled: empty, action: () => api.copy() },
+                { label: t("Paste", "BasicConstants"), action: () => api.paste() },
+                { label: t("Delete", "BasicConstants"), disabled: empty, action: () => api.del() },
                 "-",
-                { label: "Select All", action: () => api.selectAll() },
-                { label: "Copy as Text", action: () => api.copyText() },
-                { label: "Copy as HTML Tags", action: () => api.copyHtml() },
+                { label: t("Select All", "BasicConstants"), action: () => api.selectAll() },
+                { label: t("Copy as Text", "EventCommandListBox"), action: () => api.copyText() },
+                { label: t("Copy as HTML", "EventCommandListBox"), action: () => api.copyHtml() },
                 "-",
-                { label: "Test", action: () => api.test() }
+                { label: t("Test", "EventCommandListBox"), action: () => api.test() }
             ], { x, y });
         },
         render
@@ -344,10 +345,10 @@ export function createCommandList(opts) {
 
 // Barra de botões de toque para a lista (substitui o menu do botão direito).
 export function commandListToolbar(cl) {
-    const multiBtn = h("button", { type: "button", class: "evBtn toggle", title: "Selecionar vários (equivale a Shift+clique)" }, "Multi");
+    const multiBtn = h("button", { type: "button", class: "evBtn toggle", title: t("Select multiple (same as Shift+click)") }, t("Multi-select"));
     multiBtn.addEventListener("click", () => { multiBtn.classList.toggle("on"); cl.setMulti(multiBtn.classList.contains("on")); });
     const b = (label, fn, title) => h("button", { type: "button", class: "evBtn", title, onclick: fn }, label);
     return h("div", { class: "evRow evListTools" },
-        b("New…", () => cl.newCommand()), b("Edit…", () => cl.edit()), b("Cut", () => cl.cut()), b("Copy", () => cl.copy()),
-        b("Paste", () => cl.paste()), b("Delete", () => cl.del()), multiBtn, b("Test", () => cl.test(), "Testar os comandos selecionados no jogo"), b("☰", e => { const r = e.currentTarget.getBoundingClientRect(); cl.menu(r.left, r.bottom); }, "Mais"));
+        b(t("New", "StandardPopupMenu") + "…", () => cl.newCommand()), b(t("Edit", "StandardPopupMenu") + "…", () => cl.edit()), b(t("Cut", "BasicConstants"), () => cl.cut()), b(t("Copy", "BasicConstants"), () => cl.copy()),
+        b(t("Paste", "BasicConstants"), () => cl.paste()), b(t("Delete", "BasicConstants"), () => cl.del()), multiBtn, b(t("Test", "EventCommandListBox"), () => cl.test(), t("Test the selected commands in the game.")), b("☰", e => { const r = e.currentTarget.getBoundingClientRect(); cl.menu(r.left, r.bottom); }, t("More")));
 }

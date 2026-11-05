@@ -3,6 +3,7 @@
 // Import / Export / Delete / DLC / Preview. Extra: "Importar recursos padrão".
 import { el, button, modal, confirmBox, alertBox, progressDialog } from "./ui.js";
 import * as audio from "./audio.js";
+import { t } from "../i18n.js";
 
 // Pastas na ordem do Resource Manager do MZ.
 export const FOLDERS = [
@@ -78,7 +79,7 @@ async function writeAll(items, title) {
     const folders = new Set(items.map(i => i.rel.slice(0, i.rel.lastIndexOf("/"))));
     for (const folder of folders) { api.emit("resources:changed", { folder }); }
     if (failed.length) {
-        await alertBox(api, "Importar", "Falha ao importar:\n" + failed.slice(0, 20).join("\n"), "warning");
+        await alertBox(api, t("Import", "Dialog_ResourceManager"), t("Failed to import:") + "\n" + failed.slice(0, 20).join("\n"), "warning");
     }
     return items.length - failed.length;
 }
@@ -92,15 +93,16 @@ export async function importFiles(folder) {
     const skipped = files.length - ok.length;
     const existing = new Set(await listFolder(folder));
     const dup = ok.filter(f => existing.has(f.name));
-    if (dup.length && !(await confirmBox(api, "Importar",
-        `${dup.length} arquivo(s) já existem em ${folder} e serão substituídos:\n${dup.slice(0, 8).map(f => f.name).join(", ")}${dup.length > 8 ? "…" : ""}`))) {
+    if (dup.length && !(await confirmBox(api, t("Import", "Dialog_ResourceManager"),
+        t("%1 file(s) already exist in %2 and will be replaced:", null, dup.length, folder) + "\n" +
+        `${dup.slice(0, 8).map(f => f.name).join(", ")}${dup.length > 8 ? "…" : ""}`))) {
         return [];
     }
-    await writeAll(ok.map(f => ({ rel: `${folder}/${f.name}`, file: f })), "Importando…");
+    await writeAll(ok.map(f => ({ rel: `${folder}/${f.name}`, file: f })), t("Importing…"));
     if (skipped) {
-        await alertBox(api, "Importar", `${skipped} arquivo(s) ignorado(s): tipo inválido para ${folder} (${exts.join(", ")}).`, "warning");
+        await alertBox(api, t("Import", "Dialog_ResourceManager"), t("%1 file(s) skipped: invalid type for %2 (%3).", null, skipped, folder, exts.join(", ")), "warning");
     }
-    api.status(`${ok.length} arquivo(s) importado(s) em ${folder}`);
+    api.status(t("%1 file(s) imported into %2", null, ok.length, folder));
     return ok.map(f => f.name);
 }
 
@@ -127,9 +129,9 @@ export async function importFromFolder(onlyFolder = null) {
         items.push({ rel, file: f, folder });
     }
     if (!items.length) {
-        await alertBox(api, "Importar", onlyFolder
-            ? `Nenhum arquivo de ${onlyFolder} encontrado na pasta escolhida.`
-            : "Nenhum recurso (img/, audio/, effects/) encontrado na pasta escolhida.", "warning");
+        await alertBox(api, t("Import", "Dialog_ResourceManager"), onlyFolder
+            ? t("No %1 files found in the chosen folder.", null, onlyFolder)
+            : t("No resources (img/, audio/, effects/) found in the chosen folder."), "warning");
         return 0;
     }
     // não sobrescreve o que já existe no projeto
@@ -141,13 +143,13 @@ export async function importFromFolder(onlyFolder = null) {
     const fresh = items.filter(i => !(i.rel.split("/").length === i.folder.split("/").length + 1 && existingBy.get(i.folder).has(i.file.name)));
     const keep = items.length - fresh.length;
     const total = fresh.reduce((s, i) => s + i.file.size, 0);
-    if (!(await confirmBox(api, "Importar recursos",
-        `Copiar ${fresh.length} arquivo(s) (${(total / 1048576).toFixed(1)} MB) para o projeto?` +
-        (keep ? `\n${keep} já existem e serão mantidos.` : "")))) {
+    if (!(await confirmBox(api, t("Import Default Resources"),
+        t("Copy %1 file(s) (%2 MB) to the project?", null, fresh.length, (total / 1048576).toFixed(1)) +
+        (keep ? "\n" + t("%1 already exist and will be kept.", null, keep) : "")))) {
         return 0;
     }
-    const n = await writeAll(fresh.map(({ rel, file }) => ({ rel, file })), "Importando recursos…");
-    api.status(`${n} recurso(s) importado(s)`);
+    const n = await writeAll(fresh.map(({ rel, file }) => ({ rel, file })), t("Importing resources…"));
+    api.status(t("%1 resource(s) imported", null, n));
     return n;
 }
 
@@ -176,7 +178,7 @@ function previewInto(box, folder, name, filesSet, { big = false } = {}) {
     audio.stop();
     box.replaceChildren();
     if (!name) {
-        box.appendChild(el("div", { class: "tlHint", text: "Nenhum arquivo selecionado" }));
+        box.appendChild(el("div", { class: "tlHint", text: t("No file selected") }));
         return;
     }
     const ext = extOf(name);
@@ -184,7 +186,7 @@ function previewInto(box, folder, name, filesSet, { big = false } = {}) {
         const img = el("img", { class: big ? "tlPreviewImgBig" : "tlPreviewImg", alt: name, src: fileUrl(folder, name) });
         const info = el("div", { class: "tlPreviewInfo", text: name });
         img.addEventListener("load", () => { info.textContent = `${name} — ${img.naturalWidth}×${img.naturalHeight}`; });
-        img.addEventListener("error", () => { info.textContent = `${name} — não foi possível carregar`; });
+        img.addEventListener("error", () => { info.textContent = `${name} — ${t("could not be loaded")}`; });
         box.append(el("div", { class: "tlPreviewCanvas" }, img), info);
     } else if (ext === "ogg" || ext === "m4a") {
         const type = folder.split("/")[1];
@@ -194,21 +196,21 @@ function previewInto(box, folder, name, filesSet, { big = false } = {}) {
                 el("img", { src: "img/toolbar/tools-soundtest.png", alt: "", class: "tlBigIcon" }),
                 el("div", { class: "tlPreviewInfo", text: name }),
                 el("div", { class: "tlRow" },
-                    button("▶ Tocar", () => audio.play(type, st, filesSet)),
-                    button("■ Parar", () => audio.stop(type))))
+                    button("▶ " + t("Play", "Layout_AudioSelector"), () => audio.play(type, st, filesSet)),
+                    button("■ " + t("Stop", "Layout_AudioSelector"), () => audio.stop(type))))
         );
     } else {
         box.append(el("div", { class: "tlPreviewAudio" },
             el("div", { class: "tlEffName", text: "✦ " + name }),
-            el("div", { class: "tlHint", text: "Efeito Effekseer (.efkefc). A pré-visualização é feita na aba Animações do Banco de Dados." })));
+            el("div", { class: "tlHint", text: t("Effekseer effect (.efkefc). Preview it in the Animations tab of the Database.") })));
     }
 }
 
 async function previewDialog(folder, name, filesSet) {
     await modal(api, {
-        title: "Preview — " + name, width: "960px", height: "560px", cls: "tlPreviewDlg",
+        title: t("Resource Preview", "Dialog_ResourcePreview") + " — " + name, width: "960px", height: "560px", cls: "tlPreviewDlg",
         build: b => { const box = el("div", { class: "tlPreviewBox big" }); b.appendChild(box); previewInto(box, folder, name, filesSet, { big: true }); },
-        buttons: [{ label: "Fechar", primary: true, value: true }],
+        buttons: [{ label: t("Close", "BasicConstants"), primary: true, value: true }],
         onClose: () => audio.stop()
     });
     audio.stop();
@@ -225,7 +227,7 @@ export async function openResourceManager() {
     const fileList = el("div", { class: "tlList tlFiles" });
     const preview = el("div", { class: "tlPreviewBox" });
     const countLbl = el("span", { class: "tlCount" });
-    const multiBtn = button("☑ Seleção múltipla", () => {
+    const multiBtn = button("☑ " + t("Multiple Selection"), () => {
         state.multi = !state.multi;
         multiBtn.classList.toggle("on", state.multi);
         if (!state.multi && state.selected.size > 1) {
@@ -245,9 +247,9 @@ export async function openResourceManager() {
         }));
     };
     const renderFiles = () => {
-        countLbl.textContent = `${files.length} arquivo(s)` + (state.selected.size > 1 ? ` — ${state.selected.size} selecionado(s)` : "");
+        countLbl.textContent = t("%1 file(s)", null, files.length) + (state.selected.size > 1 ? " — " + t("%1 selected", null, state.selected.size) : "");
         if (!files.length) {
-            fileList.replaceChildren(el("div", { class: "tlHint", text: "(pasta vazia)" }));
+            fileList.replaceChildren(el("div", { class: "tlHint", text: t("(empty folder)") }));
         } else {
             fileList.replaceChildren(...files.map(n => {
                 const sel = state.selected.has(n);
@@ -280,7 +282,7 @@ export async function openResourceManager() {
         state.folder = f;
         if (!keepSel) { state.selected.clear(); state.last = null; }
         renderFolders();
-        fileList.replaceChildren(el("div", { class: "tlHint", text: "Carregando…" }));
+        fileList.replaceChildren(el("div", { class: "tlHint", text: t("Loading…") }));
         files = await listFolder(f);
         filesSet = new Set(files);
         for (const s of [...state.selected]) { if (!filesSet.has(s)) { state.selected.delete(s); } }
@@ -288,21 +290,21 @@ export async function openResourceManager() {
         previewInto(preview, f, state.selected.size === 1 ? [...state.selected][0] : null, filesSet);
     };
 
-    btns.imp = button("Importar…", async () => {
+    btns.imp = button(t("Import", "Dialog_ResourceManager") + "…", async () => {
         const names = await importFiles(state.folder);
         if (names.length) { state.selected = new Set(names); state.last = names[0]; }
         await selectFolder(state.folder, true);
     });
-    btns.exp = button("Exportar…", async () => {
+    btns.exp = button(t("Export", "Dialog_ResourceManager") + "…", async () => {
         for (const n of state.selected) {
-            try { await exportFile(state.folder, n); } catch (e) { await alertBox(api, "Exportar", `${n}: ${e.message}`, "warning"); }
+            try { await exportFile(state.folder, n); } catch (e) { await alertBox(api, t("Export", "Dialog_ResourceManager"), `${n}: ${e.message}`, "warning"); }
         }
     });
-    btns.del = button("Excluir", async () => {
+    btns.del = button(t("Delete", "Dialog_ResourceManager"), async () => {
         const list = [...state.selected];
         if (!list.length) { return; }
-        if (!(await confirmBox(api, "Excluir",
-            `Excluir ${list.length} arquivo(s) de ${state.folder}? Esta ação não pode ser desfeita.\n\n${list.slice(0, 10).join("\n")}${list.length > 10 ? "\n…" : ""}`))) {
+        if (!(await confirmBox(api, t("Delete", "Dialog_ResourceManager"),
+            t("Delete %1 file(s) from %2? This cannot be undone.", null, list.length, state.folder) + `\n\n${list.slice(0, 10).join("\n")}${list.length > 10 ? "\n…" : ""}`))) {
             return;
         }
         audio.stop();
@@ -311,38 +313,42 @@ export async function openResourceManager() {
             if (!(await api.project.delete(`${state.folder}/${n}`))) { fail.push(n); }
         }
         api.emit("resources:changed", { folder: state.folder });
-        if (fail.length) { await alertBox(api, "Excluir", "Não foi possível excluir:\n" + fail.join("\n"), "warning"); }
+        if (fail.length) { await alertBox(api, t("Delete", "Dialog_ResourceManager"), t("Could not delete:") + "\n" + fail.join("\n"), "warning"); }
         await selectFolder(state.folder);
     });
-    btns.dlc = button("DLC…", async () => {
+    btns.dlc = button(t("DLC", "Dialog_ResourceManager") + "…", async () => {
         await importFromFolder(state.folder);
         await selectFolder(state.folder, true);
     });
-    btns.prev = button("Preview…", () => {
+    btns.prev = button(t("Preview", "Constants") + "…", () => {
         const n = [...state.selected][0];
         if (n) { previewDialog(state.folder, n, filesSet); }
     });
-    btns.std = button("Importar recursos padrão…", async () => {
+    btns.std = button(t("Import Default Resources") + "…", async () => {
         await importFromFolder(null);
         await selectFolder(state.folder, true);
     });
-    btns.dlc.title = "Importa arquivos desta pasta a partir de uma pasta de DLC escolhida";
-    btns.std.title = "Copia img/, audio/ e effects/ de uma pasta (ex.: newdata do RPG Maker MZ ou um projeto de exemplo)";
+    btns.imp.title = t("Import files into the selected folder.", "Dialog_ResourceManager");
+    btns.exp.title = t("Export the selected file.", "Dialog_ResourceManager");
+    btns.del.title = t("Delete the selected file.", "Dialog_ResourceManager");
+    btns.prev.title = t("Preview the selected file.", "Dialog_ResourceManager");
+    btns.dlc.title = t("Imports files for this folder from a chosen DLC folder.");
+    btns.std.title = t("Copies img/, audio/ and effects/ from a folder (e.g. RPG Maker MZ's newdata or a sample project).");
 
     const p = modal(api, {
-        title: "Resource Manager", width: "1040px", height: "580px", cls: "tlResDlg",
+        title: t("Resource Manager", "Dialog_ResourceManager"), width: "1040px", height: "580px", cls: "tlResDlg",
         build: b => {
             b.classList.add("tlResBody");
             b.append(
-                el("div", { class: "tlCol tlColFolders" }, el("div", { class: "tlColHead", text: "Pastas" }), folderList),
+                el("div", { class: "tlCol tlColFolders" }, el("div", { class: "tlColHead", text: t("Folders") }), folderList),
                 el("div", { class: "tlCol tlColFiles" },
-                    el("div", { class: "tlColHead" }, "Arquivos ", countLbl), fileList,
+                    el("div", { class: "tlColHead" }, t("Files") + " ", countLbl), fileList,
                     el("div", { class: "tlRow" }, multiBtn)),
                 el("div", { class: "tlCol tlColPreview" },
-                    el("div", { class: "tlColHead", text: "Pré-visualização" }), preview,
+                    el("div", { class: "tlColHead", text: t("Preview", "Constants") }), preview,
                     el("div", { class: "tlBtnGrid" }, btns.imp, btns.exp, btns.del, btns.dlc, btns.prev, btns.std)));
         },
-        buttons: [{ label: "OK", primary: true, value: true }],
+        buttons: [{ label: t("OK", "BasicConstants"), primary: true, value: true }],
         onClose: () => audio.stop()
     });
     renderFolders();
@@ -364,7 +370,7 @@ export async function pickResource(folder, opts = {}) {
         if (opts.none !== false) { rows.push(""); }
         rows.push(...names);
         list.replaceChildren(...rows.map(n => {
-            const row = el("div", { class: "tlItem" + (n === (sel ?? "") ? " selected" : "") }, n || "(Nenhum)");
+            const row = el("div", { class: "tlItem" + (n === (sel ?? "") ? " selected" : "") }, n || "(" + t("None", "Constants") + ")");
             row.addEventListener("click", () => {
                 sel = n;
                 render();
@@ -375,12 +381,12 @@ export async function pickResource(folder, opts = {}) {
         }));
     };
     const ok = await modal(api, {
-        title: opts.title || "Selecionar — " + folder, width: "860px", height: "540px", cls: "tlPickDlg",
+        title: opts.title || (folder.startsWith("audio/") ? t("Select an Audio", "Dialog_AudioSelector") : t("Select an Image", "Dialog_ImageSelector")) + " — " + folder, width: "860px", height: "540px", cls: "tlPickDlg",
         build: b => {
             b.classList.add("tlPickBody");
             b.append(
                 el("div", { class: "tlCol tlColFiles" }, list,
-                    el("div", { class: "tlRow" }, button("Importar…", async () => {
+                    el("div", { class: "tlRow" }, button(t("Import", "Dialog_ResourceManager") + "…", async () => {
                         const imported = await importFiles(folder);
                         files = await listFolder(folder);
                         names = [...new Set(files.map(baseOf))];

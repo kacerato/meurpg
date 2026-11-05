@@ -2,6 +2,7 @@
 // no estilo do MZ e seletores (switch, variável, banco, áudio, imagem, personagem, local).
 
 import { db, clone } from "./data.js";
+import { t } from "../i18n.js";
 
 let API = null;
 export function setApi(api) { API = api; }
@@ -29,7 +30,7 @@ export function h(tag, attrs, ...children) {
 }
 
 // Diálogo modal que resolve com o valor de onOk (ou null ao cancelar/fechar pelo botão voltar).
-export function dialog({ title, width, height, okLabel = "OK", cancelLabel = "Cancel", build, onOk, extraButtons, noCancel }) {
+export function dialog({ title, width, height, okLabel = t("OK", "BasicConstants"), cancelLabel = t("Cancel", "BasicConstants"), build, onOk, extraButtons, noCancel }) {
     return new Promise(resolve => {
         let done = false;
         const finish = v => { if (!done) { done = true; obs.disconnect(); resolve(v); } };
@@ -54,12 +55,14 @@ export function dialog({ title, width, height, okLabel = "OK", cancelLabel = "Ca
     });
 }
 
+const NONE = () => "(" + t("None", "Constants") + ")";
+
 export function alertBox(msg, title = "MZ Editor") {
     return dialog({ title, width: "420px", height: "auto", noCancel: true, build: b => b.append(h("p", { class: "evMsg" }, msg)) });
 }
 
 export function confirmBox(msg, title = "MZ Editor") {
-    return dialog({ title, width: "420px", height: "auto", okLabel: "Yes", cancelLabel: "No", build: b => b.append(h("p", { class: "evMsg" }, msg)) });
+    return dialog({ title, width: "420px", height: "auto", okLabel: t("Yes", "BasicConstants"), cancelLabel: t("No", "BasicConstants"), build: b => b.append(h("p", { class: "evMsg" }, msg)) });
 }
 
 // Menu de ações (equivalente ao menu de contexto do botão direito) como folha de toque.
@@ -224,7 +227,7 @@ export function listDialog({ title, options, value, width = "520px", height = "8
     return dialog({
         title, width, height,
         build: body => {
-            const filter = h("input", { type: "search", class: "evTxt evFilter", placeholder: "Filtrar…" });
+            const filter = h("input", { type: "search", class: "evTxt evFilter", placeholder: t("Filter…") });
             const list = h("div", { class: "evList" });
             const nameBox = editNames ? txt("") : null;
             const render = () => {
@@ -261,8 +264,8 @@ export function listDialog({ title, options, value, width = "520px", height = "8
                     while (names.length < n + 1) { names.push(""); }
                     names.length = n + 1;
                     render();
-                } }, "Change Maximum…");
-                body.append(row(field("Name:", nameBox), field("Max:", maxN), applyMax));
+                } }, t("Change Maximum", "Dialog_VariableSelector") + "…");
+                body.append(row(field(t("Name", "Constants"), nameBox), field(t("Maximum", "Dialog_ChangeMaximum"), maxN), applyMax));
             }
             render();
         },
@@ -274,15 +277,15 @@ export function listDialog({ title, options, value, width = "520px", height = "8
 }
 
 export function dataPick(list, value, { none = false, width, title } = {}) {
-    const label = v => v ? db.pad(v) + " " + db.name(list, v) : (none ? "None" : db.pad(0));
-    return pickBtn(value, label, cur => listDialog({ title: title || "Select", options: db.options(list, { none }), value: cur }), { width });
+    const label = v => v ? db.pad(v) + " " + db.name(list, v) : (none ? t("None", "Constants") : db.pad(0));
+    return pickBtn(value, label, cur => listDialog({ title: title || t("Object Selection", "Dialog_GameObjectSelector"), options: db.options(list, { none }), value: cur }), { width });
 }
 
 function namedPick(kind, value, width) {
     const names = () => db.system[kind] || [""];
     const label = v => "#" + db.pad(v) + " " + (names()[v] || "");
     return pickBtn(value, label, cur => listDialog({
-        title: kind === "switches" ? "Switch" : "Variable",
+        title: kind === "switches" ? t("Switch Selector", "Dialog_VariableSelector") : t("Variable Selector", "Dialog_VariableSelector"),
         value: cur,
         editNames: {
             names: names(),
@@ -330,7 +333,7 @@ function fileDialog({ title, files, value, preview, extra, width = "900px", heig
             const pv = h("div", { class: "evFilePreview" });
             const show = () => { pv.innerHTML = ""; const n = preview && preview(cur); if (n) { pv.append(n); } };
             for (const f of ["", ...files]) {
-                const it = h("div", { class: "evListItem" + (f === cur ? " selected" : "") }, f === "" ? "(None)" : f);
+                const it = h("div", { class: "evListItem" + (f === cur ? " selected" : "") }, f === "" ? NONE() : f);
                 it.addEventListener("click", () => {
                     cur = f;
                     for (const s of list.querySelectorAll(".selected")) { s.classList.remove("selected"); }
@@ -351,9 +354,9 @@ function fileDialog({ title, files, value, preview, extra, width = "900px", heig
 }
 
 export function imagePick(folder, value, { width = "220px" } = {}) {
-    return pickBtn(value || "", v => v || "(None)", async cur => {
+    return pickBtn(value || "", v => v || NONE(), async cur => {
         const files = await listFiles("img/" + folder, ["png"]);
-        return fileDialog({ title: "Select an Image", files, value: cur, preview: n => n ? h("img", { src: imgUrl(folder, n), class: "evPvImg" }) : null });
+        return fileDialog({ title: t("Select an Image", "Dialog_ImageSelector"), files, value: cur, preview: n => n ? h("img", { src: imgUrl(folder, n), class: "evPvImg" }) : null });
     }, { width });
 }
 
@@ -372,17 +375,17 @@ function playAudio(folder, a) {
     audioEl.play().catch(() => {});
 }
 export function audioText(a) {
-    return a && a.name ? `${a.name} (${a.volume}, ${a.pitch}, ${a.pan})` : "None";
+    return a && a.name ? `${a.name} (${a.volume}, ${a.pitch}, ${a.pan})` : t("None", "Constants");
 }
 export function audioDialog(folder, value) {
     const a = clone(value) || { name: "", volume: 90, pitch: 100, pan: 0 };
     const vol = slider(a.volume, 0, 100), pit = slider(a.pitch, 50, 150), pan = slider(a.pan, -100, 100);
     return listFiles("audio/" + folder, ["ogg", "m4a"]).then(files => {
         const extra = h("div", { class: "evAudioCtl" },
-            row(h("button", { type: "button", class: "evBtn", onclick: () => playAudio(folder, { name: a.name, volume: vol.get(), pitch: pit.get(), pan: pan.get() }) }, "▶ Play"),
-                h("button", { type: "button", class: "evBtn", onclick: stopAudio }, "■ Stop")),
-            field("Volume", vol), field("Pitch", pit), field("Pan", pan));
-        return fileDialog({ title: "Select " + folder.toUpperCase(), files, value: a.name, extra, width: "640px", onSelect: n => { a.name = n; } });
+            row(h("button", { type: "button", class: "evBtn", onclick: () => playAudio(folder, { name: a.name, volume: vol.get(), pitch: pit.get(), pan: pan.get() }) }, "▶ " + t("Play", "Layout_AudioSelector")),
+                h("button", { type: "button", class: "evBtn", onclick: stopAudio }, "■ " + t("Stop", "Layout_AudioSelector"))),
+            field(t("Volume", "Layout_AudioSelector"), vol), field(t("Pitch", "Layout_AudioSelector"), pit), field(t("Pan", "Layout_AudioSelector"), pan));
+        return fileDialog({ title: t("Select an Audio", "Dialog_AudioSelector") + " (" + folder.toUpperCase() + ")", files, value: a.name, extra, width: "640px", onSelect: n => { a.name = n; } });
     }).then(name => {
         stopAudio();
         if (name === null) { return null; }
@@ -410,10 +413,10 @@ export function loadImage(src) {
 export function isBigCharacter(name) { return /^[!]?\$/.test(name || ""); }
 
 // Seleção do gráfico de evento/personagem. opts.mode: "event" (frame exato + tiles) | "index" (só índice).
-export async function characterDialog(image, { mode = "event", tileset = null, title = "Select an Image" } = {}) {
+export async function characterDialog(image, { mode = "event", tileset = null, title = t("Select an Image", "Dialog_ImageSelector") } = {}) {
     const img = clone(image) || { characterName: "", characterIndex: 0, direction: 2, pattern: 1, tileId: 0 };
     const files = await listFiles("img/characters", ["png"]);
-    const tabs = [{ name: "Characters" }];
+    const tabs = [{ name: t("Character", "Constants") }];
     if (mode === "event" && tileset) {
         ["B", "C", "D", "E"].forEach((t, i) => { if (tileset.tilesetNames[5 + i]) { tabs.push({ name: t, set: i }); } });
     }
@@ -484,7 +487,7 @@ export async function characterDialog(image, { mode = "event", tileset = null, t
                 list.innerHTML = "";
                 list.style.display = tab === 0 ? "" : "none";
                 for (const f of ["", ...files]) {
-                    const it = h("div", { class: "evListItem" + (f === img.characterName && !img.tileId ? " selected" : "") }, f || "(None)");
+                    const it = h("div", { class: "evListItem" + (f === img.characterName && !img.tileId ? " selected" : "") }, f || NONE());
                     it.addEventListener("click", () => {
                         img.characterName = f; img.tileId = 0;
                         if (isBigCharacter(f)) { img.characterIndex = 0; }
@@ -537,7 +540,7 @@ export function drawCharacterThumb(canvas, image, tileset, size = 96) {
 }
 
 export function charIndexPick(name, index, { width = "240px" } = {}) {
-    return pickBtn({ name: name || "", index: index || 0 }, v => v.name ? `${v.name} (${v.index})` : "(None)", async cur => {
+    return pickBtn({ name: name || "", index: index || 0 }, v => v.name ? `${v.name} (${v.index})` : NONE(), async cur => {
         const r = await characterDialog({ characterName: cur.name, characterIndex: cur.index, direction: 2, pattern: 1, tileId: 0 }, { mode: "index" });
         return r ? { name: r.characterName, index: r.characterIndex } : null;
     }, { width });
@@ -547,7 +550,7 @@ export async function faceDialog(name, index) {
     const files = await listFiles("img/faces", ["png"]);
     let cur = { name: name || "", index: index || 0 };
     return dialog({
-        title: "Select an Image", width: "1000px", height: "92vh",
+        title: t("Select an Image", "Dialog_ImageSelector"), width: "1000px", height: "92vh",
         build: body => {
             const list = h("div", { class: "evList evFileList" });
             const wrap = h("div", { class: "evFilePreview" });
@@ -569,7 +572,7 @@ export async function faceDialog(name, index) {
                 };
             };
             for (const f of ["", ...files]) {
-                const it = h("div", { class: "evListItem" + (f === cur.name ? " selected" : "") }, f || "(None)");
+                const it = h("div", { class: "evListItem" + (f === cur.name ? " selected" : "") }, f || NONE());
                 it.addEventListener("click", () => {
                     cur.name = f;
                     for (const s of list.querySelectorAll(".selected")) { s.classList.remove("selected"); }
@@ -606,12 +609,12 @@ export function facePick(name, index) {
 }
 
 // ---------- Tom de cor / cor ----------
-const TONE_PRESETS = [["Normal", [0, 0, 0, 0]], ["Dark", [-68, -68, -68, 0]], ["Sepia", [34, -34, -68, 170]], ["Sunset", [68, -34, -34, 0]], ["Night", [-68, -68, 0, 68]]];
+const TONE_PRESETS = [[t("Normal", "Layout_ColorTone"), [0, 0, 0, 0]], [t("Dark", "Layout_ColorTone"), [-68, -68, -68, 0]], [t("Sepia", "Layout_ColorTone"), [34, -34, -68, 170]], [t("Sunset", "Layout_ColorTone"), [68, -34, -34, 0]], [t("Night", "Layout_ColorTone"), [-68, -68, 0, 68]]];
 export function tonePick(tone, { gray = true, color = false } = {}) {
-    const t = clone(tone) || [0, 0, 0, 0];
+    const tn = clone(tone) || [0, 0, 0, 0];
     const lim = color ? [0, 255] : [-255, 255];
-    const r = slider(t[0], lim[0], lim[1]), g = slider(t[1], lim[0], lim[1]), b = slider(t[2], lim[0], lim[1]);
-    const k = slider(t[3], 0, color ? 255 : 255);
+    const r = slider(tn[0], lim[0], lim[1]), g = slider(tn[1], lim[0], lim[1]), b = slider(tn[2], lim[0], lim[1]);
+    const k = slider(tn[3], 0, color ? 255 : 255);
     const sw = h("div", { class: "evSwatch" });
     const upd = () => {
         const v = [r.get(), g.get(), b.get(), k.get()];
@@ -627,13 +630,13 @@ export function tonePick(tone, { gray = true, color = false } = {}) {
     };
     for (const s of [r, g, b, k]) { s.onChange(upd); }
     const presets = color ? null : h("div", { class: "evRow" }, ...TONE_PRESETS.map(([n, v]) => h("button", { type: "button", class: "evBtn", onclick: () => { [r, g, b, k].forEach((s, i) => s.set(v[i])); upd(); } }, n)));
-    const el = h("div", { class: "evTone" }, h("div", { class: "evToneSliders" }, field("Red", r), field("Green", g), field("Blue", b), (gray || color) ? field(color ? "Intensity" : "Gray", k) : null), sw, presets);
+    const el = h("div", { class: "evTone" }, h("div", { class: "evToneSliders" }, field(color ? t("Red", "Layout_FlashColor") : t("Red", "Layout_ColorTone"), r), field(color ? t("Green", "Layout_FlashColor") : t("Green", "Layout_ColorTone"), g), field(color ? t("Blue", "Layout_FlashColor") : t("Blue", "Layout_ColorTone"), b), (gray || color) ? field(color ? t("Intensity", "Layout_FlashColor") : t("Gray", "Layout_ColorTone"), k) : null), sw, presets);
     upd();
     return ctl(el, () => [r.get(), g.get(), b.get(), k.get()], v => { [r, g, b, k].forEach((s, i) => s.set(v[i])); upd(); });
 }
 
 // ---------- Mini-mapa para escolher local ----------
-export async function locationDialog({ mapId, x, y, title = "Select a Location", allowMapChange = true }) {
+export async function locationDialog({ mapId, x, y, title = t("Location", "Dialog_Location"), allowMapChange = true }) {
     let cur = { mapId: mapId || API.currentMapId || 1, x: x || 0, y: y || 0 };
     let app = null;
     const destroy = () => { if (app) { try { app.destroy(true, { children: true }); } catch (e) { /* ignora */ } app = null; } };

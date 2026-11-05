@@ -4,24 +4,25 @@
 import { db, clone } from "./data.js";
 import { h, dialog, field, row, num, txt, sel, chk, switchPick, audioPick, audioText, charIndexPick, area, alertBox, getApi } from "./ui.js";
 import { MiniMap } from "./minimap.js";
+import { t } from "../i18n.js";
 
-const SPEEDS = ["", "1: x8 Slower", "2: x4 Slower", "3: x2 Slower", "4: Normal", "5: x2 Faster", "6: x4 Faster"];
-const FREQS = ["", "1: Lowest", "2: Lower", "3: Normal", "4: Higher", "5: Highest"];
-const BLENDS = ["Normal", "Additive", "Multiply", "Screen"];
+const SPEEDS = ["", t("1: x8 Slower", "MovementSpeedBox"), t("2: x4 Slower", "MovementSpeedBox"), t("3: x2 Slower", "MovementSpeedBox"), t("4: Normal", "MovementSpeedBox"), t("5: x2 Faster", "MovementSpeedBox"), t("6: x4 Faster", "MovementSpeedBox")];
+const FREQS = ["", t("1: Lowest", "MovementFrequencyBox"), t("2: Lower", "MovementFrequencyBox"), t("3: Normal", "MovementFrequencyBox"), t("4: Higher", "MovementFrequencyBox"), t("5: Highest", "MovementFrequencyBox")];
+const BLENDS = [t("Normal", "Constants"), t("Additive", "Constants"), t("Multiply", "Constants"), t("Screen", "Constants")];
 
 export const ROUTE_NAMES = {
-    1: "Move Down", 2: "Move Left", 3: "Move Right", 4: "Move Up",
-    5: "Move Lower Left", 6: "Move Lower Right", 7: "Move Upper Left", 8: "Move Upper Right",
-    9: "Move at Random", 10: "Move toward Player", 11: "Move away from Player",
-    12: "1 Step Forward", 13: "1 Step Backward", 14: "Jump", 15: "Wait",
-    16: "Turn Down", 17: "Turn Left", 18: "Turn Right", 19: "Turn Up",
-    20: "Turn 90° Right", 21: "Turn 90° Left", 22: "Turn 180°", 23: "Turn 90° Right or Left",
-    24: "Turn at Random", 25: "Turn toward Player", 26: "Turn away from Player",
-    27: "Switch ON", 28: "Switch OFF", 29: "Speed", 30: "Frequency",
-    31: "Walking Animation ON", 32: "Walking Animation OFF", 33: "Stepping Animation ON", 34: "Stepping Animation OFF",
-    35: "Direction Fix ON", 36: "Direction Fix OFF", 37: "Through ON", 38: "Through OFF",
-    39: "Transparent ON", 40: "Transparent OFF", 41: "Image", 42: "Opacity", 43: "Blend Mode",
-    44: "SE", 45: "Script"
+    1: t("Move Down", "MovementCommands"), 2: t("Move Left", "MovementCommands"), 3: t("Move Right", "MovementCommands"), 4: t("Move Up", "MovementCommands"),
+    5: t("Move Lower Left", "MovementCommands"), 6: t("Move Lower Right", "MovementCommands"), 7: t("Move Upper Left", "MovementCommands"), 8: t("Move Upper Right", "MovementCommands"),
+    9: t("Move at Random", "MovementCommands"), 10: t("Move toward Player", "MovementCommands"), 11: t("Move away from Player", "MovementCommands"),
+    12: t("1 Step Forward", "MovementCommands"), 13: t("1 Step Backward", "MovementCommands"), 14: t("Jump", "MovementCommands"), 15: t("Wait", "MovementCommands"),
+    16: t("Turn Down", "MovementCommands"), 17: t("Turn Left", "MovementCommands"), 18: t("Turn Right", "MovementCommands"), 19: t("Turn Up", "MovementCommands"),
+    20: t("Turn 90° Right", "MovementCommands"), 21: t("Turn 90° Left", "MovementCommands"), 22: t("Turn 180°", "MovementCommands"), 23: t("Turn 90° Right or Left", "MovementCommands"),
+    24: t("Turn at Random", "MovementCommands"), 25: t("Turn toward Player", "MovementCommands"), 26: t("Turn away from Player", "MovementCommands"),
+    27: t("Switch ON", "MovementCommands"), 28: t("Switch OFF", "MovementCommands"), 29: t("Speed", "MovementCommands"), 30: t("Frequency", "MovementCommands"),
+    31: t("Walking Animation ON", "MovementCommands"), 32: t("Walking Animation OFF", "MovementCommands"), 33: t("Stepping Animation ON", "MovementCommands"), 34: t("Stepping Animation OFF", "MovementCommands"),
+    35: t("Direction Fix ON", "MovementCommands"), 36: t("Direction Fix OFF", "MovementCommands"), 37: t("Through ON", "MovementCommands"), 38: t("Through OFF", "MovementCommands"),
+    39: t("Transparent ON", "MovementCommands"), 40: t("Transparent OFF", "MovementCommands"), 41: t("Image", "MovementCommands"), 42: t("Opacity", "MovementCommands"), 43: t("Blend Mode", "MovementCommands"),
+    44: t("SE", "MovementCommands"), 45: t("Script", "MovementCommands")
 };
 
 // Layout dos botões em 3 colunas como no diálogo original.
@@ -30,7 +31,7 @@ const BUTTONS = [
     [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
     [31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
 ];
-const BUTTON_LABELS = { 14: "Jump…", 15: "Wait…", 27: "Switch ON…", 28: "Switch OFF…", 29: "Change Speed…", 30: "Change Frequency…", 41: "Change Image…", 42: "Change Opacity…", 43: "Change Blend Mode…", 44: "Play SE…", 45: "Script…" };
+const BUTTON_LABELS = { 14: t("Jump", "MovementCommands") + "…", 15: t("Wait", "MovementCommands") + "…", 27: t("Switch ON", "MovementCommands") + "…", 28: t("Switch OFF", "MovementCommands") + "…", 29: t("Change Speed", "MovementCommands") + "…", 30: t("Change Frequency", "MovementCommands") + "…", 41: t("Change Image", "MovementCommands") + "…", 42: t("Change Opacity", "MovementCommands") + "…", 43: t("Change Blend Mode", "MovementCommands") + "…", 44: t("Play SE", "MovementCommands") + "…", 45: t("Script", "MovementCommands") + "…" };
 
 const sign = n => (n >= 0 ? "+" : "") + n;
 
@@ -39,17 +40,17 @@ export function routeText(c) {
     const n = ROUTE_NAMES[c.code];
     if (!c.code) { return ""; }
     switch (c.code) {
-        case 14: return `Jump：${sign(p[0])},${sign(p[1])}`;
-        case 15: return `Wait：${p[0]} frames`;
+        case 14: return `${t("Jump", "MovementCommands")}：${sign(p[0])},${sign(p[1])}`;
+        case 15: return `${t("Wait", "MovementCommands")}：${t(p[0] === 1 ? "%1 frame" : "%1 frames", "Constants", p[0])}`;
         case 27: case 28: return `${n}：#${db.pad(p[0])} ${db.switchName(p[0])}`;
-        case 29: return `Speed：${p[0]}`;
-        case 30: return `Frequency：${p[0]}`;
-        case 41: return `Image：${p[0] ? p[0] + "(" + p[1] + ")" : "None"}`;
-        case 42: return `Opacity：${p[0]}`;
-        case 43: return `Blend Mode：${BLENDS[p[0]] || p[0]}`;
-        case 44: return `SE：${audioText(p[0])}`;
-        case 45: return `Script：${p[0]}`;
-        default: return n || "?" + c.code;
+        case 29: return `${t("Speed", "MovementCommands")}：${p[0]}`;
+        case 30: return `${t("Frequency", "MovementCommands")}：${p[0]}`;
+        case 41: return `${t("Image", "MovementCommands")}：${p[0] ? p[0] + "(" + p[1] + ")" : t("None", "Constants")}`;
+        case 42: return `${t("Opacity", "MovementCommands")}：${p[0]}`;
+        case 43: return `${t("Blend Mode", "MovementCommands")}：${BLENDS[p[0]] || p[0]}`;
+        case 44: return `${t("SE", "MovementCommands")}：${audioText(p[0])}`;
+        case 45: return `${t("Script", "MovementCommands")}：${p[0]}`;
+        default: return n || t("Undefined Command", "MovementCommands");
     }
 }
 
@@ -61,19 +62,19 @@ function paramDialog(code, params) {
         switch (code) {
             case 14: {
                 const x = num(p[0] || 0, { min: -100, max: 100 }), y = num(p[1] || 0, { min: -100, max: 100 });
-                b.append(row(field("X:", x), field("Y:", y)));
+                b.append(row(field(t("X", "MovementCommand14"), x), field(t("Y", "MovementCommand14"), y)));
                 get = () => [x.get(), y.get()];
                 break;
             }
-            case 15: { const w = num(p[0] || 60, { min: 1, max: 999 }); b.append(field("Duration:", w, " frames (1/60 sec)")); get = () => [w.get()]; break; }
-            case 27: case 28: { const s = switchPick(p[0] || 1); b.append(field("Switch:", s)); get = () => [s.get()]; break; }
-            case 29: { const s = sel(SPEEDS.map((l, i) => ({ value: i, label: l })).slice(1), p[0] || 4); b.append(field("Speed:", s)); get = () => [s.get()]; break; }
-            case 30: { const s = sel(FREQS.map((l, i) => ({ value: i, label: l })).slice(1), p[0] || 3); b.append(field("Frequency:", s)); get = () => [s.get()]; break; }
-            case 41: { const s = charIndexPick(p[0] || "", p[1] || 0); b.append(field("Image:", s)); get = () => { const v = s.get(); return [v.name, v.index]; }; break; }
-            case 42: { const s = num(p[0] === undefined ? 255 : p[0], { min: 0, max: 255 }); b.append(field("Opacity:", s)); get = () => [s.get()]; break; }
-            case 43: { const s = sel(BLENDS.map((l, i) => ({ value: i, label: l })), p[0] || 0); b.append(field("Blend Mode:", s)); get = () => [s.get()]; break; }
-            case 44: { const s = audioPick("se", p[0] || { name: "", volume: 90, pitch: 100, pan: 0 }); b.append(field("SE:", s)); get = () => [s.get()]; break; }
-            case 45: { const s = area(p[0] || "", { rows: 4, mono: true }); b.append(field("Script:", s)); get = () => [s.get()]; break; }
+            case 15: { const w = num(p[0] || 60, { min: 1, max: 999 }); b.append(field(t("Duration", "Group_Duration"), w, " " + t("frames (1/60 sec)", "Group_Duration"))); get = () => [w.get()]; break; }
+            case 27: case 28: { const s = switchPick(p[0] || 1); b.append(field(t("Switch", "Constants"), s)); get = () => [s.get()]; break; }
+            case 29: { const s = sel(SPEEDS.map((l, i) => ({ value: i, label: l })).slice(1), p[0] || 4); b.append(field(t("Speed", "MovementSpeedBox"), s)); get = () => [s.get()]; break; }
+            case 30: { const s = sel(FREQS.map((l, i) => ({ value: i, label: l })).slice(1), p[0] || 3); b.append(field(t("Frequency", "MovementFrequencyBox"), s)); get = () => [s.get()]; break; }
+            case 41: { const s = charIndexPick(p[0] || "", p[1] || 0); b.append(field(t("Image", "MovementCommand41"), s)); get = () => { const v = s.get(); return [v.name, v.index]; }; break; }
+            case 42: { const s = num(p[0] === undefined ? 255 : p[0], { min: 0, max: 255 }); b.append(field(t("Opacity", "MovementCommand42"), s)); get = () => [s.get()]; break; }
+            case 43: { const s = sel(BLENDS.map((l, i) => ({ value: i, label: l })), p[0] || 0); b.append(field(t("Blend Mode", "MovementCommand43"), s)); get = () => [s.get()]; break; }
+            case 44: { const s = audioPick("se", p[0] || { name: "", volume: 90, pitch: 100, pan: 0 }); b.append(field(t("SE", "MovementCommands"), s)); get = () => [s.get()]; break; }
+            case 45: { const s = area(p[0] || "", { rows: 4, mono: true }); b.append(field(t("Script", "MovementCommand45"), s)); get = () => [s.get()]; break; }
         }
     };
     return dialog({ title, width: "520px", height: "auto", build, onOk: () => ({ v: get() }) }).then(r => r ? r.v : null);
@@ -84,7 +85,7 @@ export function routeNeedsParams(code) { return !!BUTTON_LABELS[code]; }
 // Abre o diálogo "Movement Route". opts.target: valor do personagem (ou undefined para rota do evento)
 // opts.targets: opções [{value,label}] para o seletor de alvo; opts.showWait: mostra "Wait for Completion".
 // opts.previewStart(target) -> {mapId, x, y, d} | null: posição inicial para a prévia desenhada no mapa.
-export function moveRouteDialog(route, { target, targets, showWait = true, title = "Movement Route", previewStart } = {}) {
+export function moveRouteDialog(route, { target, targets, showWait = true, title = t("Movement Route", "Dialog_MovementRoute"), previewStart } = {}) {
     const r = clone(route) || { list: [{ code: 0, parameters: [] }], repeat: false, skippable: false, wait: true };
     if (!r.list.length || r.list[r.list.length - 1].code !== 0) { r.list.push({ code: 0, parameters: [] }); }
     let selected = r.list.length - 1;
@@ -114,7 +115,7 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
             const updatePreview = async recenter => {
                 if (!previewStart) { return; }
                 const st = await previewStart(targetSel ? targetSel.get() : target);
-                if (!st) { pvInfo.textContent = "Sem posição conhecida para a prévia."; if (mini) { mini.layer.removeChildren(); } return; }
+                if (!st) { pvInfo.textContent = t("No known position for the preview."); if (mini) { mini.layer.removeChildren(); } return; }
                 if (!mini) { mini = new MiniMap(pvHost, { zoom: 0.75 }); }
                 if (pvMapId !== st.mapId) { pvMapId = st.mapId; await mini.load(getApi(), st.mapId); recenter = true; }
                 pvStart = st;
@@ -161,20 +162,20 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
             if (targets) {
                 targetSel = sel(targets, target);
                 targetSel.onChange(() => updatePreview(true));
-                left.append(field("Character:", targetSel));
+                left.append(field(t("Character", "Constants"), targetSel));
             }
             left.append(list, h("div", { class: "evRow evListTools" },
-                h("button", { type: "button", class: "evBtn", onclick: () => editAt(selected) }, "Edit"),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (r.list[selected].code) { clip = clone(r.list[selected]); } } }, "Copy"),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (clip) { r.list.splice(selected, 0, clone(clip)); selected++; render(); } } }, "Paste"),
-                h("button", { type: "button", class: "evBtn", onclick: () => { if (r.list[selected].code) { r.list.splice(selected, 1); render(); } } }, "Delete"),
-                h("button", { type: "button", class: "evBtn", onclick: () => { r.list = [{ code: 0, parameters: [] }]; selected = 0; render(); } }, "Clear")));
-            repeat = chk("Repeat Movements", r.repeat);
-            skip = chk("Skip If Cannot Move", r.skippable);
-            wait = chk("Wait for Completion", r.wait);
+                h("button", { type: "button", class: "evBtn", onclick: () => editAt(selected) }, t("Edit", "StandardPopupMenu")),
+                h("button", { type: "button", class: "evBtn", onclick: () => { if (r.list[selected].code) { clip = clone(r.list[selected]); } } }, t("Copy", "BasicConstants")),
+                h("button", { type: "button", class: "evBtn", onclick: () => { if (clip) { r.list.splice(selected, 0, clone(clip)); selected++; render(); } } }, t("Paste", "BasicConstants")),
+                h("button", { type: "button", class: "evBtn", onclick: () => { if (r.list[selected].code) { r.list.splice(selected, 1); render(); } } }, t("Delete", "BasicConstants")),
+                h("button", { type: "button", class: "evBtn", onclick: () => { r.list = [{ code: 0, parameters: [] }]; selected = 0; render(); } }, t("Clear", "BasicConstants"))));
+            repeat = chk(t("Repeat Movements", "Layout_MovementRoute"), r.repeat);
+            skip = chk(t("Skip If Cannot Move", "Layout_MovementRoute"), r.skippable);
+            wait = chk(t("Wait for Completion", "Layout_MovementRoute"), r.wait);
             repeat.onChange(() => updatePreview());
-            left.append(h("fieldset", { class: "evGroup" }, h("legend", null, "Options"), repeat.el, skip.el, showWait ? wait.el : null));
-            const cmds = h("fieldset", { class: "evGroup evRouteCmds" }, h("legend", null, "Movement Commands"));
+            left.append(h("fieldset", { class: "evGroup" }, h("legend", null, t("Options", "Layout_MovementRoute")), repeat.el, skip.el, showWait ? wait.el : null));
+            const cmds = h("fieldset", { class: "evGroup evRouteCmds" }, h("legend", null, t("Movement Commands", "Layout_MovementRoute")));
             const grid = h("div", { class: "evRouteGrid" });
             for (const colCodes of BUTTONS) {
                 const c = h("div", { class: "evRouteCol" });
@@ -185,8 +186,8 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
             }
             cmds.append(grid);
             const center = previewStart ? h("div", { class: "evRouteCenter" },
-                h("div", { class: "evRow" }, h("span", { class: "evContentsTitle" }, "Preview"),
-                    h("button", { type: "button", class: "evBtn", onclick: playPreview }, "▶ Preview")),
+                h("div", { class: "evRow" }, h("span", { class: "evContentsTitle" }, t("Preview", "Constants")),
+                    h("button", { type: "button", class: "evBtn", onclick: playPreview }, "▶ " + t("Preview", "Constants"))),
                 pvHost, pvInfo) : null;
             body.append(h("div", { class: "evRouteWrap" + (center ? " withPreview" : "") }, left, center, cmds));
             render();

@@ -2,10 +2,11 @@
 // A edição dos comandos pertence ao módulo "events": se ele expuser
 // api.events.editCommandList(list, opts) (ou api.editCommandList), usamos; senão, só leitura.
 import { el, btn, getApi, changed, alertBox } from "./ui.js";
+import { t } from "../i18n.js";
 
 const NAMES = {
     101: "Text", 102: "Show Choices", 402: "When", 403: "When Cancel", 404: "End", 103: "Input Number",
-    104: "Select Item", 105: "Text (S)", 108: "Comment", 109: "Skip", 111: "If", 411: "Else", 412: "End", 112: "Loop",
+    104: "Select Item", 105: "Show Scrolling Text", 108: "Comment", 109: "Skip", 111: "If", 411: "Else", 412: "End", 112: "Loop",
     413: "Repeat Above", 113: "Break Loop", 115: "Exit Event Processing", 117: "Common Event", 118: "Label",
     119: "Jump to Label", 121: "Control Switches", 122: "Control Variables", 123: "Control Self Switch",
     124: "Control Timer", 125: "Change Gold", 126: "Change Items", 127: "Change Weapons", 128: "Change Armors",
@@ -17,7 +18,7 @@ const NAMES = {
     216: "Change Player Followers", 217: "Gather Followers", 221: "Fadeout Screen", 222: "Fadein Screen",
     223: "Tint Screen", 224: "Flash Screen", 225: "Shake Screen", 230: "Wait", 231: "Show Picture",
     232: "Move Picture", 233: "Rotate Picture", 234: "Tint Picture", 235: "Erase Picture", 236: "Set Weather Effect",
-    241: "Play BGM", 242: "Fadeout BGM", 243: "Save BGM", 244: "Resume BGM", 245: "Play BGS", 246: "Fadeout BGS",
+    241: "Play BGM", 242: "Fadeout BGM", 243: "Save BGM", 244: "Replay BGM", 245: "Play BGS", 246: "Fadeout BGS",
     249: "Play ME", 250: "Play SE", 251: "Stop SE", 261: "Play Movie", 281: "Change Map Name Display",
     282: "Change Tileset", 283: "Change Battle Background", 284: "Change Parallax", 285: "Get Location Info",
     301: "Battle Processing", 601: "If Win", 602: "If Escape", 603: "If Lose", 604: "End", 302: "Shop Processing",
@@ -39,13 +40,14 @@ function brief(p) {
 export function commandText(c) {
     if (c.code === 0) { return "◆"; }
     if (c.code in CONT) {
-        const t = typeof c.parameters[0] === "string" ? c.parameters[0] : brief(c.parameters);
-        return "　：" + (c.code === 505 ? "◇" + ((c.parameters[0] && c.parameters[0].code) ?? "") : t);
+        const tq = typeof c.parameters[0] === "string" ? c.parameters[0] : brief(c.parameters);
+        return "　：" + (c.code === 505 ? "◇" + ((c.parameters[0] && c.parameters[0].code) ?? "") : tq);
     }
-    const name = NAMES[c.code] || "Code " + c.code;
+    const name = c.code === 109 ? t("Skip", "EventCommandTexts") : c.code === 101 ? t("Text", "EventCommand101")
+        : NAMES[c.code] ? t(NAMES[c.code], "EventCommands") : t("Code %1", "MZEditor", c.code);
     let arg = "";
     switch (c.code) {
-        case 101: arg = c.parameters[0] ? `${c.parameters[0]}(${c.parameters[1]})` : "None"; break;
+        case 101: arg = c.parameters[0] ? `${c.parameters[0]}(${c.parameters[1]})` : t("None", "Constants"); break;
         case 102: arg = (c.parameters[0] || []).join(", "); break;
         case 402: arg = c.parameters[1]; break;
         case 108: case 355: arg = c.parameters[0]; break;
@@ -54,7 +56,8 @@ export function commandText(c) {
         default: arg = brief(c.parameters);
     }
     if (c.code === 404 || c.code === 412 || c.code === 604) { return ":" + name; }
-    if ([402, 403, 411, 601, 602, 603].includes(c.code)) { return ":" + name + (arg ? " " + arg : ""); }
+    if (c.code === 402) { return ":" + t("When %1", "EventCommandTexts", arg); }
+    if ([403, 411, 601, 602, 603].includes(c.code)) { return ":" + name + (arg ? " " + arg : ""); }
     return "◆" + name + (arg !== "" ? "：" + arg : "");
 }
 
@@ -80,15 +83,15 @@ export function commandList(owner, key, opts = {}) {
     const edit = async () => {
         const ed = findEditor();
         if (!ed) {
-            alertBox("O editor de comandos de evento (módulo \"events\") não está carregado. A lista é exibida somente para leitura.", "Contents");
+            alertBox(t("The event command editor (\"events\" module) is not loaded. The list is shown read-only.", "MZEditor"), t("Contents", "Edit_CommonEvents"));
             return;
         }
         const r = await ed(structuredClone(owner[key]), opts);
         if (Array.isArray(r)) { owner[key] = r; changed(); render(); }
     };
     listEl.addEventListener("dblclick", edit);
-    wrap.append(el("div", { class: "dbRow" }, btn("Edit Contents...", edit, "small"),
-        findEditor() ? null : el("span", { class: "dbHint", text: "(somente leitura: módulo events não carregado)" })), listEl);
+    wrap.append(el("div", { class: "dbRow" }, btn(t("Edit", "StandardPopupMenu") + "...", edit, "small"),
+        findEditor() ? null : el("span", { class: "dbHint", text: t("(read-only: events module not loaded)", "MZEditor") })), listEl);
     render();
     wrap.refresh = render;
     return wrap;
