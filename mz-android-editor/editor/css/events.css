@@ -1,0 +1,197 @@
+/* Módulo events: editor de evento, comandos, rota, buscador, modo evento. Toque: alvos >= 36px. */
+
+.evDlgRoot .mzDialog { max-height: 100%; }
+.evDlgRoot .mzDialog[style*="height: auto"] { max-height: 98vh; }
+.evDlgBody { display: flex; flex-direction: column; gap: 6px; }
+.evDlgRoot .mzDialogButtons button { min-height: 38px; }
+.evMsg { margin: 8px 4px; white-space: pre-wrap; }
+
+.evBtn, .evPick, .evTab, .evMenuItem {
+    min-height: 36px; min-width: 36px; padding: 0 10px;
+    border: 1px solid var(--line); background: var(--panel2); border-radius: 3px;
+    font-size: 13px; white-space: nowrap;
+}
+.evBtn:disabled, .evPick:disabled { opacity: .45; }
+.evBtn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.evBtn.toggle.on { background: var(--accent-bg); border-color: var(--accent); }
+.evPick { text-align: left; overflow: hidden; text-overflow: ellipsis; background: #fff linear-gradient(#fff, #f2f2f2); }
+.evPick::after { content: " …"; color: var(--muted); }
+
+.evRow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.evRow.evTop { align-items: flex-start; flex-wrap: nowrap; }
+.evCol { display: flex; flex-direction: column; gap: 6px; }
+.evField { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-height: 36px; }
+.evLabel { color: var(--text); white-space: nowrap; }
+.evGroup { border: 1px solid var(--line2); border-radius: 3px; margin: 0; padding: 4px 8px 8px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.evGroup > legend { padding: 0 4px; color: #333; font-family: "M+ 1p", sans-serif; }
+.evTwoCol { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+
+.evNum, .evTxt, .evSel, .evArea {
+    min-height: 36px; font: inherit; font-size: 14px;
+    border: 1px solid var(--line); border-radius: 3px; background: #fff; padding: 2px 6px;
+}
+.evSel { max-width: 100%; }
+.evArea { width: 100%; resize: vertical; min-height: 80px; user-select: text; }
+.evArea.mono { font-family: "M+ 1c", ui-monospace, monospace; }
+.evTxt, .evArea { user-select: text; }
+.evDisabled { opacity: .5; }
+.evChk, .evRadio { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; cursor: pointer; white-space: nowrap; }
+.evChk input, .evRadio input { width: 20px; height: 20px; margin: 0; }
+.evRadios { display: flex; flex-direction: column; gap: 2px; }
+.evRadios.inline { flex-direction: row; flex-wrap: wrap; gap: 4px 14px; }
+.evRadioRow { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.evRadioRow > .evRadio { min-width: 120px; }
+.evRadios.inline .evRadioRow > .evRadio { min-width: 0; }
+.evSlider { display: inline-flex; align-items: center; gap: 6px; }
+.evRange { width: 180px; height: 32px; }
+.evDesc { color: var(--muted); font-size: 12px; white-space: pre-wrap; }
+.evCode { font-family: ui-monospace, monospace; padding: 0 6px; min-width: 40px; }
+
+/* listas */
+.evList { flex: 1; min-height: 120px; overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
+.evListItem { padding: 8px 10px; min-height: 36px; cursor: pointer; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.evListItem.selected { background: var(--accent); color: #fff; }
+.evListHead { display: flex; justify-content: space-between; padding: 4px 10px; background: var(--panel); border-bottom: 1px solid var(--line2); font-weight: 500; }
+.evFilter { width: 100%; }
+.evListTools { padding: 4px 0; }
+
+/* abas */
+.evTabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.evTab { border-bottom: 0; border-radius: 3px 3px 0 0; background: #e6e6e6; min-width: 48px; }
+.evTab.on { background: var(--panel2); border-color: var(--accent); font-weight: 600; }
+.evTabPages { padding-top: 6px; }
+
+/* menu de ações */
+.evMenuBack { position: fixed; inset: 0; z-index: 80; }
+.evMenu { position: fixed; min-width: 220px; max-height: 96vh; overflow: auto; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,.35); padding: 4px; display: flex; flex-direction: column; }
+.evMenuTitle { padding: 4px 8px; color: var(--muted); font-size: 12px; }
+.evMenuItem { text-align: left; border: 0; background: transparent; min-height: 40px; width: 100%; }
+.evMenuItem:hover:not(:disabled) { background: var(--accent-bg); }
+.evMenuSub { padding-left: 16px; display: flex; flex-direction: column; }
+.evMenuSub.hidden { display: none; }
+.evMenuSep { height: 1px; background: var(--line2); margin: 3px 0; }
+
+/* arquivos / imagens */
+.evFileWrap, .evCharContent { display: flex; gap: 8px; flex: 1; min-height: 0; }
+.evFileList { flex: 0 0 240px; }
+.evFilePreview { flex: 1; overflow: auto; background: #3a3a3a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='8' height='8' fill='%23484848'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23484848'/%3E%3C/svg%3E"); border: 1px solid var(--line); border-radius: 3px; display: flex; align-items: flex-start; justify-content: flex-start; }
+.evPvImg { max-width: 100%; }
+.evCharCanvas { display: block; max-width: 100%; height: auto; image-rendering: pixelated; cursor: pointer; }
+.evAudioCtl { display: flex; flex-direction: column; gap: 2px; }
+.evFaceBtn, .evImageBtn { padding: 2px; border: 1px solid var(--line); background: #444; border-radius: 3px; height: auto; }
+.evFaceCanvas { width: 144px; height: 144px; display: block; }
+.evPageImage { width: 120px; height: 120px; display: block; image-rendering: pixelated; }
+.evSwatch { width: 80px; height: 80px; border: 1px solid var(--line); border-radius: 3px; flex: none; }
+.evTone { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+.evToneSliders { display: flex; flex-direction: column; }
+.evTone > .evRow { flex-basis: 100%; }
+
+/* local (mini-mapa) */
+.evLocWrap { display: flex; gap: 8px; flex: 1; min-height: 0; height: 100%; }
+.evMapList { flex: 0 0 230px; }
+.evLocRight { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.evLocHost { flex: 1; min-height: 200px; background: #202020; overflow: hidden; border: 1px solid var(--line); }
+.evLocHost canvas { display: block; }
+.evLocInfo { padding: 4px; }
+
+/* editor de evento */
+.evEditorBody { padding: 4px 8px; gap: 4px; overflow: hidden; }
+.evEditorTop { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.evPageBtns { margin-left: auto; }
+.evPageBtns .evBtn { padding: 0 8px; font-size: 12px; }
+.evPageTabs .evTab { min-width: 44px; }
+.evPageArea { flex: 1; min-height: 0; display: flex; }
+.evPage { display: flex; gap: 8px; flex: 1; min-height: 0; }
+.evPageLeft { flex: 0 0 470px; overflow: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+.evPageRight { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+.evContentsTitle { font-family: "M+ 1p", sans-serif; padding: 2px 0; }
+.evCondRow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.evCondRow > .evChk { min-width: 108px; }
+.evCommonBody { overflow: hidden; }
+.evCommonBody .evCmdList { flex: 1; }
+
+/* lista de comandos */
+.evCmdList { flex: 1; min-height: 0; overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 3px; font-size: 14px; outline: none; }
+.evCmdRow { min-height: 30px; line-height: 30px; padding-right: 8px; white-space: pre; cursor: default; border-bottom: 1px solid #f7f7f7; }
+.evCmdRow.selected { background: #b8d4fa; }
+.evMark { color: #1e1e1e; margin-right: 1px; }
+.evCmdLabel.hiddenLabel { visibility: hidden; }
+.cat-msg { color: #000; }
+.cat-prog { color: #c00000; }
+.cat-flow { color: #0000c0; }
+.cat-comment { color: #008000; }
+.cat-party, .cat-actor { color: #b84d00; }
+.cat-move, .cat-char { color: #7a1a9a; }
+.cat-pic, .cat-time, .cat-screen { color: #a0006e; }
+.cat-audio { color: #006c80; }
+.cat-scene, .cat-system, .cat-map { color: #7a6300; }
+.cat-battle { color: #8a2020; }
+.cat-adv { color: #505050; }
+.evPalBtn.cat-msg, .evPalBtn { color: var(--text); }
+
+/* paleta de comandos */
+.evPalette { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; align-items: start; }
+.evPalGroup { display: flex; flex-direction: column; gap: 3px; }
+.evPalGroup.wide { grid-column: span 2; }
+.evPalBtns { display: flex; flex-direction: column; gap: 3px; }
+.evPalGroup.wide .evPalBtns { display: block; column-count: 2; column-gap: 4px; }
+.evPalGroup.wide .evPalBtn { display: block; width: 100%; margin-bottom: 3px; break-inside: avoid; }
+.evPalTitle { font-family: "M+ 1p", sans-serif; color: #333; padding: 2px 0; border-bottom: 1px solid var(--line2); }
+.evPalBtn { text-align: left; min-height: 36px; overflow: hidden; text-overflow: ellipsis; padding: 0 6px; }
+
+/* Show Text */
+.evShowText { display: flex; gap: 10px; align-items: flex-start; }
+.evShowText > .evCol:last-child { flex: 1; min-width: 0; }
+.evMsgText { font-size: 16px; line-height: 1.6; min-height: 140px; background-image: linear-gradient(90deg, transparent calc(100% - 1px), #e0a0a0 0); background-size: 100% 100%; }
+.evMsgPreview { background: #000; padding: 6px; border-radius: 3px; }
+.evMsgPreview.hidden { display: none; }
+.evMsgWin { display: flex; gap: 10px; background: linear-gradient(#24486f, #10203a); border: 2px solid #ccc; border-radius: 4px; padding: 10px; min-height: 160px; }
+.evMsgFace { width: 144px; height: 144px; flex: none; }
+.evMsgLines { font-family: "M+ 1p", sans-serif; font-size: 22px; line-height: 36px; color: #fff; text-shadow: 1px 1px 2px #000; white-space: pre; overflow: hidden; }
+.evMsgIcon { width: 32px; height: 32px; vertical-align: middle; }
+.evMsgName { display: inline-block; background: linear-gradient(#24486f, #10203a); color: #fff; border: 2px solid #ccc; border-radius: 4px; padding: 2px 12px; margin-bottom: 2px; font-size: 18px; }
+.evColorGrid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+.evColorCell { height: 40px; color: #fff; text-shadow: 0 0 2px #000; border: 2px solid transparent; }
+.evColorCell.on { border-color: #f00; }
+.evIconWrap { overflow: auto; max-height: 60vh; background: #333; }
+.evIconCanvas { display: block; width: 512px; image-rendering: pixelated; cursor: pointer; }
+
+/* rota de movimento */
+.evRouteWrap { display: flex; gap: 8px; flex: 1; min-height: 0; height: 100%; }
+.evRouteLeft { flex: 0 0 360px; display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+.evRouteList { flex: 1; }
+.evRouteCmds { flex: 1; overflow: auto; }
+.evRouteGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.evRouteCol { display: flex; flex-direction: column; gap: 3px; }
+.evRouteBtn { text-align: left; min-height: 34px; font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+
+/* plugin command */
+.evArgs { display: flex; flex-direction: column; gap: 4px; max-height: 50vh; overflow: auto; }
+.evArgRow { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8px; align-items: center; border-bottom: 1px solid #eee; padding: 2px 0; }
+.evArgName small { color: var(--muted); }
+.evGoods { min-height: 220px; max-height: 50vh; }
+.evGoodsRow { display: flex; justify-content: space-between; }
+
+/* modo evento (sobre o mapa) */
+.evModeBar { position: absolute; left: 6px; bottom: 6px; right: 6px; z-index: 5; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding: 4px; background: rgba(240,240,240,.94); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,.25); pointer-events: auto; }
+.evModeBar.hidden, .evListPanel.hidden { display: none; }
+.evBarInfo { min-width: 120px; padding: 0 6px; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+.evListPanel { position: absolute; top: 6px; right: 6px; bottom: 60px; width: 280px; z-index: 5; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; overflow: auto; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+.evListPanelTitle { padding: 6px 10px; background: var(--panel); border-bottom: 1px solid var(--line2); font-family: "M+ 1p", sans-serif; position: sticky; top: 0; }
+
+/* buscador */
+.evSearchBody { overflow: hidden; }
+.evSearchTop { display: flex; gap: 10px; align-items: flex-end; }
+.evSearchTop .evGroup { flex: 1; }
+.evSearchTop .evRadios { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; }
+.evSearchResults { flex: 1; }
+.evSearchHit { white-space: normal; }
+.evHitWhere { font-size: 12px; color: var(--muted); }
+.evListItem.selected .evHitWhere { color: #e0e8ff; }
+.evHitLine { font-family: "M+ 1c", monospace; }
+
+@media (max-height: 640px) {
+    .evDlgRoot .mzDialogTitle { padding: 3px 10px; }
+    .evDlgRoot .mzDialogButtons { padding: 4px 10px; }
+    .evDlgRoot .mzDialogBody { padding: 4px 6px; }
+}
