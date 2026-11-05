@@ -5,6 +5,7 @@ import { db, clone } from "./data.js";
 
 let API = null;
 export function setApi(api) { API = api; }
+export function getApi() { return API; }
 export const PROJECT = "/project/";
 
 // ---------- DOM ----------
@@ -599,7 +600,7 @@ export function facePick(name, index) {
     let cur = { name: name || "", index: index || 0 };
     const el = h("button", { type: "button", class: "evFaceBtn" }, canvas);
     const refresh = () => drawFace(canvas, cur.name, cur.index, 144);
-    el.addEventListener("click", async () => { const r = await faceDialog(cur.name, cur.index); if (r) { cur = r; refresh(); } });
+    el.addEventListener("click", async () => { const r = await faceDialog(cur.name, cur.index); if (r) { cur = r; refresh(); el.dispatchEvent(new Event("change")); } });
     refresh();
     return ctl(el, () => cur, v => { cur = v; refresh(); });
 }

@@ -3,7 +3,8 @@
 
 import { CMD, pickCommand } from "./commands.js";
 import { clone } from "./data.js";
-import { h, actionMenu, alertBox } from "./ui.js";
+import { h, actionMenu, alertBox, getApi } from "./ui.js";
+import { runEventTest } from "./etest.js";
 
 const E = indent => ({ code: 0, indent, parameters: [] });
 const BLOCK_END = { 111: 412, 112: 413, 102: 404, 301: 604 };
@@ -272,6 +273,12 @@ export function createCommandList(opts) {
             const s = text.join("<br>\n");
             if (navigator.clipboard) { navigator.clipboard.writeText(s).catch(() => alertBox(s, "Copy as HTML")); }
         },
+        // "Test": executa no jogo os comandos selecionados (ou a lista toda se só a linha vazia).
+        async test() {
+            let cmds = selected();
+            if (!cmds.some(c => c.code !== 0)) { cmds = list.slice(); }
+            await runEventTest(getApi(), cmds);
+        },
         async menu(x, y) {
             const c = list[sel[0]];
             const empty = !c || c.code === 0;
@@ -286,7 +293,9 @@ export function createCommandList(opts) {
                 "-",
                 { label: "Select All", action: () => api.selectAll() },
                 { label: "Copy as Text", action: () => api.copyText() },
-                { label: "Copy as HTML Tags", action: () => api.copyHtml() }
+                { label: "Copy as HTML Tags", action: () => api.copyHtml() },
+                "-",
+                { label: "Test", action: () => api.test() }
             ], { x, y });
         },
         render
@@ -340,5 +349,5 @@ export function commandListToolbar(cl) {
     const b = (label, fn, title) => h("button", { type: "button", class: "evBtn", title, onclick: fn }, label);
     return h("div", { class: "evRow evListTools" },
         b("New…", () => cl.newCommand()), b("Edit…", () => cl.edit()), b("Cut", () => cl.cut()), b("Copy", () => cl.copy()),
-        b("Paste", () => cl.paste()), b("Delete", () => cl.del()), multiBtn, b("☰", e => { const r = e.currentTarget.getBoundingClientRect(); cl.menu(r.left, r.bottom); }, "Mais"));
+        b("Paste", () => cl.paste()), b("Delete", () => cl.del()), multiBtn, b("Test", () => cl.test(), "Testar os comandos selecionados no jogo"), b("☰", e => { const r = e.currentTarget.getBoundingClientRect(); cl.menu(r.left, r.bottom); }, "Mais"));
 }

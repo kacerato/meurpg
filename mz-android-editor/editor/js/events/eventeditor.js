@@ -94,7 +94,10 @@ export function openEventEditor(opts) {
                 const mt = sel(opt(MOVE_TYPES), page.moveType);
                 const routeBtn = h("button", { type: "button", class: "evBtn" }, "Route…");
                 routeBtn.addEventListener("click", async () => {
-                    const r = await moveRouteDialog(page.moveRoute, { showWait: false, title: "Movement Route" });
+                    const r = await moveRouteDialog(page.moveRoute, {
+                        showWait: false, title: "Movement Route",
+                        previewStart: () => (opts.mapId ? { mapId: opts.mapId, x: ev.x, y: ev.y, d: page.image.direction || 2, directionFix: page.directionFix } : null)
+                    });
                     if (r) { page.moveRoute = r.route; }
                 });
                 mt.onChange(() => { page.moveType = mt.get(); routeBtn.disabled = page.moveType !== 3; });
@@ -109,7 +112,7 @@ export function openEventEditor(opts) {
                 const tr = sel(opt(TRIGGERS), page.trigger).onChange(() => { page.trigger = tr.get(); });
                 const left = h("div", { class: "evPageLeft" }, conditions, h("div", { class: "evRow evTop" }, image, col(movement)), h("div", { class: "evRow evTop" }, options, col(group("Priority", pr), group("Trigger", tr))));
                 // Contents
-                cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id } });
+                cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id, eventPos: { x: ev.x, y: ev.y, d: page.image.direction || 2, directionFix: page.directionFix } } });
                 const right = h("div", { class: "evPageRight" }, h("div", { class: "evContentsTitle" }, "Contents"), cl.el, commandListToolbar(cl));
                 return h("div", { class: "evPage" }, left, right);
             };

@@ -9,7 +9,9 @@ import {
     locationPick, tabs, slider, listFiles, alertBox, imgUrl, loadImage, audioDialog, drawFace
 } from "./ui.js";
 import { moveRouteDialog, routeText } from "./moveroute.js";
-import { loadPluginCommands } from "./plugincmd.js";
+import { getEnabledPluginsWithCommands, getPluginCommands, defaultArgs } from "../plugins/commands.js";
+import { ParamTable } from "../plugins/params.js";
+import { listPluginFiles } from "../plugins/store.js";
 
 // ---------- textos auxiliares ----------
 const P = n => db.pad(n);
@@ -114,6 +116,99 @@ function textEditor(lines, rows = 8) {
     return area((lines || []).join("\n"), { rows, mono: true });
 }
 
+// ---------- Texto da mensagem com guia de largura real ----------
+// Largura útil da janela de mensagem como no runtime: Graphics.boxWidth = uiAreaWidth - 8,
+// innerWidth = boxWidth - padding(12)*2; o texto começa em 4px, ou em faceWidth(144)+20 com rosto
+// (Window_Message.newLineX). A fonte é a mainFontFilename do projeto no tamanho advanced.fontSize.
+let gameFont = null;
+function loadGameFont() {
+    if (!gameFont) {
+        const adv = (db.system && db.system.advanced) || {};
+        const file = adv.mainFontFilename || "mplus-1m-regular.woff";
+        const ff = new FontFace("evGameFont", `url("/project/fonts/${encodeURIComponent(file)}")`);
+        gameFont = ff.load().then(f => { document.fonts.add(f); return true; }).catch(() => false);
+    }
+    return gameFont;
+}
+function msgMetrics(hasFace) {
+    const adv = (db.system && db.system.advanced) || {};
+    const inner = (adv.uiAreaWidth || 816) - 8 - 24;
+    return { inner, avail: inner - (hasFace ? 164 : 4), fontSize: adv.fontSize || 26, fallback: adv.fallbackFonts || "Verdana, sans-serif" };
+}
+// Mede uma linha como Window_Base.processAllText (códigos de controle não ocupam espaço;
+// \I[n] = 36px; \{ \} mudam o tamanho em 12; \FS[n]; \PX[n] reposiciona). Devolve, para cada
+// caractere do texto bruto, o x final (para achar onde passa da janela).
+function measureMessageLine(ctx, line, m) {
+    let fs = m.fontSize, x = 0;
+    const setFont = () => { ctx.font = `${fs}px evGameFont, ${m.fallback}`; };
+    setFont();
+    const ends = new Array(line.length).fill(0);
+    let i = 0;
+    const expand = t => t.replace(/\\V\[(\d+)\]/gi, "0").replace(/\\N\[(\d+)\]/gi, (a, n) => db.name("actors", Number(n)))
+        .replace(/\\P\[(\d+)\]/gi, (a, n) => db.name("actors", (db.system.partyMembers || [])[Number(n) - 1])).replace(/\\G/gi, db.system.currencyUnit || "G");
+    while (i < line.length) {
+        const rest = line.slice(i);
+        let mm;
+        if ((mm = /^\\(V|N|P)\[(\d+)\]|^\\G/i.exec(rest))) { x += ctx.measureText(expand(mm[0])).width; }
+        else if ((mm = /^\\I\[(\d+)\]/i.exec(rest))) { x += 36; }
+        else if ((mm = /^\\FS\[(\d+)\]/i.exec(rest))) { fs = Number(mm[1]); setFont(); }
+        else if ((mm = /^\\PX\[(\d+)\]/i.exec(rest))) { x = Number(mm[1]); }
+        else if ((mm = /^\\\{/.exec(rest))) { if (fs <= 96) { fs += 12; setFont(); } }
+        else if ((mm = /^\\\}/.exec(rest))) { if (fs >= 24) { fs -= 12; setFont(); } }
+        else if ((mm = /^\\(C|PY)\[\d+\]|^\\[$.|!><^]/i.exec(rest))) { /* sem largura */ }
+        else if ((mm = /^\\\\/.exec(rest))) { x += ctx.measureText("\\").width; }
+        else { mm = [line[i]]; x += ctx.measureText(line[i]).width; }
+        for (let k = 0; k < mm[0].length; k++) { ends[i + k] = x; }
+        i += mm[0].length;
+    }
+    return { width: x, ends };
+}
+function messageTextEditor(lines, hasFace) {
+    const ta = h("textarea", { class: "evArea evMsgText", rows: 5, spellcheck: "false", wrap: "off" });
+    ta.value = (lines || []).join("\n");
+    const mirror = h("div", { class: "evMsgMirror" });
+    const gauge = h("div", { class: "evMsgGauge" });
+    const wrap = h("div", { class: "evMsgWrap" }, mirror, ta);
+    const el = h("div", { class: "evMsgEditor" }, wrap, gauge);
+    const cv = document.createElement("canvas").getContext("2d");
+    const refresh = () => {
+        const m = msgMetrics(hasFace());
+        const pad = 6;
+        const k = Math.max(0.4, (wrap.clientWidth - pad * 2 - 20) / m.inner);
+        const fsz = m.fontSize * k;
+        for (const e of [ta, mirror]) {
+            e.style.fontFamily = `evGameFont, ${m.fallback}`;
+            e.style.fontSize = fsz + "px";
+            e.style.lineHeight = Math.round(fsz * 1.45) + "px";
+            e.style.padding = `4px ${pad}px`;
+        }
+        // guia vertical: onde termina a área útil da janela (para texto sem códigos de controle)
+        const gx = pad + m.avail * k;
+        mirror.style.backgroundImage = `linear-gradient(90deg, transparent ${gx - 1}px, #d04040 ${gx - 1}px, #d04040 ${gx + 1}px, transparent ${gx + 1}px)`;
+        mirror.innerHTML = "";
+        gauge.innerHTML = "";
+        ta.value.split("\n").forEach((line, n) => {
+            const r = measureMessageLine(cv, line, m);
+            const cut = r.ends.findIndex(e => e > m.avail);
+            const div = document.createElement("div");
+            div.className = "evMirrorLine";
+            if (cut >= 0) {
+                div.append(document.createTextNode(line.slice(0, cut)), h("span", { class: "evOverflow" }, line.slice(cut)));
+            } else { div.textContent = line || " "; }
+            mirror.append(div);
+            const over = r.width > m.avail;
+            gauge.append(h("div", { class: "evGaugeRow" + (over ? " over" : "") + (n >= 4 ? " extra" : "") },
+                `${n + 1}: ${Math.round(r.width)}/${m.avail}px`));
+        });
+        mirror.scrollTop = ta.scrollTop; mirror.scrollLeft = ta.scrollLeft;
+    };
+    ta.addEventListener("input", refresh);
+    ta.addEventListener("scroll", () => { mirror.scrollTop = ta.scrollTop; mirror.scrollLeft = ta.scrollLeft; });
+    new ResizeObserver(() => refresh()).observe(wrap);
+    loadGameFont().then(() => document.fonts.ready).then(refresh);
+    return { el, ta, refresh, get: () => ta.value, set: v => { ta.value = v; refresh(); } };
+}
+
 // ---------- Comandos ----------
 export const CMD = {};
 function def(code, d) { CMD[code] = Object.assign({ code }, d); }
@@ -130,10 +225,10 @@ def(101, {
             const name = txt(p[4] || "", { width: "220px" });
             const bg = sel(BACKGROUNDS.map((l, i) => ({ value: i, label: l })), p[2]);
             const pos = sel(POSITIONS.map((l, i) => ({ value: i, label: l })), p[3]);
-            const text = textEditor((conts || []).map(c => c[0]), 6);
-            text.el.classList.add("evMsgText");
+            const text = messageTextEditor((conts || []).map(c => c[0]), () => face.get().name !== "");
+            face.onChange(() => text.refresh());
             const batch = chk("Batch Entry", false);
-            const insertAt = s => { const t = text.el; const a = t.selectionStart; t.setRangeText(s, a, t.selectionEnd, "end"); t.focus(); };
+            const insertAt = s => { const t = text.ta; const a = t.selectionStart; t.setRangeText(s, a, t.selectionEnd, "end"); t.focus(); text.refresh(); };
             const tools = row(
                 h("button", { type: "button", class: "evBtn", onclick: async () => { const n = await colorPicker(); if (n !== null) { insertAt(`\\C[${n}]`); } } }, "Color…"),
                 h("button", { type: "button", class: "evBtn", onclick: async () => { const n = await iconPicker(); if (n !== null) { insertAt(`\\I[${n}]`); } } }, "Icon…"),
@@ -142,7 +237,7 @@ def(101, {
             body.append(h("div", { class: "evShowText" },
                 col(h("div", null, "Face:"), face),
                 col(row(field("Name:", name), field("Background:", bg), field("Window Position:", pos)), field("Text:", text), tools, batch)));
-            setTimeout(() => text.el.focus(), 50);
+            setTimeout(() => text.ta.focus(), 50);
             return () => {
                 const f = face.get();
                 const lines = text.get().split("\n");
@@ -818,13 +913,26 @@ def(205, {
     contText: p => "◇" + routeText(p[0]),
     async edit(p, ctx) {
         p = p || [-1, { list: [{ code: 0, parameters: [] }], repeat: false, skippable: false, wait: true }];
-        const r = await moveRouteDialog(p[1], { target: p[0], targets: charOptions(ctx) });
+        const r = await moveRouteDialog(p[1], { target: p[0], targets: charOptions(ctx), previewStart: t => routePreviewStart(ctx, t) });
         if (!r) { return null; }
         const route = r.route;
         return { p: [r.target, route], conts: route.list.filter(c => c.code !== 0).map(c => [c]) };
     },
     refs: p => p[1].list.filter(c => c.code === 27 || c.code === 28).map(c => ["switch", c.parameters[0]])
 });
+// Posição inicial da prévia de rota: evento do mapa (ou "This Event") ou jogador na posição inicial.
+function routePreviewStart(ctx, target) {
+    if (!ctx || !ctx.map || !ctx.mapId) { return null; }
+    if (target < 0) {
+        const s = db.system;
+        return s.startMapId === ctx.mapId ? { mapId: ctx.mapId, x: s.startX, y: s.startY, d: 2 } : null;
+    }
+    if (target === 0 && ctx.eventPos) { return { mapId: ctx.mapId, ...ctx.eventPos }; }
+    const ev = ctx.map.events[target === 0 ? ctx.eventId : target];
+    if (!ev) { return null; }
+    const pg = ev.pages[0];
+    return { mapId: ctx.mapId, x: ev.x, y: ev.y, d: (pg && pg.image.direction) || 2, directionFix: pg && pg.directionFix };
+}
 def(206, { name: "Get on/off Vehicle", cat: "move", text: () => ["Get on/off Vehicle", ""], noParams: true });
 
 // ===== Character =====
@@ -1263,68 +1371,82 @@ def(355, {
 });
 def(356, { name: "Plugin Command (MV)", cat: "adv", text: p => ["Plugin Command", p[0]],
     async edit(p) { p = p || [""]; return form("Plugin Command (MV)", b => { const t = txt(p[0], { width: "420px" }); b.append(field("Command:", t)); return () => ({ p: [t.get()] }); }); } });
+// Plugin Command (MZ): lista os plugins ativos com @command (mesma fonte do Gerenciador de plugins),
+// argumentos editados pela tabela/editores do módulo plugins (struct<…>, arrays, @parent, @dir...).
+async function pluginCommandSources(current) {
+    const api = db.api;
+    const enabled = await getEnabledPluginsWithCommands().catch(() => []);
+    const out = enabled.map(p => ({ name: p.name, label: p.name, commands: p.commands }));
+    // Plugin já usado pelo comando mas desativado/ausente da lista: mantém para não perder dados.
+    const extra = new Set(current ? [current] : []);
+    if (!out.length) { for (const n of await listPluginFiles(api)) { extra.add(n); } }
+    for (const n of extra) {
+        if (out.some(o => o.name === n)) { continue; }
+        const cmds = await getPluginCommands(n).catch(() => []);
+        if (cmds.length) { out.push({ name: n, label: n + " (OFF)", commands: cmds }); }
+    }
+    return out;
+}
 def(357, {
     name: "Plugin Command", cat: "adv", cont: 657,
     text: p => ["Plugin Command", `${p[0]}, ${p[2] || p[1]}`], contText: p => p[0],
-    async edit(p, ctx) {
-        const plugins = await loadPluginCommands(db.api);
-        p = p || [plugins[0] ? plugins[0].name : "", "", "", {}];
-        const args = clone(p[3]) || {};
-        let argCtls = [];
+    async edit(p) {
+        ensurePluginsCss();
+        const sources = await pluginCommandSources(p ? p[0] : "");
+        p = p || [sources[0] ? sources[0].name : "", "", "", {}];
+        let values = clone(p[3]) || {};
         let cmdInfo = null;
         return form("Plugin Command", b => {
-            const pl = sel(plugins.map(x => ({ value: x.name, label: x.name })), p[0]);
+            const pl = sel(sources.map(x => ({ value: x.name, label: x.label })), p[0]);
             const cm = sel([], p[1]);
             const desc = h("div", { class: "evDesc" });
-            const argBox = h("div", { class: "evArgs" });
+            const argHelp = h("div", { class: "evDesc" });
+            const table = new ParamTable(db.api, { defs: [], values, structs: {}, onSelect: def => { argHelp.textContent = def.desc || ""; } });
+            table.root.classList.add("evArgTable");
             const fillCmds = keep => {
-                const info = plugins.find(x => x.name === pl.get());
-                cm.setOptions(info ? info.commands.map(c => ({ value: c.name, label: c.text || c.name })) : [], keep ? p[1] : (info && info.commands[0] ? info.commands[0].name : ""));
-                fillArgs();
+                const src = sources.find(x => x.name === pl.get());
+                const cmds = src ? src.commands : [];
+                cm.setOptions(cmds.map(c => ({ value: c.name, label: c.text || c.name })), keep ? p[1] : (cmds[0] ? cmds[0].name : ""));
+                fillArgs(keep);
             };
-            const fillArgs = () => {
-                const info = plugins.find(x => x.name === pl.get());
-                cmdInfo = info ? info.commands.find(c => c.name === cm.get()) : null;
-                desc.textContent = cmdInfo ? cmdInfo.desc : (plugins.length ? "" : "Nenhum plugin com @command em js/plugins/.");
-                argBox.innerHTML = "";
-                argCtls = [];
-                for (const a of cmdInfo ? cmdInfo.args : []) {
-                    const cur = args[a.name] !== undefined ? String(args[a.name]) : a.default;
-                    let c;
-                    const t = a.type || "string";
-                    if (t === "number") { c = num(Number(cur) || 0, { min: isFinite(a.min) ? a.min : -99999999, max: isFinite(a.max) ? a.max : 99999999, step: a.decimals ? Math.pow(10, -a.decimals) : 1, float: !!a.decimals }); }
-                    else if (t === "boolean") { c = sel([{ value: "true", label: a.on || "ON" }, { value: "false", label: a.off || "OFF" }], cur === "true" ? "true" : "false"); }
-                    else if (t === "select" || t === "combo") { c = sel(a.options.map(o => ({ value: o.value, label: o.label })), cur); if (t === "combo" || c.get() === null) { c = txt(cur); c.el.setAttribute("list", "evdl_" + a.name); argBox.append(h("datalist", { id: "evdl_" + a.name }, ...a.options.map(o => h("option", { value: o.value })))); } }
-                    else if (t === "switch") { c = switchPick(Number(cur) || 1); }
-                    else if (t === "variable") { c = varPick(Number(cur) || 1); }
-                    else if (["actor", "class", "skill", "item", "weapon", "armor", "enemy", "troop", "state", "animation", "tileset", "common_event"].includes(t)) {
-                        const list = t === "class" ? "classes" : t === "common_event" ? "commonEvents" : t + "s";
-                        c = sel(db.options(list, { none: true }), Number(cur) || 0);
-                    }
-                    else if (t === "file") { c = txt(cur); }
-                    else if (t === "multiline_string" || t === "note" || /^struct|\[\]$/.test(t)) { c = area(cur, { rows: 3, mono: true }); }
-                    else { c = txt(cur, { width: "320px" }); }
-                    argCtls.push({ a, c });
-                    argBox.append(h("div", { class: "evArgRow" }, h("div", { class: "evArgName" }, a.text || a.name, h("small", null, a.desc ? " — " + a.desc : "")), c.el));
-                }
+            const fillArgs = keep => {
+                const src = sources.find(x => x.name === pl.get());
+                cmdInfo = src ? src.commands.find(c => c.name === cm.get()) : null;
+                desc.textContent = cmdInfo ? cmdInfo.desc : (sources.length ? "" : "Nenhum plugin com @command em js/plugins/.");
+                argHelp.textContent = "";
+                if (!keep) { values = {}; }
+                values = cmdInfo ? { ...defaultArgs(cmdInfo), ...values } : values;
+                table.setData(cmdInfo ? cmdInfo.args : [], values, cmdInfo ? cmdInfo.structs : {});
             };
             pl.onChange(() => fillCmds(false));
-            cm.onChange(fillArgs);
+            cm.onChange(() => fillArgs(false));
             fillCmds(true);
-            b.append(row(field("Plugin Name:", pl), field("Command Name:", cm)), desc, group("Arguments", argBox));
+            const editBtn = h("button", { type: "button", class: "evBtn", onclick: () => table.edit() }, "Edit Argument…");
+            b.append(row(field("Plugin Name:", pl), field("Command Name:", cm)), desc,
+                group("Arguments", table.root, row(editBtn, h("span", { class: "evDesc" }, "Toque no argumento selecionado para editar.")), argHelp));
             return () => {
-                const out = {};
+                if (!pl.get() || !cm.get()) { alertBox("Selecione um plugin e um comando."); return false; }
+                const args = {};
                 const conts = [];
-                for (const { a, c } of argCtls) {
-                    const v = String(c.get());
-                    out[a.name] = v;
+                for (const a of cmdInfo ? cmdInfo.args : []) {
+                    const v = values[a.name] === undefined ? "" : String(values[a.name]);
+                    args[a.name] = v;
                     conts.push([`${a.text || a.name} = ${v}`]);
                 }
-                return { p: [pl.get(), cm.get(), cmdInfo ? cmdInfo.text : cm.get(), out], conts };
+                return { p: [pl.get(), cm.get(), cmdInfo ? cmdInfo.text : cm.get(), args], conts };
             };
-        }, { width: "860px" });
+        }, { width: "900px" });
     }
 });
+
+function ensurePluginsCss() {
+    if (document.getElementById("pluginsCss")) { return; }
+    const link = document.createElement("link");
+    link.id = "pluginsCss";
+    link.rel = "stylesheet";
+    link.href = new URL("../../css/plugins.css", import.meta.url).href;
+    document.head.appendChild(link);
+}
 
 // ---------- Paleta "Event Commands" (3 abas como no MZ) ----------
 export const PALETTE = [

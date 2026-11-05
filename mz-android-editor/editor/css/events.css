@@ -195,3 +195,21 @@
     .evDlgRoot .mzDialogButtons { padding: 4px 10px; }
     .evDlgRoot .mzDialogBody { padding: 4px 6px; }
 }
+
+/* prévia da rota de movimento */
+.evRouteWrap.withPreview .evRouteLeft { flex: 0 0 270px; }
+.evRouteCenter { flex: 0 0 330px; display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+.evRoutePvHost { flex: 1; min-height: 200px; background: #202020; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.evRoutePvHost canvas { display: block; }
+.evRouteWrap.withPreview .evRouteBtn { font-size: 11px; padding: 0 5px; }
+
+/* Show Text: editor com espelho (guia de largura real e parte que passa da janela em vermelho) */
+.evMsgEditor { display: flex; gap: 6px; align-items: stretch; width: 100%; }
+.evMsgWrap { position: relative; flex: 1; min-width: 0; }
+.evMsgWrap .evMsgText { position: relative; z-index: 1; display: block; width: 100%; background: transparent; resize: vertical; white-space: pre; overflow: auto; min-height: 150px; }
+.evMsgMirror { position: absolute; inset: 0; z-index: 0; background-color: #fff; border: 1px solid transparent; border-radius: 3px; color: transparent; white-space: pre; overflow: hidden; pointer-events: none; background-repeat: no-repeat; }
+.evMirrorLine { min-height: 1em; }
+.evOverflow { background: rgba(230, 40, 40, .35); }
+.evMsgGauge { flex: 0 0 118px; font-size: 11px; color: var(--muted); display: flex; flex-direction: column; gap: 1px; padding-top: 4px; }
+.evGaugeRow.over { color: #c00000; font-weight: 600; }
+.evGaugeRow.extra { opacity: .6; }

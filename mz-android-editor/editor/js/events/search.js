@@ -92,16 +92,7 @@ export function openSearcher(api, eventMode) {
         if (dlgClose) { dlgClose(); }
         if (r.kind === "common") { await openCommonEventEditor(api, r.id, r.row); return; }
         if (r.kind === "troop") { alertBox(`${r.where}\n${r.line}\n\nEdite grupos de inimigos no Banco de dados (aba Troops).`, "Event Searcher"); return; }
-        if (api.currentMapId !== r.mapId) {
-            const rowEl = document.querySelector(`#mapTree div[data-id="${r.mapId}"]`);
-            if (!rowEl) { return; }
-            await new Promise(res => {
-                const once = ({ id }) => { if (id === r.mapId) { res(); } };
-                api.on("map:selected", once);
-                rowEl.click();
-                setTimeout(res, 3000);
-            });
-        }
+        if (api.currentMapId !== r.mapId) { await api.selectMap(r.mapId); }
         if (!eventMode.active) { document.getElementById("btnModeEvent").click(); }
         await eventMode.openEvent(r.eventId, r.page, r.row);
     };
