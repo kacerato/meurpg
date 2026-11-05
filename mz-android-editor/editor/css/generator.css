@@ -1,0 +1,153 @@
+/* Gerador de Personagem (módulo generator). Interface para toque em paisagem. */
+
+.genDialog .mzDialogBody { padding: 6px; overflow: hidden; display: flex; }
+
+.gen {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 196px 318px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 6px;
+    font-size: 14px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.gen-col { display: flex; flex-direction: column; gap: 6px; min-height: 0; min-width: 0; }
+
+.gen-box {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #e9eef5;
+    padding: 4px 6px 6px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+.gen-box > .gen-boxTitle { font-weight: bold; font-size: 13px; padding: 0 0 4px; }
+
+.gen-tabs { display: flex; gap: 2px; }
+.gen-tabs button {
+    flex: 1; min-height: 38px; border: 1px solid var(--line); background: #e4e4e4; border-radius: 4px 4px 0 0; padding: 0 4px;
+}
+.gen-tabs button.on { background: var(--panel2); border-bottom-color: var(--panel2); font-weight: bold; }
+
+.gen-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    -webkit-overflow-scrolling: touch;
+}
+.gen-list .gen-item {
+    min-height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #eef0f3;
+}
+.gen-list .gen-item:nth-child(even) { background: #f4f7fb; }
+.gen-list .gen-item.sel { background: var(--accent); color: #fff; }
+.gen-list .gen-item.disabled { color: #a0a0a0; }
+.gen-list .gen-item.sel.disabled { color: #dbe6f8; }
+
+.gen-variation { flex: 1 1 172px; min-height: 120px; }
+.gen-varGrid {
+    flex: 1; min-height: 0; overflow-y: auto; background: var(--panel2); border: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(auto-fill, 68px); grid-auto-rows: 68px; gap: 2px; padding: 2px; justify-content: center; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+.gen-var {
+    position: relative; width: 68px; height: 68px; box-sizing: border-box; border: 2px solid transparent;
+    background-color: #fff;
+    background-image: linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%);
+    background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+.gen-var img { position: absolute; left: 0; top: 0; width: 64px; height: 64px; image-rendering: pixelated; }
+.gen-var.sel { border-color: #000; box-shadow: inset 0 0 0 2px #fff; }
+
+.gen-color { flex: 0 0 auto; height: 154px; }
+.gen-colorRow { flex: 1; min-height: 0; display: flex; gap: 4px; }
+.gen-colorRow .gen-list { flex: 0 0 112px; }
+.gen-colorRow .gen-list .gen-item { padding: 0 6px; font-size: 13px; }
+.gen-paletteWrap {
+    flex: 1; min-width: 0; overflow-y: auto; background: #b9c4d2; border: 1px solid var(--line);
+    -webkit-overflow-scrolling: touch;
+}
+.gen-paletteWrap canvas { display: block; touch-action: pan-y; }
+
+.gen-offset { flex: 0 0 auto; }
+.gen-offRow { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.gen-pad { display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 36px); gap: 2px; }
+.gen-pad button { border: 1px solid var(--line); background: var(--panel2); font-size: 18px; padding: 0; min-height: 0; }
+.gen-pad .up { grid-column: 2; grid-row: 1; }
+.gen-pad .left { grid-column: 1; grid-row: 2; }
+.gen-pad .right { grid-column: 3; grid-row: 2; }
+.gen-pad .down { grid-column: 2; grid-row: 3; }
+.gen-offsetText { color: var(--muted); min-width: 80px; }
+.gen-leftBtns { display: flex; gap: 4px; }
+.gen-leftBtns button { flex: 1; min-height: 40px; border: 1px solid var(--line); background: var(--panel2); border-radius: 4px; padding: 0 4px; }
+
+.gen-preview { flex: 1; }
+.gen-previewHead { display: flex; align-items: center; gap: 6px; padding-bottom: 4px; }
+.gen-previewHead .gen-boxTitle { padding: 0; flex: 1; }
+.gen-seg { display: flex; }
+.gen-seg button { min-height: 36px; border: 1px solid var(--line); background: var(--panel2); border-radius: 0; padding: 0 12px; }
+.gen-seg button:first-child { border-radius: 4px 0 0 4px; }
+.gen-seg button:last-child { border-radius: 0 4px 4px 0; }
+.gen-seg button + button { border-left: none; }
+.gen-seg button.on { background: var(--accent-bg); border-color: var(--accent); }
+.gen-previewArea {
+    flex: 1; min-height: 0; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; border: 1px solid var(--line);
+}
+.gen-checker {
+    background-color: #fff;
+    background-image: linear-gradient(45deg, #dcdcdc 25%, transparent 25%), linear-gradient(-45deg, #dcdcdc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #dcdcdc 75%), linear-gradient(-45deg, transparent 75%, #dcdcdc 75%);
+    background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+.gen-previewArea canvas { image-rendering: pixelated; display: block; }
+.gen-sheet { max-width: 100%; max-height: 100%; }
+
+.gen-anim { display: flex; gap: 14px; align-items: flex-start; justify-content: center; padding: 6px; width: 100%; height: 100%; box-sizing: border-box; overflow: auto; }
+.gen-animCell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.gen-animCell .gen-cap { font-size: 12px; color: var(--muted); }
+.gen-animCell canvas { border: 1px solid var(--line2); }
+.gen-dirs { display: grid; grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(2, 36px); gap: 2px; }
+.gen-dirs button { border: 1px solid var(--line); background: var(--panel2); padding: 0; font-size: 16px; }
+.gen-dirs button.on { background: var(--accent-bg); border-color: var(--accent); }
+.gen-anim select { min-height: 36px; font-size: 14px; max-width: 200px; }
+
+.gen-actions { grid-column: 1 / -1; display: flex; gap: 6px; align-items: center; overflow-x: auto; }
+.gen-actions button {
+    min-height: 40px; padding: 0 12px; border: 1px solid var(--line); background: var(--panel2); border-radius: 4px; flex: none;
+}
+.gen-actions .sep { height: 30px; }
+.gen-loading[hidden] { display: none; }
+.gen-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.6); font-weight: bold; }
+
+/* Janela de exportação */
+.genExpDialog .mzDialogBody { display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+.gen-expTop { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.gen-expTop button { min-height: 40px; min-width: 140px; border: 1px solid var(--line); background: var(--panel2); border-radius: 4px; }
+.gen-expTop .gen-expName { color: var(--muted); }
+.gen-expArea { flex: 1; min-height: 0; overflow: auto; border: 1px solid var(--line); position: relative; -webkit-overflow-scrolling: touch; }
+.gen-expArea canvas { display: block; image-rendering: pixelated; touch-action: manipulation; }
+
+/* Pequenos diálogos (nome de arquivo, lista de arquivos) */
+.gen-form { display: flex; flex-direction: column; gap: 8px; }
+.gen-form label { display: flex; flex-direction: column; gap: 4px; }
+.gen-form input[type=text] { min-height: 38px; font-size: 16px; padding: 0 8px; border: 1px solid var(--line); border-radius: 3px; }
+.gen-form .gen-hint { color: var(--muted); font-size: 13px; }
+.gen-fileList { max-height: 300px; overflow-y: auto; border: 1px solid var(--line); background: var(--panel2); }
+.gen-fileList .gen-file { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 2px 8px; border-bottom: 1px solid #eef0f3; }
+.gen-fileList .gen-file.sel { background: var(--accent); color: #fff; }
+.gen-fileList .gen-file img { max-width: 72px; max-height: 40px; image-rendering: pixelated; }
+.gen-msg { white-space: pre-wrap; }
