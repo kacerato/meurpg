@@ -1368,3 +1368,14 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
   - ~~senha não guardada~~ (lembrada por projeto);
   - chave = MD5 da senha, compatível com o runtime (autoteste em `deploy/index.js:382-390`).
 - Teste de batalha não limpa os `data/Test_*.json`.
+
+### Extensões do port (não existem no MZ)
+
+- **Tela cheia (ajustar resolução à tela)** — mz-shell. No teste de jogo (botão "Tela cheia" na barra do teste,
+  lembrado em `localStorage["mzEditor.fitScreen"]`, ligado por padrão no Android) e no APK exportado (opção da
+  Implantação, ligada por padrão, gravada em `app.json` como `fit`). `editor/fitscreen.js` estende
+  `Scene_Boot.resizeScreen`: mantém a altura do projeto e alarga a largura para a proporção da tela
+  (ex.: 624 × 2772/1280 ≈ 1351); a área de UI continua com o tamanho do projeto e o runtime a centraliza.
+  O mapa mostra mais tiles e não há barras pretas, sem distorção. Desligado, o comportamento é o do MZ (4:3 com barras).
+- **Novo projeto em lote no Android** (`POST /api/template/copy`, `TemplateCopier.java`): copia o template direto
+  dos assets para a pasta SAF, em 6 threads, em vez de um PUT por arquivo.

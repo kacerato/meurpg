@@ -51,6 +51,10 @@ public class SafProject {
         this.rootDocId = rootDocId != null ? rootDocId : DocumentsContract.getTreeDocumentId(treeUri);
     }
 
+    public ContentResolver resolver() {
+        return resolver;
+    }
+
     public Uri getRootUri() {
         return treeUri;
     }

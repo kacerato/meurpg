@@ -34,6 +34,7 @@ public class LocalServer implements Runnable {
 
     public LocalServer(AssetManager assets) {
         this.assets = assets;
+        this.templates = new TemplateCopier(assets, this);
     }
 
     public void setProject(SafProject project) {
@@ -43,6 +44,9 @@ public class LocalServer implements Runnable {
     public SafProject getProject() {
         return project;
     }
+
+    // Cópia do template do Novo projeto (rotas /api/template/*).
+    private final TemplateCopier templates;
 
     // Implantação (rotas /api/deploy/*), ligada pela MainActivity.
     private volatile Deployer deployer;
@@ -252,6 +256,12 @@ public class LocalServer implements Runnable {
                     ? d.handle(req.method, req.path, req.query, req.body) : null;
                 if (r != null) {
                     json(out, Integer.parseInt(r[0]), r[1]);
+                    return;
+                }
+                // Novo projeto em lote: POST /api/template/copy, GET /api/template/status
+                String[] tr = req.path.startsWith("/api/template/") ? templates.handle(req.method, req.path, req.body) : null;
+                if (tr != null) {
+                    json(out, Integer.parseInt(tr[0]), tr[1]);
                     return;
                 }
                 text(out, 404, "unknown api");
