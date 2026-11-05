@@ -42,13 +42,13 @@ export const templateFileUrl = (tp, rel) => new URL(rel.split("/").map(encodeURI
 // Grava pela API do projeto aberto (útil para testes: prefix = "subpasta/").
 export function apiWriter(project, prefix = "") {
     return {
-        project: !prefix,   // grava na raiz do projeto aberto: pode usar a cópia em lote do servidor
+        serverDir: prefix.replace(/\/+$/, ""),   // destino da cópia em lote do servidor ("" = raiz)
         write: (rel, blob) => project.writeBinary(prefix + rel, blob, blob.type || "application/octet-stream")
     };
 }
 
 // ------------------------------------------------------------------ cópia em lote no servidor
-// Casca Android (LocalServer): POST /api/template/copy {title} copia o template (template-full
+// Casca Android (LocalServer): POST /api/template/copy {title, dir} copia o template (template-full
 // ou template) direto dos assets para o projeto SAF aberto, em Java e com várias threads, e
 // personaliza System.json / index.html / game.rmmzproject. Progresso em GET /api/template/status
 // → {done, total, file, state: "idle"|"running"|"done"|"error", error?}. No PC a rota não existe
@@ -64,9 +64,9 @@ export async function serverCopyAvailable() {
     }
 }
 
-async function serverCopy(title, onProgress) {
+async function serverCopy(title, dir, onProgress) {
     const res = await fetch("/api/template/copy", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title })
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, dir })
     });
     if (!res.ok) { throw new Error("/api/template/copy: " + res.status + " " + (await res.text().catch(() => ""))); }
     for (;;) {
@@ -158,8 +158,8 @@ const escapeHtml = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": 
 // Grava o template em `writer`, personalizando o título como o MZ faz
 // (System.json → gameTitle, <title> do index.html) e criando game.rmmzproject.
 export async function createProject(writer, { title = "", onProgress } = {}) {
-    if (writer.project && await serverCopyAvailable()) {
-        return serverCopy(title, onProgress);
+    if (typeof writer.serverDir === "string" && await serverCopyAvailable()) {
+        return serverCopy(title, writer.serverDir, onProgress);
     }
     const tp = await loadTemplate();
     const files = tp.manifest.files;
