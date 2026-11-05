@@ -2,12 +2,24 @@
 // opções, prioridade, trigger e lista de conteúdo. Também o editor de lista de evento comum.
 
 import { db, clone, TEMPLATE } from "./data.js";
-import { h, dialog, field, row, col, group, num, txt, sel, chk, switchPick, varPick, characterDialog, drawCharacterThumb, confirmBox } from "./ui.js";
+import { h, dialog, field, row, col, group, num, txt, sel, chk, switchPick, varPick, characterDialog, drawCharacterThumb, getApi } from "./ui.js";
 import { createCommandList, commandListToolbar } from "./commandlist.js";
 import { moveRouteDialog } from "./moveroute.js";
 import { t } from "../i18n.js";
 
 let pageClipboard = null;
+const MAX_PAGES = 20; // limite do MZ (01_09_03)
+
+// "Aplicar" do Event Editor: grava o evento no mapa sem fechar o diálogo. Usa opts.onApply(ev) se o
+// chamador fornecer; senão grava direto no modo evento (api.events), com desfazer.
+async function applyToMap(opts, ev) {
+    if (opts.onApply) { return opts.onApply(clone(ev)); }
+    const mode = getApi() && getApi().events;
+    if (!mode || !mode.map || mode.mapId !== opts.mapId) { return; }
+    mode.record();
+    mode.map.events[ev.id] = clone(ev);
+    await mode.save();
+}
 
 const MOVE_TYPES = [t("Fixed", "Layout_EventPage"), t("Random", "Layout_EventPage"), t("Approach", "Layout_EventPage"), t("Custom", "Layout_EventPage")];
 const SPEEDS = [t("1: x8 Slower", "MovementSpeedBox"), t("2: x4 Slower", "MovementSpeedBox"), t("3: x2 Slower", "MovementSpeedBox"), t("4: Normal", "MovementSpeedBox"), t("5: x2 Faster", "MovementSpeedBox"), t("6: x4 Faster", "MovementSpeedBox")];
@@ -24,6 +36,7 @@ export function openEventEditor(opts) {
     const ev = clone(opts.event);
     let pageIndex = Math.min(opts.page || 0, ev.pages.length - 1);
     let cl = null;
+    let applied = false;
     return dialog({
         title: `${t("Event Editor", "EventEditorMain")} - ID:${String(ev.id).padStart(3, "0")}`,
         width: "min(1260px, 99vw)", height: "98vh",
@@ -36,18 +49,25 @@ export function openEventEditor(opts) {
             const tabBar = h("div", { class: "evTabs evPageTabs" });
             const pageArea = h("div", { class: "evPageArea" });
             const b = (label, fn) => h("button", { type: "button", class: "evBtn", onclick: fn }, label);
+            // Como no MZ: Nova/Colar desabilitam com 20 páginas; Excluir desabilita com uma só; Limpar não pede confirmação.
+            const bNew = b(pageBtn("New<br>Event Page"), () => { if (ev.pages.length < MAX_PAGES) { ev.pages.splice(pageIndex + 1, 0, TEMPLATE.page()); showPage(pageIndex + 1); } });
+            const bCopy = b(pageBtn("Copy<br>Event Page"), () => { pageClipboard = clone(ev.pages[pageIndex]); syncBtns(); });
+            const bPaste = b(pageBtn("Paste<br>Event Page"), () => { if (pageClipboard && ev.pages.length < MAX_PAGES) { ev.pages.splice(pageIndex + 1, 0, clone(pageClipboard)); showPage(pageIndex + 1); } });
+            const bDel = b(pageBtn("Delete<br>Event Page"), () => { if (ev.pages.length > 1) { ev.pages.splice(pageIndex, 1); showPage(Math.min(pageIndex, ev.pages.length - 1)); } });
+            const bClear = b(pageBtn("Clear<br>Event Page"), () => { ev.pages[pageIndex] = TEMPLATE.page(); showPage(pageIndex); });
+            const syncBtns = () => {
+                bNew.disabled = ev.pages.length >= MAX_PAGES;
+                bPaste.disabled = !pageClipboard || ev.pages.length >= MAX_PAGES;
+                bDel.disabled = ev.pages.length <= 1;
+            };
             const top = h("div", { class: "evEditorTop" },
                 field(t("Name", "Constants"), name), field(t("Note", "Constants"), note),
-                h("div", { class: "evRow evPageBtns" },
-                    b(pageBtn("New<br>Event Page"), () => { ev.pages.splice(pageIndex + 1, 0, TEMPLATE.page()); showPage(pageIndex + 1); }),
-                    b(pageBtn("Copy<br>Event Page"), () => { pageClipboard = clone(ev.pages[pageIndex]); }),
-                    b(pageBtn("Paste<br>Event Page"), () => { if (pageClipboard) { ev.pages.splice(pageIndex + 1, 0, clone(pageClipboard)); showPage(pageIndex + 1); } }),
-                    b(pageBtn("Delete<br>Event Page"), () => { if (ev.pages.length > 1) { ev.pages.splice(pageIndex, 1); showPage(Math.min(pageIndex, ev.pages.length - 1)); } }),
-                    b(pageBtn("Clear<br>Event Page"), async () => { if (await confirmBox(t("Clear this event page?"))) { ev.pages[pageIndex] = TEMPLATE.page(); showPage(pageIndex); } })));
+                h("div", { class: "evRow evPageBtns" }, bNew, bCopy, bPaste, bDel, bClear));
             body.append(top, tabBar, pageArea);
 
             const showPage = i => {
                 pageIndex = i;
+                syncBtns();
                 tabBar.innerHTML = "";
                 ev.pages.forEach((_, k) => {
                     const tb = h("button", { type: "button", class: "evTab" + (k === i ? " on" : "") }, String(k + 1));
@@ -122,8 +142,15 @@ export function openEventEditor(opts) {
             showPage(pageIndex);
             if (opts.row !== undefined && cl) { setTimeout(() => cl.selectRow(opts.row), 30); }
         },
-        onOk: () => ({ v: ev })
-    }).then(r => r ? r.v : null);
+        onApply: async () => { await applyToMap(opts, ev); applied = true; },
+        // Depois de "Aplicar" o evento já está no mapa: o OK grava aqui e devolve null, para o chamador
+        // não colocá-lo de novo (evento novo ganharia outro ID).
+        onOk: () => (applied && !opts.onApply ? { v: ev, applied: true } : { v: ev })
+    }).then(async r => {
+        if (!r) { return null; }
+        if (r.applied) { await applyToMap(opts, r.v); return null; }
+        return r.v;
+    });
 }
 
 // Editor de lista de um evento comum (usado pelo Event Searcher).
@@ -141,12 +168,16 @@ export function openCommonEventEditor(api, id, rowIndex) {
             body.classList.add("evCommonBody");
             if (rowIndex !== undefined) { setTimeout(() => cl.selectRow(rowIndex), 30); }
         },
+        onApply: () => save(clone(ce)),
         onOk: () => ({ v: ce })
     }).then(async r => {
         if (!r) { return null; }
-        db.commonEvents[id] = r.v;
-        await api.project.writeJson("data/CommonEvents.json", db.commonEvents);
-        api.emit("db:changed", { file: "data/CommonEvents.json" });
+        await save(r.v);
         return r.v;
     });
+    async function save(v) {
+        db.commonEvents[id] = v;
+        await api.project.writeJson("data/CommonEvents.json", db.commonEvents);
+        api.emit("db:changed", { file: "data/CommonEvents.json" });
+    }
 }

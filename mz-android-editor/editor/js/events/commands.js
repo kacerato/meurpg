@@ -6,12 +6,12 @@ import { db, clone, TEMPLATE } from "./data.js";
 import {
     h, dialog, field, row, col, group, num, txt, area, sel, chk, radios, radioName, pickBtn, listDialog,
     dataPick, switchPick, varPick, imagePick, audioPick, audioText, facePick, charIndexPick, tonePick,
-    locationPick, tabs, slider, listFiles, alertBox, imgUrl, loadImage, audioDialog, drawFace
+    locationPick, tabs, slider, listFiles, alertBox, imgUrl, loadImage, audioDialog, textMenu
 } from "./ui.js";
+import { renderMessagePages, sampleImage, drawToned, drawWindow, projectImage, screenSize, drawBattleback, TextPainter, textColors as skinColors, loadGameFont } from "./preview.js";
 import { moveRouteDialog, routeText } from "./moveroute.js";
 import { getEnabledPluginsWithCommands, getPluginCommands, defaultArgs } from "../plugins/commands.js";
 import { ParamTable } from "../plugins/params.js";
-import { listPluginFiles } from "../plugins/store.js";
 import { t } from "../i18n.js";
 
 // ---------- textos auxiliares ----------
@@ -42,7 +42,14 @@ function actorText(kind, id) {
     if (kind === 0) { return id === 0 ? t("Entire Party", "EventCommandTexts") : NM("actors", id); }
     return `{${VR(id)}}`;
 }
-function enemyText(i) { return i < 0 ? t("Entire Troop", "EventCommandTexts") : "#" + (i + 1); }
+// No contexto de uma tropa o MZ mostra "#1 Slime" (membro da tropa), senão só "#1".
+function troopMemberName(ctx, i) {
+    const tr = ctx && ctx.troopId ? db.troops[ctx.troopId] : null;
+    const m = tr && tr.members && tr.members[i];
+    return m ? db.name("enemies", m.enemyId) : "";
+}
+function enemyLabel(ctx, i) { const n = troopMemberName(ctx, i); return "#" + (i + 1) + (n ? " " + n : ""); }
+function enemyText(i, ctx) { return i < 0 ? t("Entire Troop", "EventCommandTexts") : enemyLabel(ctx, i); }
 function wait(b) { return b ? ` (${t("Wait", "EventCommandTexts")})` : ""; }
 function toneText(tone) { return `(${tone.join(",")})`; }
 
@@ -61,16 +68,19 @@ function charOptions(ctx, { player = true, thisEvent = true } = {}) {
     for (const e of evs) { if (e) { out.push({ value: e.id, label: `${P(e.id)}:${e.name}` }); } }
     return out;
 }
-function enemyOptions(entire = true) {
+function enemyOptions(entire = true, ctx = null) {
     const out = entire ? [{ value: -1, label: t("Entire Troop", "EventCommandTexts") }] : [];
-    for (let i = 0; i < 8; i++) { out.push({ value: i, label: "#" + (i + 1) }); }
+    for (let i = 0; i < 8; i++) { out.push({ value: i, label: enemyLabel(ctx, i) }); }
     return out;
 }
 
 // Operando "Constant / Variable" (operateValue).
+// Limites do Constant por comando (manual 01_10_04/05/15; runtime: maxGold 99 999 999, maxItems 99,
+// nível máx. 99, TP máx. 100). Mínimo 1 em todos, como o spin box do MZ.
+const RANGE = { gold: 99999999, item: 9999, hp: 9999, mp: 9999, tp: 100, exp: 9999999, level: 98, param: 9999, enemyHp: 999999, enemyMp: 9999, enemyTp: 100 };
 function operandUI(op, type, val, { opLabels = [t("Increase", "Group_Operation"), t("Decrease", "Group_Operation")], min = 1, max = 9999999 } = {}) {
     const opR = radios(opLabels.map((l, i) => ({ label: l, value: i })), op || 0, { inline: true });
-    const c = num(type === 0 && val !== undefined ? val : min, { min: type === 0 ? Math.min(min, 0) : min, max });
+    const c = num(type === 0 && val !== undefined ? Math.max(min, Math.min(max, val)) : min, { min, max });
     const v = varPick(type === 1 ? val : 1);
     const tR = radios([{ label: t("Constant", "Group_Operand"), value: 0, controls: [c] }, { label: t("Variable", "Constants"), value: 1, controls: [v] }], type || 0);
     return {
@@ -121,21 +131,18 @@ function audioCmd(folder, title) {
 function textEditor(lines, rows = 8) {
     return area((lines || []).join("\n"), { rows, mono: true });
 }
+function trimLines(s) { const lines = s.split("\n"); while (lines.length > 1 && lines[lines.length - 1] === "") { lines.pop(); } return lines; }
+// Campo de texto com o menu do MZ (botão direito / botão ⋯): Plugin Help e, se pedido, ícone/cor.
+function withTextMenu(ctl, opts = {}) {
+    const input = ctl.el.tagName ? ctl.el : ctl.el.querySelector("textarea,input");
+    const m = textMenu(input, { icon: opts.icon ? iconPicker : null, color: opts.color ? colorPicker : null });
+    return h("div", { class: "evTextWithMenu" }, ctl.el, m.button);
+}
 
 // ---------- Texto da mensagem com guia de largura real ----------
 // Largura útil da janela de mensagem como no runtime: Graphics.boxWidth = uiAreaWidth - 8,
 // innerWidth = boxWidth - padding(12)*2; o texto começa em 4px, ou em faceWidth(144)+20 com rosto
 // (Window_Message.newLineX). A fonte é a mainFontFilename do projeto no tamanho advanced.fontSize.
-let gameFont = null;
-function loadGameFont() {
-    if (!gameFont) {
-        const adv = (db.system && db.system.advanced) || {};
-        const file = adv.mainFontFilename || "mplus-1m-regular.woff";
-        const ff = new FontFace("evGameFont", `url("/project/fonts/${encodeURIComponent(file)}")`);
-        gameFont = ff.load().then(f => { document.fonts.add(f); return true; }).catch(() => false);
-    }
-    return gameFont;
-}
 function msgMetrics(hasFace) {
     const adv = (db.system && db.system.advanced) || {};
     const inner = (adv.uiAreaWidth || 816) - 8 - 24;
@@ -235,19 +242,20 @@ def(101, {
             face.onChange(() => text.refresh());
             const batch = chk(t("Batch Entry", "EventCommand101"), false);
             const insertAt = s => { const ta = text.ta; const a = ta.selectionStart; ta.setRangeText(s, a, ta.selectionEnd, "end"); ta.focus(); text.refresh(); };
+            const menu = textMenu(text.ta, { color: colorPicker, icon: iconPicker });
             const tools = row(
-                h("button", { type: "button", class: "evBtn", onclick: async () => { const n = await colorPicker(); if (n !== null) { insertAt(`\\C[${n}]`); } } }, t("Color", "Group_AnimationFlash") + "…"),
-                h("button", { type: "button", class: "evBtn", onclick: async () => { const n = await iconPicker(); if (n !== null) { insertAt(`\\I[${n}]`); } } }, t("Icon", "Constants") + "…"),
-                ...["\\V[1]", "\\N[1]", "\\P[1]", "\\G", "\\{", "\\}", "\\$", "\\.", "\\|", "\\!", "\\>", "\\<", "\\^"].map(c => h("button", { type: "button", class: "evBtn evCode", onclick: () => insertAt(c) }, c)),
-                h("button", { type: "button", class: "evBtn", onclick: () => dialog({ title: t("Preview", "Constants"), width: "900px", height: "auto", noCancel: true, build: pb => { const pv = h("div", { class: "evMsgPreview" }); pb.append(pv); renderMessagePreview(pv, face.get(), name.get(), text.get().split("\n")); } }) }, t("Preview", "Constants") + "…"));
+                h("button", { type: "button", class: "evBtn", onclick: async () => { const n = await colorPicker(); if (n !== null) { insertAt(`\\C[${n}]`); } } }, t("Insert Color Index", "TextEditPopupMenuEx") + "…"),
+                h("button", { type: "button", class: "evBtn", onclick: async () => { const n = await iconPicker(); if (n !== null) { insertAt(`\\I[${n}]`); } } }, t("Insert Icon Index", "TextEditPopupMenuEx") + "…"),
+                ...["\\V[1]", "\\N[1]", "\\P[1]", "\\G", "\\{", "\\}", "\\FS[26]", "\\PX[0]", "\\PY[0]", "\\$", "\\.", "\\|", "\\!", "\\>", "\\<", "\\^"].map(c => h("button", { type: "button", class: "evBtn evCode", onclick: () => insertAt(c) }, c)),
+                menu.button,
+                h("button", { type: "button", class: "evBtn", onclick: () => dialog({ title: t("Preview", "Constants"), width: "min(980px, 98vw)", height: "auto", noCancel: true, build: pb => { const pv = h("div", { class: "evMsgPreview" }); pb.append(pv); renderMessagePages(pv, { face: face.get(), name: name.get(), lines: trimLines(text.get()), background: bg.get(), position: pos.get() }); } }) }, t("Preview", "Constants") + "…"));
             body.append(h("div", { class: "evShowText" },
                 col(h("div", null, t("Face", "EventCommand101")), face),
                 col(row(field(t("Name", "Constants"), name), field(t("Background", "EventCommand101"), bg), field(t("Window Position", "EventCommand101"), pos)), field(t("Text", "EventCommand101"), text), tools, batch)));
             setTimeout(() => text.ta.focus(), 50);
             return () => {
                 const f = face.get();
-                const lines = text.get().split("\n");
-                while (lines.length > 1 && lines[lines.length - 1] === "") { lines.pop(); }
+                const lines = trimLines(text.get());
                 const params = [f.name, f.index, bg.get(), pos.get(), name.get()];
                 if (batch.get() && lines.length > 4) {
                     const split = [];
@@ -278,6 +286,17 @@ def(102, {
             const cancelOpts = [{ value: -2, label: t("Branch", "Constants") }, { value: -1, label: t("Disallow", "Constants") }, ...[0, 1, 2, 3, 4, 5].map(i => ({ value: i, label: CHOICE_N[i] }))];
             const df = sel(defOpts, p[2] === undefined ? 0 : p[2]);
             const cn = sel(cancelOpts, p[1]);
+            // Como no MZ: "Padrão"/"Cancelar" não podem apontar para uma escolha vazia (opção desabilitada).
+            const syncChoices = () => {
+                let n = 0;
+                ch.forEach((c, i) => { if (c.get() !== "") { n = i + 1; } });
+                for (const [s, fallback] of [[df, -1], [cn, -1]]) {
+                    for (const o of s.el.options) { const v = JSON.parse(o.value); o.disabled = v >= 0 && v >= n; }
+                    if (s.get() >= 0 && s.get() >= n) { s.set(fallback); }
+                }
+            };
+            for (const c of ch) { c.onChange(syncChoices); }
+            syncChoices();
             body.append(h("div", { class: "evTwoCol" },
                 group(t("Choices", "EventCommand102"), ...ch.map((c, i) => field("#" + (i + 1), c))),
                 col(field(t("Background", "EventCommand102"), bg), field(t("Window Position", "EventCommand102"), pos), field(t("Default", "EventCommand102"), df), field(t("Cancel", "EventCommand102"), cn))));
@@ -334,7 +353,7 @@ def(105, {
         return form(t("Show Scrolling Text", "EventCommands"), b => {
             const te = textEditor((conts || []).map(c => c[0]), 12);
             const s = num(p[0], { min: 1, max: 8 }); const nf = chk(t("No Fast Forward", "EventCommand105"), p[1]);
-            b.append(field(t("Text", "EventCommand105"), te), row(field(t("Speed", "EventCommand105"), s), nf));
+            b.append(field(t("Text", "EventCommand105"), withTextMenu(te, { icon: true })), row(field(t("Speed", "EventCommand105"), s), nf));
             return () => ({ p: [s.get(), nf.get()], conts: te.get().split("\n").map(l => [l]) });
         }, { width: "760px" });
     }
@@ -347,7 +366,8 @@ def(121, {
     async edit(p) {
         p = p || [1, 1, 0];
         return form(t("Control Switches", "EventCommands"), b => {
-            const s = switchPick(p[0]); const a = num(p[0], { min: 1, max: 9999 }); const z = num(p[1], { min: 1, max: 9999 });
+            const mx = Math.max(1, (db.system.switches || [""]).length - 1);
+            const s = switchPick(p[0]); const a = num(p[0], { min: 1, max: mx }); const z = num(p[1], { min: 1, max: mx });
             const range = row(a, " ~ ", z); range.enable = on => { a.enable(on); z.enable(on); };
             const r = radios([{ label: t("Single", "Group_VariableRange"), value: 0, controls: [s] }, { label: t("Range", "Group_VariableRange"), value: 1, controls: [range] }], p[0] === p[1] ? 0 : 1);
             const v = radios([{ label: ONOFF[0], value: 0 }, { label: ONOFF[1], value: 1 }], p[2], { inline: true });
@@ -373,7 +393,7 @@ function gameDataText(kind, a, b, ctx) {
         case 1: return t("The number of %1", "EventCommandTexts", NM("weapons", a));
         case 2: return t("The number of %1", "EventCommandTexts", NM("armors", a));
         case 3: return t("%1 of %2", "EventCommandTexts", actorDataNames()[b] || "?", NM("actors", a));
-        case 4: return t("%1 of %2", "EventCommandTexts", enemyDataNames()[b] || "?", "#" + (a + 1));
+        case 4: return t("%1 of %2", "EventCommandTexts", enemyDataNames()[b] || "?", enemyLabel(ctx, a));
         case 5: return t("%1 of %2", "EventCommandTexts", CHAR_DATA[b], charText(ctx, a));
         case 6: return t("%1 of %2", "EventCommandTexts", t("Actor ID", "EventCommandTexts"), t("party member #%1", "EventCommandTexts", a + 1));
         case 7: return OTHER_DATA[a] || "?";
@@ -387,7 +407,7 @@ async function gameDataDialog(v, ctx) {
         const name = radioName();
         const it = sel(db.options("items"), v[0] === 0 ? v[1] : 1), wp = sel(db.options("weapons"), v[0] === 1 ? v[1] : 1), ar = sel(db.options("armors"), v[0] === 2 ? v[1] : 1);
         const ac = sel(db.options("actors"), v[0] === 3 ? v[1] : 1), acd = sel(actorDataNames().map((l, i) => ({ value: i, label: l })), v[0] === 3 ? v[2] : 0);
-        const en = sel(enemyOptions(false), v[0] === 4 ? v[1] : 0), end = sel(enemyDataNames().map((l, i) => ({ value: i, label: l })), v[0] === 4 ? v[2] : 0);
+        const en = sel(enemyOptions(false, ctx), v[0] === 4 ? v[1] : 0), end = sel(enemyDataNames().map((l, i) => ({ value: i, label: l })), v[0] === 4 ? v[2] : 0);
         const chs = sel(charOptions(ctx), v[0] === 5 ? v[1] : -1), chd = sel(CHAR_DATA.map((l, i) => ({ value: i, label: l })), v[0] === 5 ? v[2] : 0);
         const pm = sel([1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ value: i - 1, label: t("Member #%1", "Dialog_GameData", i) })), v[0] === 6 ? v[1] : 0);
         const ot = sel(OTHER_DATA.map((l, i) => ({ value: i, label: l })), v[0] === 7 ? v[1] : 0);
@@ -425,7 +445,8 @@ def(122, {
     async edit(p, ctx) {
         p = p || [1, 1, 0, 0, 0];
         return form(t("Control Variables", "EventCommands"), b => {
-            const s = varPick(p[0]); const a = num(p[0], { min: 1, max: 9999 }); const z = num(p[1], { min: 1, max: 9999 });
+            const mx = Math.max(1, (db.system.variables || [""]).length - 1);
+            const s = varPick(p[0]); const a = num(p[0], { min: 1, max: mx }); const z = num(p[1], { min: 1, max: mx });
             const range = row(a, " ~ ", z); range.enable = on => { a.enable(on); z.enable(on); };
             const tgt = radios([{ label: t("Single", "Group_VariableRange"), value: 0, controls: [s] }, { label: t("Range", "Group_VariableRange"), value: 1, controls: [range] }], p[0] === p[1] ? 0 : 1);
             const op = radios([t("Set", "EventCommand122"), t("Add", "EventCommand122"), t("Sub", "EventCommand122"), t("Mul", "EventCommand122"), t("Div", "EventCommand122"), t("Mod", "EventCommand122")].map((l, i) => ({ label: l, value: i })), p[2], { inline: true });
@@ -517,7 +538,7 @@ function condText(p, ctx) {
             }
             break;
         }
-        case 5: return p[2] === 0 ? t("%1 has appeared", "EventCommandTexts", `#${p[1] + 1}`) : t("%1 is affected by %2", "EventCommandTexts", `#${p[1] + 1}`, NM("states", p[3]));
+        case 5: return p[2] === 0 ? t("%1 has appeared", "EventCommandTexts", enemyLabel(ctx, p[1])) : t("%1 is affected by %2", "EventCommandTexts", enemyLabel(ctx, p[1]), NM("states", p[3]));
         case 6: return t("%1 is facing %2", "EventCommandTexts", charText(ctx, p[1]), DIRS[p[2]]);
         case 7: return `${t("Gold", "EventCommandTexts")} ${["≥", "≤", "<"][p[2]]} ${p[1]}`;
         case 8: return t("Party has %1", "EventCommandTexts", NM("items", p[1]));
@@ -564,7 +585,7 @@ def(111, {
             const actorBox = col(ac, asub); actorBox.enable = on => { ac.enable(on); asub.enable(on); };
             const r2 = radios([{ label: t("Actor", "Constants"), value: 4, controls: [actorBox] }], ty, { name });
             // Aba 3
-            const en = sel(enemyOptions(false), g(5, 1) || 0), est = sel(db.options("states"), ty === 5 && p[2] === 1 ? p[3] : 1);
+            const en = sel(enemyOptions(false, ctx), g(5, 1) || 0), est = sel(db.options("states"), ty === 5 && p[2] === 1 ? p[3] : 1);
             const esub = radios([{ label: t("Appeared", "Tab_ConditionalBranch3"), value: 0 }, { label: t("State", "Constants"), value: 1, controls: [est] }], ty === 5 ? p[2] : 0, { inline: true });
             const enBox = col(en, esub); enBox.enable = on => { en.enable(on); esub.enable(on); };
             const chs = sel(charOptions(ctx), ty === 6 ? p[1] : -1), chd = dirSel(ty === 6 ? p[2] : 2, { retain: false });
@@ -579,7 +600,9 @@ def(111, {
             const wp = sel(db.options("weapons"), g(9, 1) || 1), wpe = chk(t("Include Equipment", "Constants"), g(9, 2));
             const ar = sel(db.options("armors"), g(10, 1) || 1), are = chk(t("Include Equipment", "Constants"), g(10, 2));
             const bt = sel(BUTTONS.map(([v, l]) => ({ value: v, label: l })), g(11, 1) || "ok"), btm = sel(BUTTON_STATES.map((l, i) => ({ value: i, label: l })), g(11, 2) || 0);
-            const sc = txt(g(12, 1) || "", { width: "380px" });
+            const scIn = txt(g(12, 1) || "", { width: "380px" });
+            const scEl = withTextMenu(scIn);
+            const sc = { el: scEl, get: scIn.get, set: scIn.set, enable: on => { scIn.enable(on); scEl.querySelector(".evTextMenuBtn").disabled = !on; } };
             const r4 = radios([
                 { label: t("Gold", "Tab_ConditionalBranch4"), value: 7, controls: [gcmp, gv] }, { label: t("Item", "Constants"), value: 8, controls: [it] },
                 { label: t("Weapon", "Constants"), value: 9, controls: [wp, wpe] }, { label: t("Armor", "Constants"), value: 10, controls: [ar, are] },
@@ -671,7 +694,7 @@ def(108, {
     async edit(p, ctx, conts) {
         const lines = p ? [p[0], ...(conts || []).map(c => c[0])] : [];
         return form(t("Comment", "EventCommand108"), b => {
-            const te = textEditor(lines, 10); b.append(te.el);
+            const te = textEditor(lines, 10); b.append(withTextMenu(te));
             return () => { const l = te.get().split("\n"); return { p: [l[0]], conts: l.slice(1).map(x => [x]) }; };
         }, { width: "760px" });
     }
@@ -681,7 +704,7 @@ def(108, {
 def(125, {
     name: "Change Gold", cat: "party",
     text: p => [t("Change Gold", "EventCommands"), operandText(p[0], p[1], p[2])],
-    async edit(p) { p = p || [0, 0, 0]; return form(t("Change Gold", "EventCommands"), b => { const o = operandUI(p[0], p[1], p[2]); b.append(o.el); return () => ({ p: o.get() }); }); },
+    async edit(p) { p = p || [0, 0, 1]; return form(t("Change Gold", "EventCommands"), b => { const o = operandUI(p[0], p[1], p[2], { max: RANGE.gold }); b.append(o.el); return () => ({ p: o.get() }); }); },
     refs: p => (p[1] === 1 ? [["variable", p[2]]] : [])
 });
 function changeItemCmd(code, list, title, label, equip) {
@@ -691,7 +714,7 @@ function changeItemCmd(code, list, title, label, equip) {
         async edit(p) {
             p = p || [1, 0, 0, 1, false];
             return form(t(title, "EventCommands"), b => {
-                const it = sel(db.options(list), p[0]); const o = operandUI(p[1], p[2], p[3]);
+                const it = sel(db.options(list), p[0]); const o = operandUI(p[1], p[2], p[3], { max: RANGE.item });
                 const ie = equip ? chk(t("Include Equipment", "Constants"), p[4]) : null;
                 b.append(field(t(label, "Constants"), it), o.el, ie ? ie.el : null);
                 return () => ({ p: equip ? [it.get(), ...o.get(), ie.get()] : [it.get(), ...o.get()] });
@@ -718,7 +741,7 @@ def(129, {
 });
 
 // ===== Actor =====
-function actorValueCmd(code, title, { death = false, levelUp = false, param = false } = {}) {
+function actorValueCmd(code, title, { death = false, levelUp = false, param = false, max = 9999 } = {}) {
     def(code, {
         name: title, cat: "actor",
         text: p => {
@@ -730,7 +753,7 @@ function actorValueCmd(code, title, { death = false, levelUp = false, param = fa
             return form(t(title, "EventCommands"), b => {
                 const a = actorTargetUI(p[0], p[1]);
                 const pr = param ? sel(PARAMS().slice(0, 8).map((l, i) => ({ value: i, label: l })), p[2]) : null;
-                const o = param ? operandUI(p[3], p[4], p[5]) : operandUI(p[2], p[3], p[4]);
+                const o = param ? operandUI(p[3], p[4], p[5], { max }) : operandUI(p[2], p[3], p[4], { max });
                 const ex = death ? chk(t("Allow Death", "Constants"), p[5]) : levelUp ? chk(t("Show Level Up", "Constants"), p[5]) : null;
                 b.append(a.el, pr ? field(t("Parameter", "EventCommand317"), pr) : null, o.el, ex ? ex.el : null);
                 return () => {
@@ -744,12 +767,12 @@ function actorValueCmd(code, title, { death = false, levelUp = false, param = fa
         refs: p => [...(p[0] === 1 ? [["variable", p[1]]] : []), ...((param ? p[4] : p[3]) === 1 ? [["variable", param ? p[5] : p[4]]] : [])]
     });
 }
-actorValueCmd(311, "Change HP", { death: true });
-actorValueCmd(312, "Change MP");
-actorValueCmd(326, "Change TP");
-actorValueCmd(315, "Change EXP", { levelUp: true });
-actorValueCmd(316, "Change Level", { levelUp: true });
-actorValueCmd(317, "Change Parameter", { param: true });
+actorValueCmd(311, "Change HP", { death: true, max: RANGE.hp });
+actorValueCmd(312, "Change MP", { max: RANGE.mp });
+actorValueCmd(326, "Change TP", { max: RANGE.tp });
+actorValueCmd(315, "Change EXP", { levelUp: true, max: RANGE.exp });
+actorValueCmd(316, "Change Level", { levelUp: true, max: RANGE.level });
+actorValueCmd(317, "Change Parameter", { param: true, max: RANGE.param });
 def(313, {
     name: "Change State", cat: "actor",
     text: p => [t("Change State", "EventCommands"), `${actorText(p[0], p[1])}, ${p[2] === 0 ? "+" : "-"} ${NM("states", p[3])}`],
@@ -1012,7 +1035,8 @@ def(231, {
             b.append(field(t("Number", "Group_Picture"), n), ui.el);
             return () => { const v = ui.get(); return { p: [n.get(), ui.nm.get(), ...v] }; };
         }, { width: "760px" });
-    }
+    },
+    refs: p => (p[3] === 1 ? [["variable", p[4]], ["variable", p[5]]] : [])
 });
 def(232, {
     name: "Move Picture", cat: "pic",
@@ -1025,7 +1049,8 @@ def(232, {
             b.append(row(field(t("Number", "Group_Picture"), n), field(t("Easing", "EventCommand232"), e)), ui.el, row(d.el, w.el));
             return () => { const v = ui.get(); return { p: [n.get(), 0, ...v, d.n.get(), w.get(), e.get()] }; };
         }, { width: "760px" });
-    }
+    },
+    refs: p => (p[3] === 1 ? [["variable", p[4]], ["variable", p[5]]] : [])
 });
 def(233, {
     name: "Rotate Picture", cat: "pic", text: p => [t("Rotate Picture", "EventCommands"), `#${p[0]}, ${p[1]}`],
@@ -1036,10 +1061,11 @@ def(233, {
 });
 def(234, {
     name: "Tint Picture", cat: "pic", text: p => [t("Tint Picture", "EventCommands"), `#${p[0]}, ${toneText(p[1])}, ${FR(p[2])}${wait(p[3])}`],
-    async edit(p) {
+    async edit(p, ctx) {
         p = p || [1, [0, 0, 0, 0], 60, true];
         return form(t("Tint Picture", "EventCommands"), b => {
-            const n = num(p[0], { min: 1, max: 100 }); const tp = tonePick(p[1]); const d = durationField(p[2]); const w = waitChk(p[3]);
+            const n = num(p[0], { min: 1, max: 100 }); const tp = tonePick(p[1], { preview: picturePreview(ctx, n) }); const d = durationField(p[2]); const w = waitChk(p[3]);
+            n.onChange(() => tp.set(tp.get()));
             b.append(field(t("Number", "Group_Picture"), n), group(t("Color Tone", "EventCommand234"), tp), row(d.el, w.el));
             return () => ({ p: [n.get(), tp.get(), d.n.get(), w.get()] });
         }, { width: "700px" });
@@ -1061,7 +1087,7 @@ def(223, {
     name: "Tint Screen", cat: "screen", text: p => [t("Tint Screen", "EventCommands"), `${toneText(p[0])}, ${FR(p[1])}${wait(p[2])}`],
     async edit(p) {
         p = p || [[0, 0, 0, 0], 60, true];
-        return form(t("Tint Screen", "EventCommands"), b => { const tp = tonePick(p[0]); const d = durationField(p[1]); const w = waitChk(p[2]); b.append(group(t("Color Tone", "EventCommand223"), tp), row(d.el, w.el)); return () => ({ p: [tp.get(), d.n.get(), w.get()] }); }, { width: "700px" });
+        return form(t("Tint Screen", "EventCommands"), b => { const tp = tonePick(p[0], { preview: screenTonePreview }); const d = durationField(p[1]); const w = waitChk(p[2]); b.append(group(t("Color Tone", "EventCommand223"), tp), row(d.el, w.el)); return () => ({ p: [tp.get(), d.n.get(), w.get()] }); }, { width: "700px" });
     }
 });
 def(224, {
@@ -1229,7 +1255,7 @@ accessCmd(136, "Change Encounter", t("Encounter", "EventCommand136"));
 accessCmd(137, "Change Formation Access", t("Formation", "EventCommand137"));
 def(138, {
     name: "Change Window Color", cat: "system", text: p => [t("Change Window Color", "EventCommands"), toneText(p[0])],
-    async edit(p) { p = p || [clone(db.system.windowTone || [0, 0, 0, 0])]; return form(t("Change Window Color", "EventCommands"), b => { const tp = tonePick(p[0], { gray: false }); b.append(group(t("Window Color", "EventCommand138"), tp)); return () => { const v = tp.get(); v[3] = 0; return { p: [v] }; }; }, { width: "640px" }); }
+    async edit(p) { p = p || [clone(db.system.windowTone || [0, 0, 0, 0])]; return form(t("Change Window Color", "EventCommands"), b => { const tp = tonePick(p[0], { gray: false, preview: windowTonePreview }); b.append(group(t("Window Color", "EventCommand138"), tp)); return () => { const v = tp.get(); v[3] = 0; return { p: [v] }; }; }, { width: "640px" }); }
 });
 def(322, {
     name: "Change Actor Images", cat: "system", text: p => [t("Change Actor Images", "EventCommands"), `${NM("actors", p[0])}, ${p[1] || NONE()}(${p[2]}), ${p[3] || NONE()}(${p[4]}), ${p[5] || NONE()}`],
@@ -1261,8 +1287,37 @@ def(282, {
 });
 def(283, {
     name: "Change Battle Background", cat: "map", text: p => [t("Change Battle Background", "EventCommands"), `${p[0] || NONE()} & ${p[1] || NONE()}`],
-    async edit(p) { p = p || ["", ""]; return form(t("Change Battle Background", "EventCommands"), b => { const a = imagePick("battlebacks1", p[0]); const c = imagePick("battlebacks2", p[1]); b.append(group(t("Battle Background", "EventCommand283"), field(null, a), field(null, c))); return () => ({ p: [a.get(), c.get()] }); }); }
+    async edit(p) {
+        p = p || ["", ""];
+        return form(t("Change Battle Background", "EventCommands"), b => {
+            const bb = pickBtn({ a: p[0], b: p[1] }, v => `${v.a || NONE()} & ${v.b || NONE()}`, cur => battlebackDialog(cur), { width: "360px" });
+            b.append(group(t("Battle Background", "EventCommand283"), bb));
+            return () => { const v = bb.get(); return { p: [v.a, v.b] }; };
+        });
+    }
 });
+// Seletor único das duas camadas (battlebacks1 + battlebacks2) com a prévia composta, como no MZ.
+async function battlebackDialog(cur) {
+    const f1 = await listFiles("img/battlebacks1", ["png"]), f2 = await listFiles("img/battlebacks2", ["png"]);
+    let v = { ...cur };
+    return form(t("Select an Image", "Dialog_ImageSelector"), b => {
+        const cv = h("canvas", { class: "evBattlebackCanvas" });
+        const draw = () => drawBattleback(cv, v.a, v.b);
+        const mk = (files, key) => {
+            const list = h("div", { class: "evList evFileList" });
+            for (const f of ["", ...files]) {
+                const it = h("div", { class: "evListItem" + (f === v[key] ? " selected" : "") }, f || "(" + NONE() + ")");
+                it.addEventListener("click", () => { v[key] = f; for (const s of list.querySelectorAll(".selected")) { s.classList.remove("selected"); } it.classList.add("selected"); draw(); });
+                list.append(it);
+            }
+            requestAnimationFrame(() => { const s = list.querySelector(".selected"); if (s) { s.scrollIntoView({ block: "center" }); } });
+            return list;
+        };
+        b.append(h("div", { class: "evBattlebackWrap" }, mk(f1, "a"), mk(f2, "b"), h("div", { class: "evFilePreview" }, cv)));
+        draw();
+        return () => v;
+    }, { width: "min(1200px, 98vw)" });
+}
 def(284, {
     name: "Change Parallax", cat: "map", text: p => [t("Change Parallax", "EventCommands"), `${p[0] || NONE()}${p[1] ? ` (${t("Loop Horizontally", "Constants")}: ${p[3]})` : ""}${p[2] ? ` (${t("Loop Vertically", "Constants")}: ${p[4]})` : ""}`],
     async edit(p) {
@@ -1301,14 +1356,14 @@ def(285, {
 });
 
 // ===== Battle =====
-function enemyValueCmd(code, title, death) {
+function enemyValueCmd(code, title, death, max) {
     def(code, {
         name: title, cat: "battle",
-        text: p => [t(title, "EventCommands"), `${enemyText(p[0])}, ${operandText(p[1], p[2], p[3])}${death && p[4] ? ` (${t("Allow Death", "Constants")})` : ""}`],
-        async edit(p) {
+        text: (p, ctx) => [t(title, "EventCommands"), `${enemyText(p[0], ctx)}, ${operandText(p[1], p[2], p[3])}${death && p[4] ? ` (${t("Allow Death", "Constants")})` : ""}`],
+        async edit(p, ctx) {
             p = p || [-1, 0, 0, 1, false];
             return form(t(title, "EventCommands"), b => {
-                const e = sel(enemyOptions(), p[0]); const o = operandUI(p[1], p[2], p[3]); const k = death ? chk(t("Allow Death", "Constants"), p[4]) : null;
+                const e = sel(enemyOptions(true, ctx), p[0]); const o = operandUI(p[1], p[2], p[3], { max }); const k = death ? chk(t("Allow Death", "Constants"), p[4]) : null;
                 b.append(field(t("Enemy", "Constants"), e), o.el, k ? k.el : null);
                 return () => ({ p: death ? [e.get(), ...o.get(), k.get()] : [e.get(), ...o.get()] });
             });
@@ -1316,34 +1371,34 @@ function enemyValueCmd(code, title, death) {
         refs: p => (p[2] === 1 ? [["variable", p[3]]] : [])
     });
 }
-enemyValueCmd(331, "Change Enemy HP", true);
-enemyValueCmd(332, "Change Enemy MP", false);
-enemyValueCmd(342, "Change Enemy TP", false);
+enemyValueCmd(331, "Change Enemy HP", true, RANGE.enemyHp);
+enemyValueCmd(332, "Change Enemy MP", false, RANGE.enemyMp);
+enemyValueCmd(342, "Change Enemy TP", false, RANGE.enemyTp);
 def(333, {
-    name: "Change Enemy State", cat: "battle", text: p => [t("Change Enemy State", "EventCommands"), `${enemyText(p[0])}, ${p[1] === 0 ? "+" : "-"} ${NM("states", p[2])}`],
-    async edit(p) {
+    name: "Change Enemy State", cat: "battle", text: (p, ctx) => [t("Change Enemy State", "EventCommands"), `${enemyText(p[0], ctx)}, ${p[1] === 0 ? "+" : "-"} ${NM("states", p[2])}`],
+    async edit(p, ctx) {
         p = p || [-1, 0, 1];
-        return form(t("Change Enemy State", "EventCommands"), b => { const e = sel(enemyOptions(), p[0]); const o = radios([{ label: t("Add", "EventCommand333"), value: 0 }, { label: t("Remove", "EventCommand333"), value: 1 }], p[1], { inline: true }); const s = sel(db.options("states"), p[2]); b.append(field(t("Enemy", "Constants"), e), group(t("Operation", "Group_Operation"), o), field(t("State", "Constants"), s)); return () => ({ p: [e.get(), o.get(), s.get()] }); });
+        return form(t("Change Enemy State", "EventCommands"), b => { const e = sel(enemyOptions(true, ctx), p[0]); const o = radios([{ label: t("Add", "EventCommand333"), value: 0 }, { label: t("Remove", "EventCommand333"), value: 1 }], p[1], { inline: true }); const s = sel(db.options("states"), p[2]); b.append(field(t("Enemy", "Constants"), e), group(t("Operation", "Group_Operation"), o), field(t("State", "Constants"), s)); return () => ({ p: [e.get(), o.get(), s.get()] }); });
     }
 });
 def(334, {
-    name: "Enemy Recover All", cat: "battle", text: p => [t("Enemy Recover All", "EventCommands"), enemyText(p[0])],
-    async edit(p) { p = p || [-1]; return form(t("Enemy Recover All", "EventCommands"), b => { const e = sel(enemyOptions(), p[0]); b.append(field(t("Enemy", "Constants"), e)); return () => ({ p: [e.get()] }); }); }
+    name: "Enemy Recover All", cat: "battle", text: (p, ctx) => [t("Enemy Recover All", "EventCommands"), enemyText(p[0], ctx)],
+    async edit(p, ctx) { p = p || [-1]; return form(t("Enemy Recover All", "EventCommands"), b => { const e = sel(enemyOptions(true, ctx), p[0]); b.append(field(t("Enemy", "Constants"), e)); return () => ({ p: [e.get()] }); }); }
 });
 def(335, {
-    name: "Enemy Appear", cat: "battle", text: p => [t("Enemy Appear", "EventCommands"), enemyText(p[0])],
-    async edit(p) { p = p || [0]; return form(t("Enemy Appear", "EventCommands"), b => { const e = sel(enemyOptions(false), p[0]); b.append(field(t("Enemy", "Constants"), e)); return () => ({ p: [e.get()] }); }); }
+    name: "Enemy Appear", cat: "battle", text: (p, ctx) => [t("Enemy Appear", "EventCommands"), enemyText(p[0], ctx)],
+    async edit(p, ctx) { p = p || [0]; return form(t("Enemy Appear", "EventCommands"), b => { const e = sel(enemyOptions(false, ctx), p[0]); b.append(field(t("Enemy", "Constants"), e)); return () => ({ p: [e.get()] }); }); }
 });
 def(336, {
-    name: "Enemy Transform", cat: "battle", text: p => [t("Enemy Transform", "EventCommands"), `${enemyText(p[0])}, ${NM("enemies", p[1])}`],
-    async edit(p) { p = p || [0, 1]; return form(t("Enemy Transform", "EventCommands"), b => { const e = sel(enemyOptions(false), p[0]); const tg = sel(db.options("enemies"), p[1]); b.append(field(t("Enemy", "Constants"), e), field(t("Transform to", "EventCommand336"), tg)); return () => ({ p: [e.get(), tg.get()] }); }); }
+    name: "Enemy Transform", cat: "battle", text: (p, ctx) => [t("Enemy Transform", "EventCommands"), `${enemyText(p[0], ctx)}, ${NM("enemies", p[1])}`],
+    async edit(p, ctx) { p = p || [0, 1]; return form(t("Enemy Transform", "EventCommands"), b => { const e = sel(enemyOptions(false, ctx), p[0]); const tg = sel(db.options("enemies"), p[1]); b.append(field(t("Enemy", "Constants"), e), field(t("Transform to", "EventCommand336"), tg)); return () => ({ p: [e.get(), tg.get()] }); }); }
 });
 def(337, {
-    name: "Show Battle Animation", cat: "battle", text: p => [t("Show Battle Animation", "EventCommands"), `${p[2] ? t("Entire Troop", "EventCommandTexts") : enemyText(p[0])}, ${NM("animations", p[1])}`],
-    async edit(p) {
+    name: "Show Battle Animation", cat: "battle", text: (p, ctx) => [t("Show Battle Animation", "EventCommands"), `${p[2] ? t("Entire Troop", "EventCommandTexts") : enemyText(p[0], ctx)}, ${NM("animations", p[1])}`],
+    async edit(p, ctx) {
         p = p || [0, 1, false];
         return form(t("Show Battle Animation", "EventCommands"), b => {
-            const e = sel(enemyOptions(false), Math.max(0, p[0])); const all = chk(t("Entire Troop", "ObjTroopMemberBox"), p[2]); const a = sel(db.options("animations"), p[1]);
+            const e = sel(enemyOptions(false, ctx), Math.max(0, p[0])); const all = chk(t("Entire Troop", "ObjTroopMemberBox"), p[2]); const a = sel(db.options("animations"), p[1]);
             b.append(field(t("Enemy", "Constants"), e), all.el, field(t("Animation", "Constants"), a));
             return () => ({ p: [e.get(), a.get(), all.get()] });
         });
@@ -1352,11 +1407,11 @@ def(337, {
 const FORCE_TARGET = [{ value: -2, label: t("Last Target", "Constants") }, { value: -1, label: t("Random", "Constants") }, ...[1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ value: i - 1, label: t("Index %1", "Constants", i) }))];
 def(339, {
     name: "Force Action", cat: "battle",
-    text: p => [t("Force Action", "EventCommands"), `${p[0] === 0 ? "#" + (p[1] + 1) : NM("actors", p[1])}, ${NM("skills", p[2])}, ${(FORCE_TARGET.find(x => x.value === p[3]) || {}).label}`],
-    async edit(p) {
+    text: (p, ctx) => [t("Force Action", "EventCommands"), `${p[0] === 0 ? enemyLabel(ctx, p[1]) : NM("actors", p[1])}, ${NM("skills", p[2])}, ${(FORCE_TARGET.find(x => x.value === p[3]) || {}).label}`],
+    async edit(p, ctx) {
         p = p || [0, 0, 1, -2];
         return form(t("Force Action", "EventCommands"), b => {
-            const e = sel(enemyOptions(false), p[0] === 0 ? p[1] : 0); const a = sel(db.options("actors"), p[0] === 1 ? p[1] : 1);
+            const e = sel(enemyOptions(false, ctx), p[0] === 0 ? p[1] : 0); const a = sel(db.options("actors"), p[0] === 1 ? p[1] : 1);
             const r = radios([{ label: t("Enemy", "Constants"), value: 0, controls: [e] }, { label: t("Actor", "Constants"), value: 1, controls: [a] }], p[0]);
             const s = sel(db.options("skills"), p[2]); const tg = sel(FORCE_TARGET, p[3]);
             b.append(group(t("Subject", "EventCommand339"), r), group(t("Action", "EventCommand339"), field(t("Skill", "Constants"), s), field(t("Target", "EventCommand339"), tg)));
@@ -1373,22 +1428,21 @@ def(355, {
     async edit(p, ctx, conts) {
         const lines = p ? [p[0], ...(conts || []).map(c => c[0])] : [];
         return form(t("Script", "EventCommand355"), b => {
-            const te = textEditor(lines, 14); b.append(te.el);
+            const te = textEditor(lines, 14); b.append(withTextMenu(te));
             return () => { const l = te.get().split("\n"); return { p: [l[0]], conts: l.slice(1).map(x => [x]) }; };
         }, { width: "860px" });
     }
 });
 def(356, { name: "Plugin Command (MV)", cat: "adv", text: p => [t("Plugin Command", "EventCommands"), p[0]],
     async edit(p) { p = p || [""]; return form(t("Plugin Command", "EventCommands") + " (MV)", b => { const tx = txt(p[0], { width: "420px" }); b.append(field(t("Plugin Command", "EventCommand356"), tx)); return () => ({ p: [tx.get()] }); }); } });
-// Plugin Command (MZ): lista os plugins ativos com @command (mesma fonte do Gerenciador de plugins),
-// argumentos editados pela tabela/editores do módulo plugins (struct<…>, arrays, @parent, @dir...).
+// Plugin Command (MZ): lista só os plugins ATIVADOS com @command (como o MZ; mesma fonte do Gerenciador
+// de plugins), argumentos editados pela tabela/editores do módulo plugins (struct<…>, arrays, @parent, @dir...).
 async function pluginCommandSources(current) {
-    const api = db.api;
     const enabled = await getEnabledPluginsWithCommands().catch(() => []);
     const out = enabled.map(p => ({ name: p.name, label: p.name, commands: p.commands }));
-    // Plugin já usado pelo comando mas desativado/ausente da lista: mantém para não perder dados.
+    // Exceção: o plugin já gravado neste comando, se estiver desativado/ausente, aparece com "(OFF)"
+    // para não perder os argumentos ao reabrir.
     const extra = new Set(current ? [current] : []);
-    if (!out.length) { for (const n of await listPluginFiles(api)) { extra.add(n); } }
     for (const n of extra) {
         if (out.some(o => o.name === n)) { continue; }
         const cmds = await getPluginCommands(n).catch(() => []);
@@ -1421,7 +1475,7 @@ def(357, {
             const fillArgs = keep => {
                 const src = sources.find(x => x.name === pl.get());
                 cmdInfo = src ? src.commands.find(c => c.name === cm.get()) : null;
-                desc.textContent = cmdInfo ? cmdInfo.desc : (sources.length ? "" : t("No plugin with @command in js/plugins/."));
+                desc.textContent = cmdInfo ? cmdInfo.desc : (sources.length ? "" : t("No active plugins.", "MZEditor"));
                 argHelp.textContent = "";
                 if (!keep) { values = {}; }
                 values = cmdInfo ? { ...defaultArgs(cmdInfo), ...values } : values;
@@ -1487,6 +1541,37 @@ export function pickCommand() {
     });
 }
 
+// ---------- Prévias de tom (imagem do projeto tingida com o ColorFilter do runtime) ----------
+async function screenTonePreview(canvas, tone) {
+    const scr = screenSize();
+    canvas.width = Math.round(scr.w / 2); canvas.height = Math.round(scr.h / 2);
+    drawToned(canvas, await sampleImage(), tone);
+}
+// Tint Picture: usa a imagem do último Show Picture com o mesmo número na lista (senão a amostra).
+function picturePreview(ctx, numCtl) {
+    return async (canvas, tone) => {
+        const n = numCtl.get();
+        const show = (ctx && ctx.list ? ctx.list : []).filter(c => c.code === 231 && c.parameters[0] === n).pop();
+        const im = (show && show.parameters[1] && await projectImage("pictures", show.parameters[1])) || await sampleImage();
+        const scr = screenSize();
+        canvas.width = Math.round(scr.w / 2); canvas.height = Math.round(scr.h / 2);
+        drawToned(canvas, im, tone);
+    };
+}
+// Change Window Color: janela com o Window.png do projeto tingido, sobre a imagem de amostra.
+async function windowTonePreview(canvas, tone) {
+    await loadGameFont();
+    const scr = screenSize();
+    canvas.width = scr.w; canvas.height = scr.h;
+    const ctx = canvas.getContext("2d");
+    drawToned(canvas, await sampleImage(), [0, 0, 0, 0]);
+    const skin = await projectImage("system", "Window");
+    const w = Math.round(scr.w * 0.7), hh = 176, x = (scr.w - w) / 2, y = (scr.h - hh) / 2;
+    const opacity = 192; // Window_Base.updateBackOpacity
+    drawWindow(ctx, skin, x, y, w, hh, { tone, backOpacity: opacity });
+    new TextPainter(ctx, { colors: skinColors(skin) }).draw(t("Window Color", "EventCommand138"), x + 16, y + 12);
+}
+
 // ---------- Prévia da janela de mensagem e seletores de cor/ícone ----------
 let windowSkin = null, iconSet = null;
 async function skin() { if (!windowSkin) { windowSkin = await loadImage(imgUrl("system", "Window")); } return windowSkin; }
@@ -1531,36 +1616,4 @@ async function iconPicker() {
         draw();
         return () => cur;
     }, { width: "640px" });
-}
-async function renderMessagePreview(el, face, name, lines) {
-    el.innerHTML = "";
-    const colors = await textColors().catch(() => []);
-    const ic = await icons().catch(() => null);
-    const box = h("div", { class: "evMsgWin" });
-    if (face && face.name) { const c = h("canvas", { class: "evMsgFace" }); box.append(c); drawFace(c, face.name, face.index, 144); }
-    const tx = h("div", { class: "evMsgLines" });
-    for (const line of lines.slice(0, 4)) {
-        const l = h("div", { class: "evMsgLine" });
-        let color = colors[0] || "#fff";
-        let i = 0;
-        let span = h("span", { style: { color } });
-        l.append(span);
-        const s = line.replace(/\\V\[(\d+)\]/gi, (m, n) => "0").replace(/\\N\[(\d+)\]/gi, (m, n) => db.name("actors", Number(n))).replace(/\\P\[(\d+)\]/gi, (m, n) => { const id = (db.system.partyMembers || [])[Number(n) - 1]; return db.name("actors", id); }).replace(/\\G/gi, db.system.currencyUnit || "G");
-        while (i < s.length) {
-            const rest = s.slice(i);
-            let m;
-            if ((m = /^\\C\[(\d+)\]/i.exec(rest))) { color = colors[Number(m[1])] || color; span = h("span", { style: { color } }); l.append(span); i += m[0].length; continue; }
-            if ((m = /^\\I\[(\d+)\]/i.exec(rest))) {
-                if (ic) { const c = h("canvas", { class: "evMsgIcon" }); c.width = 32; c.height = 32; const n = Number(m[1]); c.getContext("2d").drawImage(ic, (n % 16) * 32, Math.floor(n / 16) * 32, 32, 32, 0, 0, 32, 32); l.append(c); span = h("span", { style: { color } }); l.append(span); }
-                i += m[0].length; continue;
-            }
-            if ((m = /^\\(FS|PX|PY)\[\d+\]|^\\[{}$.|!><^]/i.exec(rest))) { i += m[0].length; continue; }
-            if (rest.startsWith("\\\\")) { span.textContent += "\\"; i += 2; continue; }
-            span.textContent += s[i]; i++;
-        }
-        tx.append(l);
-    }
-    box.append(tx);
-    if (name) { el.append(h("div", { class: "evMsgName" }, name)); }
-    el.append(box);
 }

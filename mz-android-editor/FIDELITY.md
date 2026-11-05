@@ -391,11 +391,11 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Editor: Name | 01_09_03 | OK | eventeditor.js:29-31 | Nome automático "EV###". |
 | Editor: Memo/Note | 01_09_03 | OK | eventeditor.js:30-32 | Campo de 1 linha. |
 | Editor: abas de páginas | 01_09_03 | OK | eventeditor.js:46-56 | — |
-| New Event Page | 01_09_03 | Parcial | eventeditor.js:39 | Insere após a atual; **não limita a 20 páginas**. |
+| New Event Page | 01_09_03 | OK | eventeditor.js `bNew`, `MAX_PAGES` | Insere após a atual; desabilita com 20 páginas (verificado 2026-11-05). |
 | Copy Event Page | 01_09_03 | OK | eventeditor.js:40 | Clipboard só em memória. |
-| Paste Event Page | 01_09_03 | Parcial | eventeditor.js:41 | Sem limite de 20 páginas. |
-| Delete Event Page | 01_09_03 | OK | eventeditor.js:42 | Não apaga a única página. |
-| Clear Event Page | 01_09_03 | OK | eventeditor.js:43 | Pede confirmação (MZ não pede). |
+| Paste Event Page | 01_09_03 | OK | eventeditor.js `bPaste` | Desabilitado sem página copiada ou com 20 páginas. |
+| Delete Event Page | 01_09_03 | OK | eventeditor.js `bDel`, `syncBtns` | Botão desabilitado com uma só página, como no MZ. |
+| Clear Event Page | 01_09_03 | OK | eventeditor.js `bClear` | Sem confirmação, como no MZ. |
 | Condições: Switch ×2, Variable ≥, Self Switch, Item, Actor | 01_09_03 | OK | eventeditor.js:59-82 | — |
 | Imagem (arquivo, índice, direção/padrão, tiles B–E, (None)) | 01_09_03 | OK | eventeditor.js:84-92; ui.js `characterDialog` 413+ | — |
 | Movimento autônomo: Type | 01_09_03 | OK | eventeditor.js:94-104 | — |
@@ -404,7 +404,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Opções: Walking, Stepping, Direction Fix, Through | 01_09_03 | OK | eventeditor.js:109-110 | — |
 | Prioridade (Below/Same/Above) | 01_09_03 | OK | eventeditor.js:111 | — |
 | Gatilho (5 tipos) | 01_09_03 | OK | eventeditor.js:112 | — |
-| Botão Apply do diálogo | (diálogos MZ: OK/Cancel/Apply) | Ausente | ui.js `dialog` 32-55 | Só OK/Cancel. |
+| Botão Apply do diálogo | (diálogos MZ: OK/Cancel/Apply) | OK | ui.js `dialog({onApply})`; eventeditor.js `applyToMap`; editor de evento comum | Event Editor e evento comum: OK / Cancelar / Aplicar (grava sem fechar; Cancelar depois mantém o aplicado). Diálogos de comando seguem o MZ (só OK/Cancelar). |
 | Contents: linha ◆ vazia + duplo clique insere/edita | 01_09_03 | OK | commandlist.js:317-327, `edit` 224-241 | — |
 | Contents: New | 01_09_03 | OK | commandlist.js:207-223 | Paleta de 3 abas (`pickCommand`, cmd.js:1461). |
 | Contents: Edit | 01_09_03 | OK | commandlist.js:224-241, `applyEdit` 106-128 | Reconstrói ramos de Choices/If/Battle preservando corpos. |
@@ -414,22 +414,22 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Contents: Delete | 01_09_03 | OK | commandlist.js:254-260 | — |
 | Contents: Select All | 01_09_03 | OK | commandlist.js:261 | — |
 | Contents: Copy as Text | 01_09_03 | OK | commandlist.js:262-268 | — |
-| Contents: Copy as HTML Tags | 01_09_03 | Parcial | commandlist.js:269-275 | Só escapa `&`/`<` e junta com `<br>`; o MZ gera HTML com cores/recuo. Sem fallback se `navigator.clipboard` falhar. |
+| Contents: Copy as HTML Tags | 01_09_03 | OK | commandlist.js `rowsHtml`, `copyHtml` | `<div>` monoespaçado, recuo com `&nbsp;`, cor da categoria por linha, escape de `& < >`; sem área de transferência mostra o HTML num diálogo. |
 | Contents: Test | 01_09_03 | OK | commandlist.js:277-281; etest.js | Roda os selecionados (ou tudo) em mapa vazio com `?etest`. |
 | Contents: seleção por bloco (◆ + linhas ：) | 01_09_03 | OK | commandlist.js:37-52 | — |
-| Contents: seleção múltipla com **Shift+clique** | 01_09_03 | Parcial | commandlist.js:185-197, 317-327, 346-348 | Só via botão "Multi"; `e.shiftKey` não é lido no clique; sem Shift+setas. Restrição "mesmo ramo" aplicada (mesmo indent). |
+| Contents: seleção múltipla com **Shift+clique** | 01_09_03 | OK | commandlist.js `select(i, extend)`, `extendBy` | Shift+clique e Shift+↑/↓ (mesmo recuo do âncora); botão "Multi" continua para toque. |
 | Contents: teclado (Enter/Espaço, Delete, Ctrl+C/X/V/A, setas) | — | OK | commandlist.js:330-340 | — |
 | Contents: ativar/desativar comando | (não existe no MZ) | OK | — | Corretamente ausente. |
 | Paleta Event Commands (3 abas, grupos, ordem) | 01_10 | OK | cmd.js:1452-1479 | Idêntica ao manual (36/34/35); lembra a última aba. |
 | Editor de evento comum (via buscador) | 01_09 | OK | eventeditor.js:127-149 | — |
 | Event Searcher: abrir | 01_05 | OK | search.js:79; index.js (`btnEventSearch`) | — |
 | Event Searcher: por Switch | 01_05 | OK | search.js:31-37, 51-53, 63, 71 | Condições de página, rotas, gatilho de evento comum, tropas, comandos. |
-| Event Searcher: por Variable | 01_05 | Parcial | search.js:31-37; `refs` em cmd.js | Sem `refs` em 231/232 (posição por variável), 111 aba 2/3, condição de variável de tropa não verificada (search.js:70-71), Plugin Command; Control Variables com Game Data não indexa ator/inimigo. |
-| Event Searcher: por **nome** de evento | 01_05 ("switches, variables, or names") | Ausente | search.js:107-111 | "Text" busca só no texto dos comandos, não no nome do evento. |
-| Event Searcher: Item/Weapon/Armor/Common Event/Texto | — (extra) | OK | search.js:107-111 | Itens 605 da loja não indexados (só o 1º). |
+| Event Searcher: por Variable | 01_05 | OK | search.js; `refs` em cmd.js | Acrescentados 231/232 com posição por variável. As abas 2/3 do 111 e as condições de tropa não têm campo de variável (nada a indexar). Plugin Command fica fora (argumentos sem tipo no dado). |
+| Event Searcher: por **nome** de evento | 01_05 ("switches, variables, or names") | OK | search.js `q.type === "name"` | Opção "Nome Evento" (`Dialog_EventSearcher`): nome contendo o texto, sem diferenciar maiúsculas; resultado abre o evento. |
+| Event Searcher: Item/Weapon/Armor/Common Event/Texto | — (extra) | OK | search.js `cmdRefs` | Itens 605 da loja agora indexados. |
 | Event Searcher: resultado leva ao evento/página/linha | 01_05 | OK | search.js:91-98 | Tropas só mostram alerta. |
 | Desfazer de evento comum / renomear switch-variável | — | Ausente | NOTES.md "Fora do escopo" | — |
-| Atalho Ctrl+Enter = OK nos diálogos (Show Text) | 01_10_01 Remarks | Ausente | ui.js `dialog` 32-55 (sem keydown) | — |
+| Atalho Ctrl+Enter = OK nos diálogos (Show Text) | 01_10_01 Remarks | OK | ui.js `dialog` (keydown no diálogo) | Vale para todos os diálogos do módulo. |
 
 ### Comandos de evento
 
@@ -438,11 +438,11 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Show Text (101/401) | 01_10_01 | Parcial | cmd.js:217-256 (`def(101)`), `messageTextEditor` 166-210, `renderMessagePreview` 1526, `colorPicker`/`iconPicker` 1497-1525 | Rosto, Nome, Fundo, Posição, Prévia, Batch Entry, guia de largura, inserir cor/ícone: OK. Falta: atalho **Ctrl+Enter = OK**; menu de contexto do texto (**Plugin Help**); `\PX[n]`, `\PY[n]`, `\FS[n]` sem botão (só digitando). Prévia não mostra a posição (Top/Middle/Bottom) nem o fundo (Dim/Transparent) e corta em 4 linhas; `\V[n]` aparece como "0". |
-| Show Choices (102/402/403/404) | 01_10_01 | OK | cmd.js:257-293 | 6 escolhas, Fundo, Posição (Left/Middle/Right), Default (None/#1-6), Cancel (Branch/Disallow/#1-6). Sem códigos de controle auxiliares (só digitando). Cancel/Default além do nº de escolhas viram -1 silenciosamente (MZ desabilita as opções). |
+| Show Text (101/401) | 01_10_01 | OK | cmd.js `def(101)`, `messageTextEditor`; preview.js `renderMessagePages`; ui.js `textMenu` | Rosto, Nome, Fundo, Posição, Batch Entry, guia de largura, Ctrl+Enter, menu de texto (botão direito ou ⋯: Inserir índice de cor/ícone, Ajuda do plugin), botões `\FS`/`\PX`/`\PY`. Prévia com o `Window.png`/`IconSet.png` do projeto: janela na posição, fundo Janela/Escurecer/Transparente, caixa de nome, páginas como `needsNewPage`; `\V[n]` = 0 como o `text_preview.js` do próprio editor MZ. Conferida com o runtime (etest). |
+| Show Choices (102/402/403/404) | 01_10_01 | OK | cmd.js `def(102)`, `syncChoices` | 6 escolhas, Fundo, Posição (Left/Middle/Right), Default (None/#1-6), Cancel (Branch/Disallow/#1-6). Opções de Padrão/Cancelar para escolhas vazias ficam desabilitadas, como no MZ. Sem códigos de controle auxiliares (só digitando). |
 | Input Number (103) | 01_10_01 | OK | cmd.js:294-306 | Variável + dígitos 1–8. |
 | Select Item (104) | 01_10_01 | OK | cmd.js:307-321 | Variável + tipo (Regular/Key/Hidden A/B); padrão Key Item (2) como no MZ. |
-| Show Scrolling Text (105/405) | 01_10_01 | Parcial | cmd.js:322-335 | Texto, Velocidade 1–8, No Fast Forward OK. Falta menu de contexto (Plugin Help, **Icon Set Viewer**) e prévia. |
+| Show Scrolling Text (105/405) | 01_10_01 | Parcial | cmd.js `def(105)` | Texto, Velocidade 1–8, No Fast Forward e menu do texto (Inserir índice de ícone, Ajuda do plugin) OK. Falta a prévia. |
 
 #### 01_10_02 — Progressão do jogo (aba 1)
 
@@ -457,37 +457,37 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Conditional Branch (111/411/412) | 01_10_03 | OK | cmd.js:524-626, `condText` 493-523 | Aba 1: Switch, Variable (6 comparações, Constant/Variable), Self Switch, Timer (≥/≤, min/s). Aba 2: Actor (In the Party, Name, Class, Skill, Weapon, Armor, State). Aba 3: Enemy (Appeared/State), Character (direção), Vehicle. Aba 4: Gold (≥/≤/<), Item, Weapon/Armor (+Include Equipment), Button (9 botões × pressed/triggered/repeated), Script. "Create Else Branch". Falta só o menu Plugin Help no Script. |
+| Conditional Branch (111/411/412) | 01_10_03 | OK | cmd.js `def(111)`, `condText` | Aba 1: Switch, Variable (6 comparações, Constant/Variable), Self Switch, Timer (≥/≤, min/s). Aba 2: Actor (In the Party, Name, Class, Skill, Weapon, Armor, State). Aba 3: Enemy (Appeared/State; "#1 Slime" em tropa), Character (direção), Vehicle. Aba 4: Gold (≥/≤/<), Item, Weapon/Armor (+Include Equipment), Button (9 botões × pressed/triggered/repeated), Script com menu (Ajuda do plugin). "Create Else Branch". |
 | Loop (112/413) | 01_10_03 | OK | cmd.js:629-630 | Sem parâmetros; gera Loop + Repeat Above (ver commandlist.js). |
 | Break Loop (113) | 01_10_03 | OK | cmd.js:631 | — |
 | Exit Event Processing (115) | 01_10_03 | OK | cmd.js:632 | — |
 | Common Event (117) | 01_10_03 | OK | cmd.js:633-641 | Seletor de evento comum. |
 | Label (118) | 01_10_03 | OK | cmd.js:642-645 | — |
 | Jump to Label (119) | 01_10_03 | OK | cmd.js:646-659 | Campo texto com `datalist` dos labels da lista (MZ: combo). |
-| Comment (108/408) | 01_10_03 | Parcial | cmd.js:660-670 | Texto multilinha OK; falta menu Plugin Help. |
+| Comment (108/408) | 01_10_03 | OK | cmd.js `def(108)`, `withTextMenu` | Texto multilinha com menu (Ajuda do plugin). |
 
 #### 01_10_04 — Grupo (aba 1)
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Change Gold (125) | 01_10_04 | Parcial | cmd.js:673-678, `operandUI` 65-74 | Increase/Decrease, Constant/Variable OK. Range do Constant 0–9 999 999 (MZ: 1–99 999 999?); mínimo aceito 0 em vez de 1. |
-| Change Items (126) | 01_10_04 | Parcial | cmd.js:679-697 | Item, operação, operando OK. Range do Constant genérico (0–9 999 999), MZ limita (1–9 999). |
-| Change Weapons (127) | 01_10_04 | Parcial | cmd.js:679-697 | Idem + Include Equipment OK. |
-| Change Armors (128) | 01_10_04 | Parcial | cmd.js:679-697 | Idem + Include Equipment OK. |
+| Change Gold (125) | 01_10_04 | OK | cmd.js `operandUI`, `RANGE.gold` | Constant 1–99 999 999 (= `maxGold` do runtime). |
+| Change Items (126) | 01_10_04 | OK | cmd.js `changeItemCmd`, `RANGE.item` | Constant 1–9 999. |
+| Change Weapons (127) | 01_10_04 | OK | cmd.js `changeItemCmd` | Idem + Include Equipment. |
+| Change Armors (128) | 01_10_04 | OK | cmd.js `changeItemCmd` | Idem + Include Equipment. |
 | Change Party Member (129) | 01_10_04 | OK | cmd.js:698-710 | Ator, Add/Remove, Initialize (só no Add). |
 
 #### 01_10_05 — Ator (aba 1)
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Change HP (311) | 01_10_05 | Parcial | cmd.js:713-739 (`actorValueCmd`), `actorTargetUI` 76-81 | Fixed (com Entire Party)/Variable, operação, operando, Allow Death OK. Range do Constant 0–9 999 999 (manual: 1–9 999). |
-| Change MP (312) | 01_10_05 | Parcial | idem | Range (manual 1–9 999). |
-| Change TP (326) | 01_10_05 | Parcial | idem | Range (manual 1–100). |
+| Change HP (311) | 01_10_05 | OK | cmd.js `actorValueCmd`, `RANGE.hp` | Fixed (com Entire Party)/Variable, operação, Allow Death; Constant 1–9 999 (manual). |
+| Change MP (312) | 01_10_05 | OK | idem | 1–9 999. |
+| Change TP (326) | 01_10_05 | OK | idem | 1–100. |
 | Change State (313) | 01_10_05 | OK | cmd.js:745-757 | Ator Fixed/Variable, Add/Remove, State. |
 | Recover All (314) | 01_10_05 | OK | cmd.js:758-761 | — |
-| Change EXP (315) | 01_10_05 | Parcial | cmd.js:742 | Show Level Up OK; mínimo 0 (manual 1–9 999 999). |
-| Change Level (316) | 01_10_05 | Parcial | cmd.js:743 | Show Level Up OK; range (manual 1–98). |
-| Change Parameter (317) | 01_10_05 | Parcial | cmd.js:744 | Parâmetro (8) OK; range (manual 1–9 999). |
+| Change EXP (315) | 01_10_05 | OK | idem | Show Level Up; 1–9 999 999. |
+| Change Level (316) | 01_10_05 | OK | idem | Show Level Up; 1–98. |
+| Change Parameter (317) | 01_10_05 | OK | idem | Parâmetro (8); 1–9 999. |
 | Change Skill (318) | 01_10_05 | OK | cmd.js:762-774 | Fixed/Variable, Learn/Forget, Skill. |
 | Change Equipment (319) | 01_10_05 | OK | cmd.js:775-798 | Ator, Tipo de equip., item filtrado por etype (lista não filtra pelo que o ator pode equipar, como o MZ faz). |
 | Change Name (320) | 01_10_05 | OK | cmd.js:799-813 | — |
@@ -524,7 +524,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Show Picture (231) | 01_10_08 | OK | cmd.js:996-1007, `pictureUI` 979-994 | Número 1–100, Imagem (com prévia), Origem (Upper Left/Center), Direta (−9999..9999)/Variáveis, Escala −2000..2000 %, Opacidade 0–255, Blend (4). |
 | Move Picture (232) | 01_10_08 | OK | cmd.js:1008-1020 | Idem + Duração 1–999, Wait, Easing (4). |
 | Rotate Picture (233) | 01_10_08 | OK | cmd.js:1021-1027 | Velocidade −90..90. |
-| Tint Picture (234) | 01_10_08 | Parcial | cmd.js:1028-1038, `tonePick` ui.js:610-633 | R/G/B −255..255, Gray 0–255, presets, duração, wait OK. "Prévia" é só um quadrado cinza tingido, não a imagem de amostra do MZ. |
+| Tint Picture (234) | 01_10_08 | OK | cmd.js `picturePreview`; preview.js `drawToned`/`toneImageData` | R/G/B −255..255, Gray, presets, duração, wait. Prévia: imagem do último Show Picture com o mesmo número (ou a amostra) tingida com a conta do `ColorFilter`. |
 | Erase Picture (235) | 01_10_08 | OK | cmd.js:1039-1042 | — |
 
 #### 01_10_09 — Tempo (aba 2)
@@ -539,7 +539,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 |---|---|---|---|---|
 | Fadeout Screen (221) | 01_10_10 | OK | cmd.js:1049 | — |
 | Fadein Screen (222) | 01_10_10 | OK | cmd.js:1050 | — |
-| Tint Screen (223) | 01_10_10 | Parcial | cmd.js:1051-1057 | Normal/Dark/Sepia/Sunset/Night, duração, wait OK. Prévia é só amostra de cor (MZ mostra imagem de amostra tingida). |
+| Tint Screen (223) | 01_10_10 | OK | cmd.js `screenTonePreview` | Prévia: imagem de amostra do projeto (Título 1) tingida com a conta do `ColorFilter` do runtime. Conferido no runtime (`$gameScreen.tone()`). |
 | Flash Screen (224) | 01_10_10 | OK | cmd.js:1058-1064 | R/G/B 0–255, Intensity, amostra RGBA, duração, wait. |
 | Shake Screen (225) | 01_10_10 | OK | cmd.js:1065-1075 | Power/Speed 1–9 (sliders), duração, wait. |
 | Set Weather Effect (236) | 01_10_10 | OK | cmd.js:1076-1089 | None/Rain/Storm/Snow, Power 1–9, duração, wait. |
@@ -583,7 +583,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 | Change Menu Access (135) | 01_10_13 | OK | cmd.js:1218 | — |
 | Enable/Disable Encounters (136) | 01_10_13 | OK | cmd.js:1219 | Rotulado "Change Encounter". |
 | Change Formation Access (137) | 01_10_13 | OK | cmd.js:1220 | — |
-| Change Window Color (138) | 01_10_13 | Parcial | cmd.js:1221-1224 | R/G/B −255..255 OK; prévia é amostra de cor, não janela com o `Window.png` tingido. |
+| Change Window Color (138) | 01_10_13 | OK | cmd.js `windowTonePreview`; preview.js `drawWindow` | Prévia: janela com o `Window.png` do projeto (fundo tingido, opacidade 192, moldura em 9 partes como `Window._refreshBack/_refreshFrame`). Conferido no runtime. |
 | Change Actor Images (322) | 01_10_13 | OK | cmd.js:1225-1235 | Face, Character, [SV] Battler. |
 | Change Vehicle Image (323) | 01_10_13 | OK | cmd.js:1236-1242 | — |
 
@@ -593,7 +593,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 |---|---|---|---|---|
 | Change Map Name Display (281) | 01_10_14 | OK | cmd.js:1245-1248 | — |
 | Change Tileset (282) | 01_10_14 | OK | cmd.js:1249-1252 | — |
-| Change Battle Background (283) | 01_10_14 | Parcial | cmd.js:1253-1256 | Dois seletores separados (Battlebacks 1/2) com prévia individual; MZ usa um diálogo único com prévia composta das duas camadas. |
+| Change Battle Background (283) | 01_10_14 | OK | cmd.js `battlebackDialog`; preview.js `drawBattleback` | Diálogo único com as listas Battlebacks 1/2 lado a lado e prévia composta (posição/escala de `Sprite_Battleback.adjustPosition`). Conferido no runtime. |
 | Change Parallax (284) | 01_10_14 | OK | cmd.js:1257-1268 | Imagem, Loop H/V, Scroll −32..32. |
 | Get Location Info (285) | 01_10_14 | OK | cmd.js:1269-1292 | Variável, Info Type (Terrain Tag, Event ID, Tile ID camadas 1–4, Region ID), Direta/Variáveis/Personagem. |
 
@@ -601,12 +601,12 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Change Enemy HP (331) | 01_10_15 | OK | cmd.js:1295-1310 | Inimigo (Entire Troop/#1–8), operação, operando, Allow Death. Range genérico. |
+| Change Enemy HP (331) | 01_10_15 | OK | cmd.js `enemyValueCmd` | Inimigo (Entire Troop/#1–8 com nome do membro em tropa), operação, operando (1–999 999), Allow Death. MP 1–9 999, TP 1–100. |
 | Change Enemy MP (332) | 01_10_15 | OK | cmd.js:1311 | — |
 | Change Enemy TP (342) | 01_10_15 | OK | cmd.js:1312 | — |
 | Change Enemy State (333) | 01_10_15 | OK | cmd.js:1313-1319 | — |
 | Enemy Recover All (334) | 01_10_15 | OK | cmd.js:1320-1323 | — |
-| Enemy Appear (335) | 01_10_15 | OK | cmd.js:1324-1327 | Rótulo "Enemy Appear" (manual "Enemy Appearance"). Lista "#1..#8" sem nome do inimigo da tropa (MZ mostra "#1 Slime" no contexto de tropa). |
+| Enemy Appear (335) | 01_10_15 | OK | cmd.js `enemyOptions(entire, ctx)`, `enemyLabel` | Rótulo "Enemy Appear" (manual "Enemy Appearance"). No contexto de tropa mostra "#1 Slime" na lista e no texto, como o MZ. |
 | Enemy Transform (336) | 01_10_15 | OK | cmd.js:1328-1331 | — |
 | Show Battle Animation (337) | 01_10_15 | OK | cmd.js:1332-1342 | Inimigo, "Target All Enemies", Animação. |
 | Force Action (339) | 01_10_15 | OK | cmd.js:1343-1357 | Enemy/Actor, Skill, Last Target/Random/Index 1–8. |
@@ -616,7 +616,7 @@ O manual (01_03/01_04) não lista teclas. A coluna "Manual" indica onde a ação
 
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
-| Script (355/655) | 01_10_16 | Parcial | cmd.js:1361-1371 | Texto multilinha OK; falta menu Plugin Help. |
+| Script (355/655) | 01_10_16 | OK | cmd.js `def(355)`, `withTextMenu` | Texto multilinha com menu (Ajuda do plugin). |
 | Plugin Command (357/657) | 01_10_16 | OK | cmd.js:1390-1440, `pluginCommandSources` 1376 | Plugin Name, Command Name, descrição, Arguments (ParamTable com struct/array/@parent). Plugins OFF mantidos com "(OFF)". |
 | Plugin Command MV (356) | — (legado) | OK (extra) | cmd.js:1372-1373 | Só edição de existentes; fora da paleta (correto). |
 
@@ -672,12 +672,12 @@ Arquivo: `editor/js/events/moveroute.js` (`ROUTE_NAMES` 12-25, `BUTTONS` 28-32, 
 | Change Opacity (42) | 01_10_06_01 | OK | moveroute.js:73 | 0–255. |
 | Change Blend Mode (43) | 01_10_06_01 | OK | moveroute.js:74 | 4 modos. |
 | Play SE (44) | 01_10_06_01 | OK | moveroute.js:75 | Play/Stop/Vol/Pitch/Pan. |
-| Script (45) | 01_10_06_01 | Parcial | moveroute.js:76 | Usa área **multilinha**; o MZ usa campo de 1 linha e a lista de rota mostra uma linha só (quebras ficam no texto e quebram a exibição). |
+| Script (45) | 01_10_06_01 | OK | moveroute.js `paramDialog` case 45 | Campo de uma linha, como no MZ. |
 | Diálogo: alvo (Player/This Event/eventos) | 01_10_06_01 "Player" | OK | moveroute.js:161-165; cmd.js:916 | Só no Set Movement Route (correto). |
 | Diálogo: Preview no mapa | 01_10_06_01 "Preview" | Parcial | moveroute.js:111-143, 209+; minimap.js | Desenha e anima o trajeto, mas não simula passabilidade/eventos nem a velocidade real; random/toward player viram "?". |
 | Diálogo: inserir na posição selecionada | 01_10_06_01 | OK | moveroute.js:144-153 | — |
 | Diálogo: reeditar (duplo clique) | 01_10_06_01 | OK | moveroute.js:103, 154-159 | — |
-| Diálogo: menu de contexto da lista (re-editar, copiar…) | 01_10_06_01 | Parcial | moveroute.js:166-171 | Só botões Edit/Copy/Paste/Delete/Clear; falta **Cut**, menu por botão direito/toque longo, atalhos de teclado, **seleção múltipla** (copiar/apagar vários). |
+| Diálogo: menu de contexto da lista (re-editar, copiar…) | 01_10_06_01 | OK | moveroute.js `ops`, `menu` | Editar/Recortar/Copiar/Colar/Excluir/Selecionar tudo/Limpar por botão direito, toque longo ou ☰; Shift+clique, Shift+↑/↓ e "Multi" para seleção múltipla; atalhos Enter, Delete, Ctrl+C/X/V/A. |
 | Opção Repeat Movements | 01_10_06_01 | OK | moveroute.js:172 | — |
 | Opção Skip If Cannot Move | 01_10_06_01 | OK | moveroute.js:173 | — |
 | Opção Wait for Completion | 01_10_06_01 | OK | moveroute.js:174-176 | Oculta no movimento autônomo (correto, eventeditor.js:98). |
@@ -1127,7 +1127,7 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | Item | Manual (página) | Estado | Onde no código | O que falta |
 |---|---|---|---|---|
 | Comando na paleta (aba 3, Avançado) | 01_10_16 | OK | `events/commands.js:1458` | — |
-| [Plugin Name]: plugins ativos no Gerenciador | 01_10_16 | OK | `events/commands.js:1376-1389` → `plugins/commands.js:29-42` | Se nenhum estiver ativo, lista todos os arquivos (ver Divergências) |
+| [Plugin Name]: plugins ativos no Gerenciador | 01_10_16 | OK | `events/commands.js` `pluginCommandSources` → `plugins/commands.js` | Só plugins ativados (sem a lista de todos os arquivos quando nenhum está ativo). |
 | Plugin já usado, mas OFF ou ausente: preservado com "(OFF)" | — | Extra (protege dados) | `events/commands.js:1381-1388` | — |
 | [Command Name]: lista de `@command` (`@text`) | 01_10_16 | OK | `events/commands.js:1404-1409` | — |
 | Descrição do comando (`@desc`) | spec | OK | `events/commands.js:1411-1413` | — |
@@ -1135,7 +1135,7 @@ Cobertura de partes (conferida com script: todos os arquivos de `RPG/generator/{
 | Formato gravado `[plugin, comando, texto, {args}]` + continuações 657 `"Texto = valor"` | formato de dados MZ | OK | `events/commands.js:1424-1433` | — |
 | Texto na lista de eventos "Plugin Command: Plugin, Texto" | MZ | OK | `events/commands.js:1392`; `database/eventlist.js:52` | — |
 | Plugin Command (MV, 356), só leitura/compatibilidade | — | Extra/OK | `events/commands.js:1373-1374` | Não aparece na paleta (correto para MZ) |
-| [Plugin Help] no menu de clique direito do Script (355) | 01_10_16 | Ausente | `events/commands.js:1361-1371` (só área de texto) | Existe "Plugin Help…" apenas no campo Nota do banco de dados (`database/pluginhelp.js`) |
+| [Plugin Help] no menu de clique direito do Script (355) | 01_10_16 | OK | `events/ui.js` `textMenu` → `database/pluginhelp.js` | Também em Show Text, Comment, Scrolling Text e Script do Conditional Branch. |
 | API pública para outros módulos | — | OK | `plugins/commands.js`, `plugins/index.js:417-425` | — |
 
 ### Implantação
@@ -1206,25 +1206,16 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 
 ### Eventos (`events/`)
 
-1. **P1** — Seleção múltipla por Shift+clique na lista de conteúdo (`commandlist.js:317-327`) e na lista da rota (`moveroute.js:102`).
-2. **P1** — Ranges do operando por comando em `operandUI` (`commands.js:65-74`).
-   - HP, MP e Parâmetro: 1–9 999; TP: 1–100; Nível: 1–98; EXP: 1–9 999 999.
-   - Mínimo 1 em todos.
-   - Control Switches/Variables limitados ao tamanho real da lista do System.
-3. **P1** — Botão Aplicar no Editor de evento e nos diálogos de comando (`ui.js:32-55`); Ctrl+Enter = OK.
-4. **P1** — Buscador de eventos:
-   - busca por nome de evento;
-   - referências de variável que faltam: 231/232 com posição por variável, abas 2 e 3 do 111, condição de variável das tropas e itens da loja (605).
-5. **P2** — Limite de 20 páginas por evento (`eventeditor.js:39-41`).
-6. **P2** — Prévias que faltam:
-   - Tint Screen, Tint Picture e Change Window Color com a cena ou janela de verdade (`ui.js:610-633`);
-   - Battle Background com as duas camadas (`commands.js:1253`);
-   - Show Text com posição, fundo e `\V`.
-7. **P2** — Menus dos campos de texto: Plugin Help em Show Text/Comment/Script/Script de condição, e Icon Set Viewer em Scrolling Text.
-   O código já existe em `database/pluginhelp.js` e `commands.js:1511`.
-8. **P2** — Lista de comandos de tropa deve mostrar "#1 Slime", e não só "#1" (`commands.js:39`).
-9. **P3** — Copy as HTML Tags com as cores e a estrutura do MZ (`commandlist.js:269-275`).
-   Lista da rota com Recortar, menu de contexto e Script multilinha. Event List deve substituir a paleta e sincronizar (`eventmode.js:352-371`).
+1. ~~**P1** — Seleção múltipla por Shift+clique na lista de conteúdo e na lista da rota.~~ Feito.
+2. ~~**P1** — Ranges do operando por comando em `operandUI`.~~ Feito (inclui Control Switches/Variables até o tamanho da lista do System).
+3. ~~**P1** — Botão Aplicar no Editor de evento; Ctrl+Enter = OK.~~ Feito (os diálogos de comando do MZ não têm Aplicar).
+4. ~~**P1** — Buscador de eventos: nome de evento e referências de variável que faltavam.~~ Feito.
+5. ~~**P2** — Limite de 20 páginas por evento.~~ Feito.
+6. ~~**P2** — Prévias: Tint Screen/Picture, Change Window Color, Battle Background, Show Text com posição/fundo.~~ Feito (`events/preview.js`).
+7. ~~**P2** — Menus dos campos de texto (Plugin Help e Icon Set Viewer).~~ Feito.
+8. ~~**P2** — Lista de comandos de tropa com "#1 Slime".~~ Feito.
+9. **P3** — ~~Copy as HTML Tags com cores; lista da rota com Recortar, menu de contexto e Script de 1 linha.~~ Feito.
+   Pendente (`eventmode.js`, outra sessão): Event List deve substituir a paleta e sincronizar (`eventmode.js:352-371`).
 
 ### Banco de dados (`database/`)
 
@@ -1252,7 +1243,7 @@ Ordem pelo impacto num usuário real do MZ, agrupada por módulo para virar tare
 1. **P1** — Abas [Arquivo]/[Texto] nos editores de parâmetro: texto livre como `\V[n]` em `select`, `boolean` e `number`.
    Os plugins oficiais PluginCommonBase, ExtraWindow e ExtraImage dependem disso.
 2. **P1** — "Inserir número de ícone" nos editores de texto de parâmetro (`params.js:173`).
-3. **P2** — Comando de plugin deve listar só plugins ativados (`events/commands.js:1383`); coluna Valor com rótulos amigáveis (`params.js:20-23`).
+3. **P2** — ~~Comando de plugin deve listar só plugins ativados.~~ Feito. Falta: coluna Valor com rótulos amigáveis (`params.js:20-23`).
 4. **P2** — `@require` e `@noteParam`/`@noteDir` no "Excluir arquivos não utilizados" da Implantação, para não apagar arquivos que plugins usam.
 5. **P3** — Atualizar vários plugins de uma vez, menu de contexto do gerenciador, seletor próprio para `@type animation` e bloco de idioma pela interface.
 
@@ -1305,7 +1296,7 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
   - "Turn Down…" / Face Down…
   - Vários seguem a lista do editor real, e não o manual.
 - **Duplo clique** numa linha com comando edita, como no MZ real; o manual 01_09_03 diz "insere".
-- **Show Choices:** Cancelar/Padrão apontando para escolha vazia viram −1 sem aviso (`commands.js:282-285`). No MZ essas opções ficam desabilitadas.
+- ~~**Show Choices:** Cancelar/Padrão apontando para escolha vazia viram −1 sem aviso.~~ Corrigido: as opções ficam desabilitadas como no MZ.
 - **Padrões a conferir:**
   - Change Party Member com Initialize marcado;
   - Control Timer com 1 min;
@@ -1314,7 +1305,7 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
   - Conditional Branch de ator e Control Variables (Game Data) usam frases próprias;
   - Show Text acrescenta o nome do falante no fim;
   - itens do banco aparecem sem o "0001".
-- **Páginas:** Limpar página pede confirmação; Excluir página recusa a única página (no MZ o botão fica desabilitado).
+- ~~**Páginas:** Limpar página pede confirmação; Excluir página recusa a única página.~~ Corrigido: Limpar sem confirmação; Excluir desabilitado com uma página.
 - **Criação rápida:** Transfer e Door têm campo Fade extra; textos de Tesouro/Pousada fixos.
 - **Extras:** Desfazer/Refazer no modo evento; Multi; ▲/▼ nas tabelas.
 
@@ -1342,7 +1333,7 @@ Itens que existem, mas funcionam diferente do original. Os marcados "(a confirma
 
 ### Plugins e Gerador
 
-- Plugin Command sem plugins ativos lista todos os arquivos de `js/plugins/`; o MZ só oferece os ativados.
+- ~~Plugin Command sem plugins ativos lista todos os arquivos de `js/plugins/`.~~ Corrigido: só os ativados (o plugin já gravado e desativado aparece com "(OFF)" para não perder dados).
 - `number` sem `@min`/`@max` fica sem limite; `file` sem `@dir` abre `img/` (padrões do MZ a confirmar).
 - **Extras do port:** Redefinir no Gerador; Ativar/Desativar todos; aba Comandos e campo URL no Gerenciador.
 - **Gerador:**

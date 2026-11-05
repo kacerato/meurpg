@@ -8,9 +8,11 @@ import { rowText } from "./commandlist.js";
 import { openCommonEventEditor } from "./eventeditor.js";
 import { t } from "../i18n.js";
 
-let last = { kind: 0, sw: 1, vr: 1, item: 1, weapon: 1, armor: 1, common: 1, text: "", results: [] };
+let last = { kind: 0, sw: 1, vr: 1, item: 1, weapon: 1, armor: 1, common: 1, text: "", name: "", results: [] };
 
+const GOODS = ["item", "weapon", "armor"];
 function cmdRefs(c) {
+    if (c.code === 605) { return [[GOODS[c.parameters[0]], c.parameters[1]]]; } // itens seguintes da loja
     const d = CMD[c.code];
     if (!d || !d.refs) { return []; }
     try { return d.refs(c.parameters || []); } catch (e) { return []; }
@@ -46,6 +48,13 @@ async function runSearch(api, q) {
         const ctx = { map, mapId: info.id };
         for (const ev of map.events || []) {
             if (!ev) { continue; }
+            if (q.type === "name") {
+                // Event Name (01_05): nome do evento contendo o texto, sem diferenciar maiúsculas.
+                if ((ev.name || "").toLowerCase().includes(q.text)) {
+                    out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: 0, where: `${info.name}, ${String(ev.id).padStart(3, "0")}:${ev.name} (${ev.x},${ev.y})`, line: t("Event Name", "Dialog_EventSearcher") + "：" + ev.name });
+                }
+                continue;
+            }
             ev.pages.forEach((page, pi) => {
                 const where = `${info.name}, ${String(ev.id).padStart(3, "0")}:${ev.name} (${ev.x},${ev.y}), ${t("Page", "Dialog_EventSearcher")} ${pi + 1}`;
                 if (pageCondHit(page, q)) { out.push({ kind: "map", mapId: info.id, eventId: ev.id, page: pi, where, line: t("Conditions", "Group_EventConditions") }); }
@@ -58,6 +67,7 @@ async function runSearch(api, q) {
             });
         }
     }
+    if (q.type === "name") { return out; }
     db.commonEvents.forEach((ce, id) => {
         if (!ce) { return; }
         const where = `${t("Common Event", "Constants")} ${String(id).padStart(4, "0")}:${ce.name}`;
@@ -105,18 +115,20 @@ export function openSearcher(api, eventMode) {
             const it = sel(db.options("items"), last.item), wp = sel(db.options("weapons"), last.weapon), ar = sel(db.options("armors"), last.armor);
             const ce = sel(db.options("commonEvents"), last.common);
             const tx = txt(last.text, { width: "320px" });
+            const nm = txt(last.name, { width: "320px" });
             const r = radios([
                 { label: t("Switch", "Constants"), value: 0, controls: [sw] }, { label: t("Variable", "Constants"), value: 1, controls: [vr] },
                 { label: t("Item", "Constants"), value: 2, controls: [it] }, { label: t("Weapon", "Constants"), value: 3, controls: [wp] }, { label: t("Armor", "Constants"), value: 4, controls: [ar] },
-                { label: t("Common Event", "Constants"), value: 5, controls: [ce] }, { label: t("Text", "EventCommands"), value: 6, controls: [tx] }
+                { label: t("Common Event", "Constants"), value: 5, controls: [ce] }, { label: t("Text", "EventCommands"), value: 6, controls: [tx] },
+                { label: t("Event Name", "Dialog_EventSearcher"), value: 7, controls: [nm] }
             ], last.kind);
             resultsEl = h("div", { class: "evList evSearchResults" });
             const go = h("button", { type: "button", class: "evBtn primary" }, t("Search", "Dialog_EventSearcher"));
             go.addEventListener("click", async () => {
-                last = { ...last, kind: r.get(), sw: sw.get(), vr: vr.get(), item: it.get(), weapon: wp.get(), armor: ar.get(), common: ce.get(), text: tx.get() };
-                const types = ["switch", "variable", "item", "weapon", "armor", "common", "text"];
-                const q = { type: types[last.kind], id: [last.sw, last.vr, last.item, last.weapon, last.armor, last.common][last.kind], text: last.text.toLowerCase() };
-                if (q.type === "text" && !q.text) { return; }
+                last = { ...last, kind: r.get(), sw: sw.get(), vr: vr.get(), item: it.get(), weapon: wp.get(), armor: ar.get(), common: ce.get(), text: tx.get(), name: nm.get() };
+                const types = ["switch", "variable", "item", "weapon", "armor", "common", "text", "name"];
+                const q = { type: types[last.kind], id: [last.sw, last.vr, last.item, last.weapon, last.armor, last.common][last.kind], text: (last.kind === 7 ? last.name : last.text).toLowerCase() };
+                if ((q.type === "text" || q.type === "name") && !q.text) { return; }
                 go.disabled = true; go.textContent = t("Searching…");
                 try { last.results = await runSearch(api, q); } finally { go.disabled = false; go.textContent = t("Search", "Dialog_EventSearcher"); }
                 render();

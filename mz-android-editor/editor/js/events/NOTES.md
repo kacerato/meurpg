@@ -18,7 +18,8 @@ Registro: `register(api)` em `index.js`; CSS em `editor/css/events.css` (injetad
 | `eventeditor.js` | Event Editor (nome, nota, páginas New/Copy/Paste/Delete/Clear, condições, imagem, movimento autônomo, opções, prioridade, trigger, conteúdo) e editor de lista de evento comum |
 | `eventmode.js` | sobreposição PIXI em `api.view.world`, cursor, molduras, posições iniciais (azul), toque/arrasto/menu, barra flutuante e Event List |
 | `quick.js` | Quick Event Creation: Transfer, Door, Treasure, Inn |
-| `search.js` | Event Searcher (switch, variável, item, arma, armadura, evento comum, texto) em todos os mapas, eventos comuns e tropas |
+| `search.js` | Event Searcher (switch, variável, item, arma, armadura, evento comum, texto, nome de evento) em todos os mapas, eventos comuns e tropas |
+| `preview.js` | prévias com as imagens do projeto e as contas do runtime: tom (`ColorFilter`), janela (`Window.png`), janela de mensagem (posição, fundo, nome, páginas), fundo de batalha com as 2 camadas; fonte do jogo (`loadGameFont`) |
 
 ## Controles (toque)
 
@@ -72,10 +73,48 @@ O editor de evento comum (aberto pelo buscador) grava `data/CommonEvents.json`.
   janela aparece em vermelho; ao lado, "largura/limite px" por linha.
 - API oficial: `api.selectMap(id)` no buscador, `api.view.redrawOverlay()`, `api.mode`.
 
+## Rodada 3 (fidelidade, FIDELITY.md Eventos P1–P3)
+
+- **Aplicar** (`ui.js dialog({onApply})`): Event Editor e editor de evento comum têm OK / Cancelar / Aplicar.
+  O Event Editor grava pelo `opts.onApply(ev)` se o chamador passar; senão direto em `api.events`
+  (`record()` + `map.events[id] = ev` + `save()`). Depois de um Aplicar, o OK grava e devolve `null` ao
+  chamador, para o `eventmode.js` não colocar o evento de novo (evento novo ganharia outro ID). Os
+  diálogos de comando não têm Aplicar (como no MZ).
+- **Ctrl+Enter = OK** em qualquer diálogo do módulo (keydown no `.mzDialogBackdrop`).
+- **Páginas**: no máximo 20 (Nova/Colar desabilitam); Excluir desabilita com uma página; Limpar sem confirmação.
+- **Seleção múltipla**: Shift+clique e Shift+↑/↓ na lista de conteúdo (`select(i, extend)`, `extendBy`) e
+  na lista da rota (que agora tem Recortar, menu por botão direito/toque longo/☰, Ctrl+C/X/V/A, Delete, Enter
+  e "Multi"; área de transferência de rota em `localStorage.mzRouteClip`). Script da rota em 1 linha.
+- **Limites do Constant** (`RANGE` em `commands.js`): Gold 1–99 999 999, Items 1–9 999, HP/MP/Parâmetro
+  1–9 999, TP 1–100, EXP 1–9 999 999, Nível 1–98, HP do inimigo 1–999 999; mínimo 1. Control
+  Switches/Variables em intervalo: até o tamanho de `System.switches/variables`.
+- **Buscador**: "Nome Evento" (`Dialog_EventSearcher`); refs de variável em 231/232; itens 605 da loja.
+- **Prévias** (`preview.js`): Tint Screen/Picture tingem a imagem Título 1 do projeto (Tint Picture usa a
+  imagem do último Show Picture com o mesmo número) com a conta do shader `ColorFilter`; Change Window
+  Color desenha a janela com `Window.png` (fundo tingido, opacidade 192, moldura 9 partes); Change Battle
+  Background virou um diálogo único com as duas listas e prévia composta (`Sprite_Battleback.adjustPosition`);
+  Show Text mostra a tela com a janela na posição, fundo Janela/Escurecer/Transparente, caixa de nome e
+  páginas (`needsNewPage`). `\V[n]` = 0, igual ao `text_preview.js` do editor MZ
+  (`rea-extract/qrc/html/text_preview.js_`, referência útil para outras prévias).
+- **Menu de texto** (`ui.js textMenu`, `commands.js withTextMenu`): botão direito (ou botão ⋯ no toque) com
+  Recortar/Copiar/Colar/Selecionar tudo + "Inserir índice de cor/ícone" e "Ajuda do plugin"
+  (`database/pluginhelp.js`, importado sob demanda) em Show Text, Scrolling Text (ícone), Comment,
+  Script e Script do Conditional Branch.
+- **Tropa**: com `ctx.troopId` (vem de `editCommandList`), listas e textos mostram "#1 Slime".
+- **Plugin Command**: só plugins ativados; o já gravado e desativado aparece "(OFF)".
+- **Show Choices**: Padrão/Cancelar para escolhas vazias ficam desabilitados.
+- **Copy as HTML**: `rowsHtml` gera `<div>` monoespaçado com recuo e cor por categoria.
+
+Verificado em 2026-11-05 no navegador (cópia do testproject, porta 8793): todos os itens acima, com
+screenshots; no runtime (`?etest`, `SceneManager.isGameActive` forçado porque o painel estava oculto):
+Show Text com rosto/nome/cores/ícones na mesma geometria da prévia; Tint Screen (`$gameScreen.tone()`),
+Change Window Color (`$gameSystem.windowTone()`) e Change Battle Background (`battleback1/2Name`).
+
 ## Fora do escopo / limitações
 
 - Troops: o buscador encontra referências nas páginas de tropas, mas a edição é do módulo database.
-- Show Text: "Batch Entry" divide em blocos de 4 linhas; `\V[n]` é medido como "0".
+- Show Text: "Batch Entry" divide em blocos de 4 linhas; `\V[n]` é medido como "0" (como na prévia do MZ).
+- Show Scrolling Text ainda sem prévia.
 - A prévia da rota não testa passabilidade nem eventos no caminho.
 - Desfazer não cobre renomear switches/variáveis nem edições de evento comum.
 - Textos da lista seguem o MZ em inglês; algumas variações de redação do editor original podem diferir em detalhes.
