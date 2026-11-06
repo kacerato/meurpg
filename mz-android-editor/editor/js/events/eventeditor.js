@@ -7,6 +7,7 @@ import { createCommandList, commandListToolbar } from "./commandlist.js";
 import { moveRouteDialog } from "./moveroute.js";
 import { pageMoveProps } from "./routesim.js";
 import { t } from "../i18n.js";
+import { recordDb } from "./history.js";
 
 let pageClipboard = null;
 const MAX_PAGES = 20; // limite do MZ (01_09_03)
@@ -120,7 +121,7 @@ export function openEventEditor(opts) {
                 routeBtn.addEventListener("click", async () => {
                     const r = await moveRouteDialog(page.moveRoute, {
                         showWait: false, title: t("Movement Route", "Dialog_MovementRoute"),
-                        previewStart: () => (opts.mapId ? { mapId: opts.mapId, x: ev.x, y: ev.y, selfId: ev.id, events: opts.map && opts.map.events, forced: false, ...pageMoveProps(page) } : null)
+                        previewStart: () => (opts.mapId ? { mapId: opts.mapId, x: ev.x, y: ev.y, selfId: ev.id, events: opts.map && opts.map.events, forced: false, event: ev, pageIndex, ...pageMoveProps(page) } : null)
                     });
                     if (r) { page.moveRoute = r.route; }
                 });
@@ -136,7 +137,7 @@ export function openEventEditor(opts) {
                 const tr = sel(opt(TRIGGERS), page.trigger).onChange(() => { page.trigger = tr.get(); });
                 const left = h("div", { class: "evPageLeft" }, conditions, h("div", { class: "evRow evTop" }, image, col(movement)), h("div", { class: "evRow evTop" }, options, col(group(t("Priority", "Layout_EventPage"), pr), group(t("Trigger", "Layout_EventPage"), tr))));
                 // Contents
-                cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id, eventPos: { x: ev.x, y: ev.y, ...pageMoveProps(page) } } });
+                cl = createCommandList({ list: page.list, ctx: { map: opts.map, mapId: opts.mapId, eventId: ev.id, event: ev, pageIndex, eventPos: { x: ev.x, y: ev.y, ...pageMoveProps(page) } } });
                 const right = h("div", { class: "evPageRight" }, h("div", { class: "evContentsTitle" }, t("Contents", "Layout_EventPage")), cl.el, commandListToolbar(cl));
                 return h("div", { class: "evPage" }, left, right);
             };
@@ -176,9 +177,9 @@ export function openCommonEventEditor(api, id, rowIndex) {
         await save(r.v);
         return r.v;
     });
+    // Cada OK/Aplicar que muda o evento comum é um passo do histórico persistente (history.js): Ctrl+Z ou
+    // Desfazer depois de fechar o diálogo; grava pelo salvamento unificado (markDirty).
     async function save(v) {
-        db.commonEvents[id] = v;
-        await api.project.writeJson("data/CommonEvents.json", db.commonEvents);
-        api.emit("db:changed", { file: "data/CommonEvents.json" });
+        recordDb({ kind: "common", id, before: clone(db.commonEvents[id]), after: clone(v) });
     }
 }

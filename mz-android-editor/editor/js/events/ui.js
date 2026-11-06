@@ -3,6 +3,7 @@
 
 import { db, clone } from "./data.js";
 import { t } from "../i18n.js";
+import { recordDb } from "./history.js";
 
 let API = null;
 export function setApi(api) { API = api; }
@@ -402,11 +403,8 @@ function namedPick(kind, value, width) {
         editNames: {
             names: names(),
             options: arr => db.nameListOptions(arr),
-            save: async arr => {
-                db.system[kind] = arr;
-                await API.project.writeJson("data/System.json", db.system);
-                API.emit("db:changed", { file: "data/System.json" });
-            }
+            // passo do histórico persistente (history.js): Ctrl+Z / Desfazer depois de fechar o seletor
+            save: async arr => { recordDb({ kind: "names", field: kind, before: (db.system[kind] || [""]).slice(), after: arr.slice() }); }
         }
     }), { width });
 }

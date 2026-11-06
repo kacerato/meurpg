@@ -14,7 +14,9 @@ Registro: `register(api)` em `index.js`; CSS em `editor/css/events.css` (injetad
 | `commandlist.js` | lista de conteúdo: texto igual ao MZ (`◆Text：…`, `：　　：…`, `：When …`, `：End`), recuo por `indent`, seleção por bloco, multi-seleção, novo/editar/recortar/copiar/colar/apagar, Select All, Copy as Text/HTML; reconstrução de ramos (Choices, If/Else, Battle) preservando os corpos |
 | `moveroute.js` | editor de rota (45 comandos `ROUTE_*`, opções Repeat/Skip/Wait, alvo) com **prévia no mapa**: simulação da rota (`simulateRoute`) e desenho (`drawRoute`) |
 | `minimap.js` | mini-visualizador de mapa (Tilemap do corescript) usado pela prévia da rota; `onTap(x, y)` |
-| `routesim.js` | simulação da rota portada do runtime (`SimMap`, `SimChar`, `runRoute`, `activePage`, `pageMoveProps`) |
+| `routesim.js` | simulação portada do runtime: mundo inteiro quadro a quadro (`SimWorld`, `SimMap`, `SimChar`, `SimEvent`, `SimPlayer`, `SimFollower`, `runRoute`, `activePage`, `pageMoveProps`) |
+| `simview.js` | sprites dos personagens do mundo simulado na prévia da rota (`CharSprites`) |
+| `history.js` | histórico de desfazer/refazer persistente de `CommonEvents.json` e dos nomes de switches/variáveis (`System.json`); `persistDb` = cache + `api.markDirty` |
 | `etest.js` | "Test" da lista: grava `data/Test_*.json` + `data/Test_Event.json` e abre `/project/index.html?etest` |
 | `eventeditor.js` | Event Editor (nome, nota, páginas New/Copy/Paste/Delete/Clear, condições, imagem, movimento autônomo, opções, prioridade, trigger, conteúdo) e editor de lista de evento comum |
 | `eventmode.js` | sobreposição PIXI em `api.view.world`, cursor, molduras, posições iniciais (azul), toque/arrasto/menu, barra flutuante e Event List |
@@ -36,10 +38,13 @@ Registro: `register(api)` em `index.js`; CSS em `editor/css/events.css` (injetad
 
 ## Gravação
 
-Cada alteração grava `data/MapXXX.json` na hora e emite `map:changed {id}`; depois chama
-`api.view.redrawOverlay()` para atualizar as molduras do MapView. Set Starting Position grava
-`data/System.json` e emite `db:changed`. Renomear switch/variável no seletor também grava `System.json`.
-O editor de evento comum (aberto pelo buscador) grava `data/CommonEvents.json`.
+Nada grava na hora: tudo vai para o salvamento unificado (`api.markDirty`, contrato em `api.js`) e é gravado
+no "Salvar projeto". Eventos do mapa: `markDirty(data/MapXXX.json)` + `map:changed {id}` +
+`api.view.redrawOverlay()`. Set Starting Position, renomear switch/variável e o editor de evento comum (aberto
+pelo buscador) usam `history.js persistDb(file, obj)`: põe o objeto no cache do Project (`readJson` devolve o
+cache enquanto o arquivo estiver marcado, então o Banco de dados vê a alteração), `markDirty(file)` sem dados
+(o Salvar grava o que estiver no cache, mesmo que o Banco de dados o tenha trocado) e emite `db:changed`.
+Exceção: `etest.js` grava os `Test_*.json` do teste de evento (temporários).
 
 ## Integração com outros módulos
 
@@ -115,12 +120,16 @@ Change Window Color (`$gameSystem.windowTone()`) e Change Battle Background (`ba
 
 - Troops: o buscador encontra referências nas páginas de tropas, mas a edição é do módulo database.
 - Show Text: "Batch Entry" divide em blocos de 4 linhas; `\V[n]` é medido como "0" (como na prévia do MZ).
-- Prévia da rota: os outros eventos ficam parados na posição inicial (não executam o próprio movimento
-  autônomo) e o jogador fica parado na posição de referência; Script (45) e Switch ON/OFF (27/28) não
-  são executados; seguidores e veículos em movimento não entram.
-- Desfazer da lista e do seletor de nomes vale enquanto o diálogo está aberto (como o resto do editor de
-  evento, que só grava no OK/Aplicar); depois de gravado, o histórico do modo evento (por mapa) não cobre
-  `CommonEvents.json` nem `System.json`.
+- Prévia da rota (rodada 5): o estado é o de um jogo novo (switches OFF, variáveis 0, sem itens, grupo inicial);
+  não roda eventos comuns paralelos/automáticos nem inicia eventos por toque (Event Touch/Player Touch) ou
+  Autorun durante a prévia; o jogador parado não anda por entrada; embarcar em veículo não é simulado (os
+  veículos só bloqueiam). Script (45) vê `this` (o personagem), `$gameSwitches`, `$gameVariables`,
+  `$gameSelfSwitches`, `$gameMap` (eventos, passabilidade, refresh) e `$gamePlayer`; o resto (`$gameParty`,
+  `AudioManager`, `requestBalloon`…) é um objeto inerte. Um Script que trava (laço infinito) trava a prévia,
+  como travaria o jogo.
+- Desfazer da lista de comandos vale enquanto o diálogo está aberto (o OK vira um passo do histórico do mapa
+  ou do evento comum). Eventos comuns editados pela ponte do Banco de dados (`editCommandList`) ficam no
+  histórico do módulo database, não neste.
 - Textos da lista seguem o MZ em inglês; algumas variações de redação do editor original podem diferir em detalhes.
 
 ## Rodada 4 (FIDELITY.md: Scrolling Text, prévia de rota, Shop, desfazer, Seletor de objetos)
@@ -191,3 +200,53 @@ com `?etest`; `Test_*.json` removidos ao fechar), prévia da rota com passos, sa
 repetição, undo/redo (botões, Ctrl+Z/Y e `btnUndo` da barra principal), Plugin Command com a tabela
 do módulo plugins (editor de `multiline_string[]` do EventCommandByCode), guia de largura do Show Text
 com a fonte do jogo.
+
+## Rodada 5 (pendências de eventos: prévia de rota completa, desfazer persistente)
+
+- **Prévia de rota com o mapa vivo** (`routesim.js SimWorld`): o mundo roda quadro a quadro na ordem de
+  `Scene_Map.updateMain` (`Game_Map.update`: `refreshIfNeeded` e eventos por ID; `Game_Player.update` +
+  seguidores). Os **outros eventos** usam a página ativa (`findProperPageIndex/meetsConditions` com o estado
+  simulado) e executam o **próprio movimento autônomo**: Random (`moveTypeRandom`), Approach
+  (`moveTypeTowardPlayer`, `isNearThePlayer` < 20), Custom (rota da página) com velocidade, frequência
+  (`30 * (5 - freq)`) e `isNearTheScreen` (câmera centrada no jogador, `screenWidth/Height` do System).
+  **Colisão** entre todos (eventos, jogador e seguidores via `Game_Player.isCollided`, barco/navio).
+  **Switch ON/OFF (27/28)** e **Script (45, `eval` com `this` = personagem)** alteram um estado simulado
+  (switches/variáveis/self switches de um jogo novo, nada é gravado) e pedem `refresh` como
+  `Game_Switches.onChange`: eventos trocam de página no meio da prévia (imagem, velocidade, tipo de
+  movimento, rota). O evento que roda o Set Movement Route fica **travado** (`lock`: vira para o jogador e
+  para o movimento próprio) se o gatilho for 0–2, como `Game_Event.start`. "Este Evento" usa a página em
+  edição (dados ainda não gravados) como página ativa.
+- **Rota do jogador**: o jogador parte da posição inicial do System, com **seguidores** (`optFollowers`, grupo
+  inicial até 4: `chaseCharacter` a cada passo, `jumpAll` no salto, transparência `optTransparent`) e os
+  **veículos** na posição inicial (barco/navio bloqueiam; `Game_Vehicle.pos` só no mapa deles).
+- **Desenho** (`simview.js`, camada `MiniMap.charLayer`): todos os personagens com o gráfico real (quadro por
+  padrão/direção, `$`, `!`, tiles B–E, `shiftY`, altura do salto, opacidade, transparência, blend), parados no
+  quadro 0 sob a rota desenhada; "▶ Visualização" anima o mundo inteiro (a rota fica esmaecida ao fundo) e
+  redesenha no fim. O personagem da rota tem anel amarelo. Rodapé: outros eventos com movimento, seguidores,
+  switches alterados ("simulados, não gravados") e execuções/erro de Script. Rota bloqueada só é dada como
+  travada depois de 60 tentativas quando há eventos andando (o caminho pode abrir), senão 3.
+- **Desfazer persistente** (`history.js`): OK/Aplicar do editor de evento comum (buscador) e cada OK do
+  seletor de switches/variáveis que renomeia ou muda o máximo viram passos de um histórico que continua
+  depois de fechar o diálogo. Todos os passos (os do mapa no `eventmode.js` e estes) levam um número de
+  sequência; **Ctrl+Z / Ctrl+Y**, ↶/↷ da barra flutuante e o `btnUndo` da barra principal desfazem o mais
+  recente. No **modo mapa** (maptools), Ctrl+Z/Ctrl+Y e o `btnUndo` desfazem o passo do banco quando ele é
+  mais recente que o último passo de tiles do mapa atual (o topo da pilha do maptools não mudou desde
+  então); o `btnUndo` é reabilitado por um `MutationObserver` nesse caso. Até 100 passos.
+- Lista da rota: linhas longas (Script) cortadas com "…" e dica com o texto inteiro (não empurram mais a grade
+  de comandos).
+
+Verificado em 2026-11-06 (cópia do testproject, porta 8796, 1200×554):
+- **Contra o runtime**: mapa de teste 20×15 com 7 eventos (Random freq 5/3/4, Approach, Custom com Repeat,
+  página 2 por switch 5 com outra rota/velocidade/imagem, evento parado) e rota forçada com Move, Switch ON 5,
+  Script (`setMoveSpeed`, `$gameVariables.setValue`, `turnTowardPlayer`), Jump, Approach Player, Wait, Turn
+  Random, Move Random, Switch OFF; o mesmo mapa em `/project/index.html` (`DataManager.setupNewGame`,
+  `$gameMap.setup`, interpretador marcado como rodando, `Math.random` com o mesmo gerador com semente) e
+  `$gameMap.update(false)` + `$gamePlayer.update(false)` por quadro: **0 quadros diferentes** em posição real,
+  direção e página de todos os eventos, jogador e seguidores, em 5 sementes (1500 e 3000 quadros), com e sem
+  "Ignorar se Intransponível", e com a rota no jogador (3 seguidores). Switch 5 e variável 3 iguais no fim.
+- Interface: prévia com sprites, rodapé, ▶ animando os eventos (EV005 muda de página pelo Script), rota da
+  página (Custom) pelo botão "Rota…", lista com Script longo.
+- Desfazer: evento comum (OK → Ctrl+Z / Ctrl+Y no modo evento, status "Desfazer: Evento comum 0001"),
+  renomear switch (OK → modo mapa → `btnUndo` habilitado e desfaz), Ctrl+Z no modo mapa desfaz o evento
+  comum; nada gravado no disco antes do Salvar; `api.saveAll()` grava `CommonEvents.json`/`System.json` com o
+  estado desfeito/refeito correto.

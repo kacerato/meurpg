@@ -13,6 +13,7 @@ export class MiniMap {
         host.append(this.app.view);
         this.app.view.style.touchAction = "none";
         this.world = new PIXI.Container();
+        this.charLayer = new PIXI.Container(); // personagens (abaixo dos desenhos)
         this.layer = new PIXI.Container(); // desenhos do chamador (coordenadas de mapa em px)
         this.app.stage.addChild(this.world);
         this.tilemap = null;
@@ -40,7 +41,7 @@ export class MiniMap {
         for (const b of bitmaps) { b.addLoadListener(() => this.apply()); }
         this.tilemap = tm;
         this.world.addChildAt(tm, 0);
-        this.world.addChild(this.layer);
+        this.world.addChild(this.charLayer, this.layer);
         this.apply();
     }
 
@@ -63,6 +64,7 @@ export class MiniMap {
         this.tilemap.origin.x = this.sx / z; this.tilemap.origin.y = this.sy / z;
         this.tilemap.refresh();
         this.layer.position.set(-this.sx / z, -this.sy / z);
+        this.charLayer.position.set(-this.sx / z, -this.sy / z);
     }
 
     _bindPointer() {
