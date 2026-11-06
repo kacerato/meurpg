@@ -48,10 +48,11 @@ das sessões: `mz-strings-pt_BR.txt`).
      o terceiro some, repetir o mesmo não muda nada, e o tile 0 de B apaga os dois.
      Sombra = camada 4 (bits 1,2,4,8 = quartos), região = camada 5.
    - Seletor de camada "Automático / Camada 1–4" (menu Camada do MZ) na faixa.
-   - Autotile: recalcula o tile e os 8 vizinhos (e a coluna de parede abaixo).
-   - Sombra automática ao pintar a camada 0: metade esquerda (5) no chão à direita de
-     uma parede/telhado com parede acima-à-esquerda; sombras feitas à mão (≠ 0/5) são
-     preservadas.
+   - Autotile: o algoritmo do MZ (ver "Fidelidade do autotile"): o tile escrito e o
+     anel de 8 vizinhos, só nas direções voltadas para o que mudou.
+   - Sombra automática ao pintar a camada 0: metade esquerda (5) no chão (A1/A2/A5) à
+     direita de A3/A4 com A3/A4 acima-à-esquerda; senão 0 (como o MZ, sobrescreve a
+     sombra da caneta nas células recalculadas).
    - Pincel com vários tiles: padrão repetido ancorado no início do traço (lápis,
      retângulo, elipse e preencher).
 3. **Seleção** (botão tracejado na faixa): arrastar marca uma área. `btnCut`/`btnCopy`/
@@ -76,17 +77,89 @@ das sessões: `mz-strings-pt_BR.txt`).
 
 ## Fidelidade do autotile (medida)
 
-`node editor/js/maptools/test-autotile.mjs "<...>/RPG/samplemaps"` recalcula todos os
-autotiles dos ~100 mapas de exemplo do MZ e compara com o gravado. Resultado atual:
-água/piso A1 98,6% (Map001 e Map002 = 100%), A2 ~93%, A4 teto ~88%, paredes A3/A4 ~81%,
-total 92,6%; sombra automática 68%. A diferença restante é, em grande parte, ajuste
-manual com Shift nos mapas de exemplo (há mapas com 0% de diferença nas paredes e outros
-com 50%), mas as regras de parede do editor original podem ter casos que não descobri.
-Regras derivadas dessa comparação:
-- piso/cachoeira: fora do mapa conta como igual; parede: fora conta como diferente;
-- água A1 emenda em cachoeira, e cachoeira não tem borda encostada em água;
-- parede: vizinho lateral do mesmo tipo só emenda se a coluna começar na mesma linha; o
-  teto A4 correspondente (tipo − 8) ao lado da face emenda.
+### Onde está o algoritmo do MZ
+
+No `RPG.exe` 1.1.1 (x64), em C++, na classe `MapEditorBody` (item QML do módulo
+`Tkool.core`; o `TilemapHelper` exposto ao QML só tem os predicados). Achado procurando
+`lea reg, [reg-0x1700]` (id − TILE_ID_A4) com rizin e decompilando com Ghidra (REA). Funções
+(endereços virtuais):
+
+| endereço | papel |
+|---|---|
+| `0x140014780` | atualiza um retângulo alterado: percorre o retângulo expandido em 1; dentro máscara `0xff`, coluna à direita `0x19`, à esquerda `0x46`, linha de baixo `& 0x23`, de cima `& 0x8c` |
+| `0x1400144d0` | atualiza uma célula com máscara: escolhe piso/parede/cachoeira e, na camada 0 com `mask & 0x19`, refaz a sombra |
+| `0x140014b30` | piso: 8 bits de borda |
+| `0x140014f90` | parede/telhado: varredura da coluna |
+| `0x140019e20` | "vizinho diferente?" |
+| `0x140019a30` | "mesmo tipo?" (paredes) |
+| `0x140079510` / `0x1400795d0` | tabelas forma→bits (48) e bits→forma (256) do piso |
+| `0x140010b90` | balde: cada célula da borda do preenchimento atualiza a si (0xff) e as 8 vizinhas como um retângulo 1×1 |
+| `0x140012c20` / `0x140010460` | lápis (por carimbo) e retângulo/elipse (retângulo envolvente inteiro): chamam `0x140014780` só nas camadas que o pincel escreve |
+| `0x140014450` | `updateAllAutotiles`: camadas 0 e 1 do mapa inteiro |
+| `0x1400085b0` | Shift (`QGuiApplication::keyboardModifiers() & ShiftModifier`): com ele nada é recalculado (nem a sombra) |
+
+### Como funciona (implementado em `autotile.js`, `updateAutotileId`/`updateCell`/`autoShadow`)
+
+- Cada autotile tem 8 bits de borda (1 cima-esq., 2 cima-dir., 4 baixo-dir., 8 baixo-esq.,
+  0x10 esq., 0x20 cima, 0x40 dir., 0x80 baixo). Ao atualizar, só os bits da máscara são
+  recalculados; os outros vêm da forma atual (forma 47 = bits 0). Por isso o resultado
+  depende do histórico só quando a pintura foi feita com Shift (ou, nas paredes, quando a
+  coluna vizinha mudou de altura depois).
+- **Vizinho diferente** (piso e cima/baixo de parede): fora do mapa nunca é diferente;
+  não-autotile sempre é; entre água A1 (tipos 0, 1, 4–15) e cachoeira (tipos ímpares ≥ 5)
+  qualquer cachoeira emenda (inclusive cachoeira com cachoeira de outro tipo); no resto,
+  compara o tipo. Os tipos A1 2 e 3 não entram na regra da água.
+- **Piso** (A1 não cachoeira, A2, teto A4): 8 bits pela regra acima → tabela bits→forma.
+- **Cachoeira**: só esquerda/direita.
+- **Parede/telhado** (todo A3 e a face A4): acha topo e base da coluna do mesmo tipo.
+  Esquerda/direita (sempre recalculadas, ignoram a máscara): emenda se a coluna vizinha tem
+  o mesmo tipo na linha, no topo e na base, e não tem acima do topo nem abaixo da base
+  (mesma extensão). Na face de parede (tipo%16 ≥ 8) também emenda se esses 5 pontos da
+  coluna vizinha (linha, topo, acima do topo, base, abaixo da base) forem quaisquer A3/A4.
+  Fora do mapa = borda. Cima/baixo: borda se o vizinho é diferente ou está fora do mapa.
+- **Sombra automática**: refeita em cada célula da camada 0 atualizada com `mask & 0x19`
+  (a própria célula pintada e as vizinhas da direita): 5 se o tile da camada 0 é A1, A2 ou
+  A5 e os tiles à esquerda e acima-à-esquerda (camada 0) são A3 ou A4; senão 0 —
+  sobrescreve a sombra da caneta. Face de parede A4 encostada em teto não recebe sombra
+  automática (a dos mapas oficiais foi feita com a caneta).
+- `editops.js` (`fixup`) aplica isso como o MZ: cada célula escrita (mesmo sem mudar)
+  numa camada vira um retângulo 1×1 — a união das máscaras é igual à do retângulo do
+  carimbo e à do balde —, e só o anel de 1 tile é recalculado (sem propagar pela coluna de
+  parede). Na elipse entra o retângulo envolvente inteiro. Camadas 0–3, só as escritas.
+  As regras de camada (decorações na camada 1, `repairDecorationLayers`) não mudaram.
+
+### Números (`node editor/js/maptools/test-autotile.mjs "<...>/RPG/samplemaps"`)
+
+O teste agora também simula 1500 traços aleatórios pelo `MapEdit` e exige que piso,
+cachoeira e sombra fiquem iguais ao recálculo completo (propriedade do algoritmo sem
+Shift): 100%.
+
+| tipo (camada 0, salvo indicação) | antes | depois |
+|---|---|---|
+| água/piso A1 | 98,6% (camada 1: 99,8%) | 98,6% (99,8%) — já era o algoritmo |
+| A2 | 93,8% (camada 1: 91,1%) | 93,8% (91,1%) — idem |
+| teto A4 | 87,9% | 87,9% — idem |
+| paredes/telhados A3 | 80,5% | 82,0% |
+| faces de parede A4 | 80,7% | 87,2% |
+| cachoeira | 94,1% | 94,1% |
+| total | 92,6% | 93,2% |
+| sombra | 67,7% (métrica antiga, contava face de parede) | 83,5% dos tiles em que o MZ põe 5 estão com 5 |
+
+Os 9.322 tiles que ainda diferem (de 137.916) se dividem em: 5.881 piso e 17 cachoeira
+que só Shift explica (o algoritmo sem Shift sempre chega ao recálculo completo — ver a
+simulação); 1.401 com borda virada para fora do mapa, que o MZ nunca produz (mapa
+redimensionado/deslocado depois, ou Shift); 1.396 paredes que diferem só em
+esquerda/direita (Shift, ou coluna vizinha que mudou de altura depois — o MZ não atualiza
+a coluna inteira); 627 paredes com cima/baixo diferente (andares empilhados feitos com
+Shift). Sombra: 2.147 tiles com 5 onde o MZ daria 0 e 2.544 com outros valores são da
+caneta; 397 com 0 onde daria 5 são Shift/caneta. Exemplo típico de Shift: no
+`Essentials Set Z/.../Map003.json` uma faixa de estrada A5 cruza um campo A2 que ficou
+com a forma 0 (sem borda) dos dois lados.
+
+Validação com mapas que não são os de exemplo: `RPG/newdata` (mapa do projeto novo) e o
+projeto do DLC 3D Particle: 100%; DLC Essentials Set Z: 7 dos 8 mapas 100% (o 8º é a faixa
+acima); DLC Dark Fantasy: 96,6%. Os mapas de exemplo (`samplemaps`) vêm em boa parte do MV
+e foram retocados à mão; 9 dos 104 batem 100%.
 
 ## Rodada 2 (após a integração no master)
 
@@ -130,7 +203,7 @@ Regras derivadas dessa comparação:
   salvar).
 - Salvar como Imagem não desenha a borda das mesas (A2 com flag 0x80) nem o panorama, e os
   tiles ☆ não sobem acima dos superiores (só importa na ordem de desenho).
-- Paredes A4 não são criadas automaticamente sob o teto ao pintar (não sei se o MZ faz).
+- Paredes A4 não são criadas automaticamente sob o teto ao pintar — o MZ também não cria (a atualização dele só muda a forma, ver "Fidelidade do autotile").
 - Cores das regiões são aproximadas (matiz por ID), não as do MZ.
 - O arrasto por toque na lista foi testado só com mouse; a pinça com dois dedos já foi
   confirmada no aparelho pela sessão principal.

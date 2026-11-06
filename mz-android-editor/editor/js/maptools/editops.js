@@ -89,6 +89,10 @@ export class MapEdit {
         if (!this.grid.inside(x, y)) {
             return;
         }
+        if (this.stroke && z <= 3) {
+            // o MZ recalcula o autotile de toda célula escrita pelo pincel, mesmo sem mudança
+            this.stroke.touched[z].add(y * this.w + x);
+        }
         const i = this.grid.index(x, y, z);
         const data = this.map.data;
         const old = data[i] || 0;
@@ -106,7 +110,9 @@ export class MapEdit {
 
     // ----- traço -----
     begin(label) {
-        this.stroke = { label, old: new Map(), lower: new Set() };
+        // lower: células alteradas nas camadas 0–1 (também usado por dungeon.js);
+        // touched[z]: células escritas na camada z (0–3), para a atualização do autotile.
+        this.stroke = { label, old: new Map(), lower: new Set(), touched: [new Set(), new Set(), new Set(), new Set()] };
     }
 
     // Desfaz o que o traço atual escreveu (prévia de retângulo/elipse, cancelamento).
@@ -120,6 +126,7 @@ export class MapEdit {
         }
         this.stroke.old.clear();
         this.stroke.lower.clear();
+        for (const t of this.stroke.touched) { t.clear(); }
     }
 
     cancel() {
@@ -279,72 +286,58 @@ export class MapEdit {
         return [bx, by];
     }
 
-    // Recalcula autotiles (camadas 0 e 1) e sombra automática ao redor do que mudou.
+    // Recalcula autotiles e sombra automática como o MZ (MapEditorBody, ver NOTES.md).
+    // O MZ, depois de cada aplicação do pincel, chama a atualização para o retângulo
+    // escrito expandido em 1 (0x140014780): dentro com máscara 0xff e, na moldura, só as
+    // direções voltadas para dentro (0x19 à direita, 0x46 à esquerda, 0x23 embaixo, 0x8c em
+    // cima, cruzadas nos cantos); o balde faz o mesmo por célula. A união dessas máscaras é
+    // igual à de um retângulo 1×1 por célula escrita, que é o que se calcula aqui. Nada além
+    // desse anel é recalculado (o MZ também não propaga pela coluna de parede). Na camada 0
+    // a sombra automática é refeita (0 ou 5, sobrescrevendo a da caneta) onde a máscara tem
+    // um bit do lado esquerdo (0x19). Com Shift (autotile = false) o MZ não recalcula nada.
     fixup(autotile = true) {
-        if (!this.stroke || !autotile || this.stroke.lower.size === 0) {
+        if (!this.stroke || !autotile) {
             return;
         }
         const w = this.w;
-        const cells = new Set();
-        for (const key of this.stroke.lower) {
-            const x = key % w;
-            const y = Math.floor(key / w);
-            for (let dy = -1; dy <= 1; dy++) {
-                for (let dx = -1; dx <= 1; dx++) {
-                    if (this.grid.inside(x + dx, y + dy)) {
-                        cells.add((y + dy) * w + x + dx);
+        const st = this.stroke;
+        // cópias: as gravações abaixo acrescentam em lower/touched
+        const sets = st.touched.map(t => new Set(t));
+        const savedLower = new Set(st.lower);
+        const savedTouched = st.touched.map(t => new Set(t));
+        // células que dungeon.js (ou outro chamador) pôs só em lower contam como escritas
+        // nas camadas 0 e 1
+        for (const key of savedLower) {
+            if (!sets[0].has(key) && !sets[1].has(key)) {
+                sets[0].add(key);
+                sets[1].add(key);
+            }
+        }
+        const put = (x, y, z, v) => this.set(x, y, z, v);
+        for (let z = 0; z <= 3; z++) {
+            const touched = sets[z];
+            if (touched.size === 0) {
+                continue;
+            }
+            const masks = new Map();
+            for (const key of touched) {
+                const x = key % w;
+                const y = Math.floor(key / w);
+                const r = { x, y, w: 1, h: 1 };
+                for (let py = y - 1; py <= y + 1; py++) {
+                    for (let px = x - 1; px <= x + 1; px++) {
+                        if (!this.grid.inside(px, py)) { continue; }
+                        const pk = py * w + px;
+                        masks.set(pk, (masks.get(pk) || 0) | T.rectUpdateMask(r, px, py));
                     }
                 }
             }
-            // paredes: a forma depende da coluna inteira abaixo
-            for (let dx = -1; dx <= 1; dx++) {
-                for (let yy = y + 2; yy < this.h; yy++) {
-                    const id = this.get(x + dx, yy, 0);
-                    if (T.autotileType(id) !== "wall") {
-                        break;
-                    }
-                    cells.add(yy * w + x + dx);
-                }
+            for (const [key, m] of masks) {
+                T.updateCell(this.grid, key % w, Math.floor(key / w), z, m, put);
             }
         }
-        const saved = this.stroke.lower;
-        for (const key of cells) {
-            const x = key % w;
-            const y = Math.floor(key / w);
-            for (let z = 0; z <= 1; z++) {
-                const id = this.get(x, y, z);
-                if (T.isAutotile(id)) {
-                    const n = T.computeAutotile(this.grid, x, y, z);
-                    if (n !== id) {
-                        this.set(x, y, z, n);
-                    }
-                }
-            }
-        }
-        // sombra automática: (x,y) depende de (x-1,y) e (x-1,y-1)
-        const shadowCells = new Set();
-        for (const key of saved) {
-            const x = key % w;
-            const y = Math.floor(key / w);
-            for (const [dx, dy] of [[0, 0], [1, 0], [1, 1]]) {
-                if (this.grid.inside(x + dx, y + dy)) {
-                    shadowCells.add((y + dy) * w + x + dx);
-                }
-            }
-        }
-        for (const key of shadowCells) {
-            const x = key % w;
-            const y = Math.floor(key / w);
-            const cur = this.get(x, y, 4);
-            if (cur !== 0 && cur !== 5) {
-                continue; // sombra desenhada à mão com a caneta: preserva
-            }
-            const s = T.autoShadow(this.grid, x, y);
-            if (s !== cur) {
-                this.set(x, y, 4, s);
-            }
-        }
-        this.stroke.lower = saved;
+        st.lower = savedLower;
+        st.touched = savedTouched;
     }
 
     // ----- ferramentas -----
@@ -369,6 +362,7 @@ export class MapEdit {
         const top = Math.min(y0, y1), bottom = Math.max(y0, y1);
         const cx = (left + right + 1) / 2, cy = (top + bottom + 1) / 2;
         const rx = (right - left + 1) / 2, ry = (bottom - top + 1) / 2;
+        const before = this.stroke ? this.stroke.touched.map(t => t.size) : null;
         for (let y = top; y <= bottom; y++) {
             for (let x = left; x <= right; x++) {
                 if (ellipse) {
@@ -384,6 +378,18 @@ export class MapEdit {
                 const [bx, by] = this.brushCellAt(brush, left, top, x, y);
                 this.applyBrushCell(brush, bx, by, x, y, layer, regionTab);
             }
+        }
+        if (ellipse && before) {
+            // o MZ atualiza o autotile do retângulo envolvente inteiro (0x140010460), também
+            // nos cantos que a elipse não pintou
+            this.stroke.touched.forEach((t, z) => {
+                if (t.size === before[z]) { return; }
+                for (let y = Math.max(0, top); y <= Math.min(this.h - 1, bottom); y++) {
+                    for (let x = Math.max(0, left); x <= Math.min(this.w - 1, right); x++) {
+                        t.add(y * this.w + x);
+                    }
+                }
+            });
         }
     }
 

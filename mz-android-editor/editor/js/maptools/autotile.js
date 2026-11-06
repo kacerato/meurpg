@@ -78,17 +78,6 @@ export function defaultGroundKind(id) {
     return isA2(id) ? 16 + Math.floor((kindOf(id) - 16) / 8) * 8 : 0;
 }
 
-// Formas de piso (0–47): cada quarto do tile depende de dois vizinhos ortogonais e do
-// diagonal. A tabela é derivada da própria FLOOR_AUTOTILE_TABLE do runtime, então a forma
-// escolhida é exatamente a que desenha os quartos esperados.
-// Estados por quarto: I = interior, C = canto interno, H = borda horizontal (vizinho lateral
-// diferente), V = borda vertical (vizinho de cima/baixo diferente), O = canto externo.
-const FLOOR_QUARTERS = {
-    TL: { I: "2,4", C: "2,0", H: "0,4", V: "2,2", O: "0,2" },
-    TR: { I: "1,4", C: "3,0", H: "3,4", V: "1,2", O: "3,2" },
-    BL: { I: "2,3", C: "2,1", H: "0,3", V: "2,5", O: "0,5" },
-    BR: { I: "1,3", C: "3,1", H: "3,3", V: "1,5", O: "3,5" }
-};
 export const FLOOR_AUTOTILE_TABLE = [
     [[2, 4], [1, 4], [2, 3], [1, 3]], [[2, 0], [1, 4], [2, 3], [1, 3]], [[2, 4], [3, 0], [2, 3], [1, 3]], [[2, 0], [3, 0], [2, 3], [1, 3]],
     [[2, 4], [1, 4], [2, 3], [3, 1]], [[2, 0], [1, 4], [2, 3], [3, 1]], [[2, 4], [3, 0], [2, 3], [3, 1]], [[2, 0], [3, 0], [2, 3], [3, 1]],
@@ -103,40 +92,54 @@ export const FLOOR_AUTOTILE_TABLE = [
     [[0, 4], [1, 4], [0, 5], [1, 5]], [[0, 4], [3, 0], [0, 5], [1, 5]], [[0, 2], [3, 2], [0, 3], [3, 3]], [[0, 2], [1, 2], [0, 5], [1, 5]],
     [[0, 4], [3, 4], [0, 5], [3, 5]], [[2, 2], [3, 2], [2, 5], [3, 5]], [[0, 2], [3, 2], [0, 5], [3, 5]], [[0, 0], [1, 0], [0, 1], [1, 1]]
 ];
-const FLOOR_LOOKUP = new Map();
-FLOOR_AUTOTILE_TABLE.forEach((q, shape) => {
-    const key = q.map(p => p.join(",")).join("|");
-    if (!FLOOR_LOOKUP.has(key)) { FLOOR_LOOKUP.set(key, shape); }
-});
+// ===========================================================================
+// Algoritmo do editor original (RPG.exe 1.1.1, classe C++ MapEditorBody do módulo
+// Tkool.core; endereços do executável x64 entre parênteses). Ver NOTES.md, seção
+// "Fidelidade do autotile".
+//
+// Cada autotile guarda, implicitamente, 8 bits de "borda" — um por vizinho:
+//   1 = cima-esq., 2 = cima-dir., 4 = baixo-dir., 8 = baixo-esq.,
+//   0x10 = esquerda, 0x20 = cima, 0x40 = direita, 0x80 = baixo.
+// Bit ligado = o vizinho é "diferente" (desenha a borda). O editor converte forma <-> bits
+// por duas tabelas (0x140079510 e 0x1400795d0) e, ao atualizar um tile, só recalcula os
+// bits das direções pedidas na máscara (mask); os demais vêm da forma que já estava lá.
+// ===========================================================================
 
-function quarterState(side, vert, diag) {
-    if (side && vert) { return diag ? "I" : "C"; }
-    if (!side && vert) { return "H"; }
-    if (side && !vert) { return "V"; }
-    return "O";
-}
+// Forma (0–47) -> bits de borda do piso (0x140079510). A forma 47 (tile isolado da paleta)
+// vale 0: o tile recém-pintado começa "sem bordas" nas direções não recalculadas.
+export const FLOOR_SHAPE_TO_BITS = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 25, 27, 29, 31, 35, 39, 43, 47,
+    70, 78, 71, 79, 140, 141, 142, 143, 95, 175, 59, 63, 103, 111, 206, 207, 157, 159, 127,
+    191, 223, 239, 255, 0
+];
+// Bits de borda -> forma do piso (0x1400795d0, 256 entradas).
+export const FLOOR_BITS_TO_SHAPE = (() => {
+    const t = [];
+    for (let i = 0; i < 16; i++) { t.push(i); }
+    const rest = [
+        16, 16, 17, 17, 18, 18, 19, 19, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21,
+        22, 22, 22, 22, 23, 23, 23, 23, 34, 34, 34, 34, 35, 35, 35, 35, 34, 34, 34, 34, 35, 35, 35, 35,
+        24, 26, 24, 26, 24, 26, 24, 26, 25, 27, 25, 27, 25, 27, 25, 27, 32, 32, 32, 32, 32, 32, 32, 32,
+        32, 32, 32, 32, 32, 32, 32, 32, 36, 36, 36, 36, 36, 36, 36, 36, 37, 37, 37, 37, 37, 37, 37, 37,
+        42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 28, 29, 30, 31, 28, 29, 30, 31,
+        28, 29, 30, 31, 28, 29, 30, 31, 40, 40, 41, 41, 40, 40, 41, 41, 40, 40, 41, 41, 40, 40, 41, 41,
+        33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 43, 43, 43, 43, 43, 43, 43, 43,
+        43, 43, 43, 43, 43, 43, 43, 43, 38, 39, 38, 39, 38, 39, 38, 39, 38, 39, 38, 39, 38, 39, 38, 39
+    ];
+    for (const v of rest) { t.push(v); }
+    for (const v of [44, 45, 46]) { for (let i = 0; i < 16; i++) { t.push(v); } }
+    return t;
+})();
 
-// n: função (dx, dy) => true se o vizinho conta como "mesmo tipo".
-export function floorShape(n) {
-    const l = n(-1, 0), r = n(1, 0), u = n(0, -1), d = n(0, 1);
-    const key = [
-        FLOOR_QUARTERS.TL[quarterState(l, u, n(-1, -1))],
-        FLOOR_QUARTERS.TR[quarterState(r, u, n(1, -1))],
-        FLOOR_QUARTERS.BL[quarterState(l, d, n(-1, 1))],
-        FLOOR_QUARTERS.BR[quarterState(r, d, n(1, 1))]
-    ].join("|");
-    return FLOOR_LOOKUP.has(key) ? FLOOR_LOOKUP.get(key) : 0;
-}
+// Parede/telhado (0–15): bit 1 esq., 2 cima, 4 dir., 8 baixo (0x140019f50 / 0x140019f10).
+export const wallShapeToBits = s => ((s & 1) ? 0x10 : 0) | ((s & 2) ? 0x20 : 0) | ((s & 4) ? 0x40 : 0) | ((s & 8) ? 0x80 : 0);
+export const wallBitsToShape = b => ((b & 0x10) ? 1 : 0) | ((b & 0x20) ? 2 : 0) | ((b & 0x40) ? 4 : 0) | ((b & 0x80) ? 8 : 0);
+// Cachoeira (0–3): bit 1 esq., 2 dir. (0x140019fb0 / 0x140019f90).
+export const waterfallShapeToBits = s => ((s & 1) ? 0x10 : 0) | ((s & 2) ? 0x40 : 0);
+export const waterfallBitsToShape = b => ((b & 0x10) ? 1 : 0) | ((b & 0x40) ? 2 : 0);
 
-// Paredes/telhados (0–15): bit 1 = borda esquerda, 2 = topo, 4 = direita, 8 = base.
-export function wallShape(n) {
-    return (n(-1, 0) ? 0 : 1) | (n(0, -1) ? 0 : 2) | (n(1, 0) ? 0 : 4) | (n(0, 1) ? 0 : 8);
-}
-
-// Cachoeira (0–3): bit 1 = borda esquerda, 2 = direita.
-export function waterfallShape(n) {
-    return (n(-1, 0) ? 0 : 1) | (n(1, 0) ? 0 : 2);
-}
+// Direções: [bit, dx, dy].
+const DIRS = [[1, -1, -1], [2, 1, -1], [4, 1, 1], [8, -1, 1], [0x10, -1, 0], [0x20, 0, -1], [0x40, 1, 0], [0x80, 0, 1]];
 
 // Acesso aos dados do mapa no formato do MZ: data[(z * h + y) * w + x].
 export class MapGrid {
@@ -150,80 +153,161 @@ export class MapGrid {
     get(x, y, z) {
         return this.inside(x, y) ? (this.map.data[this.index(x, y, z)] || 0) : 0;
     }
+    // Como o editor (0x140013030): fora do mapa devolve −1.
+    raw(x, y, z) {
+        return this.inside(x, y) ? (this.map.data[this.index(x, y, z)] || 0) : -1;
+    }
 }
 
-// Primeira linha (de cima) da coluna contínua de parede do mesmo tipo que contém (x,y).
-function wallColumnTop(grid, x, y, z, id) {
-    let t = y;
-    while (t > 0 && sameKind(id, grid.get(x, t - 1, z))) {
-        t--;
+// A1 "água/cachoeira" para a regra de emenda: tipos 0, 1 e 4–15 (não 2 e 3).
+const inWaterGroup = id => (id >= TILE_ID_A1 && id < TILE_ID_A1 + 96) || (id >= TILE_ID_A1 + 192 && id < TILE_ID_A2);
+
+// O vizinho o é "diferente" do autotile c? (0x140019e20)
+// Fora do mapa (−1) nunca é diferente. Não-autotile é sempre diferente. Entre água A1
+// (tipos 0, 1, 4–15) e cachoeira, qualquer cachoeira emenda; no resto compara o tipo.
+export function isDifferent(c, o) {
+    if (o < 0 || c < TILE_ID_A1) { return false; }
+    if (o < TILE_ID_A1) { return true; }
+    if (inWaterGroup(c) && inWaterGroup(o) && (isWaterfall(c) || isWaterfall(o))) {
+        return false;
     }
-    return t;
+    return kindOf(c) !== kindOf(o);
 }
 
-// Vizinho "do mesmo tipo" para o tile (x,y,z). As regras foram ajustadas comparando com
-// os ~100 mapas de exemplo oficiais (RPG/samplemaps, ver NOTES.md):
-// - piso/cachoeira: fora do mapa conta como igual (sem borda na beira do mapa);
-// - parede/telhado: fora do mapa conta como diferente; na horizontal, um vizinho do mesmo
-//   tipo só "emenda" se a coluna de parede começar na mesma linha, e o teto (A4 de cima)
-//   correspondente ao lado da face da parede também emenda.
-export function sameNeighbor(grid, x, y, z, id, dx, dy) {
-    const nx = x + dx, ny = y + dy;
-    const wall = autotileType(id) === "wall";
-    if (!grid.inside(nx, ny)) {
-        return !wall;
+// Mesmo tipo (0x140019a30): entre autotiles compara o tipo; senão, o id exato (−1 ≠ tudo).
+export const sameKindRaw = (a, b) => (a >= TILE_ID_A1 && b >= TILE_ID_A1) ? kindOf(a) === kindOf(b) : a === b;
+
+// Bits de borda de piso (0x140014b30).
+function floorBits(grid, x, y, z, c, mask, oldBits) {
+    let bits = oldBits & ~mask;
+    for (const [bit, dx, dy] of DIRS) {
+        if ((mask & bit) && isDifferent(c, grid.raw(x + dx, y + dy, z))) {
+            bits |= bit;
+        }
     }
-    const other = grid.get(nx, ny, z);
-    if (isA1(id) && !isWaterfall(id) && isWaterfall(other)) {
-        return true; // a água emenda na cachoeira (sem margem entre elas)
-    }
-    if (isWaterfall(id) && isA1(other)) {
-        return true; // e a cachoeira não tem borda lateral encostada em água
-    }
-    if (!wall || dy !== 0) {
-        return sameKind(id, other);
-    }
-    if (sameKind(id, other)) {
-        return wallColumnTop(grid, x, y, z, id) === wallColumnTop(grid, nx, y, z, id);
-    }
-    return isA4(id) && isA4(other) && kindOf(other) === kindOf(id) - 8;
+    return bits;
 }
 
-// Sombra automática (camada 4): o MZ escurece a metade esquerda (bits 1|4 = 5) de um tile
-// de chão quando o tile à esquerda e o de cima-à-esquerda são paredes/telhados (A3/A4).
-// Também vale para a face de parede encostada num teto (A4 de cima) de outra coluna.
-export function autoShadow(grid, x, y) {
-    const c = grid.get(x, y, 0);
-    const l = grid.get(x - 1, y, 0);
-    const ul = grid.get(x - 1, y - 1, 0);
-    if (!grid.inside(x - 1, y) || !grid.inside(x - 1, y - 1)) {
-        return 0;
+// Bits de borda de parede/telhado (0x140014f90). Esquerda/direita são sempre recalculadas:
+// a coluna vizinha só emenda se tiver a mesma extensão vertical (mesmo topo e mesma base)
+// do mesmo tipo; numa face de parede (A3/A4 tipo >= 8 na linha) também emenda se os mesmos
+// 5 pontos da coluna vizinha (linha atual, topo, acima do topo, base, abaixo da base) forem
+// quaisquer A3/A4. Cima/baixo: borda se o vizinho for diferente ou estiver fora do mapa.
+function wallBits(grid, x, y, z, c, mask, oldBits) {
+    let bits = oldBits & ~mask;
+    const same = (xx, yy) => sameKindRaw(grid.raw(xx, yy, z), c);
+    let top = y;
+    while (same(x, top - 1)) { top--; }
+    let bottom = y;
+    while (same(x, bottom + 1)) { bottom++; }
+    const joined = nx => same(nx, y) && same(nx, bottom) && !same(nx, bottom + 1) &&
+        same(nx, top) && !same(nx, top - 1);
+    let left = joined(x - 1);
+    let right = joined(x + 1);
+    if (isWallSide(c)) {
+        const anyWall = (xx, yy) => isShadowing(grid.raw(xx, yy, z));
+        const wide = nx => anyWall(nx, y) && anyWall(nx, bottom) && anyWall(nx, bottom + 1) &&
+            anyWall(nx, top) && anyWall(nx, top - 1);
+        left = left || wide(x - 1);
+        right = right || wide(x + 1);
     }
-    if (!isShadowing(l) || !isShadowing(ul)) {
-        return 0;
+    bits = left ? bits & ~0x10 : bits | 0x10;
+    bits = right ? bits & ~0x40 : bits | 0x40;
+    for (const [bit, dy] of [[0x20, -1], [0x80, 1]]) {
+        if (mask & bit) {
+            const o = grid.raw(x, y + dy, z);
+            if (o < 0 || isDifferent(c, o)) {
+                bits |= bit;
+            }
+        }
     }
-    const ground = isA1(c) || isA2(c) || isA5(c);
-    if (ground || (isWallSide(c) && isWallTop(l))) {
-        return 5;
-    }
-    return 0;
+    return bits;
 }
 
-// Recalcula a forma do autotile em (x,y,z). Devolve o novo id (ou o mesmo).
+// Bits de borda de cachoeira (inline em 0x1400144d0): só esquerda e direita.
+function waterfallBits(grid, x, y, z, c, mask, oldBits) {
+    let bits = oldBits & ~mask;
+    for (const [bit, dx] of [[0x10, -1], [0x40, 1]]) {
+        if ((mask & bit) && isDifferent(c, grid.raw(x + dx, y, z))) {
+            bits |= bit;
+        }
+    }
+    return bits & 0x50;
+}
+
+// Novo id do autotile em (x,y,z) recalculando só as direções de mask (0x1400144d0).
+// mask = 0xff recalcula tudo (o que o MZ faz no tile pintado).
+export function updateAutotileId(grid, x, y, z, mask = 0xff) {
+    const c = grid.raw(x, y, z);
+    if (c < TILE_ID_A1) {
+        return c;
+    }
+    const kind = kindOf(c);
+    const shape = shapeOf(c);
+    const type = autotileType(c);
+    if (type === "waterfall") {
+        return makeAutotileId(kind, waterfallBitsToShape(waterfallBits(grid, x, y, z, c, mask, waterfallShapeToBits(shape))));
+    }
+    if (type === "wall") {
+        return makeAutotileId(kind, wallBitsToShape(wallBits(grid, x, y, z, c, mask, wallShapeToBits(shape))));
+    }
+    return makeAutotileId(kind, FLOOR_BITS_TO_SHAPE[floorBits(grid, x, y, z, c, mask, FLOOR_SHAPE_TO_BITS[shape])]);
+}
+
+// Recalcula a forma do autotile em (x,y,z) a partir de todos os vizinhos (máscara 0xff).
 export function computeAutotile(grid, x, y, z) {
     const id = grid.get(x, y, z);
     if (!isAutotile(id)) {
         return id;
     }
-    const n = (dx, dy) => sameNeighbor(grid, x, y, z, id, dx, dy);
-    const type = autotileType(id);
-    let shape;
-    if (type === "waterfall") {
-        shape = waterfallShape(n);
-    } else if (type === "wall") {
-        shape = wallShape(n);
-    } else {
-        shape = floorShape(n);
+    return updateAutotileId(grid, x, y, z, 0xff);
+}
+
+// Sombra automática (camada 4), recalculada pelo MZ junto com o tile da camada 0 sempre
+// que a máscara inclui uma direção do lado esquerdo (mask & 0x19): vale 5 (metade esquerda)
+// se o tile da camada 0 é A1, A2 ou A5 e os tiles à esquerda e acima-à-esquerda (camada 0)
+// são A3 ou A4; senão 0 (apaga a sombra que estiver lá, inclusive a da caneta).
+export function autoShadow(grid, x, y) {
+    const c = grid.raw(x, y, 0);
+    const ground = (c >= TILE_ID_A5 && c < TILE_ID_A1) || (c >= TILE_ID_A1 && c < TILE_ID_A3);
+    if (!ground) {
+        return 0;
     }
-    return makeAutotileId(kindOf(id), shape);
+    return isShadowing(grid.raw(x - 1, y, 0)) && isShadowing(grid.raw(x - 1, y - 1, 0)) ? 5 : 0;
+}
+
+// Máscara que o MZ usa para atualizar a célula (x,y) quando o retângulo r ({x, y, w, h})
+// mudou (0x140014780): dentro, 0xff; na moldura de 1 tile em volta, só as direções que
+// apontam para dentro do retângulo.
+export function rectUpdateMask(r, x, y) {
+    let m = 0xff;
+    if (x === r.x + r.w) { m = 0x19; } else if (x === r.x - 1) { m = 0x46; }
+    if (y === r.y + r.h) { m &= 0x23; } else if (y === r.y - 1) { m &= 0x8c; }
+    return m;
+}
+
+// Uma chamada de 0x1400144d0: autotile da camada z e, na camada 0, a sombra automática.
+// set(x, y, z, id) grava.
+export function updateCell(grid, x, y, z, mask, set) {
+    const id = grid.raw(x, y, z);
+    if (id >= TILE_ID_A1) {
+        const n = updateAutotileId(grid, x, y, z, mask);
+        if (n !== id) { set(x, y, z, n); }
+    }
+    if (z === 0 && (mask & 0x19)) {
+        const s = autoShadow(grid, x, y);
+        if (s !== grid.get(x, y, 4)) { set(x, y, 4, s); }
+    }
+}
+
+// Atualiza autotiles e sombra de um retângulo alterado, como o MZ (0x140014780): percorre o
+// retângulo expandido em 1, linha a linha, com a máscara de rectUpdateMask.
+export function updateRect(grid, r, z, set) {
+    for (let y = r.y - 1; y <= r.y + r.h; y++) {
+        for (let x = r.x - 1; x <= r.x + r.w; x++) {
+            if (grid.inside(x, y)) {
+                updateCell(grid, x, y, z, rectUpdateMask(r, x, y), set);
+            }
+        }
+    }
 }
