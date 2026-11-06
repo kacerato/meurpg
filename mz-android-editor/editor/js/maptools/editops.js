@@ -27,6 +27,60 @@ export class MapEdit {
 
     get w() { return this.map.width; }
     get h() { return this.map.height; }
+    get mode() { return this.tileset && Number.isInteger(this.tileset.mode) ? this.tileset.mode : 0; }
+
+    // Garante sob uma decoração (camada 1) a base exigida, ou um chão válido se não houver.
+    ensureBase(x, y, decoId) {
+        const mode = this.mode;
+        const base = this.get(x, y, 0);
+        const need = T.decorationBaseKind(decoId, mode);
+        if (need !== null) {
+            if (!(T.isAutotile(base) && T.kindOf(base) === need)) {
+                this.set(x, y, 0, T.makeAutotileId(need, 0));
+            }
+            return;
+        }
+        const groundOk = base && !T.isDecorationA(base, mode) && (T.isA1(base) || T.isA2(base) || T.isA5(base));
+        if (!groundOk) {
+            this.set(x, y, 0, T.makeAutotileId(T.defaultGroundKind(decoId), 0));
+        }
+    }
+
+    // Corrige dados gravados antes da regra completa: decoração com borda transparente na
+    // camada 0 (aparece com fundo preto) vai para a camada 1 e recebe a base certa.
+    // Devolve quantas células mudaram. Entra no histórico como uma única ação.
+    repairDecorationLayers() {
+        const mode = this.mode;
+        if (mode !== 0) {
+            // Só tilesets tipo campo: nos mapas oficiais de tipo área há poucas decorações postas
+            // na camada 0 de propósito, e o reparo não deve mexer nelas.
+            return 0;
+        }
+        const cells = [];
+        for (let y = 0; y < this.h; y++) {
+            for (let x = 0; x < this.w; x++) {
+                const l0 = this.get(x, y, 0);
+                if (l0 && T.isDecorationA(l0, mode)) {
+                    cells.push([x, y, l0]);
+                }
+            }
+        }
+        if (!cells.length) {
+            return 0;
+        }
+        this.begin("repair");
+        for (const [x, y, id] of cells) {
+            const l1 = this.get(x, y, 1);
+            this.set(x, y, 0, 0);
+            if (!l1 || T.isDecorationA(l1, mode) === false) {
+                this.set(x, y, 1, id);
+            }
+            this.ensureBase(x, y, id);
+        }
+        this.fixup(true);
+        this.commit();
+        return cells.length;
+    }
 
     // ----- baixo nível -----
     get(x, y, z) { return this.grid.get(x, y, z); }
@@ -182,21 +236,11 @@ export class MapEdit {
             this.set(x, y, 3, tileId);
             return;
         }
-        if (T.isDecorationA(tileId)) {
-            // A2 colunas 5–8 / A1 pedras e icebergs: decoração na camada 1 sobre a base.
+        const mode = this.mode;
+        if (T.isDecorationA(tileId, mode)) {
+            // Borda transparente: vai na camada 1 sobre a base que os mapas oficiais usam.
             this.set(x, y, 1, tileId);
-            const base = this.get(x, y, 0);
-            if (T.isA1(tileId) && !(T.isA1(base) && T.kindOf(base) === 0)) {
-                // Decoração de A1 exige água rasa (tipo 0) por baixo, como nos mapas oficiais.
-                this.set(x, y, 0, T.makeAutotileId(0, 0));
-            }
-            if (this.tileset && this.tileset.mode === 0 && T.isA2(tileId) && T.isA2(base) && !T.isDecorationA(base)) {
-                // Tipo campo: decoração sobre a base da 2ª/4ª coluna troca a base pela 1ª/3ª.
-                const col = (T.kindOf(base) - 16) % 8;
-                if (col === 1 || col === 3) {
-                    this.set(x, y, 0, T.makeAutotileId(T.kindOf(base) - 1, T.shapeOf(base)));
-                }
-            }
+            this.ensureBase(x, y, tileId);
             return;
         }
         this.set(x, y, 0, tileId);
@@ -356,7 +400,7 @@ export class MapEdit {
         if (sample !== null && T.isUpper(sample)) {
             return this.get(x, y, 2) + "," + this.get(x, y, 3);
         }
-        if (sample !== null && T.isDecorationA(sample)) {
+        if (sample !== null && T.isDecorationA(sample, this.mode)) {
             return kindKey(this.get(x, y, 0)) + "," + kindKey(this.get(x, y, 1));
         }
         return kindKey(this.get(x, y, 0)) + "," + kindKey(this.get(x, y, 1)) +

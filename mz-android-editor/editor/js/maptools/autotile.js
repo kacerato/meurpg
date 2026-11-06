@@ -40,17 +40,42 @@ export function autotileType(id) {
 
 // Tile "de decoração" da camada A: vai para a camada 1 por cima da base.
 // A1: tipos 2 e 3 (pedras/icebergs sobre o mar); A2: colunas 5–8 (metade direita).
-export function isDecorationA(id) {
+// Autotiles A com bordas transparentes, que o MZ sempre põe na camada 1 sobre uma base.
+// Regra medida nos ~100 mapas oficiais (RPG/samplemaps): nenhum destes aparece na camada 0.
+//  - A1 tipos 1–3 (água profunda, pedras, icebergs): sobre água rasa (tipo 0).
+//  - A2 colunas 5–8 (árvores, montanhas…): sobre o chão que já estiver ali.
+//  - Tileset tipo campo (mode 0), A2 colunas 2 e 4 (gramas/terrenos com borda transparente):
+//    sobre a coluna 1 e 3 da mesma linha, respectivamente.
+// mode: Tilesets[n].mode (0 campo, 1 área, 2 compatível com VX). Sem mode, assume campo.
+export function isDecorationA(id, mode = 0) {
     if (isA1(id)) {
-        // Água profunda (1), pedras (2) e icebergs (3) têm bordas transparentes: nos mapas
-        // oficiais ficam sempre na camada 1 sobre a água rasa (tipo 0) na camada 0.
         const k = kindOf(id);
         return k === 1 || k === 2 || k === 3;
     }
     if (isA2(id)) {
-        return (kindOf(id) - 16) % 8 >= 4;
+        const col = (kindOf(id) - 16) % 8;
+        return col >= 4 || (mode === 0 && (col === 1 || col === 3));
     }
     return false;
+}
+
+// Tipo de autotile que a decoração exige na camada 0 (ou null: qualquer chão serve).
+export function decorationBaseKind(id, mode = 0) {
+    if (isA1(id)) {
+        return 0;
+    }
+    if (isA2(id) && mode === 0) {
+        const col = (kindOf(id) - 16) % 8;
+        if (col === 1 || col === 3) {
+            return kindOf(id) - 1;
+        }
+    }
+    return null;
+}
+
+// Chão padrão para uma decoração A2 (colunas 5–8) sem chão válido: coluna 1 da mesma linha.
+export function defaultGroundKind(id) {
+    return isA2(id) ? 16 + Math.floor((kindOf(id) - 16) / 8) * 8 : 0;
 }
 
 // Formas de piso (0–47): cada quarto do tile depende de dois vizinhos ortogonais e do

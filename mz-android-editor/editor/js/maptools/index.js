@@ -166,6 +166,13 @@ function onMapSelected({ id, map, tileset }) {
         S.palette.setTileset(tileset);
     }
     attachOverlay();
+    // Mapas pintados antes da regra completa de camadas: decorações com borda transparente
+    // na camada 0 aparecem com fundo preto. Move-as para a camada 1 (pode ser desfeito).
+    const fixed = edit.repairDecorationLayers();
+    if (fixed > 0) {
+        refreshView();
+        api.status(t("%1 tile(s) with transparent edges moved to layer 2 (Undo reverts).", null, fixed));
+    }
     updateButtons();
 }
 

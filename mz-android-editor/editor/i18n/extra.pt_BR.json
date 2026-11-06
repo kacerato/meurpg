@@ -291,6 +291,7 @@
   "The sample data for this step is not available in this editor; continue with your own project.": "Os dados de exemplo desta etapa não estão disponíveis neste editor; continue com o seu próprio projeto.",
   "Skills: convert the battle messages of %1 skills to the RPG Maker MZ format.": "Habilidades: converter as mensagens de batalha de %1 habilidades para o formato do RPG Maker MZ.",
   "States: convert the messages of %1 states to the RPG Maker MZ format.": "Status: converter as mensagens de %1 status para o formato do RPG Maker MZ.",
-  "This is an RPG Maker MV animation. It plays in the game as it is, but it cannot be edited in RPG Maker MZ.": "Esta é uma animação do RPG Maker MV. Ela funciona no jogo como está, mas não pode ser editada no RPG Maker MZ."
+  "This is an RPG Maker MV animation. It plays in the game as it is, but it cannot be edited in RPG Maker MZ.": "Esta é uma animação do RPG Maker MV. Ela funciona no jogo como está, mas não pode ser editada no RPG Maker MZ.",
+  "%1 tile(s) with transparent edges moved to layer 2 (Undo reverts).": "%1 tile(s) com borda transparente movido(s) para a camada 2 (Desfazer reverte)."
  }
 }
