@@ -7,6 +7,7 @@ import { h, actionMenu, alertBox, isBigCharacter } from "./ui.js";
 import { openEventEditor } from "./eventeditor.js";
 import { quickEvent } from "./quick.js";
 import { t } from "../i18n.js";
+import { initHistory, onHistoryChange, nextSeq, dbHist, dbTopSeq, undoDb, redoDb, clearDbRedo, persistDb, dbUndoWinsInMapMode, dbRedoWinsInMapMode } from "./history.js";
 
 const T = 48;
 
@@ -32,7 +33,9 @@ export class EventMode {
         this.container.addChild(this.spriteLayer, this.gfx);
         this.container.visible = false;
         this.drag = null;
-        this.history = new Map(); // mapId -> {undo: [], redo: []}
+        this.history = new Map(); // mapId -> {undo: [], redo: []} (+ history.js: CommonEvents/System)
+        initHistory(api);
+        onHistoryChange(() => this._updateBar());
         this._buildUi();
         this._bindInput();
         api.view.app.ticker.add(this._tick, this);
@@ -71,8 +74,9 @@ export class EventMode {
     get selectedEvent() { return this.map ? this.eventAt(this.cursor.x, this.cursor.y) : null; }
 
     // Não grava na hora: marca o mapa como modificado; "Salvar projeto" (api.saveAll) grava junto
-    // com os tiles, como no MZ. (System.json da posição inicial continua gravado na hora, como o
-    // banco de dados, para não divergir do que o diálogo do banco lê do disco.)
+    // com os tiles, como no MZ. A posição inicial (System.json) também entra no salvamento unificado
+    // (history.js persistDb: cache do Project + markDirty; o Banco de dados lê o cache enquanto estiver
+    // marcado).
     async save() {
         const evs = this.map.events;
         while (evs.length > 1 && !evs[evs.length - 1]) { evs.pop(); }
@@ -110,9 +114,10 @@ export class EventMode {
     record() {
         if (!this.map) { return; }
         const h = this._hist();
-        h.undo.push(this._snapshot());
+        h.undo.push({ ...this._snapshot(), seq: nextSeq() });
         if (h.undo.length > 100) { h.undo.shift(); }
         h.redo.length = 0;
+        clearDbRedo();
         this._updateBar();
     }
     async _restore(snap) {
@@ -123,21 +128,26 @@ export class EventMode {
             const s = db.system;
             s.startMapId = snap.sys.startMapId; s.startX = snap.sys.startX; s.startY = snap.sys.startY;
             for (const k of ["boat", "ship", "airship"]) { if (snap.sys[k] && s[k]) { Object.assign(s[k], snap.sys[k]); } }
-            await this.api.project.writeJson("data/System.json", s);
-            this.api.emit("db:changed", { file: "data/System.json" });
+            persistDb("data/System.json", s);
         }
         await this.save();
     }
+    // Desfaz o passo mais recente entre o histórico deste mapa e o do banco (evento comum, nomes de
+    // switches/variáveis), que continua valendo depois de fechar os diálogos.
     async undo() {
-        const h = this._hist();
-        if (!this.map || !h.undo.length) { return; }
-        h.redo.push(this._snapshot());
+        const h = this.map ? this._hist() : { undo: [], redo: [] };
+        const top = h.undo.length ? h.undo[h.undo.length - 1].seq || 0 : -1;
+        if (dbTopSeq("undo") > top) { undoDb(); return; }
+        if (!h.undo.length) { return; }
+        h.redo.push({ ...this._snapshot(), seq: nextSeq() });
         await this._restore(h.undo.pop());
     }
     async redo() {
-        const h = this._hist();
-        if (!this.map || !h.redo.length) { return; }
-        h.undo.push(this._snapshot());
+        const h = this.map ? this._hist() : { undo: [], redo: [] };
+        const top = h.redo.length ? h.redo[h.redo.length - 1].seq || 0 : -1;
+        if (dbTopSeq("redo") > top) { redoDb(); return; }
+        if (!h.redo.length) { return; }
+        h.undo.push({ ...this._snapshot(), seq: nextSeq() });
         await this._restore(h.redo.pop());
     }
 
@@ -196,8 +206,7 @@ export class EventMode {
         this.record();
         if (kind === "player") { sys.startMapId = this.mapId; sys.startX = x; sys.startY = y; }
         else { Object.assign(sys[kind], { startMapId: this.mapId, startX: x, startY: y }); }
-        await this.api.project.writeJson("data/System.json", sys);
-        this.api.emit("db:changed", { file: "data/System.json" });
+        persistDb("data/System.json", sys);
         this.refresh();
     }
     async moveEvent(ev, x, y) {
@@ -342,16 +351,42 @@ export class EventMode {
             const btn = document.getElementById(id);
             if (btn) { btn.addEventListener("click", () => { if (this.active && this.map) { fn(); } }); }
         }
+        // Modo mapa: Ctrl+Z / Ctrl+Y e o btnUndo da barra desfazem o histórico do banco (evento comum,
+        // nomes de switches/variáveis) quando ele é mais recente que o último passo do mapa (history.js).
+        const mapModeFree = () => !this.active && !document.querySelector(".mzDialogBackdrop,.evMenuBack,.mbDrop") && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || "");
+        window.addEventListener("keydown", e => {
+            if (!(e.ctrlKey || e.metaKey) || !mapModeFree()) { return; }
+            const k = (e.key || "").toLowerCase();
+            const hit = k === "z" && !e.shiftKey ? (dbHist.undo.length && dbUndoWinsInMapMode() ? undoDb : null)
+                : (k === "y" || (k === "z" && e.shiftKey)) ? (dbHist.redo.length && dbRedoWinsInMapMode() ? redoDb : null) : null;
+            if (hit) { e.preventDefault(); e.stopImmediatePropagation(); hit(); }
+        }, true);
+        const tbU = document.getElementById("btnUndo");
+        if (tbU) {
+            tbU.addEventListener("click", e => {
+                if (!this.active && dbHist.undo.length && dbUndoWinsInMapMode()) { e.stopImmediatePropagation(); undoDb(); }
+            }, true);
+            // o maptools desabilita o botão quando o mapa não tem o que desfazer: reabilita se o banco tiver
+            new MutationObserver(() => {
+                if (!this.active && tbU.disabled && dbHist.undo.length && dbUndoWinsInMapMode()) { tbU.disabled = false; }
+            }).observe(tbU, { attributes: true, attributeFilter: ["disabled"] });
+        }
     }
     _updateBar() {
         const e = this.map ? this.selectedEvent : null;
         this.info.textContent = `(${this.cursor.x},${this.cursor.y})` + (e ? ` ${String(e.id).padStart(3, "0")}:${e.name}` : "");
         this.btnEdit.textContent = (e ? t("Edit", "MainMenu") : t("New", "MainMenu")) + "…";
         const h = this.map ? this._hist() : { undo: [], redo: [] };
-        this.btnUndo.disabled = !h.undo.length;
-        this.btnRedo.disabled = !h.redo.length;
+        const canUndo = h.undo.length > 0 || dbHist.undo.length > 0, canRedo = h.redo.length > 0 || dbHist.redo.length > 0;
+        this.btnUndo.disabled = !canUndo;
+        this.btnRedo.disabled = !canRedo;
         const tbUndo = document.getElementById("btnUndo");
-        if (tbUndo && this.active) { tbUndo.disabled = !h.undo.length; }
+        if (tbUndo && this.active) { tbUndo.disabled = !canUndo; }
+        else if (tbUndo && !this.active) {
+            // modo mapa: o botão fica com o maptools, mas o histórico do banco mais recente também o habilita
+            const mt = window.mzMapTools, ed = mt && mt.state && mt.state.edits && mt.state.edits.get(this.api.currentMapId);
+            tbUndo.disabled = !((ed && ed.undoStack.length) || (dbHist.undo.length && dbUndoWinsInMapMode()));
+        }
     }
     // Event List (01_09_02): "001 EV001" por linha, listras como no MZ. Seleção sincronizada nos dois
     // sentidos; toque duplo abre o editor; toque longo / botão direito abre o menu do modo evento.

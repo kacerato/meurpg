@@ -4,7 +4,8 @@
 import { db, clone } from "./data.js";
 import { h, dialog, field, row, num, txt, sel, chk, switchPick, audioPick, audioText, charIndexPick, alertBox, actionMenu, getApi } from "./ui.js";
 import { MiniMap } from "./minimap.js";
-import { SimMap, SimChar, runRoute } from "./routesim.js";
+import { SimWorld, runRoute } from "./routesim.js";
+import { CharSprites } from "./simview.js";
 import { t } from "../i18n.js";
 
 const SPEEDS = ["", t("1: x8 Slower", "MovementSpeedBox"), t("2: x4 Slower", "MovementSpeedBox"), t("3: x2 Slower", "MovementSpeedBox"), t("4: Normal", "MovementSpeedBox"), t("5: x2 Faster", "MovementSpeedBox"), t("6: x4 Faster", "MovementSpeedBox")];
@@ -105,7 +106,7 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
                 list.innerHTML = "";
                 const [a, b] = range();
                 r.list.forEach((c, i) => {
-                    const it = h("div", { class: "evListItem" + (i >= a && i <= b ? " selected" : "") }, "◇" + routeText(c));
+                    const it = h("div", { class: "evListItem" + (i >= a && i <= b ? " selected" : ""), title: routeText(c) }, "◇" + routeText(c));
                     it.dataset.i = i;
                     list.append(it);
                 });
@@ -113,70 +114,94 @@ export function moveRouteDialog(route, { target, targets, showWait = true, title
                 if (s) { s.scrollIntoView({ block: "nearest" }); }
                 updatePreview();
             };
-            // ---- prévia no mapa (simulação do runtime: routesim.js) ----
+            // ---- prévia no mapa (simulação do runtime: routesim.js SimWorld) ----
             const pvHost = h("div", { class: "evRoutePvHost" });
+            pvHost.__pv = () => ({ mini, sprites }); // inspeção (testes no navegador)
             const pvInfo = h("div", { class: "evDesc evRoutePvInfo" });
-            let pvStart = null, pvMapId = 0, anim = null, simMap = null, playerRef = null, seed = 1;
+            let pvStart = null, pvMapId = 0, anim = null, playerRef = null, seed = 1, sprites = null;
             const curRoute = () => ({ list: r.list, repeat: repeat ? repeat.get() : r.repeat, skippable: skip ? skip.get() : r.skippable });
-            const buildSimMap = st => new SimMap({ map: mini.map, flags: mini.tileset && mini.tileset.flags, events: st.events, system: db.system, mapId: st.mapId, selfId: st.selfId || 0, player: st.isPlayer ? null : playerRef });
+            // Mundo novo a cada desenho: eventos com o próprio movimento autônomo, jogador (posição de
+            // referência ou o próprio alvo), seguidores, veículos e um estado de switches/variáveis de jogo novo.
+            const buildWorld = st => new SimWorld({
+                map: mini.map, flags: mini.tileset && mini.tileset.flags, mapId: st.mapId, events: st.events,
+                system: db.system, actors: db.actors, seed, ownerId: st.ownerId || 0,
+                player: st.isPlayer ? null : playerRef,
+                main: { kind: st.isPlayer ? "player" : "event", id: st.selfId || 0, start: st, route: curRoute(), forced: st.forced !== false, pageIndex: st.pageIndex, data: st.event }
+            });
+            const ensureSprites = () => {
+                if (!sprites) { sprites = new CharSprites(mini.charLayer, mini.tileset); }
+                sprites.tileset = mini.tileset;
+                return sprites;
+            };
             const updatePreview = async recenter => {
                 if (!previewStart) { return; }
                 stopAnim();
                 const st = await previewStart(targetSel ? targetSel.get() : target);
-                if (!st) { pvInfo.textContent = t("No known position for the preview."); if (mini) { mini.layer.removeChildren(); } return; }
+                if (!st) { pvInfo.textContent = t("No known position for the preview."); if (mini) { mini.layer.removeChildren(); } if (sprites) { sprites.destroy(); sprites = null; } return; }
                 if (!mini) {
                     mini = new MiniMap(pvHost, { zoom: 0.75 });
                     // toque no mapa: posição de referência do jogador (Move/Turn toward/away from Player)
-                    mini.onTap = (x, y) => { if (pvStart && !pvStart.isPlayer) { playerRef = { x, y }; updatePreview(); } };
+                    mini.onTap = (x, y) => { if (pvStart && !pvStart.isPlayer) { playerRef = { x, y, d: 2 }; updatePreview(); } };
                 }
                 if (pvMapId !== st.mapId) {
                     pvMapId = st.mapId; await mini.load(getApi(), st.mapId); recenter = true;
+                    if (sprites) { sprites.destroy(); sprites = null; }
                     const s = db.system || {};
-                    playerRef = s.startMapId === st.mapId ? { x: s.startX, y: s.startY } : null;
+                    playerRef = s.startMapId === st.mapId ? { x: s.startX, y: s.startY, d: 2 } : null;
                 }
                 pvStart = st;
-                simMap = buildSimMap(st);
-                const res = runRoute(simMap, st, curRoute(), { forced: st.forced !== false, seed });
-                drawRoute(mini.layer, st, res, curRoute().repeat, selected, st.isPlayer ? null : playerRef);
+                const route = curRoute();
+                const world0 = buildWorld(st);
+                if (!world0.main) { pvInfo.textContent = t("No known position for the preview."); return; }
+                ensureSprites().sync(world0); // situação inicial (todos parados no quadro 0)
+                const res = runRoute(buildWorld(st), route);
+                drawRoute(mini.layer, st, res, route.repeat, selected, st.isPlayer ? null : playerRef);
                 if (recenter) { mini.centerOn(st.x, st.y); }
-                const end = res.char;
+                const end = res.char, w = res.world;
                 const secs = (res.frames / 60).toFixed(1);
                 const parts = [`(${st.x},${st.y}) → (${end.x},${end.y})`, t("%1 frames (%2 s)", "MZEditor", res.frames, secs)];
                 if (res.stuck) { parts.push(t("blocked: the route stops here (no \"Skip If Cannot Move\")", "MZEditor")); }
                 const usesPlayer = r.list.some(c => [10, 11, 25, 26].includes(c.code));
-                const usesRandom = r.list.some(c => [9, 23, 24].includes(c.code));
+                const usesRandom = r.list.some(c => [9, 23, 24].includes(c.code)) || w.events.some(e => e !== end && (e._moveType === 1 || e._moveType === 2));
                 if (usesPlayer && !st.isPlayer) { parts.push(playerRef ? t("player at (%1,%2): tap the map to move it", "MZEditor", playerRef.x, playerRef.y) : t("the player is not on this map: tap the map to place it", "MZEditor")); }
                 if (usesRandom) { parts.push("\u{1F3B2} " + t("random: one possible outcome", "MZEditor")); }
+                const moving = w.events.filter(e => e !== end && e._moveType > 0 && e._pageIndex >= 0).length;
+                if (moving) { parts.push(t("%1 other event(s) with autonomous movement", "MZEditor", moving)); }
+                if (st.isPlayer && w.player.followers.some(f => f.visible)) { parts.push(t("%1 follower(s)", "MZEditor", w.player.followers.filter(f => f.visible).length)); }
+                const sws = [...new Set(w.switchLog.map(s => s.id))];
+                if (sws.length) { parts.push(t("switches (simulated, not saved): %1", "MZEditor", sws.map(id => `#${db.pad(id)} ${w.sw[id] ? "ON" : "OFF"}`).join(", "))); }
+                if (w.scripts.ran) { parts.push(w.scripts.errors.length ? t("Script: error \"%1\"", "MZEditor", w.scripts.errors[0].msg) : t("Script: %1 run(s)", "MZEditor", w.scripts.ran)); }
                 pvInfo.textContent = parts.join(" · ");
             };
-            const stopAnim = () => { if (anim && mini && mini.app) { mini.app.ticker.remove(anim.fn); anim.dot.destroy({ children: true }); } anim = null; };
-            // ▶ Preview: o personagem anda quadro a quadro como no jogo (velocidade, frequência, espera, salto).
+            const stopAnim = () => { if (anim && mini && mini.app) { mini.app.ticker.remove(anim.fn); } anim = null; };
+            // ▶ Preview: o mundo anda quadro a quadro como no jogo: o alvo segue a rota (velocidade, frequência,
+            // espera, salto) e os outros eventos, o jogador e os seguidores se movem ao mesmo tempo.
             const playPreview = () => {
-                if (!mini || !pvStart || !simMap) { return; }
+                if (!mini || !pvStart) { return; }
                 stopAnim();
                 const route = curRoute();
-                const ch = new SimChar(simMap, pvStart, route, { forced: pvStart.forced !== false, seed });
-                const dot = new PIXI.Graphics();
-                dot.lineStyle(2, 0x000000).beginFill(0xffff00).drawCircle(0, 0, 11).endFill();
-                const nose = new PIXI.Graphics().beginFill(0x000000).drawPolygon([0, 15, -6, 6, 6, 6]).endFill();
-                dot.addChild(nose);
-                mini.layer.addChild(dot);
-                let acc = 0, idle = 0;
+                const world = buildWorld(pvStart);
+                const ch = world.main;
+                if (!ch) { return; }
+                for (const c of mini.layer.children) { c.alpha = 0.35; } // rota desenhada fica de fundo
+                const sp = ensureSprites();
+                sp.sync(world);
+                let acc = 0, idle = 0, tail = 0;
                 const fn = () => {
                     acc += mini.app.ticker.deltaMS;
                     let guard = 0;
                     while (acc >= 1000 / 60 && guard++ < 10) {
                         acc -= 1000 / 60;
                         const n = ch.log.length;
-                        ch.update();
+                        world.update();
                         idle = ch.log.length > n && ch.log[ch.log.length - 1].ok ? 0 : idle + 1;
+                        if (ch.ended && ch.isStopping()) { tail++; }
                     }
-                    dot.position.set((ch._realX + 0.5) * 48, (ch._realY + 0.5) * 48 - ch.jumpHeight());
-                    nose.rotation = { 2: 0, 4: Math.PI / 2, 6: -Math.PI / 2, 8: Math.PI }[ch._direction] || 0;
-                    const done = (ch.ended && ch.isStopping()) || ch.frame > 60 * 600 || (!route.skippable && idle > 240 && ch.isStopping() && ch._waitCount <= 0);
-                    if (done) { setTimeout(stopAnim, 400); mini.app.ticker.remove(fn); }
+                    sp.sync(world);
+                    const done = tail > 24 || world.frame > 60 * 600 || (!route.skippable && idle > 240 && ch.isStopping() && ch._waitCount <= 0);
+                    if (done) { mini.app.ticker.remove(fn); anim = null; setTimeout(() => { if (!anim) { updatePreview(); } }, 600); }
                 };
-                anim = { fn, dot };
+                anim = { fn };
                 mini.app.ticker.add(fn);
             };
             // ---- seleção e edição da lista (como a lista do MZ: Shift+clique, menu, atalhos) ----

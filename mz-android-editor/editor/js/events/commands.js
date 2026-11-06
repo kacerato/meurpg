@@ -977,14 +977,15 @@ function routePreviewStart(ctx, target) {
     const events = ctx.map.events;
     if (target < 0) {
         const s = db.system;
-        return s.startMapId === ctx.mapId ? { mapId: ctx.mapId, x: s.startX, y: s.startY, d: 2, moveSpeed: 4, priorityType: 1, isPlayer: true, events, forced: true } : null;
+        return s.startMapId === ctx.mapId ? { mapId: ctx.mapId, x: s.startX, y: s.startY, d: 2, moveSpeed: 4, priorityType: 1, isPlayer: true, events, forced: true, ownerId: ctx.eventId || 0 } : null;
     }
-    if (target === 0 && ctx.eventPos) { return { mapId: ctx.mapId, selfId: ctx.eventId, events, forced: true, ...ctx.eventPos }; }
+    // "This Event": a página em edição é a ativa quando o comando roda (e entra na simulação com os dados em edição)
+    if ((target === 0 || target === ctx.eventId) && ctx.eventPos) { return { mapId: ctx.mapId, selfId: ctx.eventId, events, forced: true, ownerId: ctx.eventId, event: ctx.event, pageIndex: ctx.pageIndex, ...ctx.eventPos }; }
     const id = target === 0 ? ctx.eventId : target;
     const ev = events[id];
     if (!ev) { return null; }
     const pg = activePage(ev, db.system) || ev.pages[0];
-    return { mapId: ctx.mapId, x: ev.x, y: ev.y, selfId: id, events, forced: true, ...pageMoveProps(pg) };
+    return { mapId: ctx.mapId, x: ev.x, y: ev.y, selfId: id, events, forced: true, ownerId: ctx.eventId || 0, ...pageMoveProps(pg) };
 }
 def(206, { name: "Get on/off Vehicle", cat: "move", text: () => [t("Get on/off Vehicle", "EventCommands"), ""], noParams: true });
 

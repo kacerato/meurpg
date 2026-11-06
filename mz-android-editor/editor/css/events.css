@@ -164,6 +164,8 @@
 .evRouteWrap { display: flex; gap: 8px; flex: 1; min-height: 0; height: 100%; }
 .evRouteLeft { flex: 0 0 360px; display: flex; flex-direction: column; gap: 4px; min-height: 0; }
 .evRouteList { flex: 1; }
+.evRouteLeft, .evRouteCenter { min-width: 0; }
+.evRouteList .evListItem { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .evRouteCmds { flex: 1; overflow: auto; }
 .evRouteGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
 .evRouteCol { display: flex; flex-direction: column; gap: 3px; }
