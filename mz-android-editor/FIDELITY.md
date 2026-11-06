@@ -1378,4 +1378,8 @@ Itens das tabelas acima que passaram a OK (detalhes nos NOTES.md dos módulos):
 - Conversão de dados MV ao abrir o projeto (com confirmação, divergência consciente).
 - Tutoriais: os 19 tutoriais oficiais (1 560 passos) extraídos do Tutorial.exe; textos em inglês como no MZ em pt_BR.
 
-Pendências conhecidas: prévia de rota não move outros eventos nem executa Script/Switch; desfazer de evento comum não cobre o que já foi gravado; autotile de paredes A3/A4 ~81% igual aos mapas oficiais; Steam, Atsumaru e exportação Windows/macOS fora por plataforma.
+Pendências conhecidas: prévia de rota não move outros eventos nem executa Script/Switch; desfazer de evento comum não cobre o que já foi gravado; autotile de paredes A3/A4 ~81% igual aos mapas oficiais.
+
+**Fora do escopo por decisão do usuário (2026-11-06):** Steam Workshop, publicação no Atsumaru e implantação para Windows/macOS. As plataformas suportadas são Android (APK gerado no aparelho) e HTML5 (pasta ou .zip).
+
+Verificado no aparelho (2026-11-06): gramas com borda transparente na camada correta, seletor de tutoriais, prévia do Texto Rolante, diálogo da Loja e detecção de MV (projeto MZ: nada a converter).
