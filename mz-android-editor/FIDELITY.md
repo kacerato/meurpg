@@ -1378,8 +1378,19 @@ Itens das tabelas acima que passaram a OK (detalhes nos NOTES.md dos módulos):
 - Conversão de dados MV ao abrir o projeto (com confirmação, divergência consciente).
 - Tutoriais: os 19 tutoriais oficiais (1 560 passos) extraídos do Tutorial.exe; textos em inglês como no MZ em pt_BR.
 
-Pendências conhecidas: prévia de rota não move outros eventos nem executa Script/Switch; desfazer de evento comum não cobre o que já foi gravado; autotile de paredes A3/A4 ~81% igual aos mapas oficiais.
+Pendências da rodada 4 fechadas na rodada 5 (abaixo).
 
 **Fora do escopo por decisão do usuário (2026-11-06):** Steam Workshop, publicação no Atsumaru e implantação para Windows/macOS. As plataformas suportadas são Android (APK gerado no aparelho) e HTML5 (pasta ou .zip).
 
 Verificado no aparelho (2026-11-06): gramas com borda transparente na camada correta, seletor de tutoriais, prévia do Texto Rolante, diálogo da Loja e detecção de MV (projeto MZ: nada a converter).
+
+
+## Rodada 5 (concluída, mesclada em master) — fechamento
+
+- **Autotile e sombra automática:** algoritmo extraído do `RPG.exe` (C++, `MapEditorBody`) e reimplementado em `maptools/autotile.js`/`editops.js`. Contra os 104 mapas oficiais, 93,2% dos tiles saem idênticos; todas as diferenças restantes foram classificadas pelo `test-autotile.mjs` como ajustes manuais (Shift, caneta de sombra) ou bordas de mapas redimensionados — nenhuma diferença atribuída ao algoritmo. A regra de camadas das bordas transparentes continua valendo (99,7% dos tiles A1/A2).
+- **Prévia de rota:** simula o mapa vivo (movimento autônomo e colisão dos outros eventos, Switch ON/OFF e Script simulados, seguidores e veículos), conferida quadro a quadro com o runtime.
+- **Desfazer persistente:** eventos comuns e nomes de switch/variável entram no histórico de desfazer/refazer pelo salvamento unificado, também depois de fechar o diálogo.
+
+Verificado no aparelho (2026-11-06): pintura de água com autotile, prévia de rota com seguidores, texto rolante, Loja, tutoriais, gramas com borda transparente.
+
+**Estado final:** todas as telas, menus, comandos de evento e abas do manual estão implementadas. Escopo de plataformas: Android (APK no aparelho) e HTML5. Fora por decisão: Steam Workshop, Atsumaru, Windows/macOS.
