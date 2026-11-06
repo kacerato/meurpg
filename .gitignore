@@ -7,3 +7,6 @@ mz-android-editor/android/local.properties
 rea-extract/
 RPG/
 *.apk
+
+# configuração local do Claude Code
+.claude/

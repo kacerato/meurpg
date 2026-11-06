@@ -1,4 +1,24 @@
-# MZ Editor (port Android) — fase 1
+# MZ Editor (port Android do RPG Maker MZ)
+
+Editor de projetos RPG Maker MZ 1.1.1 para Android, fiel ao editor de PC: mapas com
+autotile e sombra automática do editor original, eventos e todos os comandos, banco de
+dados com as 16 abas, plugins, gerador de personagens, gerenciador de recursos, teste
+de jogo em tela cheia, tutoriais oficiais e exportação do jogo como APK gerado no
+próprio aparelho ou como HTML5. Interface em pt_BR (tradução oficial do MZ) e nos
+demais idiomas do MZ. A auditoria completa contra o manual está em `FIDELITY.md`.
+
+## Instalar
+
+Baixe o `MZEditor.apk` da página de Releases e instale no Android (8.0+ para o jogo
+exportado; o editor pede Android 11+). Abra um projeto pela pasta (Arquivo > Abrir) ou
+crie um novo (Arquivo > Novo Projeto).
+
+## Compilar
+
+`android/` é um projeto Gradle. O template completo de projeto novo é copiado na
+compilação a partir de `RPG/newdata/` da instalação do MZ (propriedade Gradle
+`mzNewdataDir`); sem ele, o editor usa o template mínimo de `editor/template/`.
+
 
 Editor de projetos RPG Maker MZ que roda em um WebView Android e lê/grava o
 mesmo formato de projeto do editor de PC (`data/*.json`, `js/plugins.js`, etc.).
