@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Map</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Map</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Map">
+        <span>Map</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Map</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>Map</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">What are Maps?</h2>
+					<p class="text--sub">
+						Maps are the data that represent the setting for your game. Maps will deploy based on where a character moves on the map when playing the game. <br/> <br/>A map&#39;s design is edited by placing together parts called &quot;Tiles&quot;.
+					</p>
+				</div>
+				<img src="assets/img/01_07_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Basic Map Specifications</h2>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>Role of Tiles </h3>
+					<p>Tiles are images which give a map its appearance, and are assigned settings including whether to allow a character to move across that tile. <br/> <br/> In a single map, multiple tiles grouped together are considered one piece of data called a &quot;Tileset&quot;, which is used as the basis of designing the shape of a map. You can instantly change the appearance of a map by changing the tileset you are using. You can edit the contents of a tileset in the [<a href="01_08_10.html">Database</a>].</p>
+				</li>
+				<li>
+					<h3>Tile Classifications </h3>
+					<p>It is possible to include 5 types of tiles, A through E, in one tileset. A is the lower layer which represents the terrain and ground, and B through E are upper layer tiles which represent surface elements such as trees and bushes or sign boards. <br/> <br/> It is possible to place both an upper layer and lower layer tile on the same location on the map. By using this two-layer composition, it is possible to create a very detailed and intricate map. <br/> <br/>As a standard, tiles that represent things such as the ocean, fields, floors, and walls are the lower layer tiles, and tiles used to decorate those layers are arranged on the upper layer. <br/>Moreover, in this program it is now possible to overlap two types of upper layer tiles, allowing for more variation.</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>Map Size and Display Method </h3>
+					<p>The size of a map is measured in tiles, and can be set to have a width and height of 0 to 256 tiles. <br/> <br/> The number of tiles visible at one time on a game screen when playing is 17x13 tiles. For maps larger than this, the area displayed will automatically center on the position of the player (scroll processing). Moreover, by connecting the edges of maps, you can have settings where the map loops just as if it was a planet (loop processing).</p>
+				</li>
+				<li>
+					<h3>Map Positioning </h3>
+					<p>The position of tiles on the map is represented in [Map Coordinates]. The origin of a map is at the upper left corner at (0,0), with X tiles to the right from this position serving as the X coordinate, while Y tiles down from this position serves as the Y coordinate. For example, in a map which has a tile size of 100x100, the coordinates of the bottom right corner would be (99,99). The map coordinates of the tile which is currently being edited will appear in the status bar. <br/> <br/>Map coordinates can be used in event commands which monitor the current location of your party or specify party destinations based on variables.	</p>
+				</li>
+			</ul>
+
+
+
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

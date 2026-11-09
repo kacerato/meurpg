@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>タイルセットの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>タイルセットの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="タイルセットの設定">
+        <span>タイルセットの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>タイルセットの設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">タイルセットの設定</h1>
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p class="text--sub">
+				タイルセットとは、ひとつのマップをデザインするのに使う“タイル”をまとめたデータです。タイル用の画像に、キャラクターが通行できるかなど、ゲームにおける挙動を設定することで作成します。<br/>
+				<br/>
+				マップ用に作成したオリジナルの画像も、その画像ファイルを設定したタイルセットを作り、それをマップデータに割り当てることで使えるようになります。<br/>
+				<br/>
+				なお、タイル上を乗り物（小型船／大型船）が通行できるかどうかは、タイルセット上の位置で決まっています。詳しくは［<a href="01_11_01.html">素材規格</a>］の項目をご覧ください。<br/>
+				飛行船については、すべてのタイルを通行可能となっています。ただし、着陸できるのは、歩行できる場所のみです。
+			</p>
+			<p class="mb10px">
+				※歩行できる場所でも以下の条件の場所は着陸できません。
+			</p>
+			<ul class="ul">
+				<li>茂み属性</li>
+				<li>タイルセットA1</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_10_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名前
+					</h4>
+					<p>タイルセットの名前です。この設定はエディターのみで使用されます（プレイ中のゲームへの影響はありません）。</p>
+				</li>
+				<li>
+					<h4>
+						モード
+					</h4>
+					<p>タイルセットの用途です。主に<a href="01_07_01.html#p01">下層タイルの特殊仕様</a>や<a href="01_07_03.html#p01">戦闘背景の取り扱い</a>に影響します。<br/>
+						基本的には、海や陸地など世界全図を表現するものの場合は［フィールドタイプ］、それ以外の場合は［エリアタイプ］を選んでください。
+				</p></li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				画像
+			</h3>
+			<p class="text">タイルに使う画像ファイルの設定です。種別（A～Eのセット）ごとにボタンを押すと表示される［画像の選択］ウィンドウで、使用するファイルを指定します。ファイルを指定すると、その内容が右の［タイルリスト］に表示されます。</p>
+
+			<h3 class="title--h3">
+				タイルリスト
+			</h3>
+			<p class="text--sub">［画像］に設定されたタイル用の画像が表示されます。下の［A］～［E］のタブをクリックすると、表示する画像を切り替えられます。［A］のタブには［画像］の［A1］～［A5］で指定したファイルのタイルを順に表示します。<br/>
+				<br/>
+				各タイルには、現在の設定編集モードにおける設定値を表すマークが重ねて表示されます。これをクリックすると設定値を変更できます。<br/>
+				なお、設定値が3種類以上ある項目（通行、地形タグ）では、右ボタンを押すと左ボタンとは逆向きに変化します。<br/>
+				また、ボタンを押したままポインタを動かすと、ポインタが通過したタイルの設定を連続して変更することができます。
+			</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						通行
+					</h4>
+					<p>タイル上を通行できるかどうかの編集モードに切り替えます。タイルリストに表示されるマークは［○］が通行可、［×］が通行不可を表します。［☆］も通行可能なタイルですが、建物の背後にキャラクターが隠れる表現となります（［A］以外のタブにのみ設定可）。</p>
+				</li>
+				<li>
+					<h4>
+						通行（4方向）
+					</h4>
+					<p>タイル上を通行できる方向の編集モードに切り替えます。［通行：ブロック］の補助的な設定で、特定の方向にしか移動できないタイルを作るのに使います。たとえば崖を表現するタイルで端にあたる部分を移動不可にすれば、その端と隣り合うタイルの間は移動できなくなり、“高低差”を表現できます。<br/>
+						<br/>
+						タイルリストに表示されるマークは、上下左右の4方向について、矢印ありが移動可、矢印なしが移動不可を表します。なお［通行］の設定値を変えると、この設定値も自動的に変わります。
+					</p>
+				</li>
+				<li>
+					<h4>
+						梯子
+					</h4>
+					<p>梯子設定の編集モードに切り替えます。この設定を付与すると、タイル上を通行するキャラクターの向きが上に固定され、梯子やロープなどで昇降する様子などを表現できます。<br/>
+						<br/>
+						設定の有無はタイルリスト上のマークをクリックして変更します。設定を付与したタイルにはマーク（梯子の絵柄）が表示されます。
+					</p>
+				</li>
+				<li>
+					<h4>
+						ダメージ床
+					</h4>
+					<p>ダメージ床の編集モードに切り替えます。この設定を付与すると、タイル上を通行するキャラクターがダメージを受けるようになります。毒の沼地やトゲが突き出す床など危険な地面を表現するのに使います。<br/>
+						<br/>
+						設定の有無はタイルリスト上のマークをクリックして変更します。設定を付与したタイルにはマーク（ふたつの三角形）が表示されます
+					</p>
+				</li>
+				<li>
+					<h4>
+						茂み
+					</h4>
+					<p class="mb5px">茂み設定の編集モードに切り替えます。この設定を付与すると、タイル上を通行するキャラクターの下から12ドットぶんが半透明表示になり、生い茂る草地で足元が隠れる様子などを表現できます。<br/>
+						<br/>
+						ただし、［A1］～［A4］に含まれるタイルに設定した場合、画像によっては、一部のタイルで半透明になりません。<br/>
+						<br/>
+						設定の有無はタイルリスト上のマークをクリックして変更します。設定を付与したタイルにはマーク（ふたつの波線）が表示されます。
+					</p>
+					<div class="img--center--half mt10px">
+						<img src="assets/img/01_08_10_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h4>
+						カウンター
+					</h4>
+					<p class="mb5px">カウンター設定の編集モードに切り替えます。この設定を付与すると、キャラクターとイベントが隣り合っていない状態でもタイル越しにイベントを開始させることができるようになり、“机を挟んで人物に話しかける”様子などを表現できます。<br/>
+						<br/>
+						なお、［A2］のタイルに設定した場合、この属性を持つタイルのパターン下端は12ドットぶん下にずれて表示されます。<br/>
+						<br/>
+						設定の有無はタイルリスト上のマークをクリックして変更します。設定を付与したタイルにはマーク（菱形の四角形）が表示されます。
+					</p>
+					<div class="img--center--half mt10px">
+						<img src="assets/img/01_08_10_img03.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h4>
+						地形タグ
+					</h4>
+					<p>各タイルに対して0～7の数値を割り当てます。具体的な用途は規定されていません。イベントコマンド［指定位置の情報取得］を使用することで取得できます。取得される地形タグは、0以外で上位のレイヤーにあるものが優先されます。
+					</p>
+				</li>
+				<li>
+					<h4 id="renew01">
+						メモ
+					</h4>
+					<p>ゲーム作成中のメモ書きに使えます。<br/>
+						右クリックするとメニューが表示され、［プラグインヘルプ］を選択するとプラグインのヘルプが表示されます。</p>
+				</li>
+			</ul>
+
+
+
+
+
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

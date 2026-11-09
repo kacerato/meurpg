@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>系统 1 设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>系统 1 设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="系统 1 设置">
+        <span>系统 1 设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">数据库</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">数据库</a></li>
+				<li>&gt;</li>
+				<li>系统 1 设置</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">系统 1 设置</h1>
+
+		<div class="section">
+			<h2 class="title--h2">数据的作用</h2>
+			<p class="text">
+				系统数据是游戏初始设置等的集合。游戏开始时，用于指定队伍成员的构成和位置、游戏中各种场面上播放的音乐等。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">项目设置内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_12_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				游戏标题
+			</h3>
+			<p class="text">游戏的标题。在这里设置创建项目时[游戏标题]中输入的名称。该名称将显示于游戏画面的标题和窗口的标题栏中。</p>
+
+			<h3 class="title--h3">
+				初始队伍
+			</h3>
+			<p class="text">游戏开始时构成队伍的成员。<br/>队伍中可以无限制地登录角色，但是能参与战斗的只有最前列的 4 个角色。<br/>双击列表中的项目（添加时是空白部分）并指定角色以添加或更改角色。在右键单击该项目后显示的菜单中指定[删除]以撤下角色。
+			</p>
+
+			<h3 class="title--h3">
+				货币单位
+			</h3>
+			<p class="text">游戏中的金钱单位名称。用于表达游戏画面中的金钱等。</p>
+
+			<h3 class="title--h3">
+				窗口颜色
+			</h3>
+			<p class="text">游戏中窗口的背景颜色。在双击栏内后出现的窗口中以[红]、[绿]、[蓝]的成分比（-255~255）为基础进行指定。</p>
+
+			<h3 class="title--h3">
+				载具图像
+			</h3>
+			<p class="text">在地图上显示的载具（小舟/大船/飞艇）图像。在双击每个栏内就会出现的窗口中指定图像。不显示图像时，指定[（无）]。</p>
+
+			<h3 class="title--h3">
+				初始位置
+			</h3>
+			<p class="text">玩家和载具（小舟/大船/飞艇）在游戏开始时的位置。单击每个栏内的[...]打开设置窗口，通过单击左栏指定地图名称、单击右栏指定位置。<br/>设为初始位置的场所，在地图上会显示蓝框图标。此图标与地图事件一样，可以通过拖拽进行移动，通过[Del]键删除。<br/> 但是，当玩家的初始位置处于未设置状态（删除图标）时，游戏会无法开始。
+			</p>
+
+
+			<div class="flex--bw--p-img mb90px">
+				<div>
+					<h3 class="title--h3">
+						标题画面
+					</h3>
+					<p class="mb30px">游戏开始后，在游戏画面中最先显示的图像。在单击设置栏内的[…]后显示的窗口中指定图像。设置[绘画游戏标题]为有效时，标题画面上方[游戏标题]会显示作品名称（图像中含标题名则设为无效）。</p>
+					<h3 class="title--h3--sub">
+						指令窗口
+					</h3>
+					<p class="text">设置指令窗口的背景类型和位置。</p>
+				</div>
+				<img src="assets/img/01_08_12_img02.png" alt=""/>
+			</div>
+
+
+
+			<h3 class="title--h3">
+				战斗画面
+			</h3>
+			<p class="text--sub">指定战斗画面的视点。
+			</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>正视图</h3>
+					<p>敌方角色以正面显示。</p>
+				</li>
+				<li>
+					<h3>侧视图</h3>
+					<p>敌方角色和角色以侧面显示。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3" id="p01">
+				战斗系统
+			</h3>
+			<p class="text--sub">设置战斗系统的类型。
+			</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>回合制</h3>
+					<p>同时决定所有战斗角色的行动。</p>
+				</li>
+				<li>
+					<h3>时间进度（即时）</h3>
+					<p>战斗角色基于敏捷行动。输入指令时时间也会流逝。</p>
+				</li>
+				<li>
+					<h3>时间进度（等待）</h3>
+					<p>战斗角色基于敏捷行动。输入指令时时间不会流逝。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3" id="p02">
+				选项
+			</h3>
+			<p class="text--sub">设置游戏行动相关的特别处理或规则。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>透明状态下开始游戏</h4>
+					<p>设为有效时，玩家的图像会在透明（隐藏）状态下开始游戏。使用[更改透明状态]的事件指令以恢复到普通显示。</p>
+				</li>
+				<li>
+					<h4>队伍的队列行进</h4>
+					<p>设为有效后移动地图时，以第 2 个角色和之后的角色的步行图像会跟着最前方的角色走动设置开始游戏。如果有队伍有 5 个以上的成员，则只有前 4 名会显示步行图像。</p>
+				</li>
+				<li>
+					<h4>慢性伤害导致无法战斗</h4>
+					<p>设为有效时，允许因“中毒”之类的状态承受伤害，导致 HP 归零。设为无效时，HP 不会低于 1。</p>
+				</li>
+				<li>
+					<h4>地形伤害导致无法战斗</h4>
+					<p>设为有效时，允许因地图上的图块（地形伤害）承受伤害，导致 HP 归零。设为无效时，HP 不会低于 1。</p>
+				</li>
+				<li>
+					<h4>窗口显示 TP</h4>
+					<p>设为有效时，每个队伍成员的 TP 会显示在状态窗口中。不使用 TP 的系统则取消勾选。</p>
+				</li>
+				<li>
+					<h4>替补队员也可以获得经验值</h4>
+					<p>设为有效时，当队伍里超过 4 人时，该设置允许未参战的角色获得经验值。</p>
+				</li>
+				<li>
+					<h4>显示重要物品的数量</h4>
+					<p>设为有效时，队伍所持有的重要物品数量会显示在物品画面中。</p>
+				</li>
+				<li>
+					<h4>自动保存功能</h4>
+					<p>设置为有效时，战斗结束时或移动场所时，游戏数据将自动保存。</p>
+				</li>
+			</ul>
+
+			<div class="flex--bw--p-table mb90px">
+				<div>
+					<h3 class="title--h3">
+						音乐
+					</h3>
+					<p>游戏中播放的音乐。根据每个场景的项目设置，指定要播放的 BGM 或 ME 文件。每个项目设置代表的场景如下所示。在地图数据可设置玩家在地图上移动时播放的音乐。</p>
+				</div>
+				<table class="table--type01">
+					<tbody><tr>
+						<th>标题</th>
+						<td>标题画面中播放的 BGM</td>
+					</tr>
+					<tr>
+						<th>战斗</th>
+						<td>战斗画面中播放的 BGM</td>
+					</tr>
+					<tr>
+						<th>胜利</th>
+						<td>战斗结束时，队伍胜利时播放的 ME</td>
+					</tr>
+					<tr>
+						<th>战败</th>
+						<td>战斗结束时，队伍败北时播放的 ME</td>
+					</tr>
+					<tr>
+						<th>游戏结束</th>
+						<td>游戏结束画面中播放的 ME</td>
+					</tr>
+					<tr>
+						<th>小舟</th>
+						<td>乘坐着小舟时播放的 BGM</td>
+					</tr>
+					<tr>
+						<th>大船</th>
+						<td>乘坐着大船时播放的 BGM</td>
+					</tr>
+					<tr>
+						<th>飞艇</th>
+						<td>乘坐着飞艇时播放的 BGM</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+			<div class="flex--bw--p-table mb90px">
+				<div>
+					<h3 class="title--h3">
+						音效
+					</h3>
+					<p>在玩家操作中、战斗时开始行动等期间播放的音效（SE）。根据每个状况的项目设置，指定要播放的 SE 文件。每个项目设置代表的状况如下所示。</p>
+				</div>
+				<table class="table--type01">
+					<tbody><tr>
+						<th>光标</th>
+						<td>移动光标时</td>
+					</tr>
+					<tr>
+						<th>确认</th>
+						<td>使用指令做决定时</td>
+					</tr>
+					<tr>
+						<th>取消</th>
+						<td>取消在菜单画面等指令时</td>
+					</tr>
+					<tr>
+						<th>无效</th>
+						<td>在菜单画面等选择了无法使用的指令时</td>
+					</tr>
+					<tr>
+						<th>装备</th>
+						<td>在菜单画面更改装备时</td>
+					</tr>
+					<tr>
+						<th>保存</th>
+						<td>保存游戏时</td>
+					</tr>
+					<tr>
+						<th>读档</th>
+						<td>游戏载入时</td>
+					</tr>
+					<tr>
+						<th>战斗开始</th>
+						<td>遇敌时</td>
+					</tr>
+					<tr>
+						<th>逃跑</th>
+						<td>战斗画面中，队伍或敌方角色逃跑时</td>
+					</tr>
+					<tr>
+						<th>敌人攻击</th>
+						<td>战斗画面中，敌方角色进行普通攻击</td>
+					</tr>
+					<tr>
+						<th>敌人受伤</th>
+						<td>战斗画面中，敌方角色受伤害时</td>
+					</tr>
+					<tr>
+						<th>敌人消失</th>
+						<td>战斗画面中，敌方角色被打败时</td>
+					</tr>
+					<tr>
+						<th>Boss 消失 1</th>
+						<td>当[特性]的[消失效果]为敌方角色[Boss]被打败时</td>
+					</tr>
+					<tr>
+						<th>Boss 消失 2</th>
+						<td>当[特性]的[消失效果]为敌方角色[Boss]的消失效果显示时</td>
+					</tr>
+					<tr>
+						<th>我方受伤</th>
+						<td>角色受到伤害时</td>
+					</tr>
+					<tr>
+						<th>角色无法战斗</th>
+						<td>战斗画面中，角色被附加无法战斗状态时</td>
+					</tr>
+					<tr>
+						<th>恢复</th>
+						<td>战斗画面中，角色和敌方角色恢复时</td>
+					</tr>
+					<tr>
+						<th>未命中</th>
+						<td>物理攻击失败，没有造成伤害时</td>
+					</tr>
+					<tr>
+						<th>回避</th>
+						<td>回避物理攻击时</td>
+					</tr>
+					<tr>
+						<th>魔法回避</th>
+						<td>回避魔法攻击时</td>
+					</tr>
+					<tr>
+						<th>魔法反射</th>
+						<td>反射魔法攻击时</td>
+					</tr>
+					<tr>
+						<th>商店</th>
+						<td>在商店中购买或出售物品等东西时</td>
+					</tr>
+					<tr>
+						<th>使用物品</th>
+						<td>在菜单画面使用物品时</td>
+					</tr>
+					<tr>
+						<th>使用技能</th>
+						<td>在菜单画面使用技能时</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+
+
+
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_8";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>状态设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>状态设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="状态设置">
+        <span>状态设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">数据库</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">数据库</a></li>
+				<li>&gt;</li>
+				<li>状态设置</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">状态设置</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">数据的作用</h2>
+			<p class="text">
+				状态指的是“中毒”和“混乱”等，对人物的身体状态和行动造成影响的状态异常。该数据用于设置附加状态时具体的影响。影响内容不仅有诸如“因中毒而削弱 HP”等负面影响，也有“因亢奋而攻击力提升”等的正面状态效果。<br/> <br/>第 1 项[无法战斗]，是当角色或敌方角色的 HP 变成 0 的时候自动附加的特殊状态。当全体队伍成员都附加了此状态则游戏结束。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">项目设置内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_08_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本设置
+			</h3>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名称
+					</h4>
+					<p>状态名称。状态会以图标的形态呈现，因此在游戏中不会使用该名称。</p>
+				</li>
+				<li>
+					<h4>
+						图标
+					</h4>
+					<p>显示在角色名称的旁边或敌方角色头上的附加中状态的图像。在双击时就会出现的[选择图像]窗口中指定图像。选择状态图像时应指定显而易见的图像。</p>
+				</li>
+				<li>
+					<h4>
+						行动限制
+					</h4>
+					<p class="mb30px">限制附加该状态的人物的行动。根据以下 5 个项目指定限制内容。应用多个限制时，会优先执行列表下方的限制内容。</p>
+					<dl class="dl--default">
+						<dt>无 </dt>
+						<dd>不限制行动。</dd>
+						<dt>攻击敌人</dt>
+						<dd>一定会攻击敌人。</dd>
+						<dt>攻击一人 </dt>
+						<dd>一定会攻击任意一个敌人。</dd>
+						<dt>攻击队友 </dt>
+						<dd>一定会攻击队友。</dd>
+						<dt>无法行动 </dt>
+						<dd>完全无法行动。</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>
+						优先度
+					</h4>
+					<p>状态图标的显示优先度（0~100）。附加多个状态时，会显示优先度设置最高的状态的图标。优先度若相同，则优先显示 ID 最新的状态。</p>
+				</li>
+				<li>
+					<h4>
+						[SV] 动作
+					</h4>
+					<p>设置在 SideView 模式中该状态有效时的动作。 </p>
+				</li>
+				<li>
+					<h4>
+						[SV] 遮罩
+					</h4>
+					<p>设置在 SideView 模式中该状态有效时的遮盖图像。</p>
+				</li>
+			</ul>
+
+
+
+			<h3 class="title--h3">
+				解除条件
+			</h3>
+			<p class="text--sub">解除状态的条件。基于以下的项目指定条件。设置多个条件时，基于个别的基准判定并解除。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>战斗结束时解除 </h4>
+					<p>设置为有效时，战斗结束时解除。</p>
+				</li>
+				<li>
+					<h4>受到行动限制时解除 </h4>
+					<p>设为有效时，附加其他行动限制的状态时解除。</p>
+				</li>
+				<li>
+					<h4>自动解除的时机与持续回合数 </h4>
+					<p>回合经过后解除。[行动结束时]在行动者的行动结束时解除，[回合结束时]则在回合结束后回到行动选择之前解除。在[持续回合数]设置从附加状态到解除为止的回合数的上限和下限（0~9999）。</p>
+				</li>
+				<li>
+					<h4>受伤时解除 </h4>
+					<p>因任何原因受到伤害时，根据指定的概率（0~100%）解除。</p>
+				</li>
+				<li>
+					<h4>按步数解除 </h4>
+					<p>在地图上移动指定的图块数（0~9999）的距离时解除。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				信息
+			</h3>
+			<p class="text">在战斗中附加或解除该状态时显示的信息。根据四种状况：[我方变成该状态时]、[敌方变成该状态时]、[该状态持续时]和[该状态解除时]，设置个别显示的文本。“%1”的部分会替换为对象的名称。</p>
+
+			<h3 class="title--h3">
+				特性
+			</h3>
+			<p class="text">添加在已附加状态对象身上的特性。更多详情，请参见[<a href="01_08_15.html">特性的设置方法</a>]。</p>
+
+			<h3 class="title--h3" id="renew01">
+				备注
+			</h3>
+			<p class="text">可以在游戏制作过程做备注。<br/>右键单击以显示菜单，然后选择[插件帮助]来显示插件帮助。</p>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

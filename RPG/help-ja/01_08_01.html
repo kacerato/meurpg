@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>アクターの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>アクターの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="アクターの設定">
+        <span>アクターの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>アクターの設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">アクターの設定</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p>
+				プレイヤーが操作するキャラクターを表現するのがアクターのデータです。<br/>アクター固有の特徴を持たせることもできます。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb60px">
+				<img src="assets/img/01_08_01_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>名前 </h3>
+					<p>［名前］はプレイ中に表示するアクターの名前です。長い名前の場合、プレイ中のメニューや戦闘画面ですべて表示されないことがあります。</p>
+				</li>
+				<li>
+					<h3>二つ名 </h3>
+					<p>［二つ名］はいわゆるニックネームです。ステータス画面の右上に表示されます。</p>
+				</li>
+				<li>
+					<h3>職業 </h3>
+					<p>アクターの属する職業です。使用できるスキルや装備可能な武器やアイテムなどに影響します。具体的な内容は［<a href="01_08_02.html">職業</a>］のタブで編集します。</p>
+				</li>
+				<li>
+					<h3>初期レベル／最高レベル </h3>
+					<p>［初期レベル］はゲーム開始時のアクターのレベル数、［最高レベル］は上限のレベル数です。プレイ中［最高レベル］を超えてレベルアップすることはありません。どちらも1～99の範囲で指定します。</p>
+				</li>
+				<li>
+					<h3>プロフィール </h3>
+					<p>アクターの紹介文です。ステータス画面の下部に表示されます。</p>
+			</li></ul>
+
+			<h3 class="title--h3">
+				画像
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>顔</h4>
+					<p>メニュー画面に表示される画像。</p>
+				</li>
+				<li>
+					<h4>歩行キャラ</h4>
+					<p>マップ画面に表示される画像。</p>
+				</li>
+				<li>
+					<h4>［SV］戦闘キャラ</h4>
+					<p>サイドビューモードのとき、バトル画面に表示される画像。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">初期装備 </h3>
+			<p class="text">プレイ開始時のアクターの装備品です。装備部位ごとに、プルダウンリストからひとつを選択してください。選択できるのはアクターの属する職業が装備可能なものに限られます。［なし］を指定した場合、その部位には何も装備しません。</p>
+
+			<h3 class="title--h3">特徴 </h3>
+			<p class="text">アクター固有の特徴です。設定欄の各行をダブルクリックして表示されるウィンドウで内容を定義します。詳細は［<a href="01_08_15.html">特徴の設定方法</a>］を参照してください。</p>
+
+			<h3 class="title--h3">メモ</h3>
+			<p class="text">ゲーム作成中のメモ書きに使えます。<br/>
+				右クリックするとメニューが表示され、［プラグインヘルプ］を選択するとプラグインのヘルプが表示されます。
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,5 @@
+singleton BasicConstants BasicConstants.qml
+singleton DialogBoxHelper DialogBoxHelper.qml
+singleton FontManager FontManager.qml
+singleton ThemeManager ThemeManager.qml
+singleton ToolTipHelper ToolTipHelper.qml

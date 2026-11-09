@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_6";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>敌方角色设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>敌方角色设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="敌方角色设置">
+        <span>敌方角色设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">数据库</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">数据库</a></li>
+				<li>&gt;</li>
+				<li>敌方角色设置</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">敌方角色设置</h1>
+
+		<div class="section">
+			<h2 class="title--h2">数据的作用</h2>
+			<p class="text">
+				表现和玩家对战的敌方人物的数据。除了与角色一样可以设置能力值之外，还能设置战斗中的行动模式。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">项目设置内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_06_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本设置
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名称
+					</h4>
+					<p>敌方角色名称。若名字太长，游戏画面中可能会无法显示全文。</p>
+				</li>
+				<li>
+					<h4>
+						图像
+					</h4>
+					<p>在战斗中显示的敌方角色的图像。在双击时就会出现的[选择图像]窗口中指定图像。指定时，移动[色相]的滑动器就能更改图像的色相。选择[（无）]时，不会显示图像。</p>
+				</li>
+				<li>
+					<h4>
+						最大 HP/最大 MP/攻击力/防御力/魔法力/魔法防御/敏捷/运气
+					</h4>
+					<p>战斗开始时，敌方角色的能力值。可以设置的范围，[最大 HP]为 1~999999，[最大 MP]为 0~9999，其余为 0~999。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				报酬
+			</h3>
+			<p class="text">战斗胜利时队伍获得的经验值（0~9999999）和金钱（0~9999999）。</p>
+
+			<h3 class="title--h3">
+				掉落物品
+			</h3>
+			<p class="text">战斗胜利时队伍获得的物品（包括武器和护具）。在双击栏内后出现的窗口中指定对象物品，并在[出现率]（1/1~1/1000）指定获得的概率。</p>
+
+
+			<h3 class="title--h3">
+				行动模式
+			</h3>
+			<div class="flex--bw--dl-img mb90px">
+				<dl>
+					<dt>回合</dt>
+					<dd>以经过的回合数为条件。以 A 为战斗开始后的回合数，B 为回合数周期，通过[A+B×X]的公式进行定义。指定 A 为 2，B 为 3 时，每次经过第 2 回合到第 3 回合（第5回合、第8回合……）就能满足条件</dd>
+					<dt>HP </dt>
+					<dd>以敌方角色的 HP 值为条件。指定与最大 HP 相对的比例范围（0~100%）。HP 在指定范围中时则满足条件。</dd>
+					<dt>MP </dt>
+					<dd>以敌方角色的 MP 值为条件。指定与最大 MP 相对的比例范围（0~100%）。MP 在指定范围中时则满足条件。</dd>
+					<dt>状态 </dt>
+					<dd>以敌方角色是否拥有状态作为基准。</dd>
+					<dt>队伍等级 </dt>
+					<dd>以队伍成员的等级为条件。当队伍成员中最高等级大于指定值时满足条件。</dd>
+					<dt>开关 </dt>
+					<dd>以指定开关为条件。当指定的开关打开时满足条件。</dd>
+				</dl>
+				<img src="assets/img/01_08_06_img02.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				特性
+			</h3>
+			<p class="text">敌方角色的特性。在设置栏每一行进行双击后显示的窗口中定义内容。更多详情，请参见[<a href="01_08_15.html">特性的设置方法</a>]。</p>
+
+			<h3 class="title--h3" id="renew01">
+				备注
+			</h3>
+			<p class="text">可以在游戏制作过程做备注。<br/>右键单击以显示菜单，然后选择[插件帮助]来显示插件帮助。</p>
+		</div><!-- /section -->
+
+
+		<div class="section">
+			<h2 class="title--h2">行动模式的采用规则</h2>
+			<p class="text">在[行动模式]设置行动时，战斗中采用的行动以以下规则为准。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>1. 从已设行动中挑出满足条件的行动。如果没有符合任何一个条件，则不会行动。</li>
+				<li>2. 从满足条件的行动中，采用拥有最大优先度的行动、所持优先度与最大优先度的差为 2 以内的行动为候补。</li>
+				<li>
+					3. 采用候补时，优先度与最大优先度相差 1 和 2 的 行动的采用概率为最大优先度行动的 2/3 和 1/3。拥有同样优先度的行动的采用率是一样的。
+					<dl class="dl--default">
+						<dt>【例 1】行动优先度为[5]、[5] </dt>
+						<dd>个别采用概率均为 50%。</dd>
+						<dt>【例 2】行动优先度为[6]、[5]、[4]、[3] </dt>
+						<dd>[6]的概率为 50%，[5]为 33.3%（50% 的 2/3），[4]为 16.6%（50% 的 1/3）。[3] 不会被采用为候补。</dd>
+						<dt>【例 3】行动优先度为[5]、[3]、[3] </dt>
+						<dd>[5]为 60%，[3]的概率均为 20%（60% 的 1/3）。</dd>
+					</dl>
+				</li>
+				<li>4. 以成为候补的采用概率为基准决定随机采用的行动。</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

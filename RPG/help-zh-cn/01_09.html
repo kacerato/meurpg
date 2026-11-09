@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>事件</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>事件</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="事件">
+        <span>事件</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG TKOOL MZ</a></li>
+				<li>&gt;</li>
+				<li>事件</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<h2 class="title--h2">事件指的是</h2>
+			<p class="text">
+				RPG游戏是通过与人物的对话，从宝箱获取物品，与Boss进行战斗之类的事情进行下去的。<br/> 本软件为诸如此类的事情准备了名为“事件”的数据。<br/> <br/>事件指的是游戏中进行某些事项处理的机制。<br/>例如可以通过将人物的图像分配给事件并在画面上显示文本的处理，来表达当玩家讲话时返回消息的人物角色。<br/> <br/>根据游戏状况、玩家的动作来“启动”该事件后，会给游戏带来各种各样的故事发展。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">事件的种类</h2>
+			<p class="text">事件具有以下3个种类。可以将游戏的剧情进行有关的处理制作成“地图事件”。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>地图事件</h3>
+					<p>是在地图画面执行的事件。可以用来表现与人物的对话场景，可以获取物品的宝箱等等。您还可以通过使用没有图像的事件来定义与游戏机制和进行相关的处理，例如玩家的场所移动、过场动画等等。<br/> <br/> 可以通过单击主窗口工具栏上的[事件]按钮（或菜单栏上的[模式]→[事件]）来执行创建和编辑，以切换事件编辑模式。
+					</p>
+				</li>
+				<li>
+					<h3>战斗事件 </h3>
+					<p>是在战斗画面执行的事件。可以用于诸如“当敌人的HP下降到一定程度以下时进行变身”之类的处理。在数据库的［<a href="01_08_07.html">敌群</a>］中进行创建和编辑。</p>
+				</li>
+				<li>
+					<h3>公共事件 </h3>
+					<p>能够以各种用途执行的事件。可以从地图事件或战斗事件中调用，或是用来设置在使用特殊物品时进行的处理等等。在数据库的［<a href="01_08_11.html">公共事件</a>］中进行创建和编辑。</p>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

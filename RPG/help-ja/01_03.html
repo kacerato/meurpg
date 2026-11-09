@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>エディターの基本操作</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>エディターの基本操作</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="エディターの基本操作">
+        <span>エディターの基本操作</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--03">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">エディターの基本操作</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>エディターの基本操作</li>
+			</ul>
+			<img src="assets/img/common/cha03.png" alt="" class="cha"/>
+		</div>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">ウィンドウ各部の名称と機能</h2>
+			<p class="text">プロジェクトを開いた後に表示される画面を“メインウィンドウ”といいます。メインウィンドウでは、主にマップやイベントを編集するのに使います。<br/>
+				［データベース］などのツールは、メインウィンドウのメニューから呼び出します。各部の機能は以下のとおりです。</p>
+
+
+			<div class="flex--bw">
+				<dl class="dl--1c--left--noline">
+					<dt>1. メニューバー</dt>
+					<dd>
+					本ソフトに用意された機能をここから選択します。
+					</dd>
+					<dt>2. ツールバー</dt>
+					<dd>
+					ボタンをクリックすることで特定の機能を実行できます。
+					</dd>
+					<dt>3. タイルパレット</dt>
+					<dd>
+					マップに配置できるタイルセットが表示されます。下のタブでセット・リージョン編集モードを切り替えられます。
+					</dd>
+					<dt>4. マップリスト</dt>
+					<dd>
+					作成中のゲームに含まれるマップデータの一覧です。
+					</dd>
+					<dt>5. マップビュー</dt>
+					<dd>
+					選択中のマップの内容を表示します。デザインの編集やイベントの配置場所の指定などに使います。
+					</dd>
+					<dt>6. ステータスバー</dt>
+					<dd>
+					選択中の機能の内容やマップ名、マップ座標を表示します。
+					</dd>
+				</dl>
+
+				<div class="img--right"><img src="assets/img/01_03_img01.png" alt=""/></div>
+			</div>
+
+
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">設定項目の編集方法</h2>
+			<p class="text">本ソフトでのゲーム作成は、各種のウィンドウに用意された設定項目に、作りたいものに合わせて文字や項目などを指定することが作業の中心となります。設定項目のタイプと編集方法は以下のとおりです。</p>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>文字の入力 </h3>
+					<p>
+						設定欄をクリックすると、“｜”のカーソルが表示されます。この状態で、キーボードから文字を入力します。入力した文字は、カーソルの位置に挿入されます。カーソルは、キーボードのカーソルキーで移動させることも可能です。文字入力の方法は、お使いの日本語入力ソフト（IME）によって異なります。
+					</p>
+				</li>
+				<li>
+					<h3>数値の入力 </h3>
+					<p>
+						文字の入力と同様に設定欄をクリックすると“｜”のカーソルが表示されます。この状態でキーボードから数値を半角で入力します。設定欄の右端にある［∧］［∨］のボタンをクリックして値を増減させることもできます。
+					</p>
+				</li>
+				<li>
+					<h3>ラジオボタン </h3>
+					<p>
+						複数の項目から適用するものをひとつ指定します。［○］をクリックして黒丸を入れた設定が有効になります。
+					</p>
+				</li>
+				<li>
+					<h3>チェックボックス </h3>
+					<p>
+						項目名で示す設定の有効／無効を指定します。［□］をクリックして、チェックマークを付けると設定が有効になります。もう一度クリックするとチェックが消えます。
+					</p>
+				</li>
+				<li>
+					<h3>プルダウンリスト </h3>
+					<p>
+						リストに表示される項目から適用するものをひとつ指定します。リストは設定欄の右側にある［∨］をクリックすると開きます。
+					</p>
+				</li>
+				<li>
+					<h3>リストボックス </h3>
+					<p>
+						複数の設定を一覧表示します。項目をダブルクリックするとウィンドウが開き、内容の追加や変更が可能です。
+					</p>
+				</li>
+				<li>
+					<h3>［…］ボタン </h3>
+					<p>
+						設定欄の右側に［…］とある項目は、その内容を別のウィンドウで指定します。［…］をクリックし、表示されたウィンドウに従って設定を行ないます。
+					</p>
+				</li>
+				<li>
+					<h3>［OK］［キャンセル］［適用］ボタン </h3>
+					<p>
+						変更した設定項目の内容は、それを確定することで設定が有効になります。確定してウィンドウを閉じる場合は［OK］、項目の変更を取りやめてウィンドウを閉じる場合は［キャンセル］、ウィンドウを閉じずに確定のみ行なうには［適用］ボタンをクリックします。
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">コンテキストメニューの検索機能</h2>
+			<p class="text">マップやデータベースなどでは、右クリックからコンテキストメニューで［検索］を選択することができます。</p>
+			<div class="flex--bw">
+				<div class="img--half">
+					<img src="assets/img/01_03_img02.png" alt=""/>
+				</div>
+				<div class="img--half">
+					<img src="assets/img/01_03_img03.png" alt=""/>
+				</div>
+			</div>
+			<p class="text">コンテキストメニューから［検索］を選択すると検索画面が開きます。一度検索をすると検索条件は記録され［次を検索］［前を検索］で検索できるようになります。</p>
+		</div>
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

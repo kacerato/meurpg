@@ -1,0 +1,2 @@
+singleton Dialog_AnimationSelector Dialog_AnimationSelector.qml
+singleton Dialog_EffectSelector Dialog_EffectSelector.qml

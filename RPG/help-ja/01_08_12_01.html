@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>システム1の設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>システム1の設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="システム1の設定">
+        <span>システム1の設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>システム1の設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">システム1の設定</h1>
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p class="text">
+				システムのデータは、ゲームの初期設定などをまとめたものです。ゲームスタート時のパーティのメンバーの構成や位置、プレイ中の様々な場面で再生する音楽などを指定できます。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_12_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				ゲームタイトル
+			</h3>
+			<p class="text">ゲームの作品名です。プロジェクト作成時に［ゲームタイトル］で入力した名前は、ここに設定されます。この名前はゲーム画面のタイトルやウィンドウのタイトルバーに表示されます。</p>
+
+			<h3 class="title--h3">
+				初期パーティ
+			</h3>
+			<p class="text">ゲームスタート時のパーティの構成メンバーです。<br/>
+				パーティには無制限にアクターを登録できますが、戦闘に参加できるのは先頭4人のみです。<br/>
+				アクターを追加・変更するにはリスト内の項目（追加する場合は空白部分）をダブルクリックし、アクターを指定します。アクターを外すには、その項目を右クリックすると表示されるメニューで［削除］を指定します。
+			</p>
+
+			<h3 class="title--h3">
+				通貨単位
+			</h3>
+			<p class="text">ゲームにおけるお金の単位の名前です。メニュー画面の所持金の表示などに使われます。</p>
+
+			<h3 class="title--h3">
+				ウィンドウカラー
+			</h3>
+			<p class="text">ゲーム上のウィンドウの背景色です。欄内をダブルクリックすると表示されるウィンドウで、［赤］［緑］［青］の成分比（-255～255）をもとに指定します。</p>
+
+			<h3 class="title--h3">
+				乗り物画像
+			</h3>
+			<p class="text">マップ上に表示される乗り物（小型船／大型船／飛行船）の画像です。各欄をダブルクリックすると表示されるウィンドウで画像を指定します。画像を表示しない場合は［（なし）］を指定します。</p>
+
+			<h3 class="title--h3">
+				初期位置
+			</h3>
+			<p class="text">プレイヤーと乗り物（小型船／大型船／飛行船）のゲームスタート時の位置です。各欄の［…］をクリックして設定ウィンドウを開き、左欄でマップ名、右欄で位置をクリックすることで指定します。<br/>
+				初期位置に指定した場所には、マップ上に青の枠で囲まれたアイコンが表示されます。このアイコンはマップイベントと同様にドラッグで移動、［Del］キーで削除できます。<br/>
+				ただし、プレイヤーの初期位置が未設定の状態（アイコンを削除）では、ゲームをスタートすることができません。
+			</p>
+
+
+			<div class="flex--bw--p-img mb90px">
+				<div>
+					<h3 class="title--h3">
+						タイトル画面
+					</h3>
+					<p class="mb30px">ゲームスタート後、プレイ画面に最初に表示する画像です。設定欄の［…］をクリックすると表示されるウィンドウで画像を指定します。［ゲームタイトルの描画］を有効にすると、タイトル画面の上方に［ゲームタイトル］に設定した作品名を表示します（画像にタイトル名を含めている場合は無効にします）。</p>
+					<h3 class="title--h3--sub">
+						コマンドウィンドウ
+					</h3>
+					<p class="text">コマンドウィンドウの背景タイプと位置を設定します。</p>
+				</div>
+				<img src="assets/img/01_08_12_img02.png" alt=""/>
+			</div>
+
+
+
+			<h3 class="title--h3">
+				戦闘画面
+			</h3>
+			<p class="text--sub">戦闘画面の視点を設定します。
+			</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>フロントビュー</h3>
+					<p>敵キャラを正面から表示します。</p>
+				</li>
+				<li>
+					<h3>サイドビュー</h3>
+					<p>敵キャラとアクターを横から表示します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3" id="p01">
+				戦闘システム
+			</h3>
+			<p class="text--sub">戦闘システムのタイプを設定します。
+			</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>ターン制</h3>
+					<p>すべての戦闘キャラの行動を一度に決定します。</p>
+				</li>
+				<li>
+					<h3>タイムプログレス（アクティブ）</h3>
+					<p>敏捷性に基づいて戦闘キャラが行動します。コマンド入力中も時間が経過します。</p>
+				</li>
+				<li>
+					<h3>タイムプログレス（ウェイト）</h3>
+					<p>敏捷性に基づいて戦闘キャラが行動します。コマンド入力中は時間が経過しません。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3" id="p02">
+				オプション
+			</h3>
+			<p class="text--sub">ゲームの動作に関する特別な処理やルールを設定します。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>透明状態で開始</h4>
+					<p>有効にすると、プレイヤーの画像を透明（非表示）にした状態でゲームがスタートします。通常表示に戻すには［透明状態の変更］のイベントコマンドを使います。</p>
+				</li>
+				<li>
+					<h4>パーティの隊列歩行</h4>
+					<p>有効にすると、マップ移動時、先頭のアクターについていくように2番目以降のアクターの歩行画像を表示する設定でゲームがスタートします。パーティが5人以上いる場合でも、歩行画像が表示されるのは先頭から4人のみです。</p>
+				</li>
+				<li>
+					<h4>スリップダメージで戦闘不能</h4>
+					<p>有効にすると、“毒”などのステートから受けるダメージによってHPが0になることを許可します。無効にした場合はHPが1以下になりません。</p>
+				</li>
+				<li>
+					<h4>床ダメージで戦闘不能</h4>
+					<p>有効にすると、マップ上のタイル（ダメージ床）から受けるダメージによってHPが0になることを許可します。無効にした場合はHPが1以下になりません。</p>
+				</li>
+				<li>
+					<h4>ウィンドウにTPを表示</h4>
+					<p>有効にすると、各パーティーメンバーのTPをステータスウィンドウに表示します。TPのシステムを使用しない場合はチェックを外してください。</p>
+				</li>
+				<li>
+					<h4>控えメンバーも経験値を獲得</h4>
+					<p>有効にすると、パーティー人数が4人を超える場合、戦闘に参加しなかったメンバーにも経験値が入るようになります。</p>
+				</li>
+				<li>
+					<h4>大事なものの個数を表示</h4>
+					<p>有効にすると、パーティーが所有する大事なものの個数をアイテム画面に表示します。</p>
+				</li>
+				<li>
+					<h4>オートセーブを有効化</h4>
+					<p>有効にすると、戦闘終了時および場所移動時に、ゲームデータを自動的に保存するようにします。</p>
+				</li>
+			</ul>
+
+			<div class="flex--bw--p-table mb90px">
+				<div>
+					<h3 class="title--h3">
+						音楽
+					</h3>
+					<p>プレイ中に再生する音楽です。シーンごとの設定項目に再生するBGMまたはMEのファイルを指定します。各設定項目が示すシーンは以下のとおりです。なお、マップ上をプレイヤーが移動しているときに再生する音楽はマップデータに設定します。</p>
+				</div>
+				<table class="table--type01">
+					<tbody><tr>
+						<th>タイトル</th>
+						<td>タイトル画面で再生するBGM</td>
+					</tr>
+					<tr>
+						<th>戦闘</th>
+						<td>戦闘画面で再生するBGM</td>
+					</tr>
+					<tr>
+						<th>勝利</th>
+						<td>戦闘終了時、パーティが勝利した場合に再生するME</td>
+					</tr>
+					<tr>
+						<th>敗北</th>
+						<td>戦闘終了時、パーティが敗北した場合に再生するME</td>
+					</tr>
+					<tr>
+						<th>ゲームオーバー</th>
+						<td>ゲームオーバー画面で再生するME</td>
+					</tr>
+					<tr>
+						<th>小型船</th>
+						<td>小型船に乗っているときに再生するBGM</td>
+					</tr>
+					<tr>
+						<th>大型船</th>
+						<td>大型船に乗っているときに再生するBGM</td>
+					</tr>
+					<tr>
+						<th>飛行船</th>
+						<td>飛行船に乗っているときに再生するBGM</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+			<div class="flex--bw--p-table mb90px">
+				<div>
+					<h3 class="title--h3">
+						効果音
+					</h3>
+					<p>プレイヤーの操作したときや、戦闘時の行動開始時などに再生する効果音（SE）です。状況ごとの設定項目に再生するSEファイルを指定します。各設定項目が示す状況は以下のとおりです。</p>
+				</div>
+				<table class="table--type01">
+					<tbody><tr>
+						<th>カーソル</th>
+						<td>カーソルを移動したとき</td>
+					</tr>
+					<tr>
+						<th>決定</th>
+						<td>使用するコマンドを決定したとき</td>
+					</tr>
+					<tr>
+						<th>キャンセル</th>
+						<td>メニュー画面などでコマンドをキャンセルしたとき</td>
+					</tr>
+					<tr>
+						<th>ブザー</th>
+						<td>メニュー画面などで使用できないコマンドを選択したとき</td>
+					</tr>
+					<tr>
+						<th>装備</th>
+						<td>メニュー画面で装備を変更したとき</td>
+					</tr>
+					<tr>
+						<th>セーブ</th>
+						<td>ゲームをセーブしたとき</td>
+					</tr>
+					<tr>
+						<th>ロード</th>
+						<td>ゲームをロードしたとき</td>
+					</tr>
+					<tr>
+						<th>戦闘開始</th>
+						<td>敵とエンカウントしたとき</td>
+					</tr>
+					<tr>
+						<th>逃走</th>
+						<td>戦闘画面でパーティや敵キャラが逃げるとき</td>
+					</tr>
+					<tr>
+						<th>敵攻撃</th>
+						<td>戦闘画面で敵キャラが通常攻撃をするとき</td>
+					</tr>
+					<tr>
+						<th>敵ダメージ</th>
+						<td>戦闘画面で敵キャラにダメージを与えたとき</td>
+					</tr>
+					<tr>
+						<th>敵消滅</th>
+						<td>戦闘画面で敵キャラが倒されたとき</td>
+					</tr>
+					<tr>
+						<th>ボス消滅1</th>
+						<td>［特徴］の［消滅エフェクト］が［ボス］の敵キャラが倒されたとき</td>
+					</tr>
+					<tr>
+						<th>ボス消滅2</th>
+						<td>［特徴］の［消滅エフェクト］が［ボス］の敵キャラの消失エフェクトを表示しているとき</td>
+					</tr>
+					<tr>
+						<th>味方ダメージ</th>
+						<td>アクターがダメージを受けたとき</td>
+					</tr>
+					<tr>
+						<th>味方戦闘不能</th>
+						<td>戦闘画面でアクターが戦闘不能のステートになったとき</td>
+					</tr>
+					<tr>
+						<th>回復</th>
+						<td>戦闘画面でアクターや敵キャラが回復したとき</td>
+					</tr>
+					<tr>
+						<th>ミス</th>
+						<td>物理攻撃に失敗してダメージを与えられなかったとき</td>
+					</tr>
+					<tr>
+						<th>回避</th>
+						<td>物理攻撃を回避したとき</td>
+					</tr>
+					<tr>
+						<th>魔法回避</th>
+						<td>魔法攻撃を回避したとき</td>
+					</tr>
+					<tr>
+						<th>魔法反射</th>
+						<td>魔法攻撃を跳ね返したとき</td>
+					</tr>
+					<tr>
+						<th>ショップ</th>
+						<td>ショップ画面でアイテムなどを購入／売却したとき</td>
+					</tr>
+					<tr>
+						<th>アイテム使用</th>
+						<td>メニュー画面でアイテムを使用したとき</td>
+					</tr>
+					<tr>
+						<th>スキル使用</th>
+						<td>メニュー画面でスキルを使用したとき</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+
+
+
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

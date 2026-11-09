@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Skill Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Skill Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Skill Settings">
+        <span>Skill Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Database</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Database</a></li>
+				<li>&gt;</li>
+				<li>Skill Settings</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">Skill Settings</h1>
+
+		<div class="section">
+			<h2 class="title--h2">This Data&#39;s Role</h2>
+			<p class="text">
+				This is data that defines the actions an actor takes during battle, such as fight, guard, magic, and special attacks. It is possible to create all kinds of actions by configuring the states and conditions when actions can be performed, success rate, the damage dealt to the target, etc.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb60px">
+				<img src="assets/img/01_08_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				Basic Settings
+			</h3>
+
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h4>
+						Name
+					</h4>
+					<p>The name of the skill. If the name of a skill is too long, it may not be completely displayed on the Play Screen.</p>
+				</li>
+				<li>
+					<h4>
+						Icon
+					</h4>
+					<p>The image that is displayed together with the skill name during gameplay. You can select an optional image in the [Select an Image] window that appears after double-clicking. It is typical to select an image that corresponds to characteristics of the skill.</p>
+				</li>
+				<li>
+					<h4>
+						Description
+					</h4>
+					<p>A description of the skill that appears during gameplay when the cursor is over it.</p>
+				</li>
+				<li>
+					<h4>
+						Skill Type
+					</h4>
+					<p>Specify the Skill Type. [Magic] and [TP Skills] are provided by default. However, you can change them in the [<a href="01_08_14.html">Terms</a>] settings. Those configured to something other than [None] can be used only by those actors and classes assigned the traits of each [Additional Skill Type].</p>
+				</li>
+				<li>
+					<h4>
+						MP Cost/TP Cost
+					</h4>
+					<p>The MP (0 to 999) and TP (0 to 100) cost to use a skill. An actor cannot use a skill if they do not have enough MP or TP.</p>
+				</li>
+				<li>
+					<h4>
+						Occasion
+					</h4>
+					<p>The state in which the skill can be used. Select one of the following: [Always], making it possible to select both in battle and in the Menu Screen; [Battle Screen], making it only selectable during battle; [Menu Screen], making it only selectable in the Menu Screen; or [Never].</p>
+				</li>
+			</ul>
+			<h4 class="title--h3--sub" id="m01">
+				Scope
+			</h4>
+			<p class="text--sub">The targets of the skill effect. You must choose one for each of the following.</p>
+			<div class="flex--bw--p-img pb40px border--bottom mb90px">
+				<div>
+					<dl class="dl--default">
+						<dt>Faction</dt>
+						<dd>Specify the target. You can select from Enemy, Ally, Enemy &amp; Ally, User, or Unspecified.</dd>
+						<dt>Number</dt>
+						<dd>Specify the number of targets. You can select from 1 Enemy/Ally, All Enemies/Allies, or random.</dd>
+						<dt>Status </dt>
+						<dd>Specify the target conditions. You can select from Alive, Knocked Out, or No Condition. <br/>Can only be set for allies.</dd>
+					</dl>
+				</div>
+				<img src="assets/img/01_08_03_img02.png" alt=""/>
+			</div>
+
+
+
+			<h3 class="title--h3">
+				Activation
+			</h3>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						Speed
+					</h4>
+					<p>The value (between -2000 and 2000) added to an actor&#39;s Agility when using the skill. Affects the action order during battle, allowing you to create effects which are less effective but can be used quickly, or are effective but take time to use.</p>
+				</li>
+				<li>
+					<h4>
+						Success
+					</h4>
+					<p>The rate of success (0 to 100%) when using a skill. The actual success rate is affected by the effectiveness of the target.</p>
+				</li>
+				<li>
+					<h4>
+						Repeat
+					</h4>
+					<p>The number of times (1 to 9) an effect is applied per single use.</p>
+				</li>
+				<li>
+					<h4>
+						TP Gain
+					</h4>
+					<p>The amount of TP gained after applying an effect to a target upon successful activation.</p>
+				</li>
+				<li>
+					<h4>
+						Hit Type
+					</h4>
+					<p>Determines the type of hit. Choose one of the following.</p>
+					<dl class="dl--default">
+						<dt>Certain Hit </dt>
+						<dd>Treats the successful use of the skill as a guaranteed hit. Counterattack, Magic Reflection, and Substitute are ineffective.</dd>
+						<dt>Physical Attack </dt>
+						<dd>Determines the success based on the user&#39;s Accuracy and the target&#39;s Evasion. Counterattack and Substitute are applicable.</dd>
+						<dt>Magic Attack </dt>
+						<dd>Determines the success based on the target&#39;s Magic Evasion. Magic Reflection and Substitute are applicable.</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>
+						Animation
+					</h4>
+					<p>Animations that appear when a skill is used during battle.</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				Message
+			</h3>
+			<p class="text">Assign a fixed phrase (up to 2 lines) that appears during battle when a skill is used. On use, &quot;%1&quot; will be replaced with the name of the user, while &quot;%2&quot; will be replaced with the skill name. You can input fixed phrases by pressing either the [casts *!] button, [does *!] button or the [used *!] button.</p>
+
+
+
+			<h3 class="title--h3">
+				Required Weapon
+			</h3>
+
+			<h4 class="title--h3--sub">
+				Weapon Type 1/Weapon Type 2
+			</h4>
+			<p class="text">Weapon(s) that must be equipped in order to use a skill. You can specify weapon types to each of the two fields. If both are set to [None], the skill can be used without any weapon prerequisites. When two types are specified, the skill can be used if a weapon of either type is equipped.</p>
+
+			<h3 class="title--h3">
+				Damage
+			</h3>
+			<p class="text--sub">Specify the formula for the type and the effectiveness if a skill damages a target.</p>
+
+			<ul class="ul--2c--line mb30px">
+				<li>
+					<h4>Type </h4>
+					<p>Effect types related to HP and MP. Select one of 6 types. [Damage] decreases, [Recover] increases, and [Drain] transfers (removes a small amount from target and gives that same amount to the user).</p>
+				</li>
+				<li>
+					<h4>Elements </h4>
+					<p>The element that is assigned to an effect.</p>
+				</li>
+				<li>
+					<h4>Variance </h4>
+					<p>How much the effectiveness of the skill varies (0 to 100%). Raise or lower the calculated effectiveness within the specified percentage. If the effectiveness is 100 and the variance is 20, the effectiveness will be a value between 80 and 120 (100±20).</p>
+				</li>
+				<li>
+					<h4>Critical Hits </h4>
+					<p>Specify whether an attack can land a critical hit or not by selecting [Yes] or [No]. When set to [Yes], the chance of landing a critical hit will be determined based on the Critical Chance of the user and the Critical Evasion Rate of the target.</p>
+				</li>
+			</ul>
+
+			<h4 class="title--h3--sub">Formula </h4>
+			<div class="flex--bw--p-tables pb30px border--bottom mb90px">
+				<p>
+					Formula for determining the effectiveness. <br/> <br/>When directly specifying a formula, specify the parameter to reference using the strings below. When referring to the values of the attacker, change &quot;x&quot; to &quot;a&quot;, and when referring to the values of the target, change &quot;x&quot; to &quot;b&quot;. For example, entering &quot;a.atk&quot; will reference the Attack Power value of the attacker. You can also reference the nth variable value by entering &quot;v[n]&quot; (where n is a number). You may also use the standard four arithmetic symbols (+, -, *, /) as operators. <br/> <br/> When you enter &quot;a.atk * 4 - b.def * 2&quot;, the value for the effectiveness of an item will be calculated as &quot;(Attacker&#39;s Attack Power x 4) - (Target&#39;s Defense x 2)&quot;. <br/> <br/> Also, as effectiveness can change depending on elements or defense actions, these factors will not be included in the formula.
+				</p>
+
+				<table class="table--type01">
+					<tbody><tr>
+						<th>x.atk</th>
+						<td>Attack Power</td>
+					</tr>
+					<tr>
+						<th>x.def</th>
+						<td>Defense</td>
+					</tr>
+					<tr>
+						<th>x.mat</th>
+						<td>Magic Attack</td>
+					</tr>
+					<tr>
+						<th>x.mdf</th>
+						<td>Magic Defense</td>
+					</tr>
+					<tr>
+						<th>x.agi</th>
+						<td>Agility</td>
+					</tr>
+					<tr>
+						<th>x.luk</th>
+						<td>Luck</td>
+					</tr>
+					<tr>
+						<th>x.mhp</th>
+						<td>Max HP</td>
+					</tr>
+					<tr>
+						<th>x.mmp</th>
+						<td>Max MP</td>
+					</tr>
+					<tr>
+						<th>x.hp</th>
+						<td>Current HP</td>
+					</tr>
+					<tr>
+						<th>x.mp</th>
+						<td>Current MP</td>
+					</tr>
+					<tr>
+						<th>x.tp</th>
+						<td>Current TP</td>
+					</tr>
+					<tr>
+						<th>x.level</th>
+						<td>Level</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+
+			<h3 class="title--h3">
+				Effects
+			</h3>
+			<p class="text">Details of effects other than damage. Configure in the [Effects] window that appears after double-clicking. Please see [<a href="01_08_16.html">How to Set Effects</a>] for more information.</p>
+
+			<h3 class="title--h3">
+				Notes
+			</h3>
+			<p>Used to make notes while making your game. <br/>Right-click to show the menu and choose [Plugin Help...] to display the Plugin Help information.
+			</p>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

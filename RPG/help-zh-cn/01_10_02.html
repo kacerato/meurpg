@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>游戏进程</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>游戏进程</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="游戏进程">
+        <span>游戏进程</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>游戏进程</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">游戏进程</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">操作开关</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">变更开关的值（ON/OFF）。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>开关</h4>
+					<p>指定变更对象的开关。要单独操作一个开关，请选择[单个]并指定目标开关。如果要一次性更改连续编号的开关的值，请选择[范围]并指定开关编号的范围。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定要代入开关的值（ON/OFF）。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">操作变量</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改存储在变量中的值。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>变量</h4>
+					<p>指定要更改数值的变量。要单独操作一个变量，请选择[单个]并指定目标变量。如果要一次性更改连续编号的变量时，请选择[范围]，并指定变量编号的范围。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定数值的计算方法（请参见备注）。在[变量]中指定的变量的值，可以基于运算前的变量值、计算方法和操作数来算出变化后的值。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定在[操作]的计算中使用的值（请参见备注）。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">备注</h3>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="mb10px">[操作]中指定的计算方法的内容如下。</p>
+					<table class="table--type04 mb40px">
+						<tbody><tr>
+							<th>代入</th>
+							<td>代入运算数的值（不计算）</td>
+						</tr>
+						<tr>
+							<th>加法</th>
+							<td>用[运算前的变量+运算数]的计算值代替</td>
+						</tr>
+						<tr>
+							<th>减法</th>
+							<td>用[运算前的变量-运算数]的计算值代替</td>
+						</tr>
+						<tr>
+							<th>乘法</th>
+							<td>用[运算前的变量×运算数]的计算值代替</td>
+						</tr>
+						<tr>
+							<th>除法</th>
+							<td>用[运算前的变量÷运算数]的计算值代替</td>
+						</tr>
+						<tr>
+							<th>余数</th>
+							<td>用[运算前的变量÷运算数]的余数代替</td>
+						</tr>
+					</tbody></table>
+					<p class="mb10px">[运算数]中指定的值的内容如下。</p>
+					<table class="table--type04">
+						<tbody><tr>
+							<th style="width: 80px;">常量</th>
+							<td>应用固定值。在右列中指定该值。</td>
+						</tr>
+
+						<tr>
+							<th>变量</th>
+							<td>应用变量的值。指定要引用的变量。</td>
+						</tr>
+
+						<tr>
+							<th>随机</th>
+							<td>应用随机数（随机确定的数字）。指定要生成的随机数的范围（-99999999~99999999）。</td>
+						</tr>
+
+						<tr>
+							<th>游戏数据</th>
+							<td>应用与游戏状况有关的值。单击[...]，然后在打开的窗口中指定要引用的信息（请参阅右表）。</td>
+						</tr>
+
+						<tr>
+							<th>脚本</th>
+							<td>将输入的JavaScript的评估结果应用于该值。</td>
+						</tr>
+					</tbody></table>
+				</div>
+				<div>
+					<p class="mb10px">在[运算数]中指定了[游戏数据]时，请指定以下数据之一作为运算数的值。</p>
+					<table class="table--type04">
+						<tbody><tr>
+							<th style="width: 80px;">物品</th>
+							<td>应用持有指定物品的数量。</td>
+						</tr>
+						<tr>
+							<th>武器</th>
+							<td>应用持有指定武器的数量。</td>
+						</tr>
+						<tr>
+							<th>护甲</th>
+							<td>应用持有指定护甲的数量。</td>
+						</tr>
+						<tr>
+							<th>角色</th>
+							<td>将值应用于角色参数（HP，MP，TP等）。指定目标角色和参数。</td>
+						</tr>
+						<tr>
+							<th>敌方角色</th>
+							<td>将值应用于敌方角色参数（HP，MP，TP等）。指定目标敌方角色和参数。该项目仅在战斗中有效。</td>
+						</tr>
+						<tr>
+							<th>人物</th>
+							<td>
+								使用玩家或事件的坐标、方向等。
+								<table class="table--type04">
+									<tbody><tr>
+										<th>地图X、地图Y</th>
+										<td>：当前位置的地图坐标</td>
+									</tr>
+									<tr>
+										<th>朝向</th>
+										<td>：现在的朝向（上＝8／左＝4／右＝6／下＝2）</td>
+									</tr>
+									<tr>
+										<th>画面X、画面Y</th>
+										<td>：屏幕上显示位置的坐标（点）</td>
+									</tr>
+								</tbody></table>
+							</td>
+						</tr>
+						<tr>
+							<th>队伍</th>
+							<td>使用在队伍中位于指定位置的作用物的ID。</td>
+						</tr>
+						<tr>
+							<th>上一个</th>
+							<td>
+								使用有关上一个行动的数据。
+								<ul class="ul">
+									<li>
+										上一个使用的技能的ID
+									</li>
+									<li>
+										上一个使用的物品的ID
+									</li>
+									<li>
+										上一个行动的角色的ID
+									</li>
+									<li>
+										上一个行动的敌方角色的索引
+									</li>
+									<li>
+										上一个作为目标的角色的ID
+									</li>
+									<li>
+										上一个作为目标的敌方角色的索引
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th>其他</th>
+							<td>使用其他数据。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">独立开关的操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">操作独立开关的值。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>独立开关</h4>
+					<p>指定目标的独立开关（A~D）。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定要代入开关的值（开/关）。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">计时器的操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">启动/停止测量时间限制（剩余时间）的计时器。启动计时器后，剩余时间将自动显示在屏幕的右上方。显示菜单时，计时器的倒计时将暂时停止（会被排除在测量对象之外）。要根据计时器的剩余时间产生分支的话，请使用[条件分支]事件指令。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>操作</h4>
+					<p>指定[开始]以开始时间限制测量，并指定[停止]以停止时间限制测量。</p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>在[操作]中指定[开始]时，请指定时间限制（0分钟0秒~99分钟59秒）。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

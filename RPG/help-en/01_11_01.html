@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Asset Standards</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Asset Standards</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Asset Standards">
+        <span>Asset Standards</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Documentation</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>Documentation</li>
+				<li>&gt;</li>
+				<li>Asset Standards</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">Asset Standards</h1>
+		<p class="text--lead">It is possible to use your own original files for all kinds of assets, such as images and audio. <br/>By copying the asset file into the appropriate folder, you can then select the asset from the editor.
+		</p>
+
+
+		<div class="section">
+			<ul class="ul--inline">
+				<li><a href="#p01">Image Assets</a></li>
+				<li><a href="#p02">Tileset Details</a></li>
+				<li><a href="#p04">Audio Assets</a></li>
+				<li><a href="#p05">Movie Assets</a></li>
+			</ul>
+		</div>
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Image Assets</h2>
+			<p class="text">All images must be in the PNG format.</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>Battlebacks (img/battlebacks1, img/battlebacks2)</h3>
+					<p>
+						Images used as the backgrounds for the Battle Screen. <br/>A battleback measures 1000x740 pixels in size. Backgrounds in the &quot;battlebacks1&quot; folder are primarily for floors, and those in the &quot;battlebacks2&quot; folder are primarily for walls. You can arrange these in any combination that you like in order to create your battleback. <br/>The upper part of images in front-view battles and the lower part of images in side-view battles will be cropped when displayed.
+					</p>
+				</li>
+				<li>
+					<h3>Front-View Enemies (img/enemies)</h3>
+					<p>
+						Images for enemies that are displayed in front-view battle. You can choose any size you want for the image. <br/><br/>*There is a possibility that images with a width (horizontal direction) that is an odd number will be blurred when displayed. Even numbers are recommended. 
+					</p>
+				</li>
+				<li>
+					<h3>Face (img/faces)</h3>
+					<p>
+						Images which are displayed in the Menu Screen and message windows. <br/>Face images are 144x144 pixels in size, and arranged into 2 rows and 4 columns equaling 8 images.
+					</p>
+				</li>
+				<li>
+					<h3>Parallax (img/parallaxes)</h3>
+					<p>
+						Images shown behind maps. You can choose any size you want for the image. <br/>Like wallpaper, the top, bottom, left, and right sides of the image will be connected when you wish to loop the image. <br/>Additionally, parallax files will be treated as floors (no parallax) when there is a &quot;!&quot; at the beginning of the file name.
+					</p>
+				</li>
+				<li>
+					<h3>Pictures (img/pictures)</h3>
+					<p>
+						Images which are displayed by using event commands during the game. You can choose any size you want for the image. <br/><br/>*There is a possibility that images with a width (horizontal direction) that is an odd number will be blurred when displayed. Even numbers are recommended.  
+					</p>
+				</li>
+				<li>
+					<h3>Side-view Allies (img/sv_actors)</h3>
+					<p>
+						Actor images which are displayed in side-view battle. <br/>Please refer to [<a href="01_11_02.html">Side-view Character Standards</a>].
+					</p>
+				</li>
+				<li>
+					<h3>Side-View Enemies (img/sv_enemies)</h3>
+					<p>
+						Images for enemies that are displayed in side-view battle. You can choose any size you want for the image. <br/><br/>*There is a possibility that images with a width (horizontal direction) that is an odd number will be blurred when displayed. Even numbers are recommended.
+					</p>
+				</li>
+				<li>
+					<h4>Tilesets (img/tilesets)</h4>
+					<p>
+						Images which consist of the tiles (also known as map chips) that make up a map.
+					</p>
+				</li>
+				<li>
+					<h4>Title Screen (img/titles1, img/titles2)</h4>
+					<p>
+						Images displayed on the Title Screen. <br/>The size for these images is 816x624 pixels. Titles1 contains files for the main background, and titles2 contains images for frames, etc. Use these in any combination to create the Title Screen.
+					</p>
+				</li>
+				<li>
+					<h3>Characters (img/characters)</h3>
+					<p>
+						Images shown for the characters on the map. <br/>The size for a character image can be changed freely (normally 48x48 pixels), and consist of 4 directions (up, down, left, right) and 3 patterns for a total of 12 patterns that will be arranged in the provided order. A file for 1 character will be arranged into 2 rows and 4 columns, totaling 8 images. The size of the character will be calculated using 1/12 of the width and 1/8 of the height of this file. Moreover, characters will be shown 6 pixels above a tile so they appear more natural when on top of buildings.
+
+						</p><ul class="ul">
+							<li>It is possible to treat 1 character as 1 file by including &quot;$&quot; at the beginning of the file name.</li>
+							<li>Including a &quot;!&quot; at the beginning of the file name will prevent the image from being shifted 6 pixels up, and bush elements will no longer make it appear half-transparent. This is primarily used for map objects such as doors and treasure chests.</li>
+							<li>It is also possible to use the &quot;$&quot; and &quot;!&quot; special characters together.</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h3>System Images (img/system)</h3>
+					<p>
+						Various images used throughout the game.
+					</p>
+					<dl class="dl--default">
+						<dt>Baloon.png</dt>
+						<dd>Asset used for actor chat balloons. The transparent area below the image is defined by the user.</dd>
+						<dt>ButtonSet.png</dt>
+						<dd>Button assets used with touch controls. These can be used for things like opening the menu, canceling, returning to previous, or changing the number of items when using the shop.</dd>
+						<dt>GameOver.png</dt>
+						<dd>Asset displayed on the Game Over Screen.</dd>
+						<dt>IconSet.png</dt>
+						<dd>Assets used for the icons for items, weapons, skills, etc.</dd>
+						<dt>Shadow1.png</dt>
+						<dd>Asset for the shadow displayed when flying a plane.</dd>
+						<dt>Shadow2.png</dt>
+						<dd>Asset for the shadows of allies in side-view battle.</dd>
+						<dt>States.png</dt>
+						<dd>
+						Asset for the states of allies in side-view battle.<br/>
+						</dd>
+						<dt>Weapons1.png, Weapons2.png, Weapons3.png</dt>
+						<dd>
+						The weapon images that are displayed when allies perform normal attacks in side-view battle. <br/>There are 12 different types of images for Weapons1 and Weapons2. Weapons3 is defined by the user.
+						</dd>
+						<dt>Window.png</dt>
+						<dd>
+						Collection of image assets that compose the windows.
+						</dd>
+					</dl>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Tileset Details</h2>
+			<p class="text">A single tile is 48x48 pixels in size, and tiles need to be grouped in the 5 types of sets, A through E, below. <br/><br/>Additionally, the specifications for some tiles can change according to the contents set under [Mode] found in [Tilesets] in the database.
+			</p>
+			<h3 class="title--h3">
+				Tileset A
+			</h3>
+			<div class="flex--bw--p-img mb30px">
+				<div>
+					<p class="text--sub">This set will be used as the lower layer when drawing the map. This set is divided further into 5 tiles, with most of them being called [Autotiles], which are composed of special tiles which have their boundary lines automatically created. <br/><br/>Autotiles are, as a rule, arranged in a pattern composed of 6 tiles as seen in the illustration below, making up the basic structure of the tiles.
+					</p>
+				</div>
+				<img src="assets/img/01_11_01_img01.png" alt=""/>
+			</div>
+			<ul class="ul--2c--line mb40px">
+				<li>
+					<h4>a</h4>
+					<p>Representative Pattern (for displaying in the tile palette)</p>
+				</li>
+				<li>
+					<h4>b</h4>
+					<p>Pattern with boundaries at each corner</p>
+				</li>
+				<li>
+					<h4>c</h4>
+					<p>Group Pattern (refers to group of tiles with one in the center and 1 in each of the 8 directions)</p>
+				</li>
+			</ul>
+
+
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_01_img02.png" alt=""/>
+			</div>
+			<p class="text">If the autotile located in the (8,8) position from the bottom-right is transparent, that autotile will be evaluated as a &quot;forest type&quot;. If a forest tile has the bush element assigned to it, character images will not appear as half transparent in the 8 types of tiles below which includes the bottom right and bottom left boundaries.</p>
+
+			<h3 class="title--h3--sub">A1 (Animations)</h3>
+			<div class="flex--bw--p-img mb60px">
+				<p class="text--sub">These are 768x576 pixels in size and made up of the 5-pattern blocks as in the illustration to the right. Basically, tiles in this part will not have a boundary created even if they touch. <br/>Boats and ships can only travel through the tiles in this part. However, tiles in this tileset will no longer be able to be entered using boats and ships if the tileset is configured to allow players to walk on the tiles.
+				</p>
+				<img src="assets/img/01_11_01_img03.png" alt=""/>
+			</div>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h5>Block A</h5>
+					<p>Autotiles used as ocean tiles. By placing 3 autotile basic patterns horizontally in a row, it is possible to animate them.</p>
+				</li>
+				<li>
+					<h5>Block B</h5>
+					<p>Autotiles used as deep sea tiles. Only tiles in this block can create a boundary line with ocean tiles when adjoined to A1 (Animation) tiles. Also, tiles in Block A will automatically fill in the transparent sections of this block. Just like in Block A, by placing 3 autotile basic patterns horizontally in a row, it is possible to animate them. Additionally, boats cannot travel through tiles in this block.</p>
+				</li>
+				<li>
+					<h5>Block C</h5>
+					<p>Autotiles which decorate ocean tiles in Block A. Tiles in Block A will automatically fill in the transparent sections of this block. Additionally, boats and ships cannot travel through tiles in this block.</p>
+				</li>
+				<li>
+					<h5>Block D</h5>
+					<p>Autotiles used as water tiles. By placing 3 autotile basic patterns horizontally in a row, it is possible to animate them.</p>
+				</li>
+				<li>
+					<h5>Block E</h5>
+					<p>Used for waterfall tiles. You can create a group pattern by placing two tiles horizontally, and animate them by placing 3 vertically in a column. Additionally, boats and ships cannot travel through tiles in this block.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3--sub">A2 (Ground)</h3>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_01_img04.png" alt=""/>
+			</div>
+			<div class="flex--bw--p-img mb60px">
+				<p class="text--sub">These are 768x576 pixels in size and composed of four 2-pattern blocks placed vertically in a row as in the illustration above. Specifications for this tileset alone can change according to the contents set under [Mode] found in [Tilesets] in the database. <br/>If the tiles in this set have the counter element, they will be used as autotiles to create tables, and the bottom of the pattern will be shifted 12 pixels down when placed.
+				</p>
+				<img src="assets/img/01_11_01_img05.png" alt=""/>
+			</div>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h5>Block A (Field Type)</h5>
+					<p>Composed using 4-pattern autotiles, and will be handled as 1 only, 1 and 2 overlapping, 3 only, or 3 and 4 overlapping in the actual tileset.
+						</p><div class="img--center mt10px">
+							<img src="assets/img/01_11_01_img06.png" alt=""/><br/><b>↓</b><br/><img src="assets/img/01_11_01_img07.png" alt=""/>
+						</div>
+					<p></p>
+				</li>
+				<li>
+					<h5>Block B (Field Type)</h5>
+					<p>It is possible to store four patterns, and these are special tiles that can be placed over tiles in Block A in the actual tileset.</p>
+				</li>
+				<li>
+					<h5>Block A (Area Type)</h5>
+					<p>It is possible to store four patterns, and these are tiles that can be placed over tiles in Block B in the actual tileset.</p>
+				</li>
+				<li>
+					<h5>Block B (Area Type)</h5>
+					<p>It is possible to store four patterns, and these are tiles that can be placed over tiles in Block A in the actual tileset.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3--sub">A3 (Buildings)</h3>
+			<p class="text">Autotiles which will primarily be used for the appearance of buildings. These are 768x384 pixels in size and are composed by placing 8 tiles horizontally and 4 tiles vertically, formed using only the autotile group pattern. <br/><br/>By placing two or more of these tiles together vertically when designing your map, shadows will automatically be created on the adjacent touching tile on the right side. However, shadows will not be automatically generated if the adjacent tile belongs to a part other than A2 (Ground) (excluding Block C) or A5 (Normal).</p>
+			<h3 class="title--h3--sub">A4 (Walls)</h3>
+			<p class="text">Autotiles which will primarily be used for walls. These are also used for walls in dungeon instances. These are 768x720 pixels in size and are composed by placing 8 tiles horizontally and 3 tiles vertically using autotile basic structures and those tiles placed vertically in a row using only the autotile group pattern. <br/><br/>By placing two or more of these tiles together vertically when designing your map, shadows will automatically be created on the adjacent touching tile on the right side. However, shadows will not be automatically generated if the adjacent tile belongs to a part other than A2 (Ground) (excluding Block C) or A5 (Normal).</p>
+
+			<h3 class="title--h3--sub">A5 (Normal)</h3>
+			<p class="text">These are 384x768 pixels in size. Please be sure to place the tiles here in an 8x16 arrangement. Tiles contained in this file will all be treated as normal tiles. The 3rd, 5th, and 7th rows from the top can also be used for the floors of dungeon instances.</p>
+			<h3 class="title--h3">
+				Tileset B through Tileset E
+			</h3>
+			<p>These sets will be used as the upper layers when drawing the map. <br/>These are 768x768 pixels in size. Please be sure to place the tiles here in a 16x16 arrangement.</p>
+
+			<ul class="ul">
+				<li>Leave the tile located in the top left of Tileset B blank. This represents nothing being placed in the upper layer.</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Audio Files (Music, Sound Effects)</h2>
+			<p class="text--sub">
+				Please use the following format for audio files.
+			</p>
+			<ul class="ul mb30px">
+				<li>Ogg Vorbis (.ogg)</li>
+			</ul>
+			<p>
+				If the LOOPSTART and LOOPLENGTH fields in the metadata are embedded, the audio sample will be repeated using those values.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Video Files (Movies)</h2>
+			<p class="text--sub">
+				The usable file formats differ depending on the operating environment, so please prepare each video in both of the file formats below. Make sure to give them the same filename.
+			</p>
+			<ul class="ul mb30px">
+				<li>WebM (.webm)</li>
+				<li>MP4 (.mp4 encoded with H.264 codec)</li>
+			</ul>
+			<p>
+				*When creating a game that will be played on Windows or Mac, please prepare only the WebM file format. When creating a game that will be released on the web or for Android/iOS, both file formats are required.
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

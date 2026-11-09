@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>地图事件的创建与操作</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>地图事件的创建与操作</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="地图事件的创建与操作">
+        <span>地图事件的创建与操作</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_09.html">事件</a></li>
+				<li>&gt;</li>
+				<li>地图事件的创建与操作</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">地图事件的创建与操作</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">地图事件的创建・操作</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>
+						转换成编辑模式
+					</h3>
+					<p>要创建或编辑地图事件，请单击主窗口工具栏上的[事件]按钮（或菜单栏上的[模式]→[事件]）以切换到事件编辑模式。</p>
+				</li>
+				<li>
+					<h3>
+						新建
+					</h3>
+					<p>要创建新的地图事件，请在地图视图中双击要放置事件的位置。在出现的［事件编辑器］窗口中可以编辑事件设置，然后单击［OK］确定。有关设置的详细信息，请参见项目[<a href="01_09_03.html">地图事件设置</a>]。
+					</p>
+				</li>
+				<li>
+					<h3>
+						重新编辑・移动
+					</h3>
+					<p>放置地图事件后，该位置将显示一个图标（图案将会应用第一个事件页面上设定好的图像）。双击该图标就会打开[事件编辑器]窗口，可以再次编辑事件设置。您可以通过拖放图标来更改位置。</p>
+				</li>
+			</ul>
+
+			<div class="flex--bw--p-img mb90px">
+				<div>
+					<h3 class="title--h3">
+						事件列表
+					</h3>
+					<p class="text--sub mb30px">
+						当切换到事件编辑模式时，图块调色板会切换到事件列表。
+					</p>
+					<ul class="ul mb90px">
+						<li class="mb30px">在事件列表中选择一个事件，就能在地图上选中该事件。<br/>另外，如果您在地图上选中一个事件，则会在事件列表中选中相应的事件。</li>
+						<li>双击事件列表中的一个项目，就能打开事件编辑器。</li>
+					</ul>		
+				</div>
+				<img src="assets/img/01_09_02_img01.png" alt="" style="max-width: 45.2%;"/>
+			</div>
+
+			<h3 class="title--h3">
+				通过上下文菜单进行操作
+			</h3>
+			<p class="text--sub">如果在事件编辑模式下右键单击地图视图，就可以复制或删除放置在上下文菜单中的事件。各项目的功能如下所示。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>编辑（如果事件尚未配置时，则为[新建]） </h4>
+					<p>打开事件的编辑窗口。</p>
+				</li>
+				<li>
+					<h4>剪切 </h4>
+					<p>将右键单击的地图事件抓取至剪贴板上，并将其删除。</p>
+				</li>
+				<li>
+					<h4>复制 </h4>
+					<p>将右键单击的地图事件抓取至剪贴板上。</p>
+				</li>
+				<li>
+					<h4>粘贴 </h4>
+					<p>将您剪贴板上的地图事件放置在右键单击选中的位置。</p>
+				</li>
+				<li>
+					<h4>删除 </h4>
+					<p>删除右击选中的地图事件。</p>
+				</li>
+				<li>
+					<h4>快速创建事件 </h4>
+					<p>使用简单的设置创建四种类型的事件（下文详述）。</p>
+				</li>
+				<li>
+					<h4>设置为初始位置 </h4>
+					<p>设置游戏开始时玩家、载具等物品的位置。初始位置由蓝色框图标指示。 <br/>※事件图标是白色框。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">快速创建事件的功能</h2>
+			<p class="text">
+				通过上下文菜单中的[快速创建事件]项目，可以通过简单的设定来快速创建RPG游戏中常见的[移动]、[宝箱]等4种事件。各项目能够创建的内容和设置内容如下所示。<br/> <br/> 与其他事件一样，您可以编辑和复制使用快速创建功能创建的事件。
+			</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>移动 </h3>
+					<p>创建一个透明（无图像）事件，会将玩家移动到指定位置。可以用于出入口、楼梯处等。 用[目的地]和[朝向]，来指定移动后的位置和玩家的显示方向。</p>
+				</li>
+				<li>
+					<h3>门 </h3>
+					<p>创建带有门图像的事件，该事件会将玩家移动到指定位置。指定要在[图像]中显示的图像以及[目的地]的位置。</p>
+				</li>
+				<li>
+					<h3>宝箱 </h3>
+					<p>将创建一个宝箱事件，只有在您初次调查时，才能获得物品。在[图像]中指定要显示的图像，在[内容]中指定可获得的项目（金钱/物品/武器/护甲）。</p>
+				</li>
+				<li>
+					<h3>旅馆 </h3>
+					<p>创建一个可以完全治愈全队的事件。在[图像]中指定要显示的图像，在[价格]中指定收取的费用。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

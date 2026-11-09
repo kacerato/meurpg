@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>出力フォーマット</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>出力フォーマット</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="出力フォーマット">
+        <span>出力フォーマット</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">資料集</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>資料集</li>
+				<li>&gt;</li>
+				<li>出力フォーマット</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">出力フォーマット</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">デプロイメント</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_03_img01.png" alt=""/>
+			</div>
+			<p class="text--sub">各プラットフォーム用の配布パッケージを出力します。Windows、macOS、ウェブブラウザへの出力が可能です。</p>
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h3>Windowsの場合</h3>
+					<dd>
+						出力されたゲームフォルダを配布します。
+					</dd>
+				</li>
+				<li>
+					<h3>macOSの場合</h3>
+					<dd>
+						出力されたゲームフォルダ、もしくはゲームフォルダ内のファイルGame.appを配布します。<br/>
+						※Windows環境ではGame.appはフォルダとして表示されますが、macOS環境ではアプリケーションとして起動することができます。
+					</dd>
+				</li>
+			</ul>
+			<h3 class="title--h3--sub">ウェブブラウザの場合</h3>
+			<div class=" pb40px border--bottom mb90px">
+				<p class="mb30px">出力されたゲームフォルダをWebサーバーにアップロードするとブラウザ上でプレイすることができます。</p>
+				<h4>ゲームプレイの動作環境</h4>
+				<table class="table--type01">
+					<tbody><tr>
+					<th>動作環境</th>
+					<td>HTML5 CanvasとWeb Audio APIに対応したもの<br/>iOS12以上<br/>Android8.0 以上</td>
+					</tr>
+					<tr>
+					<th>推奨ブラウザ</th>
+					<td>Google Chrome, Safari, Firefox, iOS Safari, Chrome for Android</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							※スマートフォンのブラウザでプレイする場合は、Wi-Fi環境でプレイしてください。<br/>
+							※WebGL対応ブラウザでのプレイ専用です。
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+
+			<h3 class="title--h3">オプション ［未使用ファイルを除外する］</h3>
+			<p class="text--sub">
+				オプション［未使用ファイルを除外する］にチェックを入れてデプロイメントをすると、ゲームで未使用のファイルを含めずに、ゲームフォルダを書き出します。これによりファイルサイズを軽量化することができます。<br/>
+				除外対象になるファイルは以下のフォルダ内のファイルです。
+			</p>
+			<ul class="ul mb30px">
+				<li>プロジェクトフォルダ/img/以下</li>
+				<li>プロジェクトフォルダ/audio/以下</li>
+				<li>プロジェクトフォルダ/effects/以下</li>
+			</ul>
+			<p class="mb90px">
+				なお、プラグインの設計によっては、プラグインで指定したファイルが除外対象になる場合があります。<br/>
+				公式プラグイン「MaterialBase」を設定することで、除外対象外にすることができます。
+			</p>
+
+
+			<h3 class="title--h3">暗号化</h3>
+			<p>ゲームで使用している画像ファイルもしくは音声ファイルを暗号化します。</p>
+			<ul class="ul--2c--line mb30px">
+				<li>
+					<h4>画像ファイル</h4>
+					<p>チェックを入れるとパッケージに含まれる画像ファイルを暗号化します。</p>
+				</li>
+				<li>
+					<h4>音声ファイル</h4>
+					<p>チェックを入れるとパッケージに含まれる音声ファイルを暗号化します。</p>
+				</li>
+				<li>
+					<h4>暗号化キー</h4>
+					<p>任意の文字列を入力してください。ファイルを暗号化する際に内部で使用されます。</p>
+				</li>
+			</ul>
+
+			<p class="red">
+				※暗号化したファイルはプロジェクトフォルダ内では使用できません。<br/>
+				※ブラウザプレイの都合上、不正な複合を完全に防ぐことはできません。
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Messages</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Messages</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Messages">
+        <span>Messages</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Messages</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Messages</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Show Text</h2>
+
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">
+				Function
+			</h3>
+			<p class="text">Opens the Message Window and displays text.</p>
+
+			<h3 class="title--h3">
+				Settings
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Face</h4>
+					<p>Specify the face image to display in the left side of the Message Window. You can select an image in the [Select an Image] window that appears after double-clicking in the image area.</p>
+				</li>
+				<li>
+					<h4>Text</h4>
+					<p>
+						Input the text to display. It is possible to display up to 4 lines of text at once in the Message Window. Press the [Enter] key to go to the next line to input text after the first line. <br/>Right-click to show the menu.
+						</p><ul class="ul">
+							<li>[Plugin Help] ・・・ Displays the Plugin Help information.</li>
+							<li>[Insert Color Number] ・・・ Select a color to insert a color number.</li>
+							<li>[Insert Icon Number] ・・・ Select an icon to insert an icon number.</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>Name</h4>
+					<p>Set the Name to be displayed above messages.</p>
+				</li>
+				<li>
+					<h4>Background</h4>
+					<p>Select the Message Window format that will be used to display text.</p>
+				</li>
+				<li>
+					<h4>Window Position</h4>
+					<p>Specify either [Bottom], [Middle], or [Top] for the display position of the Message Window.</p>
+				</li>
+				<li>
+					<h4>Preview</h4>
+					<p>Click this to see a preview of what the Message Window will look like.</p>
+				</li>
+				<li>
+					<h4>Batch Entry</h4>
+					<p>When enabled, it allows you to enter more than 4 lines of text. Text which exceeds 4 lines will be split into multiple [Show Text] event commands, each with 4 lines of text.</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				Remarks
+			</h3>
+			<div class="flex--bw--p-table">
+				<div>
+					<ul class="ul mb60px">
+						<li>Pressing [Ctrl] + [Enter] while inputting text is the same as pressing the [OK] button.</li>
+						<li>The vertical line in the [Text] field is a guide showing the Message Window&#39;s maximum character limit. To check whether the text entered will be displayed as intended, use the [Preview] button.</li>
+						<li>You can display values of variables and names of actors by entering Control Characters into the text field. Control Characters and what they display are as follows. (Be sure to enter all Control Characters using half-width character input.)</li>
+					</ul>
+
+					<p class="mb10px">
+						*Note: The control characters \V, \N, \P, \G, \C, \I, and \\ may also be used in the following locations:
+					</p>
+		
+					<ul class="ul">
+						<li>Event Command: [<a href="#p02">Show Choices</a>]</li>
+						<li>Database: [Profile] in [<a href="01_08_01.html">Actor Settings</a>]</li>
+						<li>Database: [Message] in [<a href="01_08_03.html">Skill Settings</a>]</li>
+						<li>Database: [Description] in [<a href="01_08_04.html">Item Settings</a>] and [<a href="01_08_05.html">Weapon/Armor Settings</a>]</li>
+						<li>Database: [Messages] in [<a href="01_08_08.html">State Settings</a>]</li>
+						<li>Database: [Save Message] and [Load Message] fields in [Messages] under [<a href="01_08_14.html">Terms Settings</a>]</li>
+						<li>Database: Messages used during battle from [Party Name] onward in [Messages] under [<a href="01_08_14.html">Terms Settings</a>]. (The following may also be used for things displayed in the window: \$ \. \| \! \&gt; \&lt; \^)</li>
+					</ul>
+				</div>
+				<table class="table--type01">
+					<tbody><tr>
+						<th>\V[n]</th>
+						<td>Will be replaced with the value of the nth variable.</td>
+					</tr>
+					<tr>
+						<th>\N[n]</th>
+						<td>Will be replaced with the name of the nth actor.</td>
+					</tr>
+					<tr>
+						<th>\P[n]</th>
+						<td>Will be replaced by the name of the nth (arranged order) party member.</td>
+					</tr>
+					<tr>
+						<th>\G</th>
+						<td>Will be replaced by the currency unit.</td>
+					</tr>
+					<tr>
+						<th>\C[n]</th>
+						<td>Draw the subsequent text in the nth color. Text color conforms to the contents of the [Window.png] system image.</td>
+					</tr>
+					<tr>
+						<th>\I[n]</th>
+						<td>Draws the nth icon.</td>
+					</tr>
+					<tr>
+						<th>\{</th>
+						<td>Increases the text size by 1 step.</td>
+					</tr>
+					<tr>
+						<th>\}</th>
+						<td>Decreases the text size by 1 step.</td>
+					</tr>
+					<tr>
+						<th>\\</th>
+						<td>Used to enter the backslash character as actual text.</td>
+					</tr>
+					<tr>
+						<th>\$</th>
+						<td>Open the gold window.</td>
+					</tr>
+					<tr>
+						<th>\.</th>
+						<td>Wait for 1/4 second.</td>
+					</tr>
+					<tr>
+						<th>\|</th>
+						<td>Wait for 1 second.</td>
+					</tr>
+					<tr>
+						<th>\!</th>
+						<td>Wait for button input.</td>
+					</tr>
+					<tr>
+						<th>\&gt;</th>
+						<td>Display remaining text on same line all at once.</td>
+					</tr>
+					<tr>
+						<th>\&lt;</th>
+						<td>Cancel the effect that displays text all at once.</td>
+					</tr>
+					<tr>
+						<th>\^</th>
+						<td>Do not wait for input after displaying the next.</td>
+					</tr>
+					<tr>
+						<th>\PX[n]</th>
+						<td>Display after moving right to the nth pixel.</td>
+					</tr>
+					<tr>
+						<th>\PY[n]</th>
+						<td>Display after moving down to the nth pixel.</td>
+					</tr>
+					<tr>
+						<th>\FS[n]</th>
+						<td>Changes font size to the nth value.</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Show Choices</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Displays the Choices Window (max of 6 choices), and handles branches according to the player&#39;s choices. You can use Control Characters here.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Choices (1 through 6)</h4>
+					<p>Specify the text for the choices. Choices left blank will not be displayed.</p>
+				</li>
+				<li>
+					<h4>Background</h4>
+					<p>Specify the background type for choices.</p>
+				</li>
+				<li>
+					<h4>Window Position</h4>
+					<p>Specify the display position of the choices on the screen.</p>
+				</li>
+				<li>
+					<h4>Default</h4>
+					<p>Specify the initial position of the cursor.</p>
+				</li>
+				<li>
+					<h4>Cancel</h4>
+					<p>Specify what happens when the cancel button is pressed.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">Remarks</h3>
+			<ul class="ul">
+				<li>After confirming your settings, all the branches that handle the choices (including Cancel) will be created in the [Contents] section. What will be run after selecting a choice will be set in these branches.</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Input Number</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Displays the Input Number screen, and assigns the value input by the player to a variable.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Variable</h4>
+					<p>Specify the variable that will store the number entered by the player.</p>
+				</li>
+				<li>
+					<h4>Digits</h4>
+					<p>Specify the number of digits (1 through 8) that the input will accept.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Select Item</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Displays the Item Selection Window. Assigns the ID of the item that the player selects to a variable.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Variable</h4>
+					<p>Specify the variable that will store the number (item ID) of the item selected by the player.</p>
+				</li>
+				<li>
+					<h4>Item Type</h4>
+					<p>Specify the types of items to display in the list.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Show Scrolling Text</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Displays text that will scroll from the bottom of the screen to the top. Scrolling will be fast forwarded when the confirm button is pressed.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Text</h4>
+					<p>
+						Input the text to display. <br/>Right-click to show the menu.
+						</p><ul class="ul">
+							<li>[Plugin Help] ・・・ Displays the Plugin Help information.</li>
+							<li>[Icon Set Viewer] ・・・ Displays the Icon Set Viewer.</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>Speed</h4>
+					<p>Specify the scroll speed (1 through 8). The higher the number, the faster the text will scroll.</p>
+				</li>
+				<li>
+					<h4>No Fast Forward</h4>
+					<p>Disable fast forwarding even if the confirm button is pressed.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

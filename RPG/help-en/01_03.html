@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Basic Editor Controls</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Basic Editor Controls</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Basic Editor Controls">
+        <span>Basic Editor Controls</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--03">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Basic Editor Controls</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>Basic Editor Controls</li>
+			</ul>
+			<img src="assets/img/common/cha03.png" alt="" class="cha"/>
+		</div>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Names and Functions of Each Window Component</h2>
+			<p class="text">The screen which appears after opening a project is called the &quot;Main Window&quot;. The Main Window is used primarily for editing maps and events. <br/>Tools such as the [Database] are opened from the Main Window menu. The functions of each item are as follows.</p>
+
+
+			<div class="flex--bw">
+				<dl class="dl--1c--left--noline">
+					<dt>1. Menu Bar</dt>
+					<dd>
+					You can select from the functions of this software here.
+					</dd>
+					<dt>2. Toolbar</dt>
+					<dd>
+					Click a button to run a specific function.
+					</dd>
+					<dt>3. Tile Palette</dt>
+					<dd>
+					Shows the tileset you can place on the map. You can switch to the Set Region Edit Mode from the tab on the bottom.
+					</dd>
+					<dt>4. Map List</dt>
+					<dd>
+					A list of map data included in the current game.
+					</dd>
+					<dt>5. Map View</dt>
+					<dd>
+					Shows the contents of the current map. Used for design editing and specifying the location for placing events.
+					</dd>
+					<dt>6. Status Bar</dt>
+					<dd>
+					Shows the details of the selected function, map name, or map coordinates.
+					</dd>
+				</dl>
+
+				<div class="img--right"><img src="assets/img/01_03_img01.png" alt=""/></div>
+			</div>
+
+
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Editing Parameters</h2>
+			<p class="text">Adjusting the parameters available in the various windows of the things you want to make, and specifying things such as text and items is at the core of the creation process when creating games using this software. The different types of items you can set and how to edit them are as follows.</p>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>Text Input </h3>
+					<p>
+						Click the settings field and a &quot;|&quot; cursor will be shown. You can enter text using a keyboard while the cursor is in this state. Entered text will be inserted at the cursor&#39;s position. You can also move the cursor using the keyboard&#39;s arrow keys. The text input method will depend on the input method (IME) you&#39;re using for your language.
+					</p>
+				</li>
+				<li>
+					<h3>Number Input </h3>
+					<p>
+						Just as with text input, click the settings field and a &quot;|&quot; cursor will be shown. You can enter half-width numbers using a keyboard while the cursor is in this state. You can also click the [∧] and [∨] buttons to the right of the field to increase or decrease the value.
+					</p>
+				</li>
+				<li>
+					<h3>Radio Buttons </h3>
+					<p>
+						Radio buttons specify one item to be applied from multiple items. Click a circle. When it is filled in, that setting is enabled.
+					</p>
+				</li>
+				<li>
+					<h3>Check Boxes </h3>
+					<p>
+						Specifies if a setting indicated by the item name is enabled or disabled. Click the square. When it is filled in with a check mark, that setting is enabled. Click again and the check mark will disappear.
+					</p>
+				</li>
+				<li>
+					<h3>Drop-down Lists </h3>
+					<p>
+						Specifies one item from the items shown in the list to be applied. Click the [∨] to the right of the settings field to open it.
+					</p>
+				</li>
+				<li>
+					<h3>List Boxes </h3>
+					<p>
+						A list box shows a list of multiple settings. Double click an item to open a window where you can add or change content.
+					</p>
+				</li>
+				<li>
+					<h3>[...] Button </h3>
+					<p>
+						The content of items with a [...] to the right of the settings field is specified in a separate window. Click the [...] and make your configurations in the window that appears.
+					</p>
+				</li>
+				<li>
+					<h3>[OK], [Cancel], and [Apply] Buttons </h3>
+					<p>
+						Changes to settings are enabled once you confirm them. Click [OK] to confirm and close the window, click [Cancel] to discard your changes and close the window, or click [Apply] to confirm without closing the window.
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Searching via a Context Menu</h2>
+			<p class="text">The context menu can be opened by right clicking on a map or database. From there, you can select the [Search] option.</p>
+			<div class="flex--bw">
+				<div class="img--half">
+					<img src="assets/img/01_03_img02.png" alt=""/>
+				</div>
+				<div class="img--half">
+					<img src="assets/img/01_03_img03.png" alt=""/>
+				</div>
+			</div>
+			<p class="text">The [Search] window will then open. After searching once, you can select [Search Next] or [Search Previous] to continue searching for the same text.</p>
+		</div>
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

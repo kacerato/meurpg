@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_6";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>シーン制御</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>シーン制御</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="シーン制御">
+        <span>シーン制御</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>シーン制御</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">シーン制御</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">戦闘の処理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_12_img01.png" height="313" width="292" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">敵グループを出現させて戦闘を行ないます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵グループ</h4>
+					<p>対戦する敵グループを指定します。特定の敵グループと対戦させる場合は［直接指定］を選び、敵グループを指定します。敵グループのIDで指定するには［変数で指定］を選び、参照する変数を指定します。［ランダムエンカウントと同じ］を選ぶと、パーティがいるマップの［エンカウント］の設定に基づいて選ばれた敵グループが出現します。</p>
+				</li>
+				<li>
+					<h4>逃走可</h4>
+					<p>有効にすると戦闘中に［逃げる］のコマンドを有効にし、［勝った場合］［逃げた場合］のふたつに処理を分岐できます。</p>
+				</li>
+				<li>
+					<h4>敗北可</h4>
+					<p>有効にすると、パーティが全滅してもゲームオーバーにせず、［勝った場合］［負けた場合］のふたつに処理を分岐できます。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">ショップの処理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_12_img02.png" height="359" width="292" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">武器や防具、アイテムの売買を行なうショップの処理を開始します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>商品リスト</h4>
+					<p>販売するものを指定します。リストの空欄をダブルクリックすると表示されるウィンドウで［商品］と［価格］を指定します。価格は［標準］にするとデータに設定された価格、［指定］でこのイベントコマンドのみに適用する価格を指定します。</p>
+				</li>
+				<li>
+					<h4>購入のみ</h4>
+					<p>有効にすると、所持品の売却ができなくなります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">名前入力の処理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_12_img03.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの名前の入力画面を表示し、プレイヤーが入力したものに変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>名前の変更対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>最大文字数</h4>
+					<p>入力を受け付ける最大の文字数（1～16）を指定します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+				<li>プレイ中の名前入力時は、方向ボタンでカーソルを移動し、決定ボタンで文字の追加、取り消しボタンで名前の最後尾の文字を削除できます。 </li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">メニュー画面を開く</h2>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">メニュー画面を呼び出します。設定項目はありません。</p>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">セーブ画面を開く</h2>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">セーブ画面を呼び出します。設定項目はありません。</p>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">ゲームオーバー</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>ゲームを強制終了し、ゲームオーバーの画面を表示します。設定項目はありません。</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">タイトル画面に戻す</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>ゲームを強制終了し、タイトル画面に戻ります。設定項目はありません。</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

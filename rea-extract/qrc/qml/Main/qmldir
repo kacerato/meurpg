@@ -1,0 +1,2 @@
+singleton AtsumaruNetwork AtsumaruNetwork.qml
+singleton Dialog_AtsumaruAuthentication Dialog_AtsumaruAuthentication.qml

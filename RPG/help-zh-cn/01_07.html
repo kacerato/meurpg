@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>地图</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>地图</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="地图">
+        <span>地图</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">地图</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>地图</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">什么是地图？</h2>
+					<p class="text--sub">
+						地图是表现游戏的舞台的数据。玩家所玩的游戏主要围绕着地图上人物的移动画面而展开。<br/> <br/>通过组合称作“图块”的构成部件（碎片）编辑地图设计。
+					</p>
+				</div>
+				<img src="assets/img/01_07_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">地图的基本标准</h2>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>图块的用途 </h3>
+					<p>图块对地图外观的图像添加诸如人物是否能通行等设置。<br/> <br/>您可以在一张地图上分配称作“图块组”的多个图块合集，并以此为基础设计地图形状。通过更改使用的图块组，也能一改地图的外观。图块组的内容可以在[<a href="01_08_10.html">数据库</a>]中进行编辑。</p>
+				</li>
+				<li>
+					<h3>图块的种类 </h3>
+					<p>一套图块中可以包含 A~E 五个种类的图块。A 是用于表现地形和地面等的下层图块，B~E 是用于表现地上的树木或看板等的上层图块。<br/> <br/>您可以在地图上同一个位置同时设置上层和下层图块。通过利用此二层构造，扩展地图的表现。<br/> <br/>我们在标准配置中准备了表现海洋、草原、地板及墙壁等的下层图块，还有用于装饰它们的上层图块。<br/>此外，本产品中可以重叠两种上层图块，从而使表现更多姿多彩。</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>地图大小与显示方法 </h3>
+					<p>地图的大小以图块为单位，可以在 0~256 图块之间指定宽度（横）和高度（竖）。<br/> <br/>正在玩游戏的画面中，每一次能显示的范围相当于宽 17 图块×高 13 图块的大小。对于比该尺寸大的地图，其显示范围将以玩家的位置为中心自动移动（滚动处理）。此外，通过连接地图的两端，可以表现出一个像行星般循环移动的舞台（循环处理）。</p>
+				</li>
+				<li>
+					<h3>地图上的位置 </h3>
+					<p>地图上的图块位置显示为[地图坐标]。地图坐标以左上角的图块为原点（0,0），该处右方的 X 图块距离的位置为 X 坐标，而 Y 图块距离的位置为 Y 坐标。假设地图大小为 100×100 图块，那么右下角图块的地图坐标就是（99,99）。状态栏中会显示编辑中图块的地图坐标。<br/> <br/>这个地图坐标可以用于处理事件指令，如以变量为基础指定队伍的移动路径及监控队伍当前位置。	</p>
+				</li>
+			</ul>
+
+
+
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>アニメーションの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>アニメーションの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="アニメーションの設定">
+        <span>アニメーションの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>アニメーションの設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">アニメーションの設定</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p>
+				アニメーションは、戦闘画面で敵キャラに攻撃するときや、マップ画面上などで再生できる視覚演出用のデータです。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_09_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名前
+					</h4>
+					<p>アニメーションの名前です。この設定はエディターのみで使用されます（プレイ中のゲームへの影響はありません）。</p>
+				</li>
+				<li>
+					<h4>
+						表示タイプ
+					</h4>
+					<p>ゲーム内でのアニメーションの表示位置です。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				パーティクルエフェクト
+			</h3>
+			<p class="text--sub">パーティクルエフェクトに関する設定です。再生するエフェクトを設定します。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイル名</h4>
+					<p>アニメーションで使用するEffekseerファイルを設定します。</p>
+				</li>
+				<li>
+					<h4>拡大率</h4>
+					<p>エフェクトの拡大率を設定します。</p>
+				</li>
+				<li>
+					<h4>速度</h4>
+					<p>エフェクトの再生速度を設定します。</p>
+				</li>
+				<li>
+					<h4>回転</h4>
+					<p>エフェクトの回転角度を設定します。</p>
+				</li>
+				<li>
+					<h4>オフセットX</h4>
+					<p>水平方向にシフトするピクセル数を設定します。</p>
+				</li>
+				<li>
+					<h4>オフセットY</h4>
+					<p>垂直方向にシフトするピクセル数を設定します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				プレビュー
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>再生</h4>
+					<p>アニメーションをテストします。</p>
+				</li>
+				<li>
+					<h4>ターゲットの変更</h4>
+					<p>現在表示されているターゲットの画像を変更します。</p>
+				</li>
+				<li>
+					<h4>戦闘背景の変更</h4>
+					<p>テスト用の戦闘背景画像を変更します。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				効果音
+			</h3>
+			<p class="text--sub">アニメーションの再生中に演奏される効果音を設定します。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>フレーム</h4>
+					<p>演奏されるタイミングを設定します。</p>
+				</li>
+				<li>
+					<h4>ファイル名</h4>
+					<p>指定したフレームで演奏する効果音を設定します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				フラッシュ
+			</h3>
+			<p class="text--sub">アニメーションの再生中に適用されるフラッシュエフェクトを設定します。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>フレーム</h4>
+					<p>フラッシュエフェクトの効果のタイミングを指定します。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>フラッシュする時間を1/60秒単位で設定します。</p>
+				</li>
+				<li>
+					<h4>色</h4>
+					<p>フラッシュエフェクトの色を設定します。</p>
+				</li>
+			</ul>
+
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

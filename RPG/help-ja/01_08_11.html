@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>コモンイベントの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>コモンイベントの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="コモンイベントの設定">
+        <span>コモンイベントの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>コモンイベントの設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">コモンイベントの設定</h1>
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p class="text">
+				コモンイベントとは、ゲーム中に任意のタイミングで実行できるイベントのことです。プレイの状況を定期的に監視したり、アイテムやスキルを使用時に何らかの処理を行なうなど、ゲーム全体で汎用的に実行する処理を定義できます。作成したコモンイベントは、［コモンイベント］のイベントコマンドや、特定のスイッチを［ON］にする処理によって実行できます。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_11_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名前
+					</h4>
+					<p>コモンイベントの名前です。この名前はエディターのみで使用されます（プレイ中のゲームへの影響はありません）。</p>
+				</li>
+				<li>
+					<h4>
+						スイッチ
+					</h4>
+					<p>トリガーに［自動実行］または［並列処理］を指定した場合、処理開始の合図となるスイッチを指定します。同じスイッチを指定したコモンイベントが複数ある場合、ID番号が最も若いもの（リストの上にあるもの）が実行対象になります。</p>
+				</li>
+				<li>
+					<h4>
+						トリガー
+					</h4>
+					<p>［実行内容］の処理を開始するタイミングを以下から指定します。なお［自動実行］と［並列処理］はマップ画面を表示中のみ有効です。</p>
+					<dl class="dl--default">
+						<dt>なし </dt>
+						<dd>スキル、アイテム、他のイベントなどから明示的に呼び出されたときのみ処理を開始します。</dd>
+						<dt>自動実行 </dt>
+						<dd>［スイッチ］に指定したスイッチがONになったときに処理を開始します。</dd>
+						<dt>並列処理 </dt>
+						<dd>［スイッチ］に指定したスイッチがONになったときに処理を開始し、実行内容の処理を周期的に繰り返します。</dd>
+					</dl>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				実行内容
+			</h3>
+			<p>コモンイベントで実行する処理を、イベントコマンドをもとに設定します。編集方法はマップイベントの［<a href="01_09_03.html#p03">実行内容</a>］と同じです。</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">自動実行、並列処理のトリガーを使用する場合の注意</h2>
+			<p class="text">トリガーに［自動実行］または［並列処理］に指定したイベントは、［スイッチ］に指定したスイッチの値が［ON］になっている間、［実行内容］の処理が繰り返し行なわれます。<br/>
+				この繰り返し処理を止めるには、条件としているスイッチの値を［OFF］にする措置が必要です。こうした制御を行なわないと、処理の内容によってはプレイヤーが一切操作できなくなる可能性があります。<br/>
+				<br/>
+				テストプレイ中に操作不能になった場合は、ゲームのウィンドウを［×］ボタンで閉じるか、［Alt］＋［F4］キーを押して強制終了してください。
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

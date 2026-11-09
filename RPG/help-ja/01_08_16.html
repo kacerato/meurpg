@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_8";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>使用効果の設定方法</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>使用効果の設定方法</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="使用効果の設定方法">
+        <span>使用効果の設定方法</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>使用効果の設定方法</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">使用効果の設定方法</h1>
+
+		<div class="section">
+			<h2 class="title--h2">設定の概要</h2>
+			<p class="text">
+				スキルとアイテムのデータにある［使用効果］の設定は、アクター／敵キャラが使ったとき、対象のキャラクターに与える効果を定義するものです。<br/>
+				<br/>
+				付与できる効果には下記の13種類があります。複数の効果を設定すれば、複合的な効果を持つスキル／アイテムを表現できます。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">設定方法</h2>
+					<p>
+						効果を設定するには欄内の空行をダブルクリックします。表示されたウィンドウで効果の種別を選択し、効果を及ぼす対象や効き目の大きさなどを指定します。<br/>
+						<br/>
+						設定した効果の内容は［使用効果］のリストに表示されます。この項目をダブルクリックすると、指定した内容を再編集できます。また項目を右クリックすると表示されるコンテキストメニューで、設定のコピーや削除などの操作が行なえます。
+					</p>
+				</div>
+				<img src="assets/img/01_08_16_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">使用効果の項目の内容</h2>
+			<h3 class="title--h3">
+				［回復］タブ
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>HP回復 </h4>
+					<p>HPを回復（現在値に加算）します。回復値を、対象キャラクターの最大HPに対する比率（-100～100％）と一定値（-999999～999999）の和で指定します。どちらか一方の基準で指定したい場合、もう一方の値を0にします。アイテムにこの効果を設定する場合、使用者の［薬の知識］の特殊能力値に応じて回復値が増減します。</p>
+				</li>
+				<li>
+					<h4>MP回復 </h4>
+					<p>MPを回復（現在値に加算）します。回復値を、対象キャラクターの最大MPに対する比率（-100～100％）と一定値（-9999～9999）の和で指定します。どちらか一方の基準で指定したい場合、もう一方の値を0にします。アイテムにこの効果を設定する場合、使用者の［薬の知識］の特殊能力値に応じて回復値が増減します。</p>
+				</li>
+				<li>
+					<h4>TP増加</h4>
+					<p>TPを指定した量だけ増やします。増加値を、一定値（0～100）で指定します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				［ステート］タブ
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ステート付加 </h4>
+					<p>ステートを付加します。対象のステートと成功率（0～1000％）を指定します。100％より高くすると、本来の有効度よりも高い確率で付与に成功します。</p>
+				</li>
+				<li>
+					<h4>ステート解除 </h4>
+					<p>ステートを解除します。対象のステートと成功率（0～100％）を指定します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				［能力値］タブ
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>強化 </h4>
+					<p>指定した能力値の変動レベルを1段階引き上げます。1段階につき元の値の25%変動します。一度に2段階以上上げたい場合は、この効果を複数付けることで実現できます。対象の能力値と効果が継続するターン数（1～1000）を指定します。</p>
+				</li>
+				<li>
+					<h4>弱体 </h4>
+					<p>指定した能力値の変動レベルを1段階引き下げます。1段階につき元の値の25%変動します。一度に2段階以上下げたい場合は、この効果を複数付けることで実現できます。対象の能力値と効果が継続するターン数（1～1000）を指定します。</p>
+				</li>
+				<li>
+					<h4>強化の解除 </h4>
+					<p>指定した能力値の変動レベルが強化のとき、それをリセットして本来の能力値に戻します。</p>
+				</li>
+				<li>
+					<h4>弱体の解除 </h4>
+					<p>指定した能力値の変動レベルが弱体のとき、それをリセットして本来の能力値に戻します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3" id="m01">
+				［その他］タブ
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>特殊効果 </h4>
+					<p>
+						［逃げる］のみ設定可能です。対象のキャラクターを戦闘から離脱させます。アクターが効果を受けた場合、経験値などの付与の対象外になります。<br/>
+						この特殊効果付きスキルでパーティメンバーが全員逃げた場合、全滅になります。<br/>
+						<br/>
+						※パーティーコマンドの「逃げる」とは異なります。
+					</p>
+				</li>
+				<li>
+					<h4>成長 </h4>
+					<p>能力値を恒久的に引き上げます。対象の能力値と加算値（1～1000）を指定します。</p>
+				</li>
+				<li>
+					<h4>スキル習得 </h4>
+					<p>アクターに指定のスキルを習得させます。敵キャラには、この効果は反映されません。</p>
+				</li>
+				<li>
+					<h4>コモンイベント </h4>
+					<p>指定したコモンイベントを実行します。ひとつのデータに複数設定することができます。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

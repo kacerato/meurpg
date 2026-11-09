@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_7";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>システム設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>システム設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="システム設定">
+        <span>システム設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>システム設定</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">システム設定</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">戦闘BGMの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">戦闘中に再生するBGMの設定を変更します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>使用するBGMのファイルを指定します。再生しない場合は［（なし）］を指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてBGMを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>戦闘中に変更した場合、次の戦闘から反映されます。</li>
+				<li>マップと戦闘のBGMが同一のときは、演奏を止めずに画面が切り替わります。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">勝利MEの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">戦闘勝利時に再生するMEの設定を変更します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>使用するMEのファイルを指定します。再生しない場合は［（なし）］を指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてMEを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">敗北MEの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">戦闘敗北時に再生するMEの設定を変更します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>使用するMEのファイルを指定します。再生しない場合は［（なし）］を指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてMEを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">乗り物BGMの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">乗り物に乗っているときに再生するBGMの設定を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>乗り物</h4>
+					<p>BGMを変更する乗り物を指定します。</p>
+				</li>
+				<li>
+					<h4>BGM</h4>
+					<p>再生されるBGMを指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">セーブ禁止の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">プレイヤーによるセーブ操作の可否を制御します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>セーブ</h4>
+					<p>セーブ操作を不可とするには［禁止］、可能にするには［許可］を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">メニュー禁止の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">プレイヤーによるメニュー画面の呼び出し操作の可否を制御します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>メニュー</h4>
+					<p>メニュー画面の呼び出しを不可とするには［禁止］、可能にするには［許可］を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">エンカウント禁止の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img07.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティ移動中のエンカウント（ランダムで敵グループとの戦闘を発生させる処理）の有無を制御します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>エンカウント</h4>
+					<p>エンカウントの発生を止めるには［禁止］、発生させるには［許可］を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">並び替え禁止の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img08.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">プレイヤーによるパーティメンバーの並び替え操作の可否を制御します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>並び替え</h4>
+					<p>並び替え操作を不可とするには［禁止］、可能にするには［許可］を指定します。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">ウィンドウカラーの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img09.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">ウィンドウカラーの設定を変更します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ウィンドウカラー</h4>
+					<p>変更後の色を［赤］［緑］［青］の成分比（-255～255）をもとに指定します。指定中の色は右側のプレビュー領域で確認できます。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">アクターの画像変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img10.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの画像を変更します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>画像</h4>
+					<p>［顔］［歩行キャラ］［[SV]戦闘キャラ］をダブルクリックすると開くウィンドウでそれぞれ指定します。［（なし）］を指定すると画像が非表示になります。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p11">
+			<h2 class="title--h2">乗り物の画像変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img11.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">乗り物の画像を変更します。変更後の設定は、再度このイベントコマンドで変更するまで有効です。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>乗り物</h4>
+					<p>対象の乗り物を指定します。</p>
+				</li>
+				<li>
+					<h4>画像</h4>
+					<p>変更後の画像を、ダブルクリックすると開くウィンドウで指定します。［（なし）］を指定すると画像が非表示になります。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

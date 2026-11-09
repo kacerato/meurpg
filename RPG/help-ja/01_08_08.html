@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_8";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>ステートの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>ステートの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="ステートの設定">
+        <span>ステートの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>ステートの設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">ステートの設定</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p class="text">
+				ステートとは“毒”や“混乱”など、キャラクターの体調や行動に影響を与える状態異常のことです。データには、ステートが付加された場合の具体的な影響を設定します。“毒に冒されてHPが減る”といったマイナスの影響だけでなく、“興奮して攻撃力がアップする”というプラスの効果を持つステートも用意できます。<br/>
+				<br/>
+				なお、1番の［戦闘不能］は、アクターや敵キャラのHPが0になったときに自動で付加される特殊なステートです。パーティメンバー全員にこのステートが付与されるとゲームオーバーになります。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_08_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名前
+					</h4>
+					<p>ステートの名前です。ステートはアイコンで示されますので、名前がゲーム中に使用されることはありません。</p>
+				</li>
+				<li>
+					<h4>
+						アイコン
+					</h4>
+					<p>ステートの付加中、アクター名の横や敵キャラの頭上に表示する画像です。ダブルクリックすると表示される［画像の選択］ウィンドウで画像を指定します。ステートの内容がわかる画像を指定するようにしましょう。</p>
+				</li>
+				<li>
+					<h4>
+						行動制約
+					</h4>
+					<p class="mb30px">ステートの付加中のキャラクターについて行動を制限します。以下の5項目をもとに制限内容を指定します。複数の制約が適用した場合、リストの下にあるものを優先します。</p>
+					<dl class="dl--default">
+						<dt>なし </dt>
+						<dd>行動は制約されません。</dd>
+						<dt>敵を攻撃</dt>
+						<dd>必ず敵を攻撃します。</dd>
+						<dt>誰かを攻撃 </dt>
+						<dd>必ず敵か味方の一体を攻撃します。</dd>
+						<dt>味方を攻撃 </dt>
+						<dd>必ず味方を攻撃します。</dd>
+						<dt>行動できない </dt>
+						<dd>一切行動できなくなります。</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>
+						優先度
+					</h4>
+					<p>ステートのアイコンの表示優先度（0～100）です。複数のステートが付与されている場合、最大の優先度を設定したステートのアイコンが表示されます。優先度が同じ場合は最も若いIDのステートが優先されます。</p>
+				</li>
+				<li>
+					<h4>
+						［SV］モーション
+					</h4>
+					<p>サイドビューモードでステートが有効な時に表示されるモーションを設定します。</p>
+				</li>
+				<li>
+					<h4>
+						［SV］重ね合わせ
+					</h4>
+					<p>サイドビューモードでステートが有効な時に表示される重ね合わせ画像を設定します。</p>
+				</li>
+			</ul>
+
+
+
+			<h3 class="title--h3">
+				解除条件
+			</h3>
+			<p class="text--sub">ステートを解除する条件です。以下の項目をもとに条件を指定します。複数の条件を設定した場合、それぞれの基準を判定して解除します。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>戦闘終了時に解除 </h4>
+					<p>有効にすると戦闘終了時に解除します。</p>
+				</li>
+				<li>
+					<h4>行動制約によって解除 </h4>
+					<p>有効にすると、別の行動制約を持つステートが付加された場合に解除します。</p>
+				</li>
+				<li>
+					<h4>自動解除のタイミング／継続ターン数 </h4>
+					<p>ターンの経過後に解除します。［行動終了時］では行動者の行動が終わったとき、［ターン終了］ではターンが終了し行動選択に戻る前に解除します。［継続ターン数］にはステートの付加から解除までのターン数の下限と上限（0～9999）を指定します。</p>
+				</li>
+				<li>
+					<h4>ダメージで解除 </h4>
+					<p>何らかのダメージを受けたとき、指定の確率（0～100％）で解除します。</p>
+				</li>
+				<li>
+					<h4>歩数で解除 </h4>
+					<p>指定したタイル数（0～9999）の距離を、マップ上を移動したタイミングで解除します。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				メッセージ
+			</h3>
+			<p class="text">戦闘中、このステートが付加／解除されたときに表示するメッセージです。［味方がこの状態になったとき］［敵がこの状態になったとき］［この状態が継続しているとき］［この状態が解除されたとき］の4つの状況ごとに、表示する文言を指定します。“%1”の部分は対象者の名前に置き換えられます。</p>
+
+			<h3 class="title--h3">
+				特徴
+			</h3>
+			<p class="text">ステートが付加されている対象者に付与する特徴です。詳細は［<a href="01_08_15.html">特徴の設定方法</a>］の項目を参照してください。</p>
+
+			<h3 class="title--h3" id="renew01">
+				メモ
+			</h3>
+			<p class="text">ゲーム作成中のメモ書きに使えます。<br/>
+				右クリックするとメニューが表示され、［プラグインヘルプ］を選択するとプラグインのヘルプが表示されます。</p>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

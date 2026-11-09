@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_9";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>战斗</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>战斗</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="战斗">
+        <span>战斗</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>战斗</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">战斗</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">增减敌方角色HP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">增减敌方角色的HP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。如果选择[整个敌群]，则将以所有敌方角色作为目标。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定[增加]或[减少]。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定HP的增减量。要指定固定值，请选择[常量]并输入该值。要用变量来指定时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>允许无法战斗</h4>
+					<p>启用后，HP减少至0以下时，将无法战斗。如果禁用，则即使当HP低于0时，也会将其变为1。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">增减敌方角色MP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img02.png" height="300" width="352" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">增减敌方角色的MP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。如果选择[整个敌群]，则将以战斗中所有敌方角色作为目标。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定[增加]或[减少]。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定MP的增减量。要指定固定值，请选择[常量]并输入该值。要用变量来指定时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">增减敌方角色TP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img03.png" width="352" height="300" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">增减敌方角色的TP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。如果选择[整个敌群]，则将以战斗中所有敌方角色作为目标。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定[增加]或[减少]。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定TP的增减量。要指定固定值，请选择[常量]并输入该值。要用变量来指定时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">变更敌方角色状态</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img04.png" height="251" width="262" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">更改敌人的状态。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。如果选择[整个敌群]，则将以战斗中所有敌方角色作为目标。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定[附加]或[解除]。</p>
+				</li>
+				<li>
+					<h4>状态</h4>
+					<p>指定要禁用/解除的状态种类。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">完全恢复敌方角色</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img05.png" height="134" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">将敌方角色的HP和MP恢复到最大值，并解除所有状态。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。如果选择[整个敌群]，则将以战斗中所有敌方角色作为目标。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">敌方角色的出现</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img06.png" height="134" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">使用在敌群数据中的[中途出现]中的选项，使设定好的敌方角色出现。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">敌方角色的变身</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img07.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">将出现中的敌方角色转换为其他敌方角色。变身后的敌方角色的HP和MP，将继承变身前的敌方角色的值。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定要变身的敌方角色。</p>
+				</li>
+				<li>
+					<h4>变身</h4>
+					<p>指定变身后的敌方角色。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">显示战斗动画</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img08.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">将敌方角色作为目标，显示其动画。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌方角色</h4>
+					<p>指定目标敌方角色。</p>
+				</li>
+				<li>
+					<h4>动画</h4>
+					<p>指定要显示的动画。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">强制战斗行动</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img09.png" height="285" width="352" alt=""/>
+			</div>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">强迫敌方角色/角色执行特定的技能。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>行动主体</h4>
+					<p>指定目标敌方角色/角色。</p>
+				</li>
+				<li>
+					<h4>行动</h4>
+					<p>在[技能]中，指定要强制执行的技能。在[行动目标]中，从[上一个目标]（与上一个行动的目标相同），[随机]（随机选定），[索引X]（X为1~8 /详细信息，请参见注释）中选择技能的目标。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">中断战斗</h2>
+			<h3 class="title--h3">功能 </h3>
+			<p class="text">强制结束战斗，并返回地图。没有设置项目<br/>另外，如果启动了事件指令[战斗的处理]，并且[允许逃跑]，则会执行逃走的分支处理。<br/>在这种情况下，变量-其他中可以获得的逃跑次数不计算在内。</p>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>仅能在战斗事件中发动。</li>
+			</ul>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

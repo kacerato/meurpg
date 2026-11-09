@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_5";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>オーディオ・ビデオ</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>オーディオ・ビデオ</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="オーディオ・ビデオ">
+        <span>オーディオ・ビデオ</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>オーディオ・ビデオ</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">オーディオ・ビデオ</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">BGMの演奏</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">BGM（背景音楽）の再生を開始します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>再生するBGMのファイルを指定します。再生を停止するには［（なし）］を指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてBGMを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>指定したBGMがすでに再生されている場合、このイベントコマンドの処理は行なわれません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">BGMのフェードアウト</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">BGMの音量を下げながら再生を停止します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>時間 </h4>
+					<p>フェードアウトにかける秒数（1～60）を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">BGMの保存</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>再生中のBGMを、演奏時間の位置も含めて保存します。設定項目はありません。</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">BGMの再開</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>「BGMの保存」で保存したBGMを再生します。設定項目はありません。</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">BGSの演奏</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">BGS（背景音）の再生を開始します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>再生するBGSのファイルを指定します。再生を停止するには［（なし）］を指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてBGSを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>指定のBGSがすでに再生されている場合、このイベントコマンドの処理は行なわれません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">BGSのフェードアウト</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">BGSの音量を下げながら再生を停止します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>時間 </h4>
+					<p>フェードアウトにかける秒数（1～60）を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">MEの演奏</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img07.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">ME（効果音楽）の再生を開始します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>再生するMEのファイルを指定します。再生を停止するには［（なし）］を指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてMEを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>指定のMEがすでに再生されている場合、このイベントコマンドの処理は行なわれません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">SEの演奏</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img08.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">SE（効果音）の再生を開始します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>再生するSEのファイルを指定します。</p>
+				</li>
+				<li>
+					<h4>再生／停止</h4>
+					<p>［再生］をクリックすると現在の設定に基づいてSEを再生します。終了するには［停止］をクリックします。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>音量を指定します。</p>
+				</li>
+				<li>
+					<h4>ピッチ</h4>
+					<p>ピッチ（50～150％）を指定します。100％より高くすると再生速度が速くなり、音階も高くなります。</p>
+				</li>
+				<li>
+					<h4>位相</h4>
+					<p>位相（-100～100）を指定します。-の値で左スピーカー、＋の値で右のスピーカーの比重が大きくなります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>SEの再生が終了する前にこのイベントコマンドが実行されると、SEは重ねて再生されます。</li>
+				<li>［（なし）］を再生してもSEは停止しません。SEを停止するには、［SEの停止］のイベントコマンドを使用してください。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">SEの停止</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>すべてのSE（効果音）の再生を停止します。設定項目はありません。</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">ムービーの再生</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_11_img10.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">ムービーを再生します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ファイルリスト</h4>
+					<p>再生するムービーのファイルを指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>データベース</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>データベース</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="データベース">
+        <span>データベース</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>データベース</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<h2 class="title--h2">データベースとは</h2>
+			<p class="text">
+				データベースとは、マップとマップイベント以外のゲームの構成要素をまとめたものです。プレイヤーが操作するキャラクターやアイテムや魔法などの要素や設定を、下記の15種類のデータとして用意できるようになっています。<br/>
+				<br/>
+				［システム］、［タイプ］、［用語］を除くデータは、ゲームに登場させる単位ごとにデータを用意します。たとえば“回復薬”や“カギ”などの道具類は、物品ごとに［アイテム］のデータを作り、それぞれ名前や画像、使用時の効果などの特徴を設定します。
+			</p>
+			<table class="table--type04">
+				<tbody><tr>
+					<th>アクター</th>
+					<td>プレイヤーが操作可能なキャラクター</td>
+				</tr>
+				<tr>
+					<th>職業</th>
+					<td>アクターに付加する特徴（能力値、成長条件など）</td>
+				</tr>
+				<tr>
+					<th>スキル</th>
+					<td>戦闘時の行動や特殊技能（通常攻撃、特技や魔法など）</td>
+				</tr>
+				<tr>
+					<th>アイテム</th>
+					<td>プレイヤーが所持できる物品（回復薬や鍵など）</td>
+				</tr>
+				<tr>
+					<th>武器</th>
+					<td>アクターの攻撃用の装備品（剣や杖、弓など）</td>
+				</tr>
+				<tr>
+					<th>防具</th>
+					<td>アクターの防御用の装備品（鎧、盾、アクセサリーなど）</td>
+				</tr>
+				<tr>
+					<th>敵キャラ </th>
+					<td>アクターの戦闘相手となるキャラクター</td>
+				</tr>
+				<tr>
+					<th>敵グループ</th>
+					<td>敵キャラの登場単位</td>
+				</tr>
+				<tr>
+					<th>ステート </th>
+					<td>アクターや敵キャラの状態（毒、戦闘不能など）</td>
+				</tr>
+				<tr>
+					<th>アニメーション</th>
+					<td>スキルの使用時などに表示する視覚効果</td>
+				</tr>
+				<tr>
+					<th>タイルセット</th>
+					<td>マップの作成に用いるタイルセットの構成</td>
+				</tr>
+				<tr>
+					<th>コモンイベント</th>
+					<td>汎用的に実行するイベント処理</td>
+				</tr>
+				<tr>
+					<th>システム1</th>
+					<td>ゲーム全体の基本的な設定</td>
+				</tr>
+				<tr>
+					<th>システム2</th>
+					<td>ゲーム全体の基本的な設定と高度な設定</td>
+				</tr>
+				<tr>
+					<th>タイプ</th>
+					<td>属性、スキル、武器、防具、装備のタイプを設定</td>
+				</tr>
+				<tr>
+					<th>用語</th>
+					<td>ゲーム共通のコマンドや設定項目の名称</td>
+				</tr>
+			</tbody></table>
+
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">データベースの編集方法</h2>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>編集画面の表示 </h3>
+					<p>データベースの内容は［データベース］のウィンドウで編集します。ウィンドウを表示するには、ツールバーの［データベース］のボタン（またはメニューの［ツール］→［データベース］）をクリックします。</p>
+				</li>
+				<li>
+					<h3>データ数の変更</h3>
+					<p>スキル、アイテム、武器、防具、敵キャラ、敵グループは最大2000点まで、それ以外は1000点まで用意できます。データ数を変更するには、データリストの下にある［最大数の変更］をクリックし、データ数を指定します。最大数を減らした場合、それを超える番号のデータはすべて削除されます。</p>
+				</li>
+				<li>
+					<h3>編集画面の構成</h3>
+					<p>［データベース］ウィンドウの画面は、サイドメニューよりデータの種類ごとに選択できます。サイドメニューのボタンをクリックして画面を切り替えることで、それぞれのデータを作成／編集できるようになります。<br/>
+						<br/>
+						［システム］、［タイプ］、［用語］以外のデータを編集する際は、まずウィンドウ左側のデータリストで編集するデータをクリックで選択します。そのうえで、ウィンドウ右側に並ぶ設定項目の内容を編集することでデータの特徴を定義します。<br/>
+						<br/>
+						データリストで選択するデータは、［F4］［F5］キーで前後のデータに切り替えることができます。
+					</p>
+				</li>
+				<li>
+					<h3>コンテキストメニューによる操作 </h3>
+					<p>データリストの項目を右クリックするとメニューが表示され、そのデータを対象にコピーなどの操作が行なえます。各項目の操作の内容は以下のとおりです。</p>
+					<dl class="dl--default">
+						<dt>コピー </dt>
+						<dd>データの設定内容をクリップボードに取り込みます。<br/>Shiftキーを押しながら選択するとリスト上で複数のデータを選択しコピーすることができます。</dd>
+						<dt>貼り付け </dt>
+						<dd>クリップボード上の設定内容をデータに適用（上書き）します。操作前のデータの設定内容はすべて失われます。</dd>
+						<dt>クリア </dt>
+						<dd>データの設定内容をすべて消去します。</dd>
+					</dl>
+				</li>
+				<li>
+					<h3>データのIDについて </h3>
+					<p>データリストの各項目の頭に表示される数字は、データのID（固有番号）を表します。このIDはイベントコマンドなどで処理の対象とするデータを変数で指定するときなどに用います。</p>
+				</li>
+				<li>
+					<h3>メモ欄の活用 </h3>
+					<p>一部のデータ（アクター／職業／スキル／アイテム／武器／防具／敵キャラ／ステート／タイルセット）の設定項目には［メモ］の欄が用意されています。これはゲーム作成時のメモを自由に書き込むためのものです。原則としてプレイするゲームには影響を与えませんが、メモ欄を利用して追加のデータを定義できるプラグインもあります。</p>
+				</li>
+			</ul>
+
+
+
+
+
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1.1.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>MV Data Conversion</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>MV Data Conversion</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="MV Data Conversion">
+        <span>MV Data Conversion</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+
+		<div class="mainvisual mainvisual--01_01">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">About RPG Maker MZ</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_01.html">About RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>New Functions</li>
+				<li>&gt;</li>
+				<li>MV Data Conversion</li>
+			</ul>
+			<img src="assets/img/common/cha01_01.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">MV Data Conversion</h1>
+
+		<p class="text--lead">
+			You can convert project data created in RPG Maker MV (hereafter &quot;MV&quot;) into RPG Maker MZ (hereafter &quot;MZ&quot;) project data.
+		</p>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Conversion Process</h2>
+			<p class="text--sub">
+				Conversion is done by copying the project data. First, follow the steps below.
+			</p>
+			<ul class="ul mb30px">
+				<li>Display file extensions on your PC.</li>
+				<li>Make a backup of the MV project data you wish to convert.</li>
+				<li>Create new project data in MZ to use as the conversion target.</li>
+			</ul>
+
+			<h3 class="title--h3">Copy all files into the MZ project</h3>
+			<p class="text--sub">
+				All of the project data files will be copied into the MZ project. <br/>Conversion processing will be executed after launching MZ. <br/>*Conversion will not be done while the project is open in MZ. When copying the files, please close MZ in advance.
+			</p>
+			<h4 class="title--h3--sub">MV and MZ data save destination</h4>
+			<p class="text--sub">Please copy and overwrite required MV data to MZ based on the following.</p>
+			<table class="table--type05 mb90px">
+				<tbody><tr>
+					<th></th>
+					<th>RPG Maker MV</th>
+					<th>RPG Maker MZ</th>
+				</tr>
+				<tr>
+					<td>Music data</td>
+					<td>\audio</td>
+					<td>\audio</td>
+				</tr>
+				<tr>
+					<td>Image data</td>
+					<td>
+						\img\battlebacks1 <br/> \img\battlebacks2 <br/> \img\characters <br/> \img\enemies <br/> \img\faces <br/> \img\parallaxes <br/> \img\pictures <br/> \img\sv_actors <br/> \img\sv_enemies <br/> \img\tilesets <br/> \img\titles1 <br/> \img\titles2
+					</td>
+					<td>
+						\img\battlebacks1 <br/> \img\battlebacks2 <br/> \img\characters <br/> \img\enemies <br/> \img\faces <br/> \img\parallaxes <br/> \img\pictures <br/> \img\sv_actors <br/> \img\sv_enemies <br/> \img\tilesets <br/> \img\titles1 <br/> \img\titles2
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Icon image data
+					</td>
+					<td>
+						\icon
+					</td>
+					<td>
+						\icon
+					</td>
+				</tr>
+				<tr>
+					<td>
+						System image data
+					</td>
+					<td>
+						\img\system <br/> <br/> *Excluding the following files<br/>
+						<ul class="ul">
+							<li>ButtonSet.png</li>
+							<li>Damage.png</li>
+							<li>Loading.png</li>
+							<li>MadeWithMv.png</li>
+						</ul>
+					</td>
+					<td>
+						\img\system
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Animations (Not recommended)
+					</td>
+					<td>
+						\data\Animations.json <br/> \img\animations
+					</td>
+					<td>
+						\data\Animations.json <br/> \img\animations <br/> <br/> *The \img\animations folder must be copied when converting
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Font data
+					</td>
+					<td>
+						\fonts <br/> <br/> *Excluding the following files<br/>
+						<ul class="ul">
+							<li>gamefont.css</li>
+						</ul>
+					</td>
+					<td>
+						\fonts
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Maps and map events
+					</td>
+					<td>
+						\data\MapInfos.json <br/> \data\Mapxxx.json <br/> (xxx being the map id number)
+					</td>
+					<td>
+						\data\MapInfos.json <br/> \data\Mapxxx.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Actors
+					</td>
+					<td>
+						\data\Actors.json
+					</td>
+					<td>
+						\data\Actors.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Classes
+					</td>
+					<td>
+						\data\Classes.json
+					</td>
+					<td>
+						\data\Classes.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Skills
+					</td>
+					<td>
+						\data\Skills.json
+					</td>
+					<td>
+						\data\Skills.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Items
+					</td>
+					<td>
+						\data\Items.json
+					</td>
+					<td>
+						\data\Items.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Weapons
+					</td>
+					<td>
+						\data\Weapons.json
+					</td>
+					<td>
+						\data\Weapons.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Armor
+					</td>
+					<td>
+						\data\Armors.json
+					</td>
+					<td>
+						\data\Armors.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Enemies
+					</td>
+					<td>
+						\data\Enemies.json
+					</td>
+					<td>
+						\data\Enemies.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Troops
+					</td>
+					<td>
+						\data\Troops.json
+					</td>
+					<td>
+						\data\Troops.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						States
+					</td>
+					<td>
+						\data\States.json
+					</td>
+					<td>\data\States.json
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Tilesets
+					</td>
+					<td>
+						\data\Tilesets.json
+					</td>
+					<td>
+						\data\Tilesets.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Common Events
+					</td>
+					<td>
+						\data\CommonEvents.json
+					</td>
+					<td>
+						\data\CommonEvents.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						System<br/> Vocabulary<br/> Types<br/> Switch names<br/>Variable names
+					</td>
+					<td>
+						\data\System.json
+					</td>
+					<td>
+						\data\System.json
+					</td>
+				</tr>
+			</tbody></table>
+
+			<h3 class="title--h3">Conversion Warnings</h3>
+			<p class="text--sub">
+				Data that can be converted includes map data, map events, and database content created in RPG Maker MV. There is some data that is not required or not recommended for conversion.
+			</p>
+			<table class="table--type06 mb90px">
+				<tbody><tr>
+					<th>
+						<b>System image data</b><br/> \img\system
+					</th>
+					<td>
+						The following image data is not required.
+						<ul class="ul">
+							<li>ButtonSet.png</li>
+							<li>Damage.png</li>
+							<li>Loading.png</li>
+							<li>MadeWithMv.png</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>Animations</b><br/> \data\Animations.json<br/> \img\animations
+					</th>
+					<td>
+						Not recommended as they cannot be edited in RPG Maker MZ. <br/>There is no &quot;animations&quot; folder inside of the &quot;img&quot; folder, so you will need to copy the folder.
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>Font data</b><br/> \fonts
+					</th>
+					<td>
+						In MZ, fonts to be used are configured from the database. Please copy only the font file. <br/> You can specify the font to use from [Database] → [System 2] → [Advanced Settings].
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>Plugin data</b><br/> \js\plugins<br/> \js\plugin.js
+					</th>
+					<td>
+						Plugins are not guaranteed to run correctly or at all.
+					</td>
+				</tr>
+			</tbody></table>
+
+			<div class="flex--bw--p-img">
+				<div>
+					<h3 class="title--h3">About Plugins</h3>
+					<p class="text--sub">
+						If an RPG Maker MV plugin is included, a message will be shown in the Plugin Manager window.
+					</p>
+				</div>
+				<img src="assets/img/01_01_01_02_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

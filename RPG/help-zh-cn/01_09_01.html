@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>地图事件的机制</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>地图事件的机制</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="地图事件的机制">
+        <span>地图事件的机制</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG TKOOL MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_09.html">事件</a></li>
+				<li>&gt;</li>
+				<li>地图事件的机制</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">地图事件的机制</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">地图事件的处理流程</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>事件的表现方法 </h3>
+					<p>您可以根据“在哪里（位置），在什么情况下（出现条件），如何（触发）和发生什么（执行内容）”这样的流程来定义由地图事件表现的游戏中发生的事件内容。<br/> <br/>人物角色，或是可以获得物品的宝箱等，可以通过给定义了事件内容的地图事件分配图像来表现。我们同样也为您准备好了未设置图像的事件，用来表现在建筑物内外的地图之间的移动机制，以及处理自动进行的演出等。<br/> <br/> 创建事件时，您首先要在主窗口的地图视图中确定事件将在“何处（位置）”发生。另外，要为该事件设置“在什么情况下（出现条件）”之后的内容。
+					</p>
+				</li>
+				<li>
+					<h3>“按情况分类”内容的事件页面</h3>
+					<p>地图事件可以根据游戏的游玩情况来更改事件的内容。<br/> <br/>担当这一职责的是“事件页”。事件页是一种“按情况分类”事件内容的机制。一个事件最多可以包含20个事件页，并且可以为每个事件页设置不同的图像，触发条件和执行内容。也就是说，一个地图事件可以“按情况分类”成20个不同的事件。
+					</p>
+				</li>
+				<li>
+					<h3>通过出现条件控制事件页 </h3>
+					<p>把“按场合分类”的事件页，可以用[出现条件]来设置决定“在什么情况下”适用。出现条件可以根据诸如“开关”、“变量”（稍后详述）和“是否持有指定物品”之类的标准来设置。<br/> <br/>地图事件会根据符合这些条件的事件页的内容，显示在您正在游玩的游戏中。如果存在多个符合条件的事件页，则事件将基于事件页中编号最大的内容出现。相反，如果没有任何一个页面符合条件，则该事件将不会出现在地图上。
+					</p>
+				</li>
+			</ul>
+			<dl class="dl">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">游戏情况的掌握方法</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>通过开关来掌握游戏状况 </h3>
+					<p>在事件页的[出现条件]中，主要用来判断游戏状态的是“开关”和“变量”。<br/> <br/>开关会记录“ON”或“OFF”值。它可以用于了解游戏情况和进度，例如“是否接受了国王的委托”或“是否打败了Boss”等。<br/> <br/>游戏开始时，所有开关的值均为“OFF”。当执行改变游戏状态的事件时，会执行将[执行内容]中的特定开关的值改变为“ON”的处理（使用[开关操作]的事件指令）。<br/> <br/>将该开关用作其他事件页上的[出现条件]后，当数值变为“ON”时会就给地图事件发送一个信号，能使所有内容一起切换。游戏的剧情推进就是通过这种事件变化来更改整个游戏的局面的机制。
+					</p>
+				</li>
+				<li>
+					<h3>记录数值的变量 </h3>
+					<p>另一方面，“变量”用于记录任意数值（整数）。可以在游戏开始时将该值设置为0，根据游戏情况代入任何值，或与别的数值相加等等。（使用[变量操作]的事件指令）。<br/> <br/>使用此变量，可以精确地控制地图事件的出现条件和结果，例如使用玩家的生命值和金钱来变更事件的内容等等。
+					</p>
+				</li>
+				<li>
+					<h3>开关和变量管理 </h3>
+					<p>一个游戏中最多可以使用5000个开关和变量。制作者可以通过选择几号开关/变量，来自由掌握游戏的状况。请务必为其指定一个能够反映用途的名称，以避免混淆两者之间的关系。两者都可以在选择窗口的[名称]栏中进行设置。</p>
+				</li>
+				<li>
+					<h3>在自行结束型的事件中有效利用独立开关 </h3>
+					<p>您也可以将“独立开关”用于地图事件。这种开关只能用于各个地图事件。每一个事件都可以给“A”到“D”4个种类的独立开关附加记录数值。<br/> <br/>使用这种独立开关仅通过其自身处理就能掌握已完成事件的状况。例如，在可以获取物品的宝箱中，您可以通过独立开关来管理“是否有开启过”，并在两个事件页中分别设置“打开前”和“打开后”的内容，以实现仅在首次调查时才能获得该物品的机制。
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

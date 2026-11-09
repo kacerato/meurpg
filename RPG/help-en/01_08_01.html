@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Actor Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Actor Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Actor Settings">
+        <span>Actor Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Database</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Database</a></li>
+				<li>&gt;</li>
+				<li>Actor Settings</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Actor Settings</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">This Data&#39;s Role</h2>
+			<p>
+				Data which represents the character the player controls is the actor data. <br/>You can also give actors unique traits.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb60px">
+				<img src="assets/img/01_08_01_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				Basic Settings
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>Name </h3>
+					<p>[Name] is the actor&#39;s name, displayed during gameplay. If the name is too long, the player name may not be fully visible in game menus and in battle.</p>
+				</li>
+				<li>
+					<h3>Nickname </h3>
+					<p>The nickname of the actor. This will be displayed on the status screen in the upper right.</p>
+				</li>
+				<li>
+					<h3>Classes </h3>
+					<p>The class which the actor belongs to. This will affect which skills can be used, which weapons can be equipped, which items can be used, etc. Specifics can be edited in the [<a href="01_08_02.html">Class</a>] tab.</p>
+				</li>
+				<li>
+					<h3>Initial Level/Max Level </h3>
+					<p>[Initial Level] is the level of the actor at the start of game, and [Max Level] is the maximum level an actor can be. An actor will never level up beyond its [Max Level]. Either can be set from 1 to 99.</p>
+				</li>
+				<li>
+					<h3>Profile </h3>
+					<p>The actor&#39;s introductory text. This will be displayed at the bottom of the status screen.</p>
+			</li></ul>
+
+			<h3 class="title--h3">
+				Images
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Face</h4>
+					<p>Image displayed on the menu screen.</p>
+				</li>
+				<li>
+					<h4>Walking Character</h4>
+					<p>Image displayed on the Map Screen.</p>
+				</li>
+				<li>
+					<h4>[SV] Battler</h4>
+					<p>Image displayed in the Battle Screen when in Side-View mode.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">Initial Equipment </h3>
+			<p class="text">The actor&#39;s equipment at the start of the game. Select one item for each slot from the pull-down list. Selectable equipment is limited to what their class is able to equip. Setting this to [None] will cause nothing to be equipped in that location.</p>
+
+			<h3 class="title--h3">Traits </h3>
+			<p class="text">An actor&#39;s unique traits. Define the details in the window that appears when double-clicking each row of the settings field. Please see [<a href="01_08_15.html">How to Set Traits</a>] for more information.</p>
+
+			<h3 class="title--h3">Memo</h3>
+			<p class="text">Used to make notes while making your game. <br/>Right-click to show the menu and choose [Plugin Help...] to display the Plugin Help information.
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

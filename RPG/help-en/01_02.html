@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Getting Started Making Your Game</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Getting Started Making Your Game</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Getting Started Making Your Game">
+        <span>Getting Started Making Your Game</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--02">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Getting Started Making Your Game</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>Getting Started Making Your Game</li>
+			</ul>
+			<img src="assets/img/common/cha02.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<h2 class="title--h2">Creating a Project</h2>
+			<p class="text">In order to start making your game, you first need to create a &quot;Project&quot;. A project contains all the data and assets that make up a game. You can also import your own files such as images and music and use them in your project. <br/> <br/>The way to create a project is as follows.
+			</p>
+
+			<ul class="ul--2c--line--align">
+				<li>
+					<h3>(1) Creating a new project </h3>
+					<p>
+						Click the [New Project] button on the toolbar or select the [New Project] option found under [File] in the menu bar.
+					</p>
+				</li>
+				<li>
+					<h3>(2) Entering a save location and title</h3>
+					<p>
+						Enter the project name (half-width alphanumeric characters are recommended), and enter the name of your game under [Title]. The project’s save location will be displayed under [Location]. To change the save location, click the [Choose... ] button to the right and specify a new save location.
+					</p>
+				</li>
+			</ul>
+			<p class="text--sub">After setting the above and clicking [OK], a sample game will be created using the settings provided, and you will be able to start making your game.</p>
+			<div class="img--half--2c">
+				<img src="assets/img/01_02_img01.png" alt="" width="270"/> <img src="assets/img/01_02_img02.png" alt="" width="350"/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Managing Projects</h2>
+			<ul class="ul--2c--line">
+				<li>
+					<h3>Saving/Loading a Project</h3>
+					<p>
+						When taking a break from making your game, make sure to save the project and close the program. When you click the [Save Project] button (or go to [Save Project] under [File]), the contents of the project you are currently editing will be overwritten and the project will be saved. <br/> <br/>To resume making your game, click the [Open Project] button (or go to [Open Project] under [File]), and select the [Game] file (or [game.rmmzproject]) and click [Open].
+					</p>
+				</li>
+				<li>
+					<h3>Backup/Deletion </h3>
+					<p>
+						The contents of a project will be saved to the folder that you chose when creating the new project. Copy the entire contents of this folder and save on a flash drive or other device to backup your project. When you no longer need a project, delete the folder as you would any other file.
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">Moving on to Creating Your Game</h2>
+					<p class="text--sub">RPG games, the type of game made using this software, are made up of various components such as images on the Play Screen, the characters that players can control, item and magic settings, attacks, and the story. <br/> <br/>In this software, these elements are made using the three types of data which are at the core of your game: the [Map] which is the setting for your game, [Events] which represent what occurs in the game, and the [Database] which determines the settings for things such as characters. <br/> <br/>There is no particular order to creating a game. If this is your first time making a game using this software, it is recommended that you start with learning how to make a map. After this, you can prepare the events and characters to fit the contents of the game you want to make.</p>
+				</div>
+				<img src="assets/img/01_02_img03.png" height="200" width="278" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

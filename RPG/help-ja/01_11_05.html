@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_5";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>公式プラグインの使い方</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>公式プラグインの使い方</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="公式プラグインの使い方">
+        <span>公式プラグインの使い方</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">資料集</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>資料集</li>
+				<li>&gt;</li>
+				<li>公式プラグインの使い方</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">公式プラグインの使い方</h1>
+		<p class="text--lead">RPGツクールMZでは、いくつかのプラグインがあらかじめ新規プロジェクトに含まれており、簡単な設定で使用できるようになっています。また、公式プラグインの中には、別途DLCフォルダに含まれているものもあります。</p>
+
+
+		<div class="section" id="m01">
+			<h2 class="title--h2">AltMenuScreen</h2>
+			<p class="text--sub">
+				メニュー画面を別のレイアウトに変更するプラグインです。<br/>
+				パーティメンバーが横並びで表示されます。
+			</p>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_05_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="m02">
+			<h2 class="title--h2">AltSaveScreen</h2>
+			<p class="text--sub">
+				セーブ画面、ロード画面を別のレイアウトに変更するプラグインです。<br/>
+				パーティメンバーの顔画像などが表示できるようになります。
+			</p>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_05_img02.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="m03">
+			<h2 class="title--h2">ButtonPicture</h2>
+			<p class="text--sub">
+				このプラグインは、ピクチャのクリック時にコモンイベントを呼び出すコマンドを提供します。<br/>
+				次の手順で使用してください。<br/>
+				<br/>
+				1. ［ピクチャの表示］を実行して、ボタン画像を表示します。<br/>
+				2. プラグインコマンド［ボタンピクチャの設定］を呼び出します。
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m04">
+			<h2 class="title--h2">EventCommandByCode</h2>
+			<p class="text--sub mb30px">
+				コードとパラメータを直接指定してイベントコマンドを実行できます。<br/>
+				各コマンドのパラメータに変数(制御文字)が使えたり、通常のイベントコマンドでは指定できない範囲外の値を無理やり指定できます。<br/>
+				なお、想定外の値を設定してコマンドを呼んだ場合の動作は保証できません。
+			</p>
+			<h3 class="title--h3--sub">制御文字</h3>
+			<p class="mb30px">
+				\v[n] : 変数値<br/>
+				\s[n] : スイッチ<br/>
+				\ss[n] : セルフスイッチ<br/>
+				\js[n] : スクリプト(TextScriptBase.js適用時のみ)
+			</p>
+			<p class="text--sub">
+				イベントエディタ上で複数行になるコマンドおよびネストが深くなるコマンドは指定できません。<br/>
+				<br/>
+				具体的なパラメータの指定方法は、以下が参考になります。<br/>
+				<a href="https://docs.google.com/spreadsheets/d/1rOIzDuhLC6IqJPEFciYOmXWL_O7X9-hMValMs7DpWCk/edit#gid=1266374350" target="_blank">https://docs.google.com/spreadsheets/d/1rOIzDuhLC6IqJPEFciYOmXWL_O7X9-hMValMs7DpWCk/edit#gid=1266374350</a>
+			</p>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m05">
+			<h2 class="title--h2">ExtraImage</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						任意の画像を指定したシーンに追加表示できます。<br/>
+						座標や拡大率、原点など基本的な情報を指定できます。<br/>
+						各パラメータに制御文字を指定すると指定した変数から値を取得できます。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>画像リスト</th>
+							<td>各画面に追加する画像のリストです。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m06">
+			<h2 class="title--h2">ExtraWindow</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						任意のウィンドウを指定したシーンに追加表示できます。<br/>
+						座標やフォントサイズ、開閉アニメの有無など基本的な情報を設定できます。<br/>
+						ウィンドウの表示テキストには制御文字が使用でき、変数値が変更されると自動的に再描画されます。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>ウィンドウリスト</th>
+							<td>各画面に追加するウィンドウのリストです。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m07">
+			<h2 class="title--h2">MaterialBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						主にプラグインで使用する画像、音声素材を登録、管理できるデータベースです。<br/>
+						登録した素材は、自動的に未使用素材削除機能の対象外となります。<br/>
+						以下の制御文字を使用すると登録した素材のファイル名に置き換わります。<br/>
+						<br/>
+						¥mi[aaa] // 識別子[aaa]で登録した画像素材のファイル名に置き換わります。<br/>
+						¥ma[bbb] // 識別子[bbb]で登録した音声素材のファイル名に置き換わります。<br/>
+						<br/>
+						制御文字を利用可能な場面は以下の通りです。<br/>
+						・文章の表示<br/>
+						・イベントコマンドや条件分岐のスクリプト<br/>
+						・メモ欄(※)<br/>
+						・プラグインコマンド(※)<br/>
+						・プラグインパラメータ(※)<br/>
+						・スキルなどの説明欄<br/>
+						・スキル、アイテムの計算式<br/>
+						※ PluginCommonBase.jsをベースとして取り込んだプラグインのみ<br/>
+						<br/>
+						登録した素材はプラグインコマンドにより別の素材に変更できます。<br/>
+						<br/>
+						設定した値はプラグインコマンドから「ピクチャ」や「BGM」として表示、再生できます。<br/>
+						詳細はプラグインコマンドの説明を確認してください。<br/>
+						<br/>
+						また、別プラグイン「イベントコマンドのコード実行プラグイン」を使えば
+						より広い用途に使用できます。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>画像素材のリスト</th>
+							<td>登録する画像素材のリストです。</td>
+						</tr>
+						<tr>
+							<th>音声素材のリスト</th>
+							<td>登録する音声画像のリストです。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m08">
+			<h2 class="title--h2">OverpassTile</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						マップ上で橋などの立体交差を表現できます。<br/>
+						ツクールMV公式プラグイン「OverpassTile.js」のMZ向け機能強化版です。<br/>
+						<br/>
+						リージョンだけでなく地形タグも指定可能で、さらにイベントの起動や衝突判定に関する考慮がなされています。<br/>
+						乗り物の存在は考慮しません。
+					</p>
+					<h3 class="title--h4--sub">通行可能判定に関する仕様</h3>
+					<p class="text--sub mb30px">
+						・橋の入り口にいる場合<br/>
+						　→立体交差に対して必ず移動できます。<br/>
+						・立体交差にいる場合<br/>
+						　→橋の上にいる場合、立体交差と橋の入り口に対して必ず移動できます。<br/>
+						　→橋の下にいる場合、橋の入り口に対して必ず移動できません。<br/>
+						・上記の条件で移動可否を判定しなかった場合<br/>
+						　→マップの本来の通行設定に従います。
+					</p>
+					<h3 class="title--h4--sub">イベントの起動判定、衝突判定を考慮できます。</h3>
+					<p class="text--sub">
+						・高さが異なる（橋の上と下にいる）イベントは起動、衝突しません。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>立体交差リージョン</th>
+							<td>橋などの立体交差部分に設定するリージョンIDです。</td>
+						</tr>
+						<tr>
+							<th>立体交差地形タグ</th>
+							<td>橋などの立体交差部分に設定する地形タグです。</td>
+						</tr>
+						<tr>
+							<th>立体交差入り口リージョン</th>
+							<td>橋の両端など、立体交差の入り口部分に設定するリージョンIDです。</td>
+						</tr>
+						<tr>
+							<th>立体交差入り口地形タグ</th>
+							<td>橋の両端など、立体交差の入り口部分に設定するリージョンIDです。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m09">
+			<h2 class="title--h2">PluginCommonBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						本プラグインは他のプラグインから参照されることを前提としたベースプラグインです。<br/>
+						本プラグインを導入すると様々な場面で以下の制御文字が使えるようになります。
+					</p>
+					<h3 class="title--h4--sub">利用可能な制御文字</h3>
+					<p class="text--sub mb30px">
+						\v[n]  : n番目の変数の値に変換されます。<br/>
+						\s[n]  : n番目のスイッチの値(true, false)に変換されます。<br/>
+						\ss[n] : n番目のセルフスイッチの値(true, false)に変換されます。
+					</p>
+					<h3 class="title--h4--sub">制御文字を利用可能な場面は以下の通りです。</h3>
+					<p class="text--sub mb30px">
+						・文章の表示<br/>
+						・メモ欄(※)<br/>
+						・プラグインコマンド(※)<br/>
+						・プラグインパラメータ(※)<br/>
+						・スキルなどの説明欄<br/>
+						※ PluginCommonBase.jsをベースとして取り込んだプラグインのみ<br/>
+						<br/>
+						開発者向けの解説はプラグイン内のヘルプを御覧ください。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>マスク処理無効化</th>
+							<td>ウィンドウが重なったときのマスク処理を無効化します。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m10">
+			<h2 class="title--h2">RegionBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						リージョンおよび地形タグのデータベースを提供します。<br/>
+						仕様はおおよそRPGツクールMV Trinityに準じています。<br/>
+						リージョンおよび地形タグをトリガーにして以下の機能を提供します。<br/>
+						・イベント、プレイヤーに対する通行判定(4方向含む)<br/>
+						・梯子、茂み、カウンター、ダメージ床<br/>
+						・コモンイベントの呼び出し(トリガー3種類)<br/>
+						・侵入している間だけONになるスイッチ<br/>
+						・侵入している間だけ有効になる特徴<br/>
+						・メモ欄<br/>
+						<br/>
+						以下のスクリプトでデータベースをスクリプトや外部プラグインから参照できます。<br/>
+						未設定もしくは添え字が[0]の場合の中身はundefinedとなるので注意してください。<br/>
+						<br/>
+						$dataSystem.regions[ID];<br/>
+						$dataSystem.terrainTags[ID];
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>リージョンリスト</th>
+							<td>リージョンデータのリストです。</td>
+						</tr>
+						<tr>
+							<th>地形タグリスト</th>
+							<td>地形タグデータのリストです。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m11">
+			<h2 class="title--h2">TextPicture</h2>
+			<p class="text--sub">
+				このプラグインは、テキストをピクチャとして表示するコマンドを提供します。<br/>
+				<br/>
+				次の手順で使用してください。<br/>
+				  1. プラグインコマンド「テキストピクチャの設定」を呼び出します。<br/>
+				  2. 画像を指定せずに「ピクチャの表示」を実行します。
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m12">
+			<h2 class="title--h2">TextScriptBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						テキストやスクリプトなどの複数行の文字列を登録、管理できるデータベースです。<br/>
+						登録したテキストは以下の制御文字で参照できます。<br/>
+						¥tx[aaa] // 識別子[aaa]で登録したテキストに置き換わります。<br/>
+						¥js[bbb] // 識別子[bbb]で登録したテキストをその場でスクリプトとして評価して結果に置き換わります。<br/>
+						<br/>
+						スクリプトを実行する場合、引数を渡すことができます。<br/>
+						引数は自働で型変換され、配列「args」から参照できます。<br/>
+						\js[bbb,10,ccc] // 配列[10, &#39;ccc&#39;]が変数argsに格納されます。<br/>
+						<br/>
+						スクリプトを直接記述して埋め込むこともできます。<br/>
+						\js<xxx> // スクリプトxxxの実行結果に置き換わります。<br/>
+
+						ただし、スクリプト中で記号「&lt;」「&gt;」を使う場合は以下の通りエスケープする必要があります。<br/>
+						&gt; : &amp;gt;<br/>
+						&lt; : &amp;lt;<br/>
+						<br/>
+						制御文字を利用可能な場面は以下の通りです。<br/>
+						・文章の表示<br/>
+						・メモ欄(※)<br/>
+						・プラグインコマンド(※)<br/>
+						・プラグインパラメータ(※)<br/>
+						・スキルなどの説明欄<br/>
+						※ PluginCommonBase.jsをベースとして取り込んだプラグインのみ<br/>
+						<br/>
+						本プラグインの利用により、よく使うスクリプトやテキストを登録して簡単に呼び出したり<br/>
+						データベースの入力欄が限られている場合でも長い文字列を設定できます。
+					</xxx></p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>テキストベースリスト</th>
+							<td>登録するテキストやスクリプトのリストです。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+		<div class="section" id="m13">
+			<h2 class="title--h2">UniqueDataLoading</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						dataフォルダ配下に存在する任意のjsonファイルを読み込みます。<br/>
+						jsonファイルはJSONとしてparse可能なテキストファイルとして作成してください。<br/>
+						定義したファイルはゲーム起動時に読み込まれます。<br/>
+						<br/>
+						データは指定した名称のグローバルオブジェクトに格納されます。<br/>
+						グローバル変数名に「window」を指定すると、各オブジェクトがそれぞれグローバル変数として定義されますが、名称の競合には注意してください。<br/>
+						<br/>
+						データベースコンバータMZで作成したデータや独自のプラグインで追加したデータの読み込みなどに使えます。<br/>
+						<br/>
+						読み込んだデータは、独自のプラグインやスクリプトで以下の通り参照できます。<br/>
+						<br/>
+						グローバル変数を[$dataUniques]プロパティ名を[property]にした場合の参照例<br/>
+						$dataUniques.property<br/>
+						<br/>
+						すべての固有データを正常に読み込むと以下のメソッドが呼ばれます。<br/>
+						必要であれば再定義してください。<br/>
+						Scene_Boot.prototype.onUniqueDataLoad
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">パラメータ</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>グローバル変数名</th>
+							<td>固有データが定義されるグローバルオブジェクトの名称です。登録した変数はこの変数の配下に生成されます。</td>
+						</tr>
+						<tr>
+							<th>データリスト</th>
+							<td>固有データのリストです。dataフォルダ配下に任意のjsonファイルを配置してください。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+	<!-- /main -->
+
+
+
+</body></html>

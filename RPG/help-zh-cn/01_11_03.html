@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>输出格式</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>输出格式</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="输出格式">
+        <span>输出格式</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">资料集</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>资料集</li>
+				<li>&gt;</li>
+				<li>输出格式</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">输出格式</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">部署</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_03_img01.png" alt=""/>
+			</div>
+			<p class="text--sub">输出每个平台的分发包。可以输出到Windows，macOS，Web浏览器等。</p>
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h3>使用Windows时</h3>
+					<dd>
+						分配输出游戏文件夹。
+					</dd>
+				</li>
+				<li>
+					<h3>使用macOS时</h3>
+					<dd>
+						分发输出游戏文件夹或游戏文件夹中的文件Game.app。<br/> ※Game.app在Windows环境中会显示为文件夹，但可以在macOS环境中作为应用程序启动。
+					</dd>
+				</li>
+			</ul>
+			<h3 class="title--h3--sub">使用浏览器时</h3>
+			<div class=" pb40px border--bottom mb90px">
+				<p class="mb30px">您可以通过将输出游戏文件夹上传到Web服务器的方法在浏览器上游玩。</p>
+				<h4>游戏的系统需求</h4>
+				<table class="table--type01">
+					<tbody><tr>
+					<th>系统需求</th>
+					<td>兼容HTML5 Canvas和Web Audio API <br/>iOS 12或更高版本<br/>Android 8.0或更高版本</td>
+					</tr>
+					<tr>
+					<th>推荐的浏览器</th>
+					<td>Google Chrome, Safari, Firefox, iOS Safari, Chrome for Android</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							※如果要在智能手机浏览器上游戏时，请使用Wi-Fi环境。<br/> ※仅用于在与WebGL兼容的浏览器上游戏。
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+
+			<h3 class="title--h3">选项 [排除未使用的文件]</h3>
+			<p class="text--sub">
+				如果您选中[排除未使用的文件]选项并进行部署，则将在不包括游戏中未使用的文件的前提下，导出游戏文件夹。这样可以减小文件大小。<br/> 要排除的文件是以下文件夹中的文件。
+			</p>
+			<ul class="ul mb30px">
+				<li>项目文件夹/img/之下</li>
+				<li>项目文件夹/audio/之下</li>
+				<li>项目文件夹/effects/之下</li>
+			</ul>
+			<p class="mb90px">
+				另外，根据插件的设计规定，可能也会排除插件指定的文件。<br/> 您可以通过设置官方插件“MaterialBase”来将它设置在排除对象之外。
+			</p>
+
+
+			<h3 class="title--h3">加密</h3>
+			<p>加密游戏中使用的图像文件或音频文件。</p>
+			<ul class="ul--2c--line mb30px">
+				<li>
+					<h4>图像文件</h4>
+					<p>如果勾选，则包中包含的图像文件将被加密。</p>
+				</li>
+				<li>
+					<h4>音频文件</h4>
+					<p>如果勾选，则包中包含的音频文件将被加密。</p>
+				</li>
+				<li>
+					<h4>密钥</h4>
+					<p>请输入任意字符串。加密文件时在内部使用。</p>
+				</li>
+			</ul>
+
+			<p class="red">
+				※加密的文件不能在项目文件夹中使用。<br/> ※用浏览器游戏时，由于客观条件所限，无法完全防止非法复合。
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

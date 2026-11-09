@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>パーティ</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>パーティ</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="パーティ">
+        <span>パーティ</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>パーティ</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">パーティ</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">所持金の増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティの所持金を増減します。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>増減させる額を指定します。一定額を増減する場合は［定数］を選び、金額を入力します。変数の値で額を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">アイテムの増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティのアイテムの所持数を増減します。増減の結果、所持数が0～99個の範囲を超える場合は99個（最大所持数）、または0個（所持なし）に調整されます。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アイテム</h4>
+					<p>増減対象のアイテムを指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>増減させる数量を指定します。一定数を増減する場合は［定数］を選び、数量を入力します。変数の値で数量を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">武器の増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティの武器の所持数を増減します。増減の結果、所持数が0～99個の範囲を超える場合は99個（最大所持数）、または0個（所持なし）に調整されます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>武器</h4>
+					<p>増減対象の武器を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>増減させる数量を指定します。一定数を増減する場合は［定数］を選び、数量を入力します。変数の値で数量を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>装備品を含む</h4>
+					<p>有効にすると、アクターが装備している武器も減らす対象にします。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">防具の増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティの武器の所持数を増減します。増減の結果、所持数が0～99個の範囲を超える場合は99個（最大所持数）、または0個（所持なし）に調整されます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>防具</h4>
+					<p>増減対象の防具を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>増減させる数量を指定します。一定数を増減する場合は［定数］を選び、数量を入力します。変数の値で数量を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>装備品を含む</h4>
+					<p>有効にすると、アクターが装備している防具も減らす対象にします。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">メンバーの入れ替え</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img05.png" 　alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティ内のアクターの構成を変更します。入れ替えの結果、パーティ内のアクターを0人にすることもできます。この場合、マップ上にプレイヤーは表示されなくなります。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>入れ替え対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（加える／外す）を指定します。</p>
+				</li>
+				<li>
+					<h4>初期化</h4>
+					<p>有効にすると、アクターを加えるときの設定値が［データベース］での設定に基づいたものになります。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

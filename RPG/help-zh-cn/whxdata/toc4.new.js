@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"编辑地图设计","type":"item","tilePath":"","url":"01_07_01.html"},{"name":"操作地图数据","type":"item","tilePath":"","url":"01_07_02.html"},{"name":"设置地图数据","type":"item","tilePath":"","url":"01_07_03.html"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

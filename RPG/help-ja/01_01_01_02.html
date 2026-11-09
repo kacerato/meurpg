@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1.1.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>MVデータのコンバート</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>MVデータのコンバート</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="MVデータのコンバート">
+        <span>MVデータのコンバート</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+
+		<div class="mainvisual mainvisual--01_01">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">RPGツクールMZとは</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_01.html">RPGツクールMZとは</a></li>
+				<li>&gt;</li>
+				<li>新機能</li>
+				<li>&gt;</li>
+				<li>MVデータのコンバート</li>
+			</ul>
+			<img src="assets/img/common/cha01_01.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">MVデータのコンバート</h1>
+
+		<p class="text--lead">
+			RPGツクールMV（以下MV）で制作していたプロジェクトデータを、RPGツクールMZ（以下MZ）のプロジェクトデータとして制作できるように変換する事ができます。
+		</p>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">コンバート手順</h2>
+			<p class="text--sub">
+				コンバートはプロジェクトデータをコピーして行います。まずは以下の準備をしましょう。
+			</p>
+			<ul class="ul mb30px">
+				<li>パソコンで「ファイルの拡張子」を表示する</li>
+				<li>コンバート元のMVのプロジェクトデータをバックアップする</li>
+				<li>MZでコンバート先のプロジェクトデータを新規作成する</li>
+			</ul>
+
+			<h3 class="title--h3">各種ファイルをMZのプロジェクトにコピー</h3>
+			<p class="text--sub">
+				MVのプロジェクトデータ内の各種ファイルを、MZのプロジェクトにコピーします。<br/>
+				その後、MZを起動することでコンバートの処理が実行されます。<br/>
+				※MZでプロジェクトを開いた状態ではコンバートは実行されません。ファイルをコピーする際は、事前にMZを終了してください。
+			</p>
+			<h4 class="title--h3--sub">MVとMZの各種データの保存先</h4>
+			<p class="text--sub">下記表を元に必要なMVのデータを、MZへコピーおよび上書き保存してください。</p>
+			<table class="table--type05 mb90px">
+				<tbody><tr>
+					<th></th>
+					<th>RPGツクールMV</th>
+					<th>RPGツクールMZ</th>
+				</tr>
+				<tr>
+					<td>音楽データ</td>
+					<td>\audio</td>
+					<td>\audio</td>
+				</tr>
+				<tr>
+					<td>画像データ</td>
+					<td>
+						\img\battlebacks1 <br/>
+						\img\battlebacks2 <br/>
+						\img\characters <br/>
+						\img\enemies <br/>
+						\img\faces <br/>
+						\img\parallaxes <br/>
+						\img\pictures <br/>
+						\img\sv_actors <br/>
+						\img\sv_enemies <br/>
+						\img\tilesets <br/>
+						\img\titles1 <br/>
+						\img\titles2
+					</td>
+					<td>
+						\img\battlebacks1 <br/>
+						\img\battlebacks2 <br/>
+						\img\characters <br/>
+						\img\enemies <br/>
+						\img\faces <br/>
+						\img\parallaxes <br/>
+						\img\pictures <br/>
+						\img\sv_actors <br/>
+						\img\sv_enemies <br/>
+						\img\tilesets <br/>
+						\img\titles1 <br/>
+						\img\titles2
+					</td>
+				</tr>
+				<tr>
+					<td>
+						アイコン画像データ
+					</td>
+					<td>
+						\icon
+					</td>
+					<td>
+						\icon
+					</td>
+				</tr>
+				<tr>
+					<td>
+						システム画像データ
+					</td>
+					<td>
+						\img\system <br/>
+						<br/>
+						※以下ファイルを除く <br/>
+						<ul class="ul">
+							<li>ButtonSet.png</li>
+							<li>Damage.png</li>
+							<li>Loading.png</li>
+							<li>MadeWithMv.png</li>
+						</ul>
+					</td>
+					<td>
+						\img\system
+					</td>
+				</tr>
+				<tr>
+					<td>
+						アニメーション（非推奨）
+					</td>
+					<td>
+						\data\Animations.json <br/>
+						\img\animations
+					</td>
+					<td>
+						\data\Animations.json <br/>
+						\img\animations <br/>
+						 <br/>
+						※コンバート時は\img\animationsフォルダをコピーする必要あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						フォントデータ
+					</td>
+					<td>
+						\fonts <br/>
+						<br/>
+						※以下ファイルを除く <br/>
+						<ul class="ul">
+							<li>gamefont.css</li>
+						</ul>
+					</td>
+					<td>
+						\fonts
+					</td>
+				</tr>
+				<tr>
+					<td>
+						マップ及びマップイベント
+					</td>
+					<td>
+						\data\MapInfos.json <br/>
+						\data\Mapxxx.json <br/>
+						(xxxはマップidの数字)
+					</td>
+					<td>
+						\data\MapInfos.json <br/>
+						\data\Mapxxx.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						アクター
+					</td>
+					<td>
+						\data\Actors.json
+					</td>
+					<td>
+						\data\Actors.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						職業
+					</td>
+					<td>
+						\data\Classes.json
+					</td>
+					<td>
+						\data\Classes.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						スキル
+					</td>
+					<td>
+						\data\Skills.json
+					</td>
+					<td>
+						\data\Skills.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						アイテム
+					</td>
+					<td>
+						\data\Items.json
+					</td>
+					<td>
+						\data\Items.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						武器
+					</td>
+					<td>
+						\data\Weapons.json
+					</td>
+					<td>
+						\data\Weapons.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						防具
+					</td>
+					<td>
+						\data\Armors.json
+					</td>
+					<td>
+						\data\Armors.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						敵キャラ
+					</td>
+					<td>
+						\data\Enemies.json
+					</td>
+					<td>
+						\data\Enemies.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						敵グループ
+					</td>
+					<td>
+						\data\Troops.json
+					</td>
+					<td>
+						\data\Troops.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						ステート
+					</td>
+					<td>
+						\data\States.json
+					</td>
+					<td>\data\States.json
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						タイルセット
+					</td>
+					<td>
+						\data\Tilesets.json
+					</td>
+					<td>
+						\data\Tilesets.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						コモンイベント
+					</td>
+					<td>
+						\data\CommonEvents.json
+					</td>
+					<td>
+						\data\CommonEvents.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						システム<br/>
+						用語<br/>
+						タイプ<br/>
+						スイッチ名<br/>
+						変数名
+					</td>
+					<td>
+						\data\System.json
+					</td>
+					<td>
+						\data\System.json
+					</td>
+				</tr>
+			</tbody></table>
+
+			<h3 class="title--h3">コンバートの注意点</h3>
+			<p class="text--sub">
+				コンバートできるデータはRPGツクールMVで制作したマップデータやマップイベント、データベースの内容です。コンバート時にコピー不要なデータや非推奨のデータがあります。
+			</p>
+			<table class="table--type06 mb90px">
+				<tbody><tr>
+					<th>
+						<b>system画像データ</b><br/>
+						\img\system
+					</th>
+					<td>
+						以下画像データは不要です。
+						<ul class="ul">
+							<li>ButtonSet.png</li>
+							<li>Damage.png</li>
+							<li>Loading.png</li>
+							<li>MadeWithMv.png</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>アニメーション</b><br/>
+						\data\Animations.json<br/>
+						\img\animations
+					</th>
+					<td>
+						RPGツクールMZで編集できないため、非推奨です。<br/>
+						MZでは「img」フォルダ内に「animations」フォルダがないため、フォルダをコピーする必要があります。
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>フォントデータ</b><br/>
+						\fonts
+					</th>
+					<td>
+						MZでは使用するフォントをデータベースから設定します。フォントファイルのみコピーしましょう。<br/>
+						使用するフォントは、［データベース］→［システム2］→［高度な設定］から指定できます。
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>プラグインデータ</b><br/>
+						\js\plugins<br/>
+						\js\plugin.js
+					</th>
+					<td>
+						プラグインについては動作保証外になります。
+					</td>
+				</tr>
+			</tbody></table>
+
+			<div class="flex--bw--p-img">
+				<div>
+					<h3 class="title--h3">プラグインについて</h3>
+					<p class="text--sub">
+						RPGツクールMV用のプラグインが含まれる場合、プラグイン管理ウィンドウにてメッセージが表示されます。
+					</p>
+				</div>
+				<img src="assets/img/01_01_01_02_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

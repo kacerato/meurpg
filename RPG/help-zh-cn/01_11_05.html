@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_5";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>如何使用官方插件</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>如何使用官方插件</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="如何使用官方插件">
+        <span>如何使用官方插件</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">资料集</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>资料集</li>
+				<li>&gt;</li>
+				<li>如何使用官方插件</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">如何使用官方插件</h1>
+		<p class="text--lead">在RPG Maker MZ中，新建的项目中已经包含了几个插件，可以通过简单的设定来使用。另外，某些官方插件单独包含在其它用途的DLC文件夹中。</p>
+
+
+		<div class="section" id="m01">
+			<h2 class="title--h2">AltMenuScreen</h2>
+			<p class="text--sub">
+				这是一个将菜单画面更改为其他布局的插件。<br/>队伍成员将横向并排显示。
+			</p>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_05_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="m02">
+			<h2 class="title--h2">AltSaveScreen</h2>
+			<p class="text--sub">
+				这是一个将保存画面和加载屏幕更改为不同布局的插件。<br/>可以显示队伍成员的面部图像等。
+			</p>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_05_img02.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="m03">
+			<h2 class="title--h2">ButtonPicture</h2>
+			<p class="text--sub">
+				该插件在单击图片时会提供调用公共事件的指令。<br/>请按以下顺序使用。<br/> <br/>1.执行[显示图片]以显示按键图像。<br/>2.调用插件指令[设置按键图片]。
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m04">
+			<h2 class="title--h2">EventCommandByCode</h2>
+			<p class="text--sub mb30px">
+				您可以通过直接指定代码和参数来执行事件指令。<br/>变量（控制字符）可以用作各个指令的参数，并且可以强制指定正常事件指令无法指定的范围之外的值。<br/>另外，如果调用的命令设置了意外的值，则不能保证实现操作。
+			</p>
+			<h3 class="title--h3--sub">控制字符</h3>
+			<p class="mb30px">
+				\v[n] : 变量值<br/> \s[n] : 开关<br/> \ss[n] : 独立开关<br/> \js[n] : 脚本（仅限适用TextScriptBase.js时）
+			</p>
+			<p class="text--sub">
+				您无法在事件编辑器中指定复数行的指令或是带有深层嵌套的命令。
+			</p>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m05">
+			<h2 class="title--h2">ExtraImage</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						您还能添加可以指定任意图像的场景。<br/>您可以指定例如坐标、放大倍数、原点等基本信息。<br/>如果为每个参数指定一个控制字符，则可以从指定的变量中获取值。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>图像列表</th>
+							<td>要添加到每个画面的图像列表。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m06">
+			<h2 class="title--h2">ExtraWindow</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						您还能添加可以指定任意窗口的场景。<br/>您可以设定例如坐标、字体大小、开闭动画等基本信息。<br/>控制字符可以在窗口中显示的文本中使用，并且在变量值更改时会自动重绘。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>窗口列表</th>
+							<td>要添加到每个画面的窗口列表。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m07">
+			<h2 class="title--h2">MaterialBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						这是一个可让您登录和管理主要由插件使用的图像和音频素材的数据库。<br/>登录的素材会自动从删除未使用的素材的功能的目标中排除。<br/>如果使用以下控制字符，则将替换已登录素材的文件名。<br/> <br/>¥mi[aaa] // 用识别码[aaa]替换登录的图像素材的文件名。<br/> ¥mi[bbb] // 用识别码[bbb]替换登录的声音素材的文件名。<br/> <br/>可以使用控制字符的情况如下。<br/>・文字的显示<br/>・事件指令或条件分支的脚本<br/>・备注栏（※）<br/>・插件指令（※）<br/>・插件参数（※）<br/>・技能等的说明栏。<br/> ・技能、物品的计算公式<br/> ※仅限使用PluginCommonBase.js为基础导入的插件<br/> <br/>可以通过插件指令将登录的素材更改为其他素材。<br/> <br/>设置的值可以通过插件指令作为[图片]或[BGM]显示、播放。<br/>详细信息，请参见插件指令的说明。<br/> <br/>另外，如果使用另一个插件[事件指令的代码执行插件]，则可以将其用于更广泛的用途。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>图像素材列表</th>
+							<td>登录的图像素材列表。</td>
+						</tr>
+						<tr>
+							<th>声音素材列表</th>
+							<td>登录的声音图像列表。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m08">
+			<h2 class="title--h2">OverpassTile</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						可以在地图上显示例如桥梁等立体交叉结构。<br/>这是Maker MV的官方插件“ OverpassTile.js”的面向MZ的功能增强版本。<br/> <br/>不仅可以指定区域，还可以指定地形标签，并考虑了事件的启动、冲突判定等有关情况。<br/>不会考虑载具的存在。
+					</p>
+					<h3 class="title--h4--sub">与允许通行有关的判定规范</h3>
+					<p class="text--sub mb30px">
+						・如果您在桥的入口处<br/>→面对立体交叉必定可以移动。<br/>・如果您在立体交叉结构时<br/>→在桥上时，面对立体交叉和桥的入口时必定可以移动。<br/>・如果您在桥下时，面对桥的入口必定无法进行移动。<br/> ・在上述条件下无法判断能否移动时<br/> →遵循地图的原始通行设置。
+					</p>
+					<h3 class="title--h4--sub">您可以考虑事件的启动判定、冲突判定等因素。</h3>
+					<p class="text--sub">
+						・高度不同（桥的上方和下方）的事件不会启动或冲突。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>立体交叉区域</th>
+							<td>要在桥梁等立体交叉部分设置的区域ID。</td>
+						</tr>
+						<tr>
+							<th>立体交叉地形标签</th>
+							<td>要在桥梁等立体交叉部分设置的地形标签。</td>
+						</tr>
+						<tr>
+							<th>立体交叉入口区域</th>
+							<td>设置在例如桥梁的两端、立体交叉的入口部分的区域ID。</td>
+						</tr>
+						<tr>
+							<th>立体交叉入口地形标签</th>
+							<td>设置在例如桥梁的两端、立体交叉的入口部分的区域ID。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m09">
+			<h2 class="title--h2">PluginCommonBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						本插件是以会被其他插件引用为前提设置的基本插件。<br/>引入此插件后，可以在各种情况下使用以下控制字符。
+					</p>
+					<h3 class="title--h4--sub">可以使用的控制字符</h3>
+					<p class="text--sub mb30px">
+						\v[n] : 转换为第n个变量的值。<br/> \s[n] : 转换为第n个开关的值(true, false)。<br/> \ss[n] : 转换为第n个独立开关的值(true, false)。
+					</p>
+					<h3 class="title--h4--sub"> 可以使用控制字符的情况如下。</h3>
+					<p class="text--sub mb30px">
+						・文字的显示<br/>・备注栏（※）<br/>・插件指令（※）<br/>・插件参数（※）<br/>・技能等的说明栏。<br/> ※仅限使用PluginCommonBase.js为基础导入的插件<br/> <br/>请参阅插件中的帮助以获取面向开发人员的说明。
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>禁用遮罩处理</th>
+							<td>窗口重叠时禁用遮罩处理。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m10">
+			<h2 class="title--h2">RegionBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						提供区域和地形标签等的数据库。<br/>规格大致以RPG Maker MV Trinity为基准。<br/>通过将区域和地形标签用作触发器，可以提供以下功能。<br/> ・对事件和玩家进行通行判定（包括4个方向）<br/> ・梯子，灌木，柜台，损坏的地板<br/> ・调用公共事件（3种触发器）<br/> ・  仅在入侵时才打开的开关<br/> ・入侵时才有效的特征<br/> ・备注栏<br/> <br/> 可使用以下脚本从脚本、外部插件等引用数据库。<br/>请注意，如果未设置内容或后缀为[0]时，则内容将设为undefined。<br/> <br/> $dataSystem.regions[ID];<br/> $dataSystem.terrainTags[ID];
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>区域列表</th>
+							<td>区域数据的列表。</td>
+						</tr>
+						<tr>
+							<th>地形标签列表</th>
+							<td>地形标签数据的列表。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m11">
+			<h2 class="title--h2">TextPicture</h2>
+			<p class="text--sub">
+				该插件提供了将文本作为图片显示的命令。<br/> <br/>请按以下顺序使用。<br/>1.调用插件指令[文本图片的设置]。<br/> 2. 执行[图片的显示]而不指定图像。
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m12">
+			<h2 class="title--h2">TextScriptBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						这是一个可以登录和管理例如文本和脚本等多行字符串的数据库。<br/>可以使用以下控制字符引用登录的文本。<br/> ¥tx[aaa] // 用识别码[aaa]替换已登录的文本。<br/> ¥js[bbb] // 用识别码[bbb]将已登录的文本作为脚本立即进行评估，并替换为其结果<br/> <br/>您可以在运行脚本时传递参数。<br/>参数将自动进行类型转换，并可以从数组[args]中引用。<br/> \js[bbb,10,ccc] // 数组[10，&#39;ccc&#39;]将存储在变量args中。<br/> <br/>您也可以直接编写和嵌入脚本。<br/> \js<xxx> // 它将被脚本xxx的执行结果代替。<br/>但是，如果在脚本中使用符号[&lt;] [&gt;]，则需要进行以下转义。<br/> &gt; : &amp;gt;<br/> &lt; :  &amp;lt;<br/> <br/> 可以使用控制字符的情况如下。<br/>・文字的显示<br/>・备注栏（※）<br/>・插件指令（※）<br/>・插件参数（※）<br/>・技能等的说明栏。<br/>  ※仅限使用PluginCommonBase.js为基础导入的插件<br/> <br/>通过使用此插件，您可以登录常用的脚本或文本并轻松调用它们。<br/>即使数据库输入字段受到限制，也可以设置长字符串。
+					</xxx></p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>文本基本列表</th>
+							<td>要登录的文本和脚本列表。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+		<div class="section" id="m13">
+			<h2 class="title--h2">UniqueDataLoading</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						读取data文件夹下存在的任何json文件。<br/>将json文件创建为可以Parse为JSON的文本文件。<br/>游戏启动时将读取定义的文件。<br/> <br/>数据将以指定的名称存储在全局对象中。<br/>如果将「window」指定为全局变量名称，则每个对象都将被定义为全局变量，请注意名称冲突问题。<br/> <br/>它可以用来读取数据库转换器MZ创建的数据或用其他单独插件添加的数据。<br/> <br/>可以使用单独的插件或脚本如下所示读取加载的数据。<br/> <br/>全局变量为[$dataUniques]属性名称为[property]时的参考示例<br/> $dataUniques.property<br/> <br/>成功读取所有固有数据后，将调用以下方法。<br/>必要时请重新定义。<br/> Scene_Boot.prototype.onUniqueDataLoad
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">参数</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>全局变量名</th>
+							<td>定义了固有数据的全局对象的名称。登录的变量将在该变量下生成。</td>
+						</tr>
+						<tr>
+							<th>数据列表</th>
+							<td>固有数据的列表。请将所有json文件配置在data文件夹下。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+	<!-- /main -->
+
+
+</body></html>

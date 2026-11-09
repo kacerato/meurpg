@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Map Event Creation and Controls</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Map Event Creation and Controls</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Map Event Creation and Controls">
+        <span>Map Event Creation and Controls</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Events</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_09.html">Events</a></li>
+				<li>&gt;</li>
+				<li>Map Event Creation and Controls</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Map Event Creation and Controls</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">Map Event Creation and Controls</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>
+						Switch to Editing Mode
+					</h3>
+					<p>To create and edit Map Events, switch to event editing mode by clicking the [Events] button on the Main Window&#39;s toolbar (or by going to [Mode] → [Events] in the menu bar).</p>
+				</li>
+				<li>
+					<h3>
+						Creating a New Map Event
+					</h3>
+					<p>To create a new Map Event, double-click the location where you wish to place the event on the map view. Edit the settings for your event in the [Event Editor] window that appears, and click [OK]. For more information on parameter details, please view <a href="01_09_03.html">Map Event Settings</a>.
+					</p>
+				</li>
+				<li>
+					<h3>
+						Re-editing and Moving
+					</h3>
+					<p>When you place a Map Event, an icon will be displayed at that location (the image that was selected on the first event page will be used). Double-clicking this icon will open the [Event Editor] window where you can re-edit the event&#39;s settings. You can change the location by dragging and dropping the icon.</p>
+				</li>
+			</ul>
+
+			<div class="flex--bw--p-img mb90px">
+				<div>
+					<h3 class="title--h3">
+						Event List
+					</h3>
+					<p class="text--sub mb30px">
+						Switching to Event Edit Mode will change the Tile Palette to the Event List.
+					</p>
+					<ul class="ul mb90px">
+						<li class="mb30px">Selecting an event from the Event List will select the corresponding event on the map. <br/>Also, selecting an event on the map will select the corresponding event on the Event List.</li>
+						<li>Double-clicking an item on the Event List will open the Event Editor.</li>
+					</ul>		
+				</div>
+				<img src="assets/img/01_09_02_img01.png" alt="" style="max-width: 45.2%;"/>
+			</div>
+
+			<h3 class="title--h3">
+				Context Menu Controls
+			</h3>
+			<p class="text--sub">When you right-click the map view in Event Edit Mode, you can perform actions such as copying and deleting the event that you placed. The functions of each item are as follows.</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Edit (&quot;New&quot; when an event has not yet been placed) </h4>
+					<p>Opens the Event Editor Window.</p>
+				</li>
+				<li>
+					<h4>Cut </h4>
+					<p>Copies the map event that you right-clicked to the clipboard, then deletes it.</p>
+				</li>
+				<li>
+					<h4>Copy </h4>
+					<p>Copies the map event that you right-clicked to the clipboard.</p>
+				</li>
+				<li>
+					<h4>Paste </h4>
+					<p>Places the map event in the clipboard at the location you right-clicked.</p>
+				</li>
+				<li>
+					<h4>Delete </h4>
+					<p>Deletes the map event that you right-clicked.</p>
+				</li>
+				<li>
+					<h4>Quick Event Creation </h4>
+					<p>Creates 4 types of events using simple settings (see below).</p>
+				</li>
+				<li>
+					<h4>Set Starting Position </h4>
+					<p>Sets the position for the player and vehicles at the start of the game. The starting position will be indicated by a blue frame.<br/>*Event icons use white frames.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">Quick Event Creation Feature</h2>
+			<p class="text">
+				By going to the [Quick Event Creation] section in the Context Menu, you can create the four following types of events often created in typical RPGs using simple settings: [Transfer], [Door], [Treasure], and [Inn]. The contents and parameter details for events that you can create using each option are as follows. <br/><br/>Just like other events, events created using Quick Event Creation can also have their parameter details edited, copied, etc.
+			</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>Movement </h3>
+					<p>Creates an invisible (no image) event that transfers the player to the specified location. Use this for things such as entrances and stairs.  In [Location] and [Direction], specify the location after transfer and the direction that the player is facing.</p>
+				</li>
+				<li>
+					<h3>Door </h3>
+					<p>Creates a door image event that transfers the player to the specified location. Specify the image used in the [Image] field, and the location after transfer in [Location].</p>
+				</li>
+				<li>
+					<h3>Treasure </h3>
+					<p>Create an event where a player can get an item from a treasure chest limited to the first time the treasure chest is checked. Set the image to display in [Image], and specify what the player can obtain (gold/items/weapons/armor) in the [Content] section.</p>
+				</li>
+				<li>
+					<h3>Inn </h3>
+					<p>Event which allows the party to completely recover. Set the image to display in [Image], and the price in the [Price] field.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

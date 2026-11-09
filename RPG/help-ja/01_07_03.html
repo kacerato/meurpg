@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>マップデータの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>マップデータの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="マップデータの設定">
+        <span>マップデータの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">マップ</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_07.html">マップ</a></li>
+				<li>&gt;</li>
+				<li>マップデータの設定</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">マップデータの設定</h1>
+
+		<div class="section">
+			<h2 class="title--h2">データの設定内容</h2>
+			<p class="text">マップを新しく作成するとき、またはマップを右クリックして［編集］を選択すると、マップデータの設定ウィンドウが表示されます。このウィンドウでは、マップの大きさやデザインに使うタイルセット、BGMや敵グループとのエンカウント（戦闘発生）の条件など、プレイ中のゲームにおける挙動を編集します。</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb30px">
+				<img src="assets/img/01_07_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>
+						名前
+					</h3>
+					<p>マップの名前です。この設定はエディターのみで使用されます（プレイするゲームへの影響はありません）。</p>
+				</li>
+				<li>
+					<h3>
+						表示名
+					</h3>
+					<p>プレイヤーがこのマップ上に移動したときに表示する名前です。</p>
+				</li>
+				<li>
+					<h3>
+						タイルセット
+					</h3>
+					<p>マップのデザインに用いるタイルセットを指定します。</p>
+				</li>
+				<li>
+					<h3>
+						幅／高さ
+					</h3>
+					<p>マップの大きさです。［幅］（横）と［高さ］（縦）をそれぞれ0～256で指定します。作成後にサイズを現在よりも小さくすると、はみ出す部分は削除されます。</p>
+				</li>
+				<li>
+					<h3>
+						スクロールタイプ
+					</h3>
+					<p>マップのループ方法です。ループを設定すると、指定方向のマップの端同士がつながり、循環移動できるようになります。</p>
+					<dl class="dl--default">
+						<dt>ループしない </dt>
+						<dd>ループ処理をしません。</dd>
+						<dt>縦方向にループする </dt>
+						<dd>マップの上端と下端をつなげます。</dd>
+						<dt>横方向にループする </dt>
+						<dd>マップの左端と右端をつなげます。</dd>
+						<dt>縦横ともループする </dt>
+						<dd>マップの上端と下端、左端と右端をそれぞれつなげます。</dd>
+					</dl>
+				</li>
+				<li>
+					<h3 id="p01">
+						戦闘背景指定
+					</h3>
+					<p>有効にすると、このマップ上でバトルが発生したときの戦闘背景を、2種類の画像の組み合わせで指定できます。<br/>
+						戦闘背景を指定しない場合、フィールド上では地形に準じた背景が自動で選択されます。その他のマップでは、マップ画面を加工した画像が背景として使用されます。
+					</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_03_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>
+						エンカウント歩数
+					</h3>
+					<p>マップ上の移動中にエンカウントが発生する頻度を、平均移動歩数（1～999／1歩はタイル1個ぶんの移動距離）で指定します。頻繁にモンスターを出現させたい場合は値を小さくします。</p>
+				</li>
+				<li>
+					<h3>
+						BGM自動演奏／BGS自動演奏
+					</h3>
+					<p>有効にすると、プレイヤーがこのマップに存在するときに、自動でBGM（背景音楽）／BGS（背景音）の再生を開始します。それぞれ再生する音楽ファイルを指定します。<br/>
+					マップと戦闘のBGMが同一のときは、演奏を止めずに画面が切り替わります。</p>
+				</li>
+				<li>
+					<h3>
+						ダッシュ禁止
+					</h3>
+					<p>有効にすると、このマップ上でプレイヤーがダッシュ移動できなくなります。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				遠景
+			</h3>
+			<p class="text">マップの空白部分に表示する画像です。［…］をクリックすると開くウィンドウで画像ファイルを指定します。<br/>
+				<br/>
+				［横方向にループする］［縦方向にループする］を有効にすると、プレイヤーの移動方向に合わせて遠景がスクロール表示します。また［スクロール］に0以外の値（-32～32）を指定すると、自動でスクロールします。正の値なら左／上、負の値なら右／下にスクロールし、絶対値が大きいほど速度が速くなります。<br/>
+				<br/>
+				［エディターに表示］を有効にすると、設定した遠景をエディター上で確認できます。ただし実際のプレイ画面とは表示の仕方が異なることがあります。<br/>
+				<br/>
+				また、遠景の画像ファイル名の先頭に「!」をつけると視差は0になります。
+			</p>
+
+			<h3 class="title--h3">
+				メモ
+			</h3>
+			<p class="text">ゲーム作成上のメモを自由に入力できます。内容はエディターのみで使用されます（プレイするゲームへの影響はありません）。</p>
+
+			<h3 class="title--h3">
+				エンカウント
+			</h3>
+			<p class="text--sub">プレイヤーがこのマップを移動中に、ランダムで出現する敵グループです。欄内の空白をダブルクリックすると開くウィンドウで、以下の内容を指定します。登録した敵グループの項目を右クリックすると、コンテキストメニューでコピーや削除などの操作が行なえます。</p>
+
+			<div class="flex--bw--dl-img">
+				<dl class="dl">
+					<dt>敵グループ </dt>
+					<dd>設定する敵グループを指定します。</dd>
+					<dt>重み</dt>
+					<dd>エンカウントの際、この敵グループが戦闘相手として出現する優先度（0～100）を指定します。複数の敵グループが設定されている場合、この値が大きい敵グループほど出現確率が高くなります。<br/>
+						<br/>
+						具体的には、設定された敵グループの重みの合計値に占める割合で出現確率が算出されます。<br/>
+						たとえば、Aグループに9、Bグループに7、Cグループに4と重みを設定したとします。この場合、Aグループの出現確率は、9/20(重みの合計である9+7+4の値)で0.45、つまり45%です。同様にして、Bは7/20で35%、Cは4/20で20%の出現確率となります。
+					</dd>
+					<dt>範囲 </dt>
+					<dd>この敵グループが出現する地域です。地域に関係なく出現させる場合は［マップ全域］を指定します。特定の地域のみに出現させるには［リージョンIDで指定］を選び、リージョンのID（3つまで）を指定します。リージョンの設定方法は下記をご覧ください。</dd>
+				</dl>
+				<img src="assets/img/01_07_03_img03.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section">
+
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">リージョンの設定方法</h2>
+					<p>マップデータの［エンカウント］の設定で指定する“リージョン”とは、敵グループの出現地域を指し示すものです。ひとつのマップは255のリージョンに区分けできます。<br/>
+						<br/>
+						設定するには、タイルパレットのタブ［R］を選択して編集モードを切り替えます。リージョンのID（1～255の番号）をクリックで選択し、マップビュー上をクリックすると、その位置のタイルにリージョンが設定されます。一地点（タイル）に設定できるリージョンIDはひとつのみです。
+					</p>
+				</div>
+				<img src="assets/img/01_07_03_img04.png" width="1383" height="940" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

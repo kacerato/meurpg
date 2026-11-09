@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_7";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>系统设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>系统设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="系统设置">
+        <span>系统设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>系统设置</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">系统设置</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">变更战斗BGM</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">变更战斗中播放的BGM的设置。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>文件列表</h4>
+					<p>设定要使用的BGM文件。不播放时，设定[（无）]。</p>
+				</li>
+				<li>
+					<h4>播放/停止</h4>
+					<p>单击[播放]后，会根据当前的设置播放BGM。单击［停止］就可以停止播放。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>设定音量。</p>
+				</li>
+				<li>
+					<h4>音调</h4>
+					<p>设定音调（50~150％）。如果高于100％，则播放速度会更快，并且音阶会更高。</p>
+				</li>
+				<li>
+					<h4>相位</h4>
+					<p>设定相位（-100~100）。负值会增加左扬声器的比重，正值增加右扬声器的比重。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>如果在战斗中进行变更，则该变更将反映在下一场战斗中。</li>
+				<li>若地图和战斗BGM相同，则仅切换画面，不停止播放。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">变更胜利ME</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">改变战斗胜利时播放的ME的设定。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>文件列表</h4>
+					<p>设定要使用的ME文件。不播放时，设定[（无）]。</p>
+				</li>
+				<li>
+					<h4>播放/停止</h4>
+					<p>单击[播放]后，会根据当前的设置播放ME。单击［停止］就可以停止播放。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>设定音量。</p>
+				</li>
+				<li>
+					<h4>音调</h4>
+					<p>设定音调（50~150％）。如果高于100％，则播放速度会更快，并且音阶会更高。</p>
+				</li>
+				<li>
+					<h4>相位</h4>
+					<p>设定相位（-100~100）。负值会增加左扬声器的比重，正值增加右扬声器的比重。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">变更战败ME</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">改变战斗失败时播放的ME的设定。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>文件列表</h4>
+					<p>设定要使用的ME文件。不播放时，设定[（无）]。</p>
+				</li>
+				<li>
+					<h4>播放/停止</h4>
+					<p>单击[播放]后，会根据当前的设置播放ME。单击［停止］就可以停止播放。</p>
+				</li>
+				<li>
+					<h4>音量</h4>
+					<p>设定音量。</p>
+				</li>
+				<li>
+					<h4>音调</h4>
+					<p>设定音调（50~150％）。如果高于100％，则播放速度会更快，并且音阶会更高。</p>
+				</li>
+				<li>
+					<h4>相位</h4>
+					<p>设定相位（-100~100）。负值会增加左扬声器的比重，正值增加右扬声器的比重。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">变更载具BGM</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改乘坐着载具时播放的 BGM。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>载具</h4>
+					<p>设定要改变BGM的载具。</p>
+				</li>
+				<li>
+					<h4>BGM</h4>
+					<p>设定要播放的BGM。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">启用/禁用存档</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">决定玩家是否可以执行保存操作。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>保存</h4>
+					<p>设为[禁止]以禁用保存操作，设为[允许]以启用保存操作。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">启用/禁用菜单</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">控制玩家是否可以调用菜单屏幕。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>菜单</h4>
+					<p>设为[禁止]以禁止访问菜单屏幕，设为[允许]以启用菜单屏幕。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">启用/禁用遇敌</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img07.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">控制在移动队伍时是否会遇敌（随机与与敌群发生战斗的处理）。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>遇敌</h4>
+					<p>设为[禁止]以禁用遇敌，设为[允许]以启用遇敌。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">启用/禁用排序</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img08.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">控制玩家是否可以对队伍成员进行排序。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>排序</h4>
+					<p>设为[禁止]以禁用排序操作，设为[允许]以启用排序操作。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">变更窗口颜色</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img09.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">变更窗口颜色的设置更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>窗口颜色</h4>
+					<p>根据[红色]，[绿色]和[蓝色]每种颜色的成分比率（0~255）设定变更后的颜色。您可以在右侧的预览区域中确认设定中的颜色。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">变更角色图像</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img10.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色的图像。更改后的设置的有效期限是到再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。</p>
+				</li>
+				<li>
+					<h4>图像</h4>
+					<p>双击[面部]，[步行]或[[SV]战斗角色]在打开的窗口中进行设定。如果设为[（无）]，则图像会被隐藏。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p11">
+			<h2 class="title--h2">变更载具图像</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img11.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改载具的图像。更改后的设置的有效期限是再次使用此事件指令进行更改为止。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>载具</h4>
+					<p>设定目标的载具。</p>
+				</li>
+				<li>
+					<h4>图像</h4>
+					<p>在双击后打开的窗口中设定变更后的图像。如果设为[（无）]，则图像会被隐藏。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Movement Route Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Movement Route Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Movement Route Settings">
+        <span>Movement Route Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10_06.html">Movement</a></li>
+				<li>&gt;</li>
+				<li>Movement Route Settings</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Movement Route Settings</h1>
+
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">What is a Movement Route?</h2>
+			<p class="text">A movement route determines how a player or event will move. This is set if [Custom] is selected in the event&#39;s [Autonomous Movement] settings, as well as when using [Set Movement Route]. Either setting will be carried out in the [Set Movement Route] window. Routes can be edited when used with [Movement Commands] that control the movement, direction, etc. of the player. For example, entering [Move Right], [Move Down], [Move Left], then [Move Up] movement commands will cause the target to move in a clockwise loop from their current location.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_06_01_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">Player</h3>
+			<p class="text">Specify the target actor/event for the movement route. This will be set only when configuring the [Set Movement Route] event command.</p>
+
+			<h3 class="title--h3">Preview</h3>
+			<p class="text">A preview of the movement route on the map will be carried out.</p>
+
+			<h3 class="title--h3">Command List</h3>
+			<p class="text--sub">The list of movement commands that have been registered. Movement commands are registered here in the order they will be carried out. <br/><br/>When clicking a movement command button on the right, it will be added at the position of the highlighted item in the list on the left. Additionally, you can perform actions such as re-editing or copying settings using the context menu that appears when you right-click an item.</p>
+
+			<h3 class="title--h3--sub">Movement Commands</h3>
+			<p class="text--sub">A group of commands used to control the movement and direction of characters (players/events). When clicking a command&#39;s button, it will be added (inserted) at the location which is currently selected in the command list on the left. The function of each command is explained below. The movement distance for 1 step is equal to one tile.</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Move Down/Move Left/Move Right/Move Up/Move Lower Left/Move Lower Right/Move Upper Left/Move Upper Right</h4>
+					<p>Move 1 step in the direction indicated in the command&#39;s name.</p>
+				</li>
+				<li>
+					<h4>Move at Random</h4>
+					<p>Move 1 step in a randomly selected direction (up, down, left, or right).</p>
+				</li>
+				<li>
+					<h4>Move Toward Player</h4>
+					<p>Move 1 step in the direction of the player.</p>
+				</li>
+				<li>
+					<h4>Move Away From Player</h4>
+					<p>Move 1 step in a direction away from the player.</p>
+				</li>
+				<li>
+					<h4>1 Step Forward</h4>
+					<p>Move 1 step in the direction the target is currently facing.</p>
+				</li>
+				<li>
+					<h4>1 Step Backward</h4>
+					<p>Move 1 step in the opposite direction the target is currently facing.</p>
+				</li>
+				<li>
+					<h4>Jump</h4>
+					<p>Move using a jump. Specify the distance to jump by setting the [X coordinate] and [Y coordinate] (each can be between -100 and 100, with a positive value indicating the right or down direction). Players will move through obstacles during a jump. However, if a party has [Show Player Followers] set to ON, members from the 2nd party member onward will remain in their location(s) prior to the jump.</p>
+				</li>
+				<li>
+					<h4>Wait</h4>
+					<p>Specify the time to stop the process in number of frames (1 to 999). One frame is equal to 1/60th of a second.</p>
+				</li>
+				<li>
+					<h4>Face Down/Face Left/Face Right/Face Up</h4>
+					<p>Causes the target to face the direction specified in the name.</p>
+				</li>
+				<li>
+					<h4>Turn 90° Right/Turn 90° Left</h4>
+					<p>Causes the target to turn 90° in the direction specified in the name.</p>
+				</li>
+				<li>
+					<h4>Turn 180°</h4>
+					<p>Causes the target to face in the opposite direction.</p>
+				</li>
+				<li>
+					<h4>Turn 90° Right or Left</h4>
+					<p>Causes the target to change the direction they are facing randomly by 90°.</p>
+				</li>
+				<li>
+					<h4>Turn at Random</h4>
+					<p>Causes the target to randomly face up, down, left, or right.</p>
+				</li>
+				<li>
+					<h4>Turn toward Player</h4>
+					<p>Causes the target to face toward the player&#39;s location.</p>
+				</li>
+				<li>
+					<h4>Turn away from Player</h4>
+					<p>Causes the target to face away from the player&#39;s location.</p>
+				</li>
+				<li>
+					<h4>Switch ON/Switch OFF</h4>
+					<p>Change the specified switch to the value in the name of the command.</p>
+				</li>
+				<li>
+					<h4>Change Speed</h4>
+					<p>Change the [Speed] setting under [Autonomous Movement] of the target map event. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Change Frequency</h4>
+					<p>Change the [Frequency] setting under [Autonomous Movement] of the target map event. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Walking Animation ON/Walking Animation OFF</h4>
+					<p>Change the value of the [Walking] setting under [Options] of the target map event. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Stepping Animation ON/Stepping Animation OFF</h4>
+					<p>Change the value of the [Stepping] setting under [Options] of the target map event. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Direction Fix ON/Direction Fix OFF</h4>
+					<p>Change the value of the [Direction Fix] setting under [Options] of the target map event. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Through ON/Through OFF</h4>
+					<p>Change the value of the [Through] setting under [Options] of the target map event. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Transparent ON/Transparent OFF</h4>
+					<p>Change the image of the character to be displayed/hidden. When set to ON, the character will not be displayed. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Change Image</h4>
+					<p>Change the character&#39;s image to the specified image. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Change Opacity</h4>
+					<p>Change the opacity (0 to 255) of the image of the character. When set to 0, the image will be invisible. This change will remain in effect even after movement has finished.</p>
+				</li>
+				<li>
+					<h4>Change Blend Mode</h4>
+					<div>
+						Change the blending method of the colors displayed for the characters and map. This change will remain in effect even after movement has finished.
+						<ul class="ul">
+							<li>[Normal] ・・・ Displayed as normal.</li>
+							<li>[Additive] ・・・ Displayed in a whiter color.</li>
+							<li>[Multiply] ・・・ Displayed in a darker color.</li>
+							<li>[Screen] ・・・ Displayed in a brighter color.</li>
+						</ul>
+					</div>
+				</li>
+				<li>
+					<h4>Play SE</h4>
+					<p>Play the specified SE.</p>
+				</li>
+				<li>
+					<h4>Script</h4>
+					<p>Run the loaded script.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">Options</h3>
+			<p class="text--sub">This is where you can specify the way to process the movement commands entered into the command list. Enable the processes to apply as necessary.</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Repeat Movements</h4>
+					<p>When enabled, the contents of the command list will be run repeatedly.</p>
+				</li>
+				<li>
+					<h4>Skip If Cannot Move</h4>
+					<p>When enabled, processes that specify movements which are not possible due to things such as obstacles will be skipped.</p>
+				</li>
+				<li>
+					<h4>Wait for Completion</h4>
+					<p>When enabled, all other processes will be temporarily paused until all movement commands are finished being processed. This can only be set when configuring the [Set movement Route] event command.</p>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_7";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>特性的设置方法</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>特性的设置方法</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="特性的设置方法">
+        <span>特性的设置方法</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">数据库</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">数据库</a></li>
+				<li>&gt;</li>
+				<li>特性的设置方法</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">特性的设置方法</h1>
+
+		<div class="section">
+			<h2 class="title--h2">设置概要</h2>
+			<p class="text">
+				角色、职业、武器、护甲、敌方角色、状态等每个数据的[特性]的设置，定义了每种数据的特有性质和功能。<br/>可以添加的性质有以下 25 个种类。将这些内容配合想要创建的数据内容做添加就可以让游戏中的内容具有复杂的特性。<br/>将每个数据添加（装备）到人物身上时，职业、武器、护甲和状态的特性会反映为该角色的特性。<br/>请小心使用永久性质的行动限制设置。例如，在角色装备上设定了“固定武器装备”特性的武器后，就会无法解除该特性。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">设置方法</h2>
+					<p class="text">
+						双击栏内的空行设置特性。在显示的窗口中选择性质的种类，指定影响内容。<br/> <br/>已设置的性质的内容会显示在[特性]的列表中。双击该项目就能重新编辑指定内容。您也可以在右键单击项目后显示的上下文菜单中，执行诸如复制和删除设置等操作。
+					</p>
+				</div>
+				<img src="assets/img/01_08_15_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">各特性项目内容</h2>
+			<h3 class="title--h3">
+				[抗性]标签
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>属性有效度 </h4>
+					<dd>改变受到具有属性的伤害。指定对象属性和变动率（0~1000%）。设为超过 100% 的变动率时，会造成比标准更大的伤害，表现出比指定属性弱的状况。</dd>
+				</li>
+				<li>
+					<h4>弱化有效度</h4>
+					<dd>改变设在技能和物品上的[弱化]效果的成功率。指定对象能力值、成功率和变动率（0~1000%，100% 则无改变）。</dd>
+				</li>
+				<li>
+					<h4>状态有效度 </h4>
+					<dd>改变设在技能和物品上的[附加状态]效果的成功率。指定对象状态、成功率和变动率（0~1000%，100% 则无改变）。</dd>
+				</li>
+				<li>
+					<h4>状态免疫 </h4>
+					<dd>使指定状态的添加无效。指定为[无法战斗]时，人物即使在 HP 归零时也不会无法战斗。</dd>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				[能力值]标签
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>普通能力值 </h4>
+					<dd>以固定的比率增减最大 HP、攻击力等能力值。指定对象能力值和变动率（0~1000%，100% 则无改变）。</dd>
+				</li>
+				<li>
+					<h4>追加能力值 </h4>
+					<dd>增减命中率和回避率等追加能力值。指定对象能力值和添加比率（-100~100%，初始值为 0%）。</dd>
+				</li>
+				<li>
+					<h4>特殊能力值 </h4>
+					<dd>增减受到攻击几率、防御效果等特殊能力值。指定对象能力值和变动率（0~1000%，初始值为 100%）。</dd>
+				</li>
+			</ul>
+			<dl class="dl">
+			</dl>
+
+			<h3 class="title--h3" id="m01">
+				[攻击]标签
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>攻击时属性 </h4>
+					<dd>普通攻击附加指定属性。</dd>
+				</li>
+				<li>
+					<h4>攻击时状态 </h4>
+					<dd>普通攻击附加状态变化的效果。指定对象效果和成功率的变动率（0~1000%，100% 则无改变）。</dd>
+				</li>
+				<li>
+					<h4>攻击速度补正 </h4>
+					<dd>在战斗中选择普通攻击时增减敏捷。指定增减值（-999~999）。</dd>
+				</li>
+				<li>
+					<h4>攻击追加次数 </h4>
+					<dd>增加以普通攻击对目标造成的伤害次数（标准次数为 1 次）。指定增加次数。</dd>
+				</li>
+				<li>
+					<h4>攻击技能 </h4>
+					<dd>
+						指定使用技能作普通攻击。<br/>更多详情，请参见[游戏表达形式的强化]→[数据库的强化]→[<a href="01_01_01_05.html#m01">添加[攻击技能]</a>]项目。
+					</dd>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				[技能]标签
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>添加技能类型 </h4>
+					<dd>允许选择指定技能类型的指令。</dd>
+				</li>
+				<li>
+					<h4>封印技能类型 </h4>
+					<dd>使指定技能类型的技能无法选择。</dd>
+				</li>
+				<li>
+					<h4>添加技能 </h4>
+					<dd>允许使用指定技能。</dd>
+				</li>
+				<li>
+					<h4>封印技能 </h4>
+					<dd>使指定技能无法使用。</dd>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				[装备]标签
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>装备武器类型 </h4>
+					<dd>允许装备指定类型的武器。</dd>
+				</li>
+				<li>
+					<h4>装备护甲类型 </h4>
+					<dd>允许装备指定的护甲类型。</dd>
+				</li>
+				<li>
+					<h4>固定装备 </h4>
+					<dd>使指定部位的装备无法更改。在不想更改临时添加到队伍的角色的装备时使用。</dd>
+				</li>
+				<li>
+					<h4>封印装备 </h4>
+					<dd>使指定部位的装备品无法装备。用于表达封印盾牌的装备的“双持”武器和封印头部装备的“全身性服装”等。</dd>
+				</li>
+				<li>
+					<h4>装备槽类型 </h4>
+					<dd>只能设定为[二刀流]。可以允许装备两件武器，但代价是不能装备盾牌。</dd>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				[其他]标签
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>增加行动次数</h4>
+					<dd>以指定的概率增加战斗中行动次数 1 次。添加多次该项目时，会基于个别指定概率判定增加的次数。例如，设置了两个 50% 概率的场合，行动次数增加 2 次的概率和一次都不增加的概率都是 25%（50％×50％）。</dd>
+				</li>
+				<li>
+					<h4>消失效果 </h4>
+					<dd>只对敌人有效的项目。将敌人无法战斗并消失时的效果更改为指定的效果。</dd>
+				</li>
+				<li>
+					<h4>特殊标志 </h4>
+					<dd>
+						添加战斗时行动相关特性。
+						<table class="table--type04 mt10px">
+							<tbody><tr>
+								<th>自动战斗</th>
+								<td>不接受玩家的指令，自动行动。</td>
+							</tr>
+							<tr>
+								<th>防御</th>
+								<td>根据固定比例减少承受的伤害。</td>
+							</tr>
+							<tr>
+								<th>掩护</th>
+								<td>当 HP 较低的我方角色受到攻击时，代替该角色承受伤害。</td>
+							</tr>
+							<tr>
+								<th>保留 TP</th>
+								<td>将储蓄的 TP 保留到下一次战斗。默认设置中，每次战斗的 TP 都会被重设，每个人物开始时所持有的 TP 量是随机决定的。</td>
+							</tr>
+						</tbody></table>
+					</dd>
+				</li>
+				<li>
+					<h4>队伍能力 </h4>
+					<dd>
+						添加队伍行动相关特性。当队伍中至少有一人是具备各种特性的角色，该特性将反映为全体队伍的特性。
+						<table class="table--type04 mt10px">
+							<tbody><tr>
+								<th>遇敌减半</th>
+								<td>移动地图时遇敌的频率减半。</td>
+							</tr>
+							<tr>
+								<th>无遇敌</th>
+								<td>移动地图时不会遇到敌人。</td>
+							</tr>
+							<tr>
+								<th>取消偷袭</th>
+								<td>战斗发生时不会发生偷袭（第一回合中只有敌群能行动的状态）。</td>
+							</tr>
+							<tr>
+								<th>增加先发制人率</th>
+								<td>战斗发生时有一定的概率提高先发制人（第一回合中只有队伍能行动的状态）。</td>
+							</tr>
+							<tr>
+								<th>双倍金钱</th>
+								<td>战斗胜利时队伍获得的金钱是平常的两倍。</td>
+							</tr>
+							<tr>
+								<th>双倍掉落物品</th>
+								<td>战斗胜利时队伍从敌人身上获得物品的概率是平常的两倍（只有在设置了打倒敌人后有物品掉落的场合）</td>
+							</tr>
+						</tbody></table>
+					</dd>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

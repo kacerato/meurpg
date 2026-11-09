@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>マップ</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>マップ</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="マップ">
+        <span>マップ</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">マップ</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>マップ</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">マップとは</h2>
+					<p class="text--sub">
+						マップとはゲームの舞台を表現するデータです。プレイするゲームは、マップ上をプレイヤーのキャラクターが移動する画面を中心に展開します。<br/>
+						<br/>
+						マップのデザインは、“タイル”という構成用のパーツ（小片）を組み合わせることで編集します。
+					</p>
+				</div>
+				<img src="assets/img/01_07_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">マップの基本仕様</h2>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>タイルの役割 </h3>
+					<p>タイルとは、マップの見た目となる画像に、キャラクターが通行できるかなどの設定を付与したものです。<br/>
+					<br/>
+					ひとつのマップには、複数のタイルをまとめた“タイルセット”というデータをひとつ割り当てられ、それをもとにマップの形状をデザインできる仕組みです。使用するタイルセットを変えることで、マップの見た目を一変させることもできます。タイルセットの内容は［<a href="01_08_10.html">データベース</a>］で編集します。</p>
+				</li>
+				<li>
+					<h3>タイルの種別 </h3>
+					<p>ひとつのタイルセットには、A～Eの5種類のタイルを含めることができます。Aは地形や地面などを表現する下層用、B～Eは地上の樹木や看板などを表現するのに用いる上層用のタイルです。<br/>
+					<br/>
+					マップには、同じ位置に上層用と下層用のタイルを配置できます。この二層構造を利用することで、マップの表現の幅を広げることが可能です。<br/>
+					<br/>
+					標準では、下層用に海や草原、床や壁などを表現するタイル、上層用には、それらを装飾するタイルが用意されています。<br/>
+					また、本作では上層用タイルを2種類重ねることが可能になり、より多彩な表現が可能になりました。</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>マップの大きさと表示方法 </h3>
+					<p>マップの大きさはタイルを単位とし、幅（横）と高さ（縦）をそれぞれ0～256タイルの間で指定できます。<br/>
+					<br/>
+					プレイするゲームの画面に一度に表示される範囲は、幅17タイル×高さ13タイル相当の大きさになります。これより大きいマップは、プレイヤーの位置を中心に表示範囲が自動的に移動します（スクロール処理）。またマップの端同士をつなぐことで、惑星のように循環移動できる舞台を表現できます（ループ処理）。</p>
+				</li>
+				<li>
+					<h3>マップ上の位置 </h3>
+					<p>マップ上のタイルの位置は［マップ座標］で表します。マップ座標は左上角のタイルを原点（0，0）とし、ここから右方向にXタイル離れた位置がX座標、Yタイル離れた位置がY座標となります。たとえば100×100タイルの大きさを持つマップの右下角のタイルのマップ座標は（99,99）となります。ステータスバーには、編集中のタイルのマップ座標が表示されます。<br/>
+					<br/>
+					このマップ座標は、変数をもとにパーティの移動先を指定したり、パーティの現在位置を監視するといったイベントコマンドの処理で利用できます。	</p>
+				</li>
+			</ul>
+
+
+
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

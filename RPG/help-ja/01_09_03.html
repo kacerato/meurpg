@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>マップイベントの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>マップイベントの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="マップイベントの設定">
+        <span>マップイベントの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベント</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">イベント</a></li>
+				<li>&gt;</li>
+				<li>マップイベントの設定</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">マップイベントの設定</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">共通設定とイベントページの操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_09_03_img01.png" alt=""/>
+			</div>
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h3>
+						ID（タイトルバーに表示）
+					</h3>
+					<p>イベントの固有番号です。番号はマップごとに作成順に自動で設定されます。このIDは、変数などでイベントを指定する際などに用いられます。</p>
+				</li>
+				<li>
+					<h3>
+						名前
+					</h3>
+					<p>マップイベントの名前です。この設定はエディターのみで使用されます（プレイ中のゲームへの影響はありません）。初期状態ではIDを使用した名前が自動で入力されます。必要に応じてイベントの内容を識別しやすいものに変更します。
+					</p>
+				</li>
+				<li>
+					<h3>
+						メモ
+					</h3>
+					<p>
+						自由にメモを記入できるテキストエリアです。
+					</p>
+				</li>
+				<li>
+					<h3>
+						イベントページ番号
+					</h3>
+					<p>イベントに含まれるイベントページの番号です。タブをクリックすることで編集対象を切り替えます。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3--sub">
+				イベントページの操作ボタン
+			</h3>
+			<p>画面上方に並ぶボタンでは、イベントページの作成や削除などの操作が行なえます。各ボタンの機能は以下のとおりです。</p>
+			<dl class="dl--default pb30px border--bottom">
+				<dt>EVページ作成 </dt>
+				<dd>編集中のイベントページの次の番号で新しいイベントページを作成します。追加ページ以降の各イベントページは、番号が1ずつ繰り上がります。</dd>
+				<dt>EVページコピー</dt>
+				<dd>編集中のイベントページの内容をクリップボードに取り込みます。</dd>
+				<dt>EVページ貼り付け </dt>
+				<dd>クリップボード上のイベントページを、編集中のイベントページの次の番号で追加（挿入）します。追加したもの以降の各イベントページは、番号が1ずつ繰り上がります。</dd>
+				<dt>EVページ削除 </dt>
+				<dd>編集中のイベントページを削除します。削除したもの以降のイベントページは番号が1ずつ繰り下がります。</dd>
+				<dt>イベントページクリア </dt>
+				<dd>編集中のイベントページの設定内容をすべて消去します（初期状態に戻します）。</dd>
+			</dl>
+
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">イベントページの設定項目</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_09_03_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">
+				出現条件
+			</h3>
+			<p class="text--sub">マップ上に、このイベントページの設定に基づいてマップイベントが出現する条件です。［スイッチ］［変数］［セルフスイッチ］［アイテム］［アクター］から条件に用いる項目を有効にし、その判定基準を設定します。<br/>
+				<br/>
+				無条件でイベントを出現させる場合は、出現条件を設定しないようにします。複数の項目を指定した場合、すべての項目に合致する場合のみ条件を満たすことになります。<br/>
+				<br/>
+				条件を満たすイベントページが複数ある場合、番号が一番大きいイベントページの内容に基づいてイベントが出現します。条件を満たすページがひとつもない場合、イベントは出現しません。
+			</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>スイッチ</h4>
+					<p>指定したスイッチがONのときに出現します。</p>
+				</li>
+				<li>
+					<h4>変数 </h4>
+					<p>指定した変数値が一定値以上のときに出現します。</p>
+				</li>
+				<li>
+					<h4>セルフスイッチ </h4>
+					<p>指定したセルフスイッチがONのときに出現します。</p>
+				</li>
+				<li>
+					<h4>アイテム </h4>
+					<p>パーティが指定したアイテムをもっているときに出現します。</p>
+				</li>
+				<li>
+					<h4>アクター </h4>
+					<p>パーティに指定したアクターがいると出現します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				画像
+			</h3>
+			<p class="text">マップに出現する場合に表示する画像です。枠内をダブルクリックすると表示される［画像の選択］ウィンドウで、ファイルリスト（左側）、画像（右側）を順にクリックして指定します。<br/>
+				<br/>
+				画像を指定しない場合は見えない状態でマップ上に出現します。設定した画像を消去するには、［画像の選択］ウィンドウのファイルリストの一番上にある［（なし）］を指定します。
+			</p>
+
+			<h3 class="title--h3">
+				自律移動
+			</h3>
+			<p class="text--sub">マップイベントの移動方法を［タイプ］［速度］［頻度］の3項目をもとに指定します。［速度］は移動する際の速さで、値が大きいほど高速で移動するようになります。［頻度］は移動する周期で、番号が大きいほど移動周期が短くなります。［タイプ］では移動の仕方を次の4種類から指定します。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>固定</h4>
+					<p>移動しません。</p>
+				</li>
+				<li>
+					<h4>ランダム </h4>
+					<p>ランダムに動き回ります。</p>
+				</li>
+				<li>
+					<h4>近づく </h4>
+					<p>プレイヤーの位置に近寄るように移動します。</p>
+				</li>
+				<li>
+					<h4>カスタム </h4>
+					<p>指定したルートに沿って移動します。ルートは［移動ルート］をクリックすると表示されるウィンドウで指定できます。詳細は［<a href="01_10_06_01.html">移動ルートの設定</a>］の項目を参照してください。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				オプション
+			</h3>
+			<p class="text--sub">画像の表示方法です。必要に応じて適用する項目を有効にします。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>歩行アニメ</h4>
+					<p>移動時にアニメーションを表示します。人物や動物のキャラクターが歩行する様子を表現するのに使います。</p>
+				</li>
+				<li>
+					<h4>足踏みアニメ </h4>
+					<p>停止中にアニメーションを表示します。揺れる海面や炎などを表現するのに使います。</p>
+				</li>
+				<li>
+					<h4>向き固定 </h4>
+					<p>移動時に画像の向きを変えないようにします。</p>
+				</li>
+				<li>
+					<h4>すり抜け </h4>
+					<p>通行できない地形やイベントをすり抜けられるようにします。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				プライオリティ
+			</h3>
+			<p class="text--sub">プレイヤーや他のイベントとの高低の位置関係を以下からひとつ指定します。イベントとプレイヤーが重なることができる場合、上に位置する方の画像の表示が優先されます。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>通常キャラの下</h4>
+					<p>このイベントの上をプレイヤーなどが歩行できるようになります。ただし、［画像］でタイルが選択されている場合、通行可否はそのタイルの設定に準じます。</p>
+				</li>
+				<li>
+					<h4>通常キャラと同じ</h4>
+					<p>プレイヤーと同じ高さに位置し、このイベントのある場所に進入できなくなります。</p>
+				</li>
+				<li>
+					<h4>通常キャラの上</h4>
+					<p>このイベントの下をプレイヤーなどが歩行できるようになります。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				トリガー
+			</h3>
+			<p class="text--sub">マップ上に出現するイベントについて、［実行内容］の処理を開始するタイミングを以下からひとつ指定します。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>決定ボタン</h4>
+					<p>プレイヤーがイベントに隣接し、かつイベントのある方向に向いた状態（重なることができるイベントの場合は重なった状態）で決定ボタンを押したとき。</p>
+				</li>
+				<li>
+					<h4>プレイヤーから接触</h4>
+					<p>このマップイベントにプレイヤーから接触したとき（重なることができるイベントの場合は重なったとき）、およびその状態で決定ボタンを押したとき。</p>
+				</li>
+				<li>
+					<h4>イベントから接触</h4>
+					<p>イベントの自律移動によってプレイヤーとぶつかったとき（重なることができるイベントの場合は重なったとき）、および［プレイヤーから接触］と同じ状態のとき。</p>
+				</li>
+				<li>
+					<h4>自動実行</h4>
+					<p>出現条件を満たしてマップ上に出現したとき。</p>
+				</li>
+				<li>
+					<h4>並列処理</h4>
+					<p>
+						出現条件を満たしてマップ上に出現したとき、実行内容の処理を周期的に繰り返します。<br/>
+						他のイベントが動作しているときでも実行し続けることができます。
+					</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				実行内容
+			</h3>
+			<p>［トリガー］の内容を満たしたときに実行する処理のリストです。詳細は次の［実行内容の編集方法］の項目を参照してください。</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p03">実行内容の編集方法</h2>
+			<h3 class="title--h3">
+				実行内容のリストの見方
+			</h3>
+			<p class="text">
+				実行内容では、プレイ中のゲームに加える処理を［イベントコマンド］という命令をもとに編集します。<br/>
+				<br/>
+				イベントコマンドは、リストの上に登録したものから順に処理され、プレイ中のゲームに反映されます。リストに［◆］とある行は登録したイベントコマンドを表します。［：］とある行は、上にあるイベントコマンドの設定内容の表示や、処理の流れを分岐させる位置などを表します。
+			</p>
+
+			<h3 class="title--h3">
+				イベントコマンドの追加
+			</h3>
+			<p class="text">リストにイベントコマンドを追加するには、［◆］が表示された行をダブルクリックします。表示されたウィンドウで使用するイベントコマンドを選択し、処理の具体的な内容（一部を除く）を設定します。すでにイベントコマンドを登録した行をダブルクリックした場合、その位置にイベントコマンドを挿入する形で登録します。</p>
+
+			<h3 class="title--h3">
+				コンテキストメニューによる操作
+			</h3>
+			<p class="text--sub">登録したイベントコマンドは［◆］の記号付きで表示されます。この行を右クリックするとメニューが表示され、［コピー］や［削除］などの操作が行なえます。各項目の内容は次のとおりです。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>新規</h4>
+					<p>選択行の位置に新しいイベントコマンドを挿入します。</p>
+				</li>
+				<li>
+					<h4>編集</h4>
+					<p>選択行のイベントコマンドの設定を再編集します。</p>
+				</li>
+				<li>
+					<h4>切り取り</h4>
+					<p>選択行の登録内容をクリップボードに取り込み、リストから削除します。</p>
+				</li>
+				<li>
+					<h4>コピー</h4>
+					<p>選択行の登録内容をクリップボードに取り込みます。</p>
+				</li>
+				<li>
+					<h4>貼り付け</h4>
+					<p>クリップボードに取り込んだ内容を、選択行の位置に挿入します。</p>
+				</li>
+				<li>
+					<h4>削除</h4>
+					<p>選択行のイベントコマンドを削除します。</p>
+				</li>
+				<li>
+					<h4>全選択</h4>
+					<p>リスト全体を編集対象として選択します。</p>
+				</li>
+				<li>
+					<h4>テキストとしてコピー</h4>
+					<p>選択行のテキストをクリップボードに取り込みます。</p>
+				</li>
+				<li>
+					<h4>HTMLタグとしてコピー</h4>
+					<p>選択行のHTMLをクリップボードに取り込みます。</p>
+				</li>
+				<li>
+					<h4>テスト</h4>
+					<p>選択したイベントをゲーム画面でテストします。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				複数項目の一括選択
+			</h3>
+			<p>リスト上で何らかの行をクリックで選択した状態で、［Shift］キーを押しながら別の行をクリックすると、その範囲のイベントコマンド（［◆］の表示があるブロック）をまとめて選択できます。選択中の項目（青色で表示された行）を右クリックすれば、コンテキストメニューによる操作を一括して行なえます。ただし分岐処理を含む場合、まとめて選択できるのは同じ分岐内の項目に限られます。</p>
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

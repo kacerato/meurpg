@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_7";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>System Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>System Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="System Settings">
+        <span>System Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>System Settings</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">System Settings</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Change Battle BGM</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the settings of the BGM that plays during battle. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>File List</h4>
+					<p>Specify the BGM file that will be used. Select [(None)] if you do not want to play a file.</p>
+				</li>
+				<li>
+					<h4>Play/Stop</h4>
+					<p>Click [Play] to start playing the selected BGM using the current settings. Click [Stop] to stop playback.</p>
+				</li>
+				<li>
+					<h4>Volume</h4>
+					<p>Specify the volume.</p>
+				</li>
+				<li>
+					<h4>Pitch</h4>
+					<p>Specify the pitch (50% to 150%). When this is set to over 100%, the playback speed increases and the sound scale gets higher.</p>
+				</li>
+				<li>
+					<h4>Balance</h4>
+					<p>Set the balance (-100 to 100). When set to a negative value, more sound will come out of the left speaker. When set to a positive value, more sound will come out of the right speaker.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>If this is changed during a battle, the settings will take effect starting with the next battle.</li>
+				<li>When the map and battle BGM is the same, the music will not stop when switching between screens.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Change Victory ME</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the settings for the ME that plays after winning a battle. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>File List</h4>
+					<p>Specify the ME file that will be used. Select [(None)] if you do not want to play a file.</p>
+				</li>
+				<li>
+					<h4>Play/Stop</h4>
+					<p>Click [Play] to start playing the selected ME using the current settings. Click [Stop] to stop playback.</p>
+				</li>
+				<li>
+					<h4>Volume</h4>
+					<p>Specify the volume.</p>
+				</li>
+				<li>
+					<h4>Pitch</h4>
+					<p>Specify the pitch (50% to 150%). When this is set to over 100%, the playback speed increases and the sound scale gets higher.</p>
+				</li>
+				<li>
+					<h4>Balance</h4>
+					<p>Set the balance (-100 to 100). When set to a negative value, more sound will come out of the left speaker. When set to a positive value, more sound will come out of the right speaker.</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Change Defeat ME</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the settings for the ME that plays after losing a battle. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>File List</h4>
+					<p>Specify the ME file that will be used. Select [(None)] if you do not want to play a file.</p>
+				</li>
+				<li>
+					<h4>Play/Stop</h4>
+					<p>Click [Play] to start playing the selected ME using the current settings. Click [Stop] to stop playback.</p>
+				</li>
+				<li>
+					<h4>Volume</h4>
+					<p>Specify the volume.</p>
+				</li>
+				<li>
+					<h4>Pitch</h4>
+					<p>Specify the pitch (50% to 150%). When this is set to over 100%, the playback speed increases and the sound scale gets higher.</p>
+				</li>
+				<li>
+					<h4>Balance</h4>
+					<p>Set the balance (-100 to 100). When set to a negative value, more sound will come out of the left speaker. When set to a positive value, more sound will come out of the right speaker.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Change Vehicle BGM</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the settings for the BGM that plays when riding a vehicle.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Vehicle</h4>
+					<p>Specify a vehicle to change the BGM for.</p>
+				</li>
+				<li>
+					<h4>BGM</h4>
+					<p>Specify the BGM that will be played.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Change Save Access</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes whether or not the game can be saved by the player. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Save</h4>
+					<p>Set this to [Disable] to prevent the player from saving or [Enable] to allow the player to save.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">Change Menu Access</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes whether or not the Menu Screen can be called by the player. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Menu</h4>
+					<p>Set this to [Disable] to prevent the player from opening the Menu Screen or [Enable] to allow the player to open the Menu Screen.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">Enable/Disable Encounters</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img07.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Controls whether or not encounters (process that randomly cause battles against troops) can occur. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Encounter</h4>
+					<p>Set this to [Disable] to stop encounters or [Enable] to allow encounters.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">Change Formation Access</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img08.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Controls whether or not a player can change the formation of his or her party members. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Formation</h4>
+					<p>Set this to [Disable] to prevent the player from changing the party or [Enable] to allow the player to change the party.</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">Change Window Color</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img09.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the window color settings. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Window Color</h4>
+					<p>Specifies the new color using [Red], [Green], and [Blue] component values (-255 to 255). The specified color can be checked in the preview area on the right.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">Change Actor Images</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img10.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Change the images used for an actor. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Actor</h4>
+					<p>Select the target actor.</p>
+				</li>
+				<li>
+					<h4>Images</h4>
+					<p>You can set images for the [Face], [Walking Character], and [[SV] Battler] in the window that appears when you double-click the corresponding box. Setting this to [(None)] will result in no image being displayed.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p11">
+			<h2 class="title--h2">Change Vehicle Image</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_13_img11.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Change the image used for vehicles. These settings will remain in effect until updated again by using this event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Vehicle</h4>
+					<p>Specify the target vehicle.</p>
+				</li>
+				<li>
+					<h4>Images</h4>
+					<p>Double-click the box to specify the image to be displayed. Setting this to [(None)] will result in no image being displayed.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

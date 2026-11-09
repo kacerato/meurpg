@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>移动</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>移动</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="移动">
+        <span>移动</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>移动</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">移动</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">移动位置</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改队伍的位置。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>位置</h4>
+					<p>指定变更后的位置。要移动到特定位置时，请选择[直接指定]，然后单击[...]后，在出现的窗口中单击指定目标位置。要指定地图ID或坐标时，请选择[按变量指定]，然后在[ID]，[X]和[Y]中指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>朝向</h4>
+					<p>指定场所移动后玩家的朝向。</p>
+				</li>
+				<li>
+					<h4>淡入淡出</h4>
+					<p>指定在场所移动时切换屏幕的方法。用[黑]显示黑色，[白]显示白色，在地图上显示目的地。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">设置载具位置</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">变更载具的位置。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>载具</h4>
+					<p>指定对象乘坐的载具（小型船/大型船/飞船）。</p>
+				</li>
+				<li>
+					<h4>位置</h4>
+					<p>指定变更后的位置。要移动到特定位置时，请选择[直接指定]，然后单击[...]后，在出现的窗口中单击指定目标位置。要指定地图ID或坐标时，请选择[按变量指定]，然后在[地图ID]，[X]和[Y]中指定要引用的变量。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">设置事件位置</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改事件的位置。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>事件</h4>
+					<p>指定目标事件。如果选择[此事件]，则事件本身将成为更改位置的目标。只能移动在同一地图上的事件。</p>
+				</li>
+				<li>
+					<h4>位置</h4>
+					<p>指定变更后的位置。要移动到特定位置时，请选择[直接指定]，然后单击[...]后，在出现的窗口中单击指定目标位置。要指定地图坐标时，请选择[按变量指定]，然后在[X]和[Y]中指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>朝向</h4>
+					<p>指定场所移动后玩家的朝向。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">滚动地图</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">您可以移动（滚动）显示在游戏画面上的地图范围，而无需更改玩家的位置。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>方向</h4>
+					<p>指定滚动的方向。</p>
+				</li>
+				<li>
+					<h4>距离</h4>
+					<p>指定移动距离（图块数）。</p>
+				</li>
+				<li>
+					<h4>速度</h4>
+					<p>指定处理的速度（6个阶段）。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>启用的话，需要等待滚动完成。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">移动路线的设置</h2>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">强制玩家或地图事件沿指定路线移动。<br/>详情请参见[<a href="01_10_06_01.html">设置移动路线</a>]的项目。</p>
+
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>已设定移动路线的人物将立即开始移动。</li>
+				<li>如果对已经设置了移动路线的人物执行此事件命令，则迄今为止的设置将被放弃，仅有新设置才会生效。如果要在完成前一条运动路线的移动之后设置下一条移动路线，请启用[等待直到移动结束]。</li>
+				<li>如果启用了[等待直到移动结束]，则玩家在移动命令结束之前无法进行操作（并行处理期间除外）。此时，如果指定了移动路线的人物因为碰到了障碍物等原因无法继续执行移动命令，则处理将在那时停止。请通过启用[无法移动时忽略]选项来避免这种情况。</li>
+				<li>即使玩家因为此事件指令发生移动，也不会将其添加到累计移动步数中。</li>
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">载具的乘降</h2>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">操作载具的乘降乘坐在载具上时会离开载具，未乘坐时会乘上载具。没有设置项目</p>
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>此事件命令会强制执行玩家用[确定]键进行的搭乘/离开的操作。当无法以正常方式上下载具时（没有可搭乘载具或无法降落时），则不会发生任何事。</li>
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_5";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Using Official Plugins</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Using Official Plugins</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Using Official Plugins">
+        <span>Using Official Plugins</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Documentation</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>Documentation</li>
+				<li>&gt;</li>
+				<li>Using Official Plugins</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">Using Official Plugins</h1>
+		<p class="text--lead">In RPG Maker MZ, there are several plugins already included in your new project that can be used with simple settings. Also, some official plugins are included in the separate DLC folder.</p>
+
+
+		<div class="section" id="m01">
+			<h2 class="title--h2">AltMenuScreen</h2>
+			<p class="text--sub">
+				A plugin that changes the Menu Screen to a different layout. <br/>Party members will be displayed horizontally.
+			</p>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_05_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="m02">
+			<h2 class="title--h2">AltSaveScreen</h2>
+			<p class="text--sub">
+				A plugin that changes the Save Screen and Load Screen to a different layout. <br/>It becomes possible to display images such as the faces of party members.
+			</p>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_05_img02.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="m03">
+			<h2 class="title--h2">ButtonPicture</h2>
+			<p class="text--sub">
+				This plugin provides a command for running a common event when clicking a picture. <br/>Please use the following procedure: <br/><br/>1. Execute [Show Picture], and a button screen will appear. <br/>2. Run the Plugin Command [Button Picture Settings].
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m04">
+			<h2 class="title--h2">EventCommandByCode</h2>
+			<p class="text--sub mb30px">
+				Directly specify the code and parameter to execute an event command. <br/>You can use variables (control characters) in each command&#39;s parameter and forcibly specify out-of-range values that cannot be specified with regular event commands. <br/>However, it is not guaranteed to run if you call a command with an unexpected specified value.
+			</p>
+			<h3 class="title--h3--sub">Control Characters</h3>
+			<p class="mb30px">
+				\v[n] : Variable<br/>\s[n] : Switch<br/>\ss[n] : Self Switch<br/>\js[n] : Script (only when TextScriptBase.js is applied)
+			</p>
+			<p class="text--sub">
+				You cannot specify commands that span multiple lines in the event editor or deeply nested commands.
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m05">
+			<h2 class="title--h2">ExtraImage</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						Allows you to display additional images for scenes that have an optional image specified. <br/>Basic information, such as coordinates, scale, origin, etc. can be configured. <br/>When a control character is specified for each parameter, the value will be retrieved from the specified variable.
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Image List</th>
+							<td>A list of images to be added to all screens.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m06">
+			<h2 class="title--h2">ExtraWindow</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						Additional windows can be used for scenes that have an optional window specified. <br/>Basic information such as coordinates, font size, whether there&#39;s an open/close animation, etc. can be set. <br/>Control characters can be used in the window display text, and when the return value is changed, it will automatically be redrawn.
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Window List</th>
+							<td>A list of windows to be added to all screens.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m07">
+			<h2 class="title--h2">MaterialBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub">
+						This is a database for registering and managing image and audio file assets used primarily in plugins. <br/>Registered assets are excluded from functions that automatically delete unused assets. <br/>Use the following control characters to swap in the filename of a registered asset. <br/><br/>¥mi[aaa] // Swaps in the filename of the image asset registered with identifier [aaa]. <br/>¥ma[bbb] // Swaps in the filename of the audio file asset registered with identifier [bbb]. <br/><br/>The situations where control characters can be used are as follows: <br/>・Text display<br/>・Event commands and conditional branch scripts<br/>・Notes field (*)<br/>・Plugin command (*)<br/>・Plugin parameter (*)<br/>・Explanation fields for skills, etc.<br/>・Skill and item formulas <br/>*Only for plugins that take PluginCommonBase.js as a base.<br/><br/>Registered assets can be changed into other assets using plugin commands. <br/><br/>Set values can be displayed or played as pictures or BGMs from plugin commands. Please check the plugin command instructions for details. <br/><br/>Additionally, by using a separate plugin, &quot;Plugin for Event Command Execution via Code&quot;, this plugin can be used to do even more. 
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Image Assets List</th>
+							<td>List of registered image assets.</td>
+						</tr>
+						<tr>
+							<th>Audio File Assets List</th>
+							<td>List of registered audio file assets.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m08">
+			<h2 class="title--h2">OverpassTile</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						Overpasses, such as bridges, can be represented on the map. <br/>This plugin improves functionality for RPG Maker MV&#39;s official &quot;OverpassTile.js&quot; plugin&#39;s MZ. <br/><br/>Since you can specify not only regions but terrain tags, considerations are made for event launches and collision determination as well. <br/>The plugin does not make considerations for vehicles.
+					</p>
+					<h3 class="title--h4--sub">Specifications for Determination of Passage</h3>
+					<p class="text--sub mb30px">
+						・When at the entrance of a bridge<br/>→The player can always move towards the overpass. <br/>・When on an overpass<br/>→If on top of a bridge, the player can always move towards the entrance of the bridge and overpass. <br/>→If under a bridge, the player can never move toward the bridge&#39;s entrance. <br/>・If movement allowance was not determined from the above conditions<br/>→Follows the map&#39;s original passage settings.
+					</p>
+					<h3 class="title--h4--sub">The plugin can take event launch determination and collision determination into consideration.</h3>
+					<p class="text--sub">
+						・Events with different heights (over and under a bridge) will launch, without collision.
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Overpass Region</th>
+							<td>Region ID set for bridge or other overpass sections.</td>
+						</tr>
+						<tr>
+							<th>Overpass Terrain Tag</th>
+							<td>Terrain tag set for bridge or other overpass sections.</td>
+						</tr>
+						<tr>
+							<th>Overpass Entrance Region</th>
+							<td>Region ID set for overpass entrances, such as both ends of a bridge.</td>
+						</tr>
+						<tr>
+							<th>Overpass Entrance Terrain Tag</th>
+							<td>Terrain tag set for overpass entrances, such as both ends of a bridge.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m09">
+			<h2 class="title--h2">PluginCommonBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						This plugin is a base plugin that is meant to be referenced from other plugins. <br/>This plugin allows you to use the following control characters in a variety of situations.
+					</p>
+					<h3 class="title--h4--sub">Usable Control Characters</h3>
+					<p class="text--sub mb30px">
+						\v[n] : n is converted to the value of the nth variable. <br/>\s[n] : n is converted to the value (true, false) of the nth switch. <br/>\ss[n] : n is converted to the value (true, false) of the nth self switch.
+					</p>
+					<h3 class="title--h4--sub">The situations where control characters can be used are as follows.</h3>
+					<p class="text--sub mb30px">
+						・Text display<br/>・Notes field (*)<br/>・Plugin command (*)<br/>・Plugin parameter (*)<br/>・Explanation fields for skills, etc.<br/>*Only for plugins that take PluginCommonBase.js as a base.<br/><br/>Please refer to the help within the plugin for explanations.
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Invalidate Mask Processing</th>
+							<td>Invalidates mask processing when windows overlap.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m10">
+			<h2 class="title--h2">RegionBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						Offers a database of regions and terrain tags. <br/>The specs generally follow RPG Maker MV Trinity. <br/>The plugin offers the following functions using regions and terrain tags as triggers. <br/>・Event, player passage determination (4 directions included)<br/>・Ladders, bushes, counters, damage floors<br/>・Calling of common events (3 trigger types)<br/>・Switches that turn ON only when a tile is entered<br/>・Traits enabled only when a tile is entered<br/>・Notes field<br/><br/>The database can be referenced from scripts and external plug-ins with the following script. <br/>Please note that when not configured, or if the index is set to [0], the content will become undefined. <br/><br/>$dataSystem.regions[ID];<br/>$dataSystem.terrainTags[ID];
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Region List</th>
+							<td>List of region data.</td>
+						</tr>
+						<tr>
+							<th>Terrain Tag List</th>
+							<td>List of terrain tag data.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m11">
+			<h2 class="title--h2">TextPicture</h2>
+			<p class="text--sub">
+				This plugin provides a command for displaying text as a picture. <br/><br/> Please use the following procedure. <br/>1. Run the Plugin Command [Text Picture Settings]. <br/>2. Execute [Show Picture], without specifying an image.
+			</p>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m12">
+			<h2 class="title--h2">TextScriptBase</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						This is a database that can register and manage multi-line strings such as text and scripts. <br/>Registered text can be referenced with the following control codes. <br/>¥tx[aaa] // Swaps in the text registered with identifier [aaa]. <br/>¥js[bbb] // Evaluates the text registered with identifier [bbb] as a script on the spot and is swapped out for the results. <br/>When executing scripts, the plugin can pass arguments. <br/>Arguments are automatically type converted, and can be referenced from the &quot;args&quot; array. <br/>\js[bbb,10,ccc] // Array [10, &#39;ccc&#39;] is stored in variable args. <br/><br/>Scripts can also be directly entered and embedded. <br/>\js <xxx> // Is replaced by the execution results of script xxx. <br/>However, you will need to escape as shown below when symbols &quot;&lt;&quot; or &quot;&gt;&quot; are used in scripting. <br/>&gt; : &amp;gt;<br/>&lt; : &amp;lt;<br/><br/>The situations where control characters can be used are as follows. <br/>・Text display  <br/>・Notes field (*)<br/>・Plugin command (*)<br/>・Plugin parameter (*)<br/>・Explanation fields for skills, etc.<br/>*Only for plugins that take PluginCommonBase.js as a base.<br/><br/>This plugin allows you to easily register and call frequently used scripts and text, and configure long strings even when the database input field is restricted.<br/>
+					</xxx></p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Text Base List</th>
+							<td>List of registered text and scripts.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+		<div class="section" id="m13">
+			<h2 class="title--h2">UniqueDataLoading</h2>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="text--sub mb30px">
+						Optional json files placed in the data folder will be loaded. <br/>Please create json files as text files that can be parsed as a JSON. <br/>Defined files will be loaded on game launch. <br/><br/>Data will be stored in the global object with the name specified. <br/>If a &quot;window&quot; is specified in the global variable name, each object will be defined as its own global variable, but please look out for competing names. <br/><br/>This can also be used to load data created with the MZ database converter, and data added with proprietary plugins. <br/><br/>Loaded data will be referred to as follows by proprietary plugins and scripts. <br/><br/>Reference example where global variable is [$dataUniques] and property name is [property].<br/> $dataUniques.property<br/><br/>The method below will be called if all unique data is loaded correctly. <br/>Please redefine if needed. <br/>Scene_Boot.prototype.onUniqueDataLoad
+					</p>
+				</div>
+				<div>
+					<h3 class="title--h3--sub">Parameters</h3>
+					<table class="table--type04">
+						<tbody><tr>
+							<th>Global Variable Name</th>
+							<td>Global object name used to define unique data. Registered variables are generated under this variable.</td>
+						</tr>
+						<tr>
+							<th>Data List</th>
+							<td>List of unique data. Place optional json files in the data folder.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<p></p>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"地图事件的机制","type":"item","tilePath":"","url":"01_09_01.html"},{"name":"地图事件的创建与操作","type":"item","tilePath":"","url":"01_09_02.html"},{"name":"地图事件的设置","type":"item","tilePath":"","url":"01_09_03.html"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>设置地图数据</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>设置地图数据</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="设置地图数据">
+        <span>设置地图数据</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">地图</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_07.html">地图</a></li>
+				<li>&gt;</li>
+				<li>设置地图数据</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">设置地图数据</h1>
+
+		<div class="section">
+			<h2 class="title--h2">数据的内容设置</h2>
+			<p class="text">新建地图时或是右键单击地图后选择[编辑]，就会显示地图数据的设置窗口。您可以在该窗口中编辑正在玩的游戏中的行动，如地图的大小和设计中使用的图块组、BGM 和遇敌（发生战斗）的条件等。</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">设置项目的内容</h2>
+			<div class="img--center mb30px">
+				<img src="assets/img/01_07_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本设置
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>
+						名称
+					</h3>
+					<p>地图名称。此设置仅由编辑器使用（不会影响您正在玩的游戏）。</p>
+				</li>
+				<li>
+					<h3>
+						显示名称
+					</h3>
+					<p>玩家在这个地图上移动时显示的名称。</p>
+				</li>
+				<li>
+					<h3>
+						图块组
+					</h3>
+					<p>指定用于地图设计的图块组。</p>
+				</li>
+				<li>
+					<h3>
+						宽度与高度
+					</h3>
+					<p>地图大小。[宽度]（横）和[高度]（竖）可以指定在 0~256 之间。创建后如果其大小比现在还小，超出的部分会被删除。</p>
+				</li>
+				<li>
+					<h3>
+						滚动类型
+					</h3>
+					<p>地图的循环方法。设置为循环时，将指定方向的地图的两端连接起来，就能循环移动。</p>
+					<dl class="dl--default">
+						<dt>无循环 </dt>
+						<dd>不进行循环处理。</dd>
+						<dt>纵向循环 </dt>
+						<dd>将地图的上端和下端连接起来。</dd>
+						<dt>横向循环 </dt>
+						<dd>将地图的左端和右端连接起来。</dd>
+						<dt>横纵向循环 </dt>
+						<dd>分别连接地图的上下端和左右端。</dd>
+					</dl>
+				</li>
+				<li>
+					<h3 id="p01">
+						指定战斗背景图像
+					</h3>
+					<p>将其设为有效时，可以指定组合两种图像作为该地图上发生战斗时的战斗背景图像。<br/>不指定战斗背景图像设置时，世界地图会自动根据地形选择背景。在其他地图上则会使用以加过工的地图图像为背景图像。
+					</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_03_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>
+						遇敌步数
+					</h3>
+					<p>通过平均移动步数（1~999/1 步为一个图块的移动距离）来指定在地图上移动时遇敌的频率。如果要使怪物频繁出现则减小该数值。</p>
+				</li>
+				<li>
+					<h3>
+						自动切换 BGM／自动切换 BGS
+					</h3>
+					<p>设置为有效时，玩家存在该地图上时会自动播放 BGM（背景音乐）/BGS（背景音效）。分别指定要播放的音乐文件。<br/> 若地图和战斗 BGM 相同，则仅切换画面，不停止播放。</p>
+				</li>
+				<li>
+					<h3>
+						禁止跑步
+					</h3>
+					<p>设置为有效时，玩家在该地图上无法使用跑步移动。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				远景
+			</h3>
+			<p class="text">在地图空白的部分显示远景图。单击[...]，然后在打开的窗口中指定图像文件。<br/> <br/>设置[横向循环]和[纵向循环]为有效时，远景会随着玩家的移动方向滚动显示。指定[滚动]为 0 以外的数值（-32~32）就能自动滚动。设置正值则往左/上滚动，负值则往右/下滚动，绝对值越大速度就越快。<br/> <br/>设置[显示在编辑器]为有效时，可以在编辑器上查看已设远景。但是可能会与实际游戏画面的表现方式有差异。<br/> <br/> 此外，在远景图像文件名最前面插入“！”，视差就会变成 0。
+			</p>
+
+			<h3 class="title--h3">
+				备注
+			</h3>
+			<p class="text">可以在制作游戏时自由输入备注。此设置仅由编辑器使用（不会影响您正在玩的游戏）。</p>
+
+			<h3 class="title--h3">
+				遇敌
+			</h3>
+			<p class="text--sub">玩家在这个地图上移动时会随机出现的敌群。双击栏内空白处打开窗口，指定以下内容。右键单击已登录的敌群项目，就能在上下文菜单进行复制和删除等操作。</p>
+
+			<div class="flex--bw--dl-img">
+				<dl class="dl">
+					<dt>敌群 </dt>
+					<dd>指定敌群设置。</dd>
+					<dt>权重</dt>
+					<dd>指定遇敌时该敌群作为战斗对手出现的优先度（0~100）。设置多个敌群的时候，数值越大的敌群出现率就越高。<br/> <br/> 具体来说，出现的概率以已设敌群总权重的百分比计算。<br/> 比如说，设置 A 群为 9，B 群为 7，C 群为 4 的权重。此时，A 群的出现率是 9/20（总权重为 9+7+4）等于 0.45，也就是 45%。以同样的计算方式计算，B 群为 7/20 是 35%，而 C 群为 4/20 是 20%。
+					</dd>
+					<dt>出现范围 </dt>
+					<dd>该敌群出现的区域。如果要让敌群出现在任何地区则指定[整个地图]。如果要让敌群仅出现在特定的地区则选择[指定区域 ID]，并指定区域的 ID（最多 3 个）。区域的设置方法请参见以下内容。</dd>
+				</dl>
+				<img src="assets/img/01_07_03_img03.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section">
+
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">区域的设置方法</h2>
+					<p>地图数据的[遇敌]设置中指定的“区域”用来指定敌群出现的地区。一个地图可划分为 255 个区域。<br/> <br/> 选择图块调色盘的标签[R]切换到编辑模式，进行设置。单击选择区域的 ID（1~255 号），然后在地图视图上单击就能在该位置的图块设置区域。一个地点（图块）上只能设置一个区域 ID。
+					</p>
+				</div>
+				<img src="assets/img/01_07_03_img04.png" width="1383" height="940" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Flow Control</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Flow Control</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Flow Control">
+        <span>Flow Control</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Flow Control</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Flow Control</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Conditional Branch</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Specifies event commands which branch processes so that it is possible to run special processes only when specified conditions are met. When [Create Else Branch] is enabled, it is possible to branch conditions when the specified conditions are not met.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<p class="text--sub">Specify the conditions from the options below along with the evaluation criteria.</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Switch</h4>
+					<p>Use the value of the specified switch as a criterion. Set the target switch and its value to (ON/OFF).</p>
+				</li>
+				<li>
+					<h4>Variable</h4>
+					<p>Use the value of the specified variable as a criterion. Set the variable used to evaluate conditions, the value to compare, and the method for comparison. When using a variable for the value to compare, select [Variable], and specify the value to reference.</p>
+				</li>
+				<li>
+					<h4>Self Switch</h4>
+					<p>Use the state of the specified self switch as a criterion. Set the target switch and its value to (ON/OFF).</p>
+				</li>
+				<li>
+					<h4>Timer</h4>
+					<p>Use the remaining time on the timer as a criterion. Specify the remaining time and criterion (greater than/less than).</p>
+				</li>
+				<li>
+					<h4>Actors</h4>
+					<p>Use the specified actor as a criterion. Select the target actor, the content to reference (in party/name/class/skill/weapon/armor/state) and the evaluation criteria (specific item).</p>
+				</li>
+				<li>
+					<h4>Enemies</h4>
+					<p>Use the specified enemy during battle as a criterion. Select the target enemy and the evaluation criteria (appeared/state). This is only effective in battle events.</p>
+				</li>
+				<li>
+					<h4>Character</h4>
+					<p>Uses the direction of the player or map event as a criterion. Specify the target character and direction. This is only effective in map events.</p>
+				</li>
+				<li>
+					<h4>Vehicle</h4>
+					<p>Use whether the player is riding the specified vehicle (boat/ship/plane) as a criterion.</p>
+				</li>
+				<li>
+					<h4>Gold</h4>
+					<p>Use Gold possessed by the party as a criterion. Specify the amount and method for comparison (greater than/less than).</p>
+				</li>
+				<li>
+					<h4>Items</h4>
+					<p>Use whether the party possesses the specified item as a criterion.</p>
+				</li>
+				<li>
+					<h4>Weapons</h4>
+					<p>Use whether the party possesses the specified weapon as a criterion. When [Include Equipped] is enabled, the equipment the actors are wearing will also be evaluated.</p>
+				</li>
+				<li>
+					<h4>Armor</h4>
+					<p>Use whether the party possesses the specified armor as a criterion. When [Include Equipped] is enabled, the equipment the actors are wearing will also be evaluated.</p>
+				</li>
+				<li>
+					<h4>Button</h4>
+					<p>Use whether the specified button is [Pressed], [Triggered], or [Repeated] as a criterion.</p>
+					<dl class="dl--default">
+						<dt>Pressed</dt>
+						<dd>The conditions will count as being met the entire time the button is pressed.</dd>
+						<dt>Triggered</dt>
+						<dd>The conditions will count as being met only in the initial moment that the button is pressed.</dd>
+						<dt>Repeated</dt>
+						<dd>While the button is continually pressed, the conditions will count as being met in the initial moment the button is pressed, then 24 frames after, then every 6 frames after that.</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>Script</h4>
+					<p>
+						For advanced users: Use the evaluated result of a script. <br/>Right-click to show the menu and choose [Plugin Help] to display the Plugin Help information.
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Loop</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3 class="title--h3">Function</h3>
+					<p class="text">Adds the event commands [Loop] and [Repeat Above] which carry out repeated processes used for control. You can repeatedly run the event commands set in the rows found between these two commands. It is also possible to use a &quot;multi-loop&quot; which runs additional loops inside other loops.</p>
+				</li>
+				<li>
+					<h3 class="title--h3">Remarks</h3>
+					<ul class="ul">
+						<li>Event commands between [Loop] and [Repeat Above] will be repeated indefinitely. Use event commands such as [Break Loop] to end repeated processes.</li>
+					</ul>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Break Loop</h2>
+			<h3 class="title--h3">Function</h3>
+			<p>Stops the process being repeated using the [Loop] event command. When this is run, the process will skip to the event command specified in the row after [Repeat Above]. There are no parameters to set.</p>
+			
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Exit Event Processing</h2>
+			<h3 class="title--h3">Function</h3>
+			<p>Stops processing of the contents. Event commands after this will not be processed. There are no parameters to set.</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Common Events</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Invokes common events. After the common event that was invoked is finished processing, the game will move to the next event command.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Common Events</h4>
+					<p>Specify the common event to run.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">Label</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Creates a jump location that can be used during processes which use the [Jump to Label] event command.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Label Name</h4>
+					<p>Specify the name of the label.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">Jump to Label</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Causes the current process to jump to the location of the specified label. The event command of the row following this label will then be processed.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Label Name</h4>
+					<p>Specify the label name of the jump location. Only labels belonging to the same event page can be specified.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">Comment</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Sets comments to be displayed in the contents list. Has no effect on the game.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Comment</h4>
+					<p>Set the text to be displayed as a comment. <br/>Right-click to show the menu and choose [Plugin Help] to display the Plugin Help information.
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

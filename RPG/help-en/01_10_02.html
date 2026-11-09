@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Game Progression</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Game Progression</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Game Progression">
+        <span>Game Progression</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Game Progression</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Game Progression</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Control Switches</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the values (ON/OFF) of switches.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Switch</h4>
+					<p>Specify the switch to change. Select [Single] when controlling one switch, then specify the target switch. Select [Range] when you wish to change the values of a group of switches, then specify the number range of the switches.</p>
+				</li>
+				<li>
+					<h4>Operation</h4>
+					<p>Specify the value (ON/OFF) to store in the switch.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Control Variables</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Changes the value stored in a variable.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Variable</h4>
+					<p>Specify the variable of the value you want to change. Select [Single] when controlling one variable, then specify the target variable. Select [Range] when you wish to change the values of a group of variables, then specify the number range of the variables.</p>
+				</li>
+				<li>
+					<h4>Operation</h4>
+					<p>Specify how the numbers will be calculated (refer to Remarks section below). The variable calculated in [Variable] will change based on the value before the operation, method of calculation, and the operand.</p>
+				</li>
+				<li>
+					<h4>Operand</h4>
+					<p>Specify the operand used for the [Operation] calculation (refer to the Remarks section below).</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">Remarks</h3>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="mb10px">Details regarding the methods of calculation specified under [Operation] are as follows.</p>
+					<table class="table--type04 mb40px">
+						<tbody><tr>
+							<th>Set</th>
+							<td>Sets the value of the operand (no calculation).</td>
+						</tr>
+						<tr>
+							<th>Add</th>
+							<td>Sets a value calculated using [variable value before operation + operand].</td>
+						</tr>
+						<tr>
+							<th>Sub</th>
+							<td>Sets a value calculated using [variable value before operation - operand].</td>
+						</tr>
+						<tr>
+							<th>Mul</th>
+							<td>Sets a value calculated using [variable value before operation x operand].</td>
+						</tr>
+						<tr>
+							<th>Divide</th>
+							<td>Sets a value calculated using [variable value before operation ÷ operand].</td>
+						</tr>
+						<tr>
+							<th>Mod</th>
+							<td>Sets a value which is the remainder of [variable value before operation ÷ operand].</td>
+						</tr>
+					</tbody></table>
+					<p class="mb10px">Details regarding [Operand] are as follows.</p>
+					<table class="table--type04">
+						<tbody><tr>
+							<th style="width: 80px;">Constant</th>
+							<td>Uses a fixed value. Specify the value in the right field.</td>
+						</tr>
+
+						<tr>
+							<th>Variable</th>
+							<td>Uses a variable. Specify the variable to reference.</td>
+						</tr>
+
+						<tr>
+							<th>Random</th>
+							<td>Uses a number value chosen at random. Range of the random value that can be generated: -99999999 to 99999999.</td>
+						</tr>
+
+						<tr>
+							<th>Game Data</th>
+							<td>Uses a value related to the play state of the game. Specify the information to reference in the window that opens when you click [...] (refer to the table on the right).</td>
+						</tr>
+
+						<tr>
+							<th>Script</th>
+							<td>Use the result evaluated from JavaScript for the value.</td>
+						</tr>
+					</tbody></table>
+				</div>
+				<div>
+					<p class="mb10px">When selecting [Game Data] as the [Operand], the type of data can be one of the following:</p>
+					<table class="table--type04">
+						<tbody><tr>
+							<th style="width: 80px;">Items</th>
+							<td>Uses the possession count of the specified item.</td>
+						</tr>
+						<tr>
+							<th>Weapons</th>
+							<td>Uses the possession count of the specified weapon.</td>
+						</tr>
+						<tr>
+							<th>Armor</th>
+							<td>Uses the possession count of the specified armor.</td>
+						</tr>
+						<tr>
+							<th>Actors</th>
+							<td>Uses the actor&#39;s parameter (HP, MP, etc.) as the value. Specify the target actor and parameter.</td>
+						</tr>
+						<tr>
+							<th>Enemies</th>
+							<td>Uses the enemy&#39;s parameter (HP, MP, etc.) as the value. Specify the target enemy and parameter. This is only effective during battle.</td>
+						</tr>
+						<tr>
+							<th>Character</th>
+							<td>
+								Uses values such as the coordinates or direction of the player or events.
+								<table class="table--type04">
+									<tbody><tr>
+										<th>Map X, Map Y</th>
+										<td>: Map coordinates of current location</td>
+									</tr>
+									<tr>
+										<th>Direction</th>
+										<td>: Current direction (up = 8 / left = 4 / right = 6 / down = 2)</td>
+									</tr>
+									<tr>
+										<th>Screen X, Screen Y</th>
+										<td>: Uses the display position coordinates on the screen (pixels)</td>
+									</tr>
+								</tbody></table>
+							</td>
+						</tr>
+						<tr>
+							<th>Party</th>
+							<td>Uses the ID of the actor in the specified position within the party.</td>
+						</tr>
+						<tr>
+							<th>Just Prior</th>
+							<td>
+								Uses data related to the immediately prior action.
+								<ul class="ul">
+									<li>
+										ID of Skill just used.
+									</li>
+									<li>
+										ID of Item just used.
+									</li>
+									<li>
+										ID of Actor who just acted.
+									</li>
+									<li>
+										Index of Enemy Character who just acted.
+									</li>
+									<li>
+										ID of Actor who was just targeted.
+									</li>
+									<li>
+										Index of Enemy Character who was just targeted.
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th>Other</th>
+							<td>Uses some other type of data.</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Control Self Switch</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Controls the value of self switches.</p>
+
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Self Switch</h4>
+					<p>Specify the target self switch (A through D).</p>
+				</li>
+				<li>
+					<h4>Operation</h4>
+					<p>Specify the value (ON/OFF) to store in the switch.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">Remarks</h3>
+			<ul class="ul">
+				<li>This cannot be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Control Timer</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Start/stop the timer that calculates the time limit (time remaining). Starting the timer will cause the time remaining to be displayed at the top right of the screen. The timer will temporarily stop (will not be calculated) while the menu is displayed. To branch a process using the time left on the timer, use the [Conditional Branch] event command.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Operation</h4>
+					<p>Select [Start] to start calculating the time limit and select [Stop] to stop calculating it.</p>
+				</li>
+				<li>
+					<h4>Duration</h4>
+					<p>In the case that [Start] was selected under [Operation], specify the time limit (between 0 minutes, 0 seconds to 99 minutes, 59 seconds).</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

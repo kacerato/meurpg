@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Editing Map Designs</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Editing Map Designs</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Editing Map Designs">
+        <span>Editing Map Designs</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Map</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_07.html">Map</a></li>
+				<li>&gt;</li>
+				<li>Editing Map Designs</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">Editing Map Designs</h1>
+
+		<div class="section">
+			<h2 class="title--h2">Basic Editing Methods</h2>
+			<ul class="ul--2c--line">
+				<li>
+					<h3>
+						Switch to Editing Mode
+					</h3>
+					<p>To edit the design of your map, click the [Map] button on the toolbar (or [Mode] → [Map] in the menu) to switch to Editing Mode.</p>
+				</li>
+				<li>
+					<h3>
+						Selecting Map Data
+					</h3>
+					<p>Click to select the map data you wish to edit in the Map List found at the bottom left of the window. The design of the map will be displayed in the Map View on the right.</p>
+				</li>
+				<li>
+					<h3 class="title--h3--sub">
+						Selecting Tiles
+					</h3>
+					<p>Click to select the tile to draw from the Tile Palette. The tile that is currently selected will have a white frame around it. The tiles displayed in the Tile Palette will be switched when you click tabs A through E at the bottom. <br/> <br/>You can select multiple tiles to draw at once by drag-selecting them on the Tile Palette.</p>
+				</li>
+				<li>
+					<h3 class="title--h3--sub">
+						Selecting the Drawing Tool and Drawing
+					</h3>
+					<p>Select a tool (from the 5 types below) to use for drawing tiles by clicking on it in the toolbar. Also, tiles will be drawn when you click or drag on the map display area (Map View) on the right side of the window. Each tool can also be selected from the [Draw] Menu. <br/> <br/> You can erase tiles that you have drawn by drawing transparent tiles. You can find the transparent tile used for the upper layer in the upper left of the B tab.</p>
+
+					<dl class="dl--flex">
+						<dt><img src="assets/img/01_07_01_img01.png" alt=""/>Pencil </dt>
+						<dd>Draws the selected tile in the spot that you have clicked.</dd>
+						<dt><img src="assets/img/01_07_01_img02.png" alt=""/>Rectangle </dt>
+						<dd>The selected tile will be drawn in a rectangular area produced by clicking and dragging the cursor diagonally with the beginning of the drag being the starting point and the end of the drag being the ending point.</dd>
+						<dt><img src="assets/img/01_07_01_img03.png" alt=""/>Ellipse</dt>
+						<dd>The selected tile will be drawn in an ellipse within a square area produced by clicking and dragging the cursor diagonally with the beginning of the drag being the starting point and the end of the drag being the ending point.</dd>
+						<dt><img src="assets/img/01_07_01_img04.png" alt=""/>Flood Fill </dt>
+						<dd>Tiles will be drawn from the location of the tile you click and on all connected surrounding tiles of the same type.</dd>
+						<dt><img src="assets/img/01_07_01_img05.png" alt=""/>Shadow Pen </dt>
+						<dd>Add or delete shadows for things such as walls in the location you click.</dd>
+					</dl>
+				</li>
+			</ul>
+
+
+
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Other Editing Functions</h2>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>Autotile </h3>
+					<p>A feature called [Autotile] is included for the tiles displayed in the A tab of the Tile Palette. With autotiles, one type of tile contains several patterns, and the border of the tile will be adjusted automatically depending on how the tiles are placed. Tiles which have the autotile function are assigned to [A1] through [A4] in the database [<a href="01_08_10.html">Tileset</a>]. <br/> <br/>Moreover, you can temporarily disable the autotile function by holding [Shift] and drawing tiles or using the eyedropper.
+					</p>
+				</li>
+				<li>
+					<h3>Autoshadows </h3>
+					<p>Within autotiles, there are some titles for which a shadow will automatically be drawn to the bottom right when placing two or more tiles vertically. However, specific tiles will not have shadows drawn on them.</p>
+				</li>
+				<li>
+					<h3>Shadow Pen </h3>
+					<p>The Shadow Pen is a tool that allows you to draw shadows for walls and buildings. You can darken the hue in increments of 1/4th of the size of a tile. <br/> <br/> Click the [Shadow Pen] button on the toolbar (or go to [Draw] → [Shadow Pen] in the menu), and click on the Map View. A shadow is drawn by clicking on a part which has no shadow. When clicking a part which already has a shadow, that shadow will be removed. <br/> <br/>
+						</p><div class="">
+							<img src="assets/img/01_07_01_img06.png" alt=""/>
+						</div>
+					<p></p>
+				</li>
+				<li>
+					<h3 id="p02">Upper Layer Tile Special Specifications </h3>
+					<p>
+						</p><ul class="ul">
+							<li>You can layer 2 different types of upper map tiles, B through E. <br/>*When layering a 3rd tile, the 1st upper tile will disappear.  <br/>*If the 3rd tile layered is the same as the 2nd tile, the first tile will not disappear. <br/>*Only the tile in the upper left of B can erase all upper tiles.
+							</li>
+							<li>When a passable tile and an impassable tile are layered, the effect of the tile placed last takes priority. <br/>*Even when a passable ☆ tile is on the bottom, the tile with the ☆ will be displayed on top. <br/>*When a passable ☆ tile is layered, the impassable tile&#39;s settings will take priority.
+							</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h3 id="p01">Lower Layer Tile Special Specifications </h3>
+					<p>Amongst the tiles that are displayed in the [A] tab of the Tile Palette, those items found in [A2] in the tileset&#39;s configuration are divided into [Base] (columns 1 to 4 from the left, or the left half) and [Decoration] tiles (columns 5 to 8 from the left, or the right half). Decoration tiles can be placed on top of base tiles. <br/> <br/>However, for tilesets which have their [Mode] set to [Field Type] in the [Tileset] settings, if a decoration tile is layered on a tile from the 2nd or 4th base tiles column, the base tile will change to a 1st or 3rd column base tile.
+					</p>
+				</li>
+				<li>
+					<h3 id="p03">Map Layer Selection Function</h3>
+					<p>
+						Switches layers in map editing mode. You can select an individual layer to edit without affecting other layers. <br/>While it is usually possible to create maps using [Auto], using each layer for separate purposes allows you to fine-tune your map. <br/> <br/>When a layer is selected, the tile placed on the selected layer will be highlighted. <br/>Since only the highlighted tile can be edited, you can use it in situations such as when you want to make batch changes only to the lower layer after placing decorations using upper layer tiles. <br/> <br/>The figure shows tiles placed using [Auto] and [Layer 1]. <br/> You can see that only the room&#39;s floor tiles are being changed in batch with the [Layer 1] settings.
+					</p>
+					<div class="img--center"><img src="assets/img/01_01_01_05_img03.png" alt=""/></div>
+				</li>
+			</ul>
+			
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

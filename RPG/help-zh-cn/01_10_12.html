@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_6";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>场景控制</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>场景控制</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="场景控制">
+        <span>场景控制</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>场景控制</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">场景控制</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">战斗处理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_12_img01.png" height="313" width="292" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">使敌群出现并进行战斗。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敌群</h4>
+					<p>指定要对战的敌群。要与特定的敌群对战，请选择[直接指定]并指定敌群。要指定敌群的ID时，请选择[通过变量指定]，然后指定要引用的变量。如果您选择[与随机遭遇相同]，则会出现一个根据队伍所在地图的[遭遇]设置的敌群。</p>
+				</li>
+				<li>
+					<h4>允许逃跑</h4>
+					<p>启用后，[逃跑]命令在战斗中会设为有效，并且可以设为两种分支处理：[获胜时]和[逃走时]。</p>
+				</li>
+				<li>
+					<h4>允许失败</h4>
+					<p>如果启用该功能，即使队伍全灭，游戏也不会结束，并且可以设为两种分支处理：[获胜时]和[失败时]。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">商店处理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_12_img02.png" height="359" width="292" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">将开始出售武器、防具和物品买卖的商店处理。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>商品列表</h4>
+					<p>指定贩卖的物品。双击列表中的空白区域时，在出现的窗口中指定[商品]和[价格]。如果将价格设置为[标准]，则数据中设置的价格可以在[指定]中指定仅适用于此事件指令的价格。</p>
+				</li>
+				<li>
+					<h4>只能购买</h4>
+					<p>启用时将无法出售您的所持品。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">名字输入处理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_12_img03.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">显示角色名称的输入画面，并将其更改为玩家输入的名称。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定要变更名称的角色。</p>
+				</li>
+				<li>
+					<h4>最长字符数</h4>
+					<p>指定可以输入的最长字符数（1~16）。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+				<li>在游戏中输入名称时，可以使用方向按钮移动光标，使用决定按钮添加文字，使用删除按钮删除名称的最后一个字符。 </li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">开启菜单画面</h2>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">呼出菜单画面。没有设置项目</p>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">开启存档画面</h2>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">呼出存档画面。没有设置项目</p>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">游戏结束</h2>
+			<h3 class="title--h3">功能</h3>
+			<p>强制结束游戏，并显示游戏结束画面。没有设置项目</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">返回标题画面</h2>
+			<h3 class="title--h3">功能</h3>
+			<p>强制结束游戏，并返回标题画面。没有设置项目</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

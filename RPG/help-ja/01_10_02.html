@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>ゲーム進行</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>ゲーム進行</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="ゲーム進行">
+        <span>ゲーム進行</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>ゲーム進行</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">ゲーム進行</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">スイッチの操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">スイッチの値（ON／OFF）を変更します。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>スイッチ</h4>
+					<p>変更対象のスイッチを指定します。ひとつのスイッチを操作する場合は［単独］を選び、対象のスイッチを指定します。連続する番号のスイッチの値をまとめて変える場合は［範囲］を選び、スイッチ番号の範囲を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>スイッチに代入する値（ON／OFF）を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">変数の操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">変数に格納されている値を変更します。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>変数</h4>
+					<p>値を変える変数を指定します。ひとつの変数を操作する場合は［単独］を選び、対象の変数を指定します。連続する番号の変数をまとめて操作する場合は［範囲］を選び、変数番号の範囲を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>値の計算方法を指定します（備考参照）。［変数］で指した変数の値は、操作前の変数の値、計算方法、オペランドの値に基づいて計算した値に変わります。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>［操作］の計算に用いる値を指定します（備考参照）。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">備考</h3>
+			<div class="flex--bw--dev--half">
+				<div>
+					<p class="mb10px">［操作］で指定する計算方法の内容は以下のとおりです。</p>
+					<table class="table--type04 mb40px">
+						<tbody><tr>
+							<th>代入</th>
+							<td>オペランドの値を代入（計算なし）</td>
+						</tr>
+						<tr>
+							<th>加算</th>
+							<td>［操作前の変数の値＋オペランド］の計算値を代入</td>
+						</tr>
+						<tr>
+							<th>減算</th>
+							<td>［操作前の変数の値－オペランド］の計算値を代入</td>
+						</tr>
+						<tr>
+							<th>乗算</th>
+							<td>［操作前の変数の値×オペランド］の計算値を代入</td>
+						</tr>
+						<tr>
+							<th>除算</th>
+							<td>［操作前の変数の値÷オペランド］の計算値を代入</td>
+						</tr>
+						<tr>
+							<th>剰余</th>
+							<td>［操作前の変数の値÷オペランド］の余りを代入</td>
+						</tr>
+					</tbody></table>
+					<p class="mb10px">［オペランド］で指定する値の内容は以下のとおりです。</p>
+					<table class="table--type04">
+						<tbody><tr>
+							<th style="width: 80px;">定数</th>
+							<td>固定値を適用します。右欄に値を指定します。</td>
+						</tr>
+
+						<tr>
+							<th>変数</th>
+							<td>変数の値を適用します。参照する変数を指定します。</td>
+						</tr>
+
+						<tr>
+							<th>乱数</th>
+							<td>乱数（不作為に決まる数）の値を適用します。発生させる乱数の範囲（-9999万9999～9999万9999）を指定します。</td>
+						</tr>
+
+						<tr>
+							<th>ゲームデータ</th>
+							<td>ゲームのプレイ状況に関する値を適用します。［…］をクリックすると開くウィンドウで参照する情報を指定します（右表参照）。</td>
+						</tr>
+
+						<tr>
+							<th>スクリプト</th>
+							<td>入力したJavaScriptの評価結果を値に適用します。</td>
+						</tr>
+					</tbody></table>
+				</div>
+				<div>
+					<p class="mb10px">［オペランド］に［ゲームデータ］を指定した場合は、オペランドの値とするデータを以下からひとつ指定します。</p>
+					<table class="table--type04">
+						<tbody><tr>
+							<th style="width: 80px;">アイテム</th>
+							<td>指定のアイテムの所有数を適用します。</td>
+						</tr>
+						<tr>
+							<th>武器</th>
+							<td>指定の武器の所有数を適用します。</td>
+						</tr>
+						<tr>
+							<th>防具</th>
+							<td>指定の防具の所有数を適用します。</td>
+						</tr>
+						<tr>
+							<th>アクター</th>
+							<td>アクターのパラメータ（HP、MP、TPなど）の値を適用します。対象のアクターとパラメータを指定します。</td>
+						</tr>
+						<tr>
+							<th>敵キャラ</th>
+							<td>敵キャラのパラメータ（HP、MP、TPなど）の値を適用します。対象の敵キャラとパラメータを指定します。この項目は戦闘時のみ有効です。</td>
+						</tr>
+						<tr>
+							<th>キャラクター</th>
+							<td>
+								プレイヤーまたはイベントの座標や向きを使用します。
+								<table class="table--type04">
+									<tbody><tr>
+										<th>マップX、マップY</th>
+										<td>：現在地のマップ座標</td>
+									</tr>
+									<tr>
+										<th>向き</th>
+										<td>：現在の向き（上＝8／左＝4／右＝6／下＝2）</td>
+									</tr>
+									<tr>
+										<th>画面X、画面Y</th>
+										<td>：画面上の表示位置の座標（ドット）</td>
+									</tr>
+								</tbody></table>
+							</td>
+						</tr>
+						<tr>
+							<th>パーティ</th>
+							<td>パーティ内で指定した位置にいるアクターのIDを使用します。</td>
+						</tr>
+						<tr>
+							<th>直前</th>
+							<td>
+								直前の行動に関するデータを使用します。
+								<ul class="ul">
+									<li>
+										直前に使用したスキルのID
+									</li>
+									<li>
+										直前に使用したアイテムのID
+									</li>
+									<li>
+										直前に行動したアクターのID
+									</li>
+									<li>
+										直前に行動した敵キャラのインデックス
+									</li>
+									<li>
+										直前に対象となったアクターのID
+									</li>
+									<li>
+										直前に対象となった敵キャラのインデックス
+									</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th>その他</th>
+							<td>その他のデータを使用します。</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">セルフスイッチの操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">セルフスイッチの値を操作します。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>セルフスイッチ</h4>
+					<p>対象のセルフスイッチ（A～D）を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>スイッチに代入する値（ON／OFF）を指定します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">タイマーの操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_02_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">制限時間（残り時間）を計測するタイマーを始動／停止します。タイマーを始動すると画面右上に残り時間が自動で表示されます。メニューの表示中は、タイマーのカウントダウンは一時停止します（計測の対象外になります）。タイマーの残り時間で処理を分岐させるには、［条件分岐］のイベントコマンドなどを使います。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>操作</h4>
+					<p>制限時間の計測を開始するには［始動］、計測を終了するには［停止］を指定します。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>［操作］に［始動］を指定した場合に、制限時間（0分0秒～99分59秒）を指定します。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

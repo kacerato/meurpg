@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_8";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>State Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>State Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="State Settings">
+        <span>State Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Database</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Database</a></li>
+				<li>&gt;</li>
+				<li>State Settings</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">State Settings</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">This Data&#39;s Role</h2>
+			<p class="text">
+				States are abnormal states such as &quot;Poison&quot; and &quot;Confusion&quot; which affect the condition and actions of a character. In this data, you&#39;ll configure the actual effects when a state is applied. You can prepare not only states with negative effects, such those where a character is poisoned and their HP is decreased, but also states with positive effects, such as those where the character goes berserk and has their attack power boosted. <br/> <br/>Additionally, State #1, named [Knockout], is a special state that is automatically applied to characters and enemies when their HP reaches zero. If all party members are in this state, it will result in a game over.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_08_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				Basic Settings
+			</h3>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						Name
+					</h4>
+					<p>The name of the state. States are displayed using icons, so the name will never be used during gameplay.</p>
+				</li>
+				<li>
+					<h4>
+						Icon
+					</h4>
+					<p>This icon is the image displayed next to an actor&#39;s name or above an enemy&#39;s head when in that state. You can select an image in the [Select an Image] window that appears after double-clicking. Try choosing an icon that makes the details of the state clear.</p>
+				</li>
+				<li>
+					<h4>
+						Restriction
+					</h4>
+					<p class="mb30px">Restricts the actions of characters in a state. Specify the restrictions based on the 5 items below. If there are multiple restrictions applied, the restriction at the bottom of the list will be prioritized.</p>
+					<dl class="dl--default">
+						<dt>None </dt>
+						<dd>Actions will not be restricted.</dd>
+						<dt>Attack an Enemy</dt>
+						<dd>Will force an actor to attack an enemy.</dd>
+						<dt>Attack Anyone </dt>
+						<dd>Will force an actor to attack either an enemy or ally.</dd>
+						<dt>Attack an Ally </dt>
+						<dd>Will force an actor to attack an ally.</dd>
+						<dt>Cannot Move </dt>
+						<dd>Cannot move at all.</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>
+						Priority
+					</h4>
+					<p>Priority (0 to 100) for displaying state icons. The icon with the highest priority will be displayed if a character has multiple states. If the priorities are the same, the state with the youngest ID will be prioritized.</p>
+				</li>
+				<li>
+					<h4>
+						[SV] Motion
+					</h4>
+					<p>Set the motion that will be displayed in Side View Mode when a state is active.</p>
+				</li>
+				<li>
+					<h4>
+						[SV] Overlay
+					</h4>
+					<p>Set the overlay that will be displayed in Side View Mode when a state is active.</p>
+				</li>
+			</ul>
+
+
+
+			<h3 class="title--h3">
+				Removal Conditions
+			</h3>
+			<p class="text--sub">The condition for removing a state. Specify the conditions based on the items below. If multiple conditions are set, each condition&#39;s criteria will be assessed and the state will be removed.</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Remove at Battle End </h4>
+					<p>When enabled, the state will be removed when the battle ends.</p>
+				</li>
+				<li>
+					<h4>Remove by Restriction </h4>
+					<p>When enabled, the state will be removed when another state is added that has separate restrictions.</p>
+				</li>
+				<li>
+					<h4>Auto-removal Timing/Duration in Turns </h4>
+					<p>Removes after a specified number of turns have elapsed. When using [Action End], the state will be removed after the active character finishes an action, and when using [Turn End], the state will be removed after a turn ends but before returning to action selection. Specify the lower limit and upper limit (0 to 9999) of number of turns until a condition is removed after the state is inflicted using [Duration in Turns].</p>
+				</li>
+				<li>
+					<h4>Remove by Damage </h4>
+					<p>The state will have a specified chance (0 to 100%) of being removed when receiving any sort of damage.</p>
+				</li>
+				<li>
+					<h4>Remove by Walking </h4>
+					<p>The state will be removed when the player moves on the map the number of tiles specified (0 to 9999).</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				Message
+			</h3>
+			<p class="text">Message that gets displayed during battle when this state is given or removed. For each of the following 4 states, a message will be displayed following the target&#39;s name: &quot;If an actor is inflicted with the state&quot;, &quot;If an enemy is inflicted with the state&quot;, &quot;If the state persists&quot;, and &quot;If the state is removed&quot;. &quot;%1&quot; will be replaced by the target&#39;s name.</p>
+
+			<h3 class="title--h3">
+				Traits
+			</h3>
+			<p class="text">Traits given to the target when given a state. Please see [<a href="01_08_15.html">How to Set Traits</a>] for more information.</p>
+
+			<h3 class="title--h3" id="renew01">
+				Notes
+			</h3>
+			<p class="text">Used to make notes while making your game. <br/>Right-click to show the menu and choose [Plugin Help...] to display the Plugin Help information.</p>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

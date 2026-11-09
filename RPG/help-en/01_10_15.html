@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_9";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Battle</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Battle</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Battle">
+        <span>Battle</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Battle</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Battle</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Change Enemy HP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Changes the HP of enemies.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy. Setting this to [Entire Troop] will target all enemies.</p>
+				</li>
+				<li>
+					<h4>Controls</h4>
+					<p>Select either [Increase] or [Decrease].</p>
+				</li>
+				<li>
+					<h4>Operand</h4>
+					<p>Specify the amount by which to raise or lower the HP. Select [Constant] to set this to a fixed value, then enter the value. Choose [Variable] to set the amount using a variable, then specify the variable to reference.</p>
+				</li>
+				<li>
+					<h4>Allow Death</h4>
+					<p>When enabled, the enemy will be knocked out when their HP falls to 0 or lower. When disabled, the enemy&#39;s HP will remain at 1 even if their HP falls to 0 or lower.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Change Enemy MP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img02.png" height="300" width="352" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Changes the MP of enemies.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy. Setting this to [Entire Troop] will target all enemies currently in battle.</p>
+				</li>
+				<li>
+					<h4>Controls</h4>
+					<p>Select either [Increase] or [Decrease].</p>
+				</li>
+				<li>
+					<h4>Operand</h4>
+					<p>Specify the amount by which to raise or lower the MP. Select [Constant] to set this to a fixed value, then enter the value. Choose [Variable] to set the amount using a variable, then specify the variable to reference.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Change Enemy TP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img03.png" width="352" height="300" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Changes the TP of enemies.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy. Setting this to [Entire Troop] will target all enemies currently in battle.</p>
+				</li>
+				<li>
+					<h4>Controls</h4>
+					<p>Select either [Increase] or [Decrease].</p>
+				</li>
+				<li>
+					<h4>Operand</h4>
+					<p>Specify the amount by which to raise or lower the TP. Select [Constant] to set this to a fixed value, then enter the value. Choose [Variable] to set the amount using a variable, then specify the variable to reference.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Change Enemy State</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img04.png" height="251" width="262" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Changes the state of an enemy.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy. Setting this to [Entire Troop] will target all enemies currently in battle.</p>
+				</li>
+				<li>
+					<h4>Controls</h4>
+					<p>Select either [Add] or [Remove].</p>
+				</li>
+				<li>
+					<h4>States</h4>
+					<p>Specify the type of state to add or remove.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Enemy Recover All</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img05.png" height="134" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Fully recovers the HP and MP of the enemy, and removes all states.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy. Setting this to [Entire Troop] will target all enemies currently in battle.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">Enemy Appearance</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img06.png" height="134" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Causes an enemy to appear which has the [Appear Mid-Battle] option set in the Troop section.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">Enemy Transform</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img07.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Transforms an enemy currently in battle to a different enemy. The HP and MP of the enemy prior to the transformation will be carried over to the new enemy.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the enemy to transform.</p>
+				</li>
+				<li>
+					<h4>Transform To</h4>
+					<p>Specify what the enemy will become after transforming.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">Show Battle Animation</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img08.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Displays an animation using the enemy as the target.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Enemies</h4>
+					<p>Specify the target enemy.</p>
+				</li>
+				<li>
+					<h4>Animations</h4>
+					<p>Specify the animation to display.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">Force Action</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img09.png" height="285" width="352" alt=""/>
+			</div>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Forces the enemy/actor to use the specified skill.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Subject</h4>
+					<p>Specify the target enemy/actor.</p>
+				</li>
+				<li>
+					<h4>Action</h4>
+					<p>Specify the skill the enemy or actor will be forced to use in the [Skill] box. Targets of the skill can be set to [Last Target] (the same target of the previous action), [Random] (a randomly selected target), or [Index X] (where X can be 1 through 8; refer to remarks for more information).</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">Abort Battle</h2>
+			<h3 class="title--h3">Function </h3>
+			<p class="text">Forces the battle to end and the game to return to the map. There are no parameters to set. <br/>Note: if starting from the [Battle Processing] Event Command, and the [Can Escape] option is on, the process set under the &quot;Escape&quot; branch will be run. <br/>However, this will not be counted in the variable that records the number of Escapes under Variables - Others.</p>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This can only be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

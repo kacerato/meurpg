@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Map Event System</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Map Event System</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Map Event System">
+        <span>Map Event System</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Events</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_09.html">Events</a></li>
+				<li>&gt;</li>
+				<li>Map Event System</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Map Event System</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">Map Event Processing Flow</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>Expressing Events </h3>
+					<p>The details of events expressed in the game using Map Events are defined using the following flow: where (location), what kind of situation (appearance conditions), what action is taken (trigger), and what happens (contents). <br/><br/>Events such as characters and chests with items in them are expressed by assigning images to the Map Events which define the contents of what happens. Also, processes such as moving in and out of buildings, or cut-scenes that advance automatically, can be prepared using events that do not have images. <br/><br/>When creating an event, you first need to decide &quot;where (location) and what happens&quot; in the map view of the Main Window. After that, you will be able to define the remaining contents such as the event&#39;s appearance conditions. 
+					</p>
+				</li>
+				<li>
+					<h3>Event Pages with &quot;Conditional&quot; Contents</h3>
+					<p>It is possible to use Map Events to change the details of what happens according to the play conditions of the game. <br/><br/>[Event Pages] are responsible for this. Event pages can &quot;conditionally&quot; determine the contents of events. One event may have up to 20 event pages, each one able to define different images, triggers, and what processes are to be run. In other words, you can &quot;conditionally&quot; choose from 20 different events in a single Map Event.
+					</p>
+				</li>
+				<li>
+					<h3>Restrict Event Pages Using Appearance Conditions </h3>
+					<p>The &quot;conditions&quot; parameter is used to define in &quot;what situation&quot; a &quot;conditional&quot; event page is to be used. Conditions are set based on criteria such as the values of &quot;Switches&quot; and &quot;Variables&quot; (see below), or &quot;does the player have the specified item?&quot; <br/><br/>Map Events occur during gameplay based on the contents of the page which meet these conditions. When there are multiple pages which meet these [Conditions], the event page with the highest number will be used on the map. Conversely, nothing will happen on the map if there are no event pages which meet the [Conditions].
+					</p>
+				</li>
+			</ul>
+			<dl class="dl">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">Evaluating Play Conditions</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>Evaluating Play Conditions Using Switches </h3>
+					<p>Under [Conditions] on the event page, [Switches] and [Variables] are primarily used for determining the play conditions of the game. <br/><br/>Switches can have either an [ON] or [OFF] value. These are used to define conditions of the game and the state of progress such as &quot;did the player accept the request from the king&quot; or &quot;did the player defeat the boss&quot;. <br/><br/>The game will start with all switches set to [OFF]. When running an event that changes the position in the game, the specific switch&#39;s value in the &quot;contents&quot; will be switched to &quot;ON&quot;. (Use the [Control Switches] event command.) <br/><br/>By using that same switch in the [Conditions] of other event pages, it is possible to change the contents of multiple Map Events all at once when the switch&#39;s value changes to &quot;ON&quot;. The game&#39;s story can be built through continuously changing the state of the overall game through the changing of these events.
+					</p>
+				</li>
+				<li>
+					<h3>Variables That Store Values </h3>
+					<p>&quot;Variables&quot; are what store arbitrary values (integers). The values at the start of the game are set to 0, and you can do calculations such as assigning values of your choice according to the state of the game or add to other values. (Use the [Control Variables] event command.) <br/><br/>By using this variable, you can do things such as use the HP of the player or the amount of gold they possess to change the details of an event. This allows you to finely control a Map Event&#39;s conditions and results.
+					</p>
+				</li>
+				<li>
+					<h3>Management Switch Variables </h3>
+					<p>You may use up to 5,000 switches and 5,000 variables in one game. Which switch number or variable is used to evaluate each game state is up to the creator. Use names that help you understand their purposes so that you do not confuse the relationship of the two. You can set their names in the [Name] field in their respective selection windows.</p>
+				</li>
+				<li>
+					<h3>Using the &quot;Self Switch&quot; for Autonomous Events </h3>
+					<p>You can also use &quot;Self Switches&quot; in Map Events. These switches are only used in their individual Map Event. You can store values in the 4 self switches, named &quot;A&quot; through &quot;D&quot;, included in an event. <br/><br/>This self switch is used for evaluating the state of events that are completed using self processing. For example, for treasure chests which contain items, by managing whether the chest was opened or not using self switches, and setting the contents for &quot;before opening&quot; and &quot;after opening&quot; in two event pages, you can make it so that an item can be obtained only the first time the chest was checked.
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

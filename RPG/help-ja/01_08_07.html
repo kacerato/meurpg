@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_7";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>敵グループの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>敵グループの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="敵グループの設定">
+        <span>敵グループの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>敵グループの設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">敵グループの設定</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p class="text">
+				敵グループは、ゲーム中に出現する敵キャラの集団を設定するデータです。マップの移動中やイベントコマンドによってプレイヤーと戦闘させる敵キャラは、このデータをもとに指定します。敵1体のみと戦闘させる場合も“敵1体のみ登録した敵グループ”のデータを用意する必要があります。“バトルイベント”（戦闘中のイベント処理）も敵グループごとに設定します。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_07_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line">
+				<li>
+					<h4>
+						名前
+					</h4>
+					<p>敵グループの名前です。この設定はエディターのみで使用されます（プレイ中のゲームへの影響はありません）。［名前の自動作成］ボタンを押すと、登録した敵キャラをもとに名前が自動で生成されます。</p>
+				</li>
+				<li>
+					<h4>
+						戦闘背景の変更
+					</h4>
+					<p>配置ビューに表示する戦闘背景を変更します。表示されるウィンドウの左欄で遠景、右欄で地面用の画像をそれぞれ指定します。この設定はエディターのみで使用され（プレイ中のゲームへの影響はありません）、他のデータの編集時にも共通して使われます。</p>
+				</li>
+				<li>
+					<h4>
+						戦闘テスト
+					</h4>
+					<p>敵グループとの戦闘をテスト実行します。表示されるウィンドウの［1］～［4］のタブで、戦闘に参加させるアクター、装備品、レベル数をそれぞれ指定します（［ステータス］には設定内容に基づいた能力値が表示されます）。［OK］をクリックすると、ウィンドウが開き戦闘が始まります。ウィンドウを閉じるとテスト実行が終了します。<br/>
+					※プラグインを設定した場合は、編集データを保存してください。保存していない状態では、戦闘テストにプラグインの設定は反映されません。</p>
+				</li>
+				<li>
+					<h4>
+						配置ビュー
+					</h4>
+					<p>グループに登録された敵キャラです。ひとつの敵グループには最大8体まで（同種を含む）の敵キャラを登録できます。<br/>
+						<br/>
+						配置ビュー上の敵キャラはドラッグすると位置を変えられます。また右クリックして［途中から出現］を選ぶと、バトルイベントで［敵キャラの出現］のイベントコマンドを実行するまで出現しない敵キャラになります。<br/>
+						<br/>
+						登録内容は下記のボタンを使って編集します。
+					</p>
+					<dl class="dl--default">
+						<dt>追加 </dt>
+						<dd>右側の敵キャラリストで選択した敵キャラを配置ビューに追加します。敵キャラリストの項目をダブルクリックすることでも追加可能です。敵キャラを追加した順番は、戦闘中に表示する敵キャラの選択リストの順番にも反映されます。</dd>
+						<dt>削除 </dt>
+						<dd>配置ビュー上でクリックして選択した敵キャラを削除します。</dd>
+						<dt>全削除 </dt>
+						<dd>配置ビュー上の敵キャラをすべて削除します。</dd>
+						<dt>整列 </dt>
+						<dd>配置ビュー上の敵キャラの位置を、登録順に左から並べます。</dd>
+					</dl>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">バトルイベントの設定内容</h2>
+			<p class="text">［バトルイベント］では、敵グループと戦闘中に実行するイベントの条件や実行内容を設定します。マップイベントと同じように、イベントページと出現条件で、処理する内容を“場合分け”することが可能です。</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>
+						イベントページの操作
+					</h3>
+					<p>左側に並ぶ［EVページ作成］［EVページコピー］［EVページ貼り付け］［EVページ削除］［EVページクリア］でイベントページの操作が行なえます。マップイベントと同様の機能です。</p>
+				</li>
+				<li>
+					<h3>
+						実行内容
+					</h3>
+					<p>［条件］と［スパン］を満たしたときに実行する処理を、イベントコマンドをもとに設定します。編集方法はマップイベントの［<a href="01_09_03.html#p03">実行内容</a>］と同じです。</p>
+				</li>
+				<li>
+					<h3>
+						条件
+					</h3>
+					<p>イベントページの処理を実行する条件です。［…］ボタンを押すと表示される［条件］ウィンドウで、以下の5つから条件に用いる項目を有効にし、それぞれ判定基準を設定します。マップイベントと違い、バトルイベントは何らかの条件を指定しないとイベントページが実行対象になりません。また条件を満たすイベントページが複数ある場合、番号が一番小さいイベントページが実行対象になります。</p>
+					<div class="img--center mt10px">
+						<img src="assets/img/01_08_07_img02.png" alt=""/>
+					</div>
+					<dl class="dl--default">
+						<dt>ターン終了 </dt>
+						<dd>ターンの終了時点を条件とします。</dd>
+						<dt>ターン</dt>
+						<dd>戦闘開始から指定のターン数が経過したときを条件とします。左欄に開始からのターン数、右欄にターンの周期数を指定します。</dd>
+						<dt>敵キャラHP </dt>
+						<dd>敵キャラのHPが基準値以下になったとき条件とします。対象の敵キャラと、基準値（最大HPに対する比率）を指定します。</dd>
+						<dt>アクターHP </dt>
+						<dd>敵アクターのHPが基準値以下になったときを条件とします。対象のアクターと、基準値（最大HPに対する比率）を指定します。</dd>
+						<dt>スイッチ </dt>
+						<dd>指定のスイッチがONのときを条件とします。</dd>
+					</dl>
+				</li>
+				<li>
+					<h3>
+						スパン
+					</h3>
+					<p>イベントページが実行対象になったとき、実行内容の処理を開始するタイミングを指定します。</p>
+					<dl class="dl--default">
+						<dt>バトル </dt>
+						<dd>戦闘開始から初めて条件を満たした場合に限り処理を開始します。一度実行すると、その後は一切実行されません。</dd>
+						<dt>ターン </dt>
+						<dd>ターンごとに条件判定を行ない、条件を満たしている場合に処理を開始します。</dd>
+						<dt>モーメント </dt>
+						<dd>条件を満たしている間、繰り返し処理を行ないます。スイッチなどで処理を制御しないと、戦闘が進行しなくなる場合がありますので注意してください。</dd>
+					</dl>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

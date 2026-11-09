@@ -1,11 +1,8 @@
 # artefatos grandes / gerados
-mz-android-editor/testproject/
 mz-android-editor/android/build/
 mz-android-editor/android/app/build/
 mz-android-editor/android/.gradle/
 mz-android-editor/android/local.properties
-rea-extract/
-RPG/
 *.apk
 
 # configuração local do Claude Code

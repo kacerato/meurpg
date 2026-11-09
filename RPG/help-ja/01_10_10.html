@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>画面</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>画面</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="画面">
+        <span>画面</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>画面</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">画面</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">画面のフェードアウト</h2>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">画面を暗転します（徐々に暗くして黒一色で表示）。設定項目はありません。</p>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>暗転した状態は、［画面のフェードイン］のイベントコマンドが実行されるまで継続します。</li>
+				<li>暗転後もメニューやメッセージウィンドウ、戦闘のコマンドウィンドウなどは表示されます。</li>
+				<li>バトルイベントで実行すると、コマンドウィンドウやメッセージ以外は黒一色で表示され、敵キャラなどが見えなくなります。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">画面のフェードイン</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>［画面のフェードアウト］で暗転した画面を元に戻します。設定項目はありません。</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">画面の色調変更</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img03.png" height="353" width="472" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">画面全体の色調を変更します。メッセージウィンドウやピクチャの色調は変更されません。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>色調</h4>
+					<p>［赤］［緑］［青］の各色に加算する成分（-255～255）を指定します。［グレー］にはグレースケールフィルターの強さ（0～255）を指定します。値を大きいほど全体的に加算する色が強調されます。下に並ぶ［通常］［ダーク］［セピア］［夕暮れ］［夜］のボタンをクリックすると、それぞれの色調を表現する規定値を適用できます（［通常］は本来の色調に戻します）。色調の変化は右側のプレビュー領域で確認できます。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>処理にかける時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、このイベントコマンドの処理が終わるまで処理の進行を停止します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>変更した色調は、戦闘中も含め、再度このイベントコマンドで変更するまで有効です。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">画面のフラッシュ</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img04.png" height="314" width="472" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">画面全体を一瞬だけ指定した色のみで表示し、徐々に元の表示に戻します。雷光の様子などを表現できます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>フラッシュ色</h4>
+					<p>表示色を［赤］［緑］［青］の各色の成分比（0～255）をもとに指定します。指定した色は右側のプレビュー領域で確認できます。［強さ］には、色の不透明度（0～255）を指定します。0にすると完全な透明になり、表示への影響はなくなります。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>処理が続く時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、このイベントコマンドの処理が終わるまで処理の進行を停止します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">画面のシェイク</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img05.png" height="252" width="414" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">画面全体を左右に揺らします。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>シェイク</h4>
+					<p>［強さ］で揺れ幅の大きさ（1～9）、［速さ］で揺れる速さ（1～9）をそれぞれ指定します。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>処理が続く時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、このイベントコマンドの処理が終わるまで処理の進行を停止します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">天候の設定</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img06.png" height="258" width="414" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">天候（雨／嵐／雪）を表現するエフェクト画像の表示を制御します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>種類</h4>
+					<p>表示する画像の種類を指定します。画像の表示を止めるには［なし］を指定します。</p>
+				</li>
+				<li>
+					<h4>強さ</h4>
+					<p>画像の表示量（1～9）を指定します。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>処理の変更にかける時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、このイベントコマンドの処理が終わるまで処理の進行を停止します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+	</div><!-- /main -->
+
+
+
+</body></html>

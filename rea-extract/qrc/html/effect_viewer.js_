@@ -1,0 +1,374 @@
+const Graphics = {};
+
+class EffekseerSprite extends PIXI.Sprite {
+    constructor() {
+        super();
+        this._effect = null;
+        this._handle = null;
+        this._scale = 1.0;
+        this._speed = 1.0;
+        this._rotationX = 0;
+        this._rotationY = 0;
+        this._rotationZ = 0;
+        this._offsetX = 0;
+        this._offsetY = 0;
+        this._alignBottom = false;
+        this._target = null;
+        this._viewportSize = 4096;
+        this._virtualScreenHeight = 624;
+        this._virtualScreenScale = 0.55;
+    }
+
+    load(url) {
+        if (!Graphics.effekseer) {
+            setTimeout(() => this.load(url), 100);
+        } else {
+            this.release();
+            if (url) {
+                this._effect = Graphics.effekseer.loadEffect(url);
+            } else {
+                this._effect = null;
+            }
+        }
+    }
+
+    release() {
+        if (this._effect) {
+            this.stop();
+            const effect = this._effect;
+            if (effect.isLoaded) {
+                Graphics.effekseer.releaseEffect(effect);
+            } else {
+                effect.onload = function() {
+                    Graphics.effekseer.releaseEffect(effect);
+                };
+            }
+            this._effect = null;
+            this._handle = null;
+        }
+    }
+
+    update() {
+        if (this._handle) {
+            this.updateEffectGeometry();
+            try {
+                Graphics.effekseer.update();
+            } catch (e) {
+                //
+            }
+        }
+    }
+
+    updateEffectGeometry() {
+        if (this._handle) {
+            const scale = this._scale;
+            const rx = this._rotationX;
+            const ry = this._rotationY;
+            const rz = this._rotationZ;
+            this._handle.setLocation(0, 0, 0);
+            this._handle.setRotation(rx, ry, rz);
+            this._handle.setScale(scale, scale, scale);
+            this._handle.setSpeed(this._speed);
+        }
+    }
+
+    play() {
+        if (this.isReady()) {
+            this.stop();
+            this._handle = Graphics.effekseer.play(this._effect);
+        }
+    }
+
+    stop() {
+        if (this._handle) {
+            this._handle.stop();
+        }
+    }
+
+    isEmpty() {
+        return !this._effect;
+    }
+
+    isReady() {
+        return !!(this._effect && this._effect.isLoaded);
+    }
+
+    isPlaying() {
+        return !!(this._handle && this._handle.exists);
+    }
+
+    setScale(scale) {
+        this._scale = scale;
+    }
+
+    setSpeed(speed) {
+        this._speed = speed;
+    }
+
+    setRotation(x, y, z) {
+        this._rotationX = x;
+        this._rotationY = y;
+        this._rotationZ = z;
+    }
+
+    setOffset(x, y) {
+        this._offsetX = x;
+        this._offsetY = y;
+    }
+
+    setAlignBottom(alignBottom) {
+        this._alignBottom = alignBottom;
+    }
+
+    setTarget(target) {
+        this._target = target;
+    }
+
+    _render(renderer) {
+        if (this.isPlaying()) {
+            this.onBeforeRender(renderer);
+            this.setProjectionMatrix(renderer);
+            this.setCameraMatrix(renderer);
+            this.setViewport(renderer);
+            Graphics.effekseer.beginDraw();
+            Graphics.effekseer.drawHandle(this._handle);
+            Graphics.effekseer.endDraw();
+            this.onAfterRender(renderer);
+        }
+    }
+
+    setProjectionMatrix(renderer) {
+        const vh = this._viewportSize;
+        const p = -(
+            vh /
+            (this._virtualScreenHeight * this._virtualScreenScale)
+        );
+        // prettier-ignore
+        Graphics.effekseer.setProjectionMatrix([
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, p,
+            0, 0, 0, 1,
+        ]);
+    }
+
+    setCameraMatrix(renderer) {
+        // prettier-ignore
+        Graphics.effekseer.setCameraMatrix([
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, -10, 1
+        ]);
+    }
+
+    setViewport(renderer) {
+        const vw = this._viewportSize;
+        const vh = this._viewportSize;
+        const vx = this._offsetX - vw / 2;
+        const vy = -this._offsetY - vh / 2;
+        const pos = this.targetPosition(renderer);
+        renderer.gl.viewport(vx + pos.x, vy + pos.y, vw, vh);
+    }
+
+    targetPosition(renderer) {
+        const pos = new PIXI.Point();
+        pos.x = renderer.view.width / 2;
+        pos.y = renderer.view.height / 2;
+        if (this._alignBottom) {
+            pos.y -= this._target.height / 2;
+        }
+        return pos;
+    }
+
+    onBeforeRender(renderer) {
+        renderer.batch.flush();
+        renderer.geometry.reset();
+    }
+
+    onAfterRender(renderer) {
+        renderer.texture.contextChange();
+        renderer.texture.reset();
+        renderer.geometry.reset();
+        renderer.state.reset();
+        renderer.shader.reset();
+        renderer.framebuffer.reset();
+    }
+}
+
+class Viewer {
+    constructor() {
+        PIXI.settings.PREFER_ENV = PIXI.ENV.WEBGL;
+        this.app = new PIXI.Application({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+
+        effekseer.initRuntime("effekseer.wasm", () => {
+            Graphics.effekseer = effekseer.createContext();
+            Graphics.effekseer.init(this.app.renderer.gl);
+        });
+
+        const view = this.app.renderer.view;
+        view.style.position = "absolute";
+        view.style.left = 0;
+        view.style.top = 0;
+        document.body.appendChild(view);
+
+        this._virtualScreenScale = 0.55;
+        this.createBackgroundSprites();
+        this.createTargetSprite();
+        this.createEffekseerSprite();
+        this._effekseerSprite.setTarget(this._targetSprite);
+    }
+
+    createBackgroundSprites() {
+        const sprite1 = new PIXI.Sprite();
+        const sprite2 = new PIXI.Sprite();
+        this._backgroundSprite1 = sprite1;
+        this._backgroundSprite2 = sprite2;
+        this.app.stage.addChild(sprite1);
+        this.app.stage.addChild(sprite2);
+        this.centerSprite(sprite1);
+        this.centerSprite(sprite2);
+    }
+
+    createTargetSprite() {
+        const sprite = new PIXI.Sprite();
+        const filter = new ColorFilter();
+        sprite.filters = [filter];
+        this._targetSprite = sprite;
+        this._targetFilter = filter;
+        this.app.stage.addChild(sprite);
+        this.centerSprite(sprite);
+    }
+
+    createEffekseerSprite() {
+        this._effekseerSprite = new EffekseerSprite();
+        this.app.stage.addChild(this._effekseerSprite);
+    }
+
+    centerSprite(sprite) {
+        const view = this.app.renderer.view;
+        sprite.anchor.x = 0.5;
+        sprite.anchor.y = 0.5;
+        sprite.scale.x = this._virtualScreenScale;
+        sprite.scale.y = this._virtualScreenScale;
+        sprite.position.x = view.width / 2;
+        sprite.position.y = view.height / 2;
+    }
+
+    setMaxFPS(maxFPS) {
+        this.app.ticker.maxFPS = maxFPS;
+    }
+
+    update() {
+        this.updateEffekseerSprite();
+        this.updateFlash();
+    }
+
+    updateEffekseerSprite() {
+        this._effekseerSprite.update();
+    }
+
+    updateFlash() {
+        if (this._flashDuration > 0) {
+            const d = this._flashDuration--;
+            this._flashColor[3] *= (d - 1) / d;
+            this._targetFilter.setBlendColor(this._flashColor);
+        }
+    }
+
+    isEmpty() {
+        return this._effekseerSprite.isEmpty();
+    }
+
+    isReady() {
+        return this._effekseerSprite.isReady();
+    }
+
+    isPlaying() {
+        return this._effekseerSprite.isPlaying() || this._flashDuration > 0;
+    }
+
+    load(url) {
+        this.stop();
+        this._effekseerSprite.load(url);
+    }
+
+    release() {
+        this._effekseerSprite.release();
+    }
+
+    play() {
+        this._effekseerSprite.play();
+    }
+
+    stop() {
+        this._effekseerSprite.stop();
+        this._flashColor = [0, 0, 0, 0];
+        this._flashDuration = 0;
+        this._targetFilter.setBlendColor(this._flashColor);
+    }
+
+    setScale(scale) {
+        this._effekseerSprite.setScale(scale / 100);
+    }
+
+    setSpeed(speed) {
+        this._effekseerSprite.setSpeed(speed / 100);
+    }
+
+    setRotation(x, y, z) {
+        const r = Math.PI / 180;
+        this._effekseerSprite.setRotation(x * r, y * r, z * r);
+    }
+
+    setOffset(x, y) {
+        this._effekseerSprite.setOffset(x, y);
+    }
+
+    setAlignBottom(alignBottom) {
+        this._effekseerSprite.setAlignBottom(alignBottom);
+    }
+
+    loadBackgroundImages(url1, url2) {
+        this._backgroundSprite1.texture = url1
+            ? PIXI.Texture.from(url1)
+            : PIXI.Texture.EMPTY;
+        this._backgroundSprite2.texture = url2
+            ? PIXI.Texture.from(url2)
+            : PIXI.Texture.EMPTY;
+    }
+
+    loadTargetImage(url, hue) {
+        this._targetSprite.texture = url
+            ? PIXI.Texture.from(url)
+            : PIXI.Texture.EMPTY;
+        this._targetFilter.setHue(hue);
+    }
+
+    startFlash(color, duration) {
+        this._flashColor = color.slice(0);
+        this._flashDuration = duration;
+    }
+}
+
+const viewer = new Viewer();
+
+document.body.addEventListener(
+    "dragover",
+    function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    false
+);
+document.body.addEventListener(
+    "drop",
+    function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    false
+);

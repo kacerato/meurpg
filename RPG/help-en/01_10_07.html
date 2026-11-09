@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Character</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Character</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Character">
+        <span>Character</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Event Commands</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">Event Commands</a></li>
+				<li>&gt;</li>
+				<li>Character</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">Character</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">Change Transparency</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Controls the transparency of the party moving on the map.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Transparency </h4>
+					<p>Set to [ON] to make the party invisible. Set to [OFF] to make the party visible.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">Change Player Followers</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Controls whether or not the party members from the 2nd member onward are displayed while walking.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Player Followers </h4>
+					<p>Set to [ON] to display followers. Set to [OFF] to hide followers.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>Only the first four actors in the first will be displayed, even when there are 5 or more members in a party.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">Gather Followers</h2>
+			<h3 class="title--h3">Function</h3>
+			<div>Moves all party members to the same location as the lead actor. There are no parameters to set.</div>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">Show Animation</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Shows animations on the map.</p>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Character</h4>
+					<p>The display location will be based on the position of the player or event.</p>
+				</li>
+				<li>
+					<h4>Animations</h4>
+					<p>Specify the animation to display.</p>
+				</li>
+				<li>
+					<h4>Wait for Completion</h4>
+					<p>When enabled, the event will be paused until the animation being displayed has finished.</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>This cannot be used in battle events.</li>
+				<li>Use the [Show Battle Animation] event command when you wish to play an animation during battle.</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">Show Balloon Icon</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Function</h3>
+			<p class="text--sub">Display icons that express emotions in balloons that appear over a party member or event. There are ten types of icons available, such as a &quot;!&quot; for expressing surprise, or a light bulb to express when a character has a good idea. It is also possible for users to define their own balloon icons.</p>
+			<div class="img--center mb90px">
+				<img src="assets/img/01_10_07_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">Settings</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>Character</h4>
+					<p>The display location will be based on the position of the player or event.</p>
+				</li>
+				<li>
+					<h4>Balloon Icon</h4>
+					<p>Specify the balloon icon to display.</p>
+				</li>
+				<li>
+					<h4>Wait for Completion</h4>
+					<p>When enabled, the event will be paused until the balloon icon being displayed has disappeared.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">Erase Event</h2>
+			<h3 class="title--h3">Function</h3>
+			<p class="text">Temporarily removes the event currently being run. There are no parameters to set. The event will remain erased until the party moves to another map.</p>
+			<h3 class="title--h3">Remarks </h3>
+			<ul class="ul">
+				<li>Cannot be used in battle events.</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

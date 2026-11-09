@@ -1,0 +1,45 @@
+"InstallScript"
+{
+	"Registry"
+	{
+		"HKEY_LOCAL_MACHINE\\Software\\KADOKAWA\\RPGMZ"
+		{
+			"string"
+			{
+				"ApplicationPath"		"%INSTALLDIR%"
+			}
+		}
+		"HKEY_CLASSES_ROOT\\RPGMZ.Project"
+		{
+			"string"
+			{
+				"(Default)"		"RPGMZ Project"
+			}
+		}
+		"HKEY_CLASSES_ROOT\\RPGMZ.Project\\DefaultIcon"
+		{
+			"string"
+			{
+				"(Default)"		"\"%INSTALLDIR%\\RPGMZ.exe\",1"
+			}
+		}
+		"HKEY_CLASSES_ROOT\\RPGMZ.Project\\shell\\open\\command"
+		{
+			"string"
+			{
+				"(Default)"		"\"%INSTALLDIR%\\RPGMZ.exe\"  \"%1\""
+			}
+		}
+		"HKEY_CLASSES_ROOT\\.rmmzproject"
+		{
+			"string"
+			{
+				"(Default)"		"RPGMZ.Project"
+			}
+		}
+	}
+}
+"kvsignatures"
+{
+	"InstallScript"		"4de2c4451821f5db4609e5c30d3c881b692dfc3fefbe17234a54b6c3fc29720f51e06763627bee344b099f311f57313eb65273f3d077dfddbd5c139a1c75864f379f94276bb5ef6ee94ce0623478ab839ba87758fe315531c7b4ce5cf1f905764e44b08cf854a996cb2abaedf4befc7937ca7f207cce77e0104b4fd780cf5a46"
+}

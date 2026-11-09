@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>编辑器的基本操作</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>编辑器的基本操作</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="编辑器的基本操作">
+        <span>编辑器的基本操作</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--03">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">编辑器的基本操作</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>编辑器的基本操作</li>
+			</ul>
+			<img src="assets/img/common/cha03.png" alt="" class="cha"/>
+		</div>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">窗口各部位名称与功能</h2>
+			<p class="text">打开项目后显示的画面称作“主窗口”。主窗口主要用于编辑地图和事件。<br/>您可以从主窗口的菜单中调出[数据库]等工具。每个部位的功能如下所示。</p>
+
+
+			<div class="flex--bw">
+				<dl class="dl--1c--left--noline">
+					<dt>1. 菜单栏</dt>
+					<dd>
+					在这里选择本软件自备的功能。
+					</dd>
+					<dt>2. 工具栏</dt>
+					<dd>
+					单击按键就可以执行特定的功能。
+					</dd>
+					<dt>3. 图块调色盘</dt>
+					<dd>
+					此处显示着可以配置在地图上的图块组。通过下方的标签可以切换到图块组、区域的编辑模式。
+					</dd>
+					<dt>4. 地图列表</dt>
+					<dd>
+					制作中游戏含有的地图数据的一览表。
+					</dd>
+					<dt>5. 地图视图</dt>
+					<dd>
+					此处显示着选中的地图的内容。用于编辑设计和指定事件的设置场所等。
+					</dd>
+					<dt>6. 状态栏</dt>
+					<dd>
+					此处显示着选中的功能的内容、地图名称和地图坐标。
+					</dd>
+				</dl>
+
+				<div class="img--right"><img src="assets/img/01_03_img01.png" alt=""/></div>
+			</div>
+
+
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">编辑项目设置的方法</h2>
+			<p class="text">使用本软件制作游戏时的主要的操作内容，是在各种窗口内自备的项目设置中根据想要制作的内容指定文本和项目等。项目设置的类型和编辑方法如下所示。</p>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>输入文本 </h3>
+					<p>
+						单击设置栏就会显示光标“｜”。在这个状态下使用键盘输入文本。输入的文本会插入到光标所在位置。您可以通过键盘的光标键移动光标。输入文本的方法会根据您使用的日语输入法（IME）而有差异。
+					</p>
+				</li>
+				<li>
+					<h3>输入数值 </h3>
+					<p>
+						跟输入文本时一样，单击设置栏就会显示光标“｜”。在这个状态下使用键盘输入半角数值。单击设置栏右侧的[∧]或[∨]按钮就可以增加或减少该数值。
+					</p>
+				</li>
+				<li>
+					<h3>单选按钮 </h3>
+					<p>
+						从复数项目中指定一个应用项目。单击[○]后，圆洞会填黑，设置就会有效。
+					</p>
+				</li>
+				<li>
+					<h3>复选框 </h3>
+					<p>
+						指定项目名称中的设置的有效或无效。单击[□]勾选复选框后，设置就会有效。再次单击则会取消勾选。
+					</p>
+				</li>
+				<li>
+					<h3>下拉列表 </h3>
+					<p>
+						从列表中显示的项目指定一个应用项目。单击列表设置栏右侧的[∨]就能打开下拉列表。
+					</p>
+				</li>
+				<li>
+					<h3>列表框 </h3>
+					<p>
+						显示复数设置的一览表。双击项目打开窗口，就能添加或更改内容。
+					</p>
+				</li>
+				<li>
+					<h3>[…]按钮 </h3>
+					<p>
+						在别的窗口中指定设置栏右侧中[…]项目的内容。单击[…]，并根据显示的窗口进行设置。
+					</p>
+				</li>
+				<li>
+					<h3>[OK]、[取消]及[应用]按钮 </h3>
+					<p>
+						对已更改的项目设置内容进行确认后，就能使该设置有效。如果要确定并关闭窗口就单击[OK]，要取消对项目的更改并关闭窗口就单击[取消]，要确认设置但不关闭窗口就单击[应用]。
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">环境选单的搜索功能</h2>
+			<p class="text">在地图和数据库等画面，右击后可以从上下文菜单中选择[搜索]功能。</p>
+			<div class="flex--bw">
+				<div class="img--half">
+					<img src="assets/img/01_03_img02.png" alt=""/>
+				</div>
+				<div class="img--half">
+					<img src="assets/img/01_03_img03.png" alt=""/>
+				</div>
+			</div>
+			<p class="text">从上下文菜单中选择[搜索]就能打开搜索画面。查过一次的搜索条件会被记忆，因此可以通过[查找下一个]和[查找上一个]进行搜索。</p>
+		</div>
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

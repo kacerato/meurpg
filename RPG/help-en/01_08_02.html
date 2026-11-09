@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Class Settings</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Class Settings</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Class Settings">
+        <span>Class Settings</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Database</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">Database</a></li>
+				<li>&gt;</li>
+				<li>Class Settings</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">Class Settings</h1>
+
+		<div class="section">
+			<h2 class="title--h2">This Data&#39;s Role</h2>
+			<p>
+				Class data compiles trait data pertaining to actor abilities. Actors must belong to a class. Things such as the way an actor levels up, how their parameters increase, and the skills they can acquire are determined based on class settings. It is also possible to assign actors unique class traits.
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb60px">
+				<img src="assets/img/01_08_02_img01.png" alt=""/>
+			</div>
+
+
+			<h3 class="title--h3">
+				Basic Settings
+			</h3>
+			<ul class="ul--2c--line mb30px">
+				<li>
+					<h3>
+						Name
+					</h3>
+					<p>The name of the class. The name will be displayed in places such as on the Menu Screen and upper part of the Status List Screen.</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3--sub">
+				EXP Curve
+			</h3>
+			<p class="text">Parameters for determining the EXP required for leveling up. When an actor acquires the needed amount of EXP for each level, that actor&#39;s level will increase by 1, and they may have their parameters increased or learn a new skill. <br/> <br/>The EXP curve is configured based on the following 4 values in the window displayed by clicking [...] in the Settings field. In the window&#39;s [To Next Level] tab, the EXP required for each level will be displayed in a list as well as in graph form in the background. It&#39;s a good idea to refer to this while setting your parameters. The total amount of EXP needed to reach each level can be viewed in the [Total] tab.
+			</p>
+			<div class="flex--bw--dl-img pb30px border--bottom mb90px">
+				<dl>
+					<dt>Base Value </dt>
+					<dd>The standard value for calculating the required EXP. By lowering this value, the overall required EXP will decrease.</dd>
+					<dt>Extra Value </dt>
+					<dd>Adds a designated value to the required EXP for each level.</dd>
+					<dt>Acceleration A </dt>
+					<dd>Adjusts the required EXP increase rate. Adjust the rate at which to increase the necessary EXP. By setting this value higher, the amount of necessary EXP will increase proportionately according to the increase in level.</dd>
+					<dt>Acceleration B</dt>
+					<dd>Adjusts the required EXP increase rate. By increasing this value, the rate of increase for required EXP will become larger primarily at higher levels.</dd>
+				</dl>
+				<img src="assets/img/01_08_02_img02.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				Parameter Curves
+			</h3>
+			<p class="text">The parameter settings for each level. Double-click the graph to open the Settings window. Please see [<a href="#p01">Setting Parameter Curves</a>] below for more information. </p>
+
+			<h3 class="title--h3">
+				Learnable Skills
+			</h3>
+			<p class="text">Skills that an actor gets upon leveling up. Set the levels and skills acquired in the window that appears when double-clicking in the field. You can use [Notes] to write notes while making your game.</p>
+			<h3 class="title--h3">
+				Traits
+			</h3>
+			<p class="text">Traits which you give to actors set to this class. Please see [<a href="01_08_15.html">How to Set Traits</a>] for more information.</p>
+			<h3 class="title--h3">
+				Notes
+			</h3>
+			<p class="text">Used to make notes while making your game. <br/>Right-click to show the menu and choose [Plugin Help] to display the Plugin Help information.<br/>
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img mb90px">
+				<div>
+					<h2 class="title--h2" id="p01">Setting Parameter Curves</h2>
+					<p class="text--sub">In the [Parameter Curves] window, parameter values for each level are set based on the items below. By clicking the tab with the parameter&#39;s name, you can switch to the parameter that you want to edit. The values that you specify will be reflected when you click [OK] after you finish editing (changes will be abandoned if you press [Cancel]).</p>
+				</div>
+				<img src="assets/img/01_08_02_img03.png" alt=""/>
+			</div>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>Quick Settings</h3>
+					<p>Preprepared values will be applied to the parameter values for all levels. There are 5 types of patterns, [A] through [E], and each pattern is applied by clicking that pattern&#39;s button.</p>
+				</li>
+				<li>
+					<h3>Level/Value </h3>
+					<p>Directly edit the Parameters for each level. After specifying the level (1 to 99) you wish to edit in [Level], specify the value (Max HP can be set from 1 to 9999, Max MP from 0 to 9999 &amp; all others from 0 to 999) for that level in [Value].</p>
+				</li>
+				<li>
+					<h3>Generate Curve </h3>
+					<p>The values of levels will be calculated automatically based on the values at level 1 and level 99. <br/> <br/> Define the values (Max HP can be set from 1 to 9999, Max MP can be set from 0 to 9999, all others from 1 to 999) at [Level 1] and [Level 99] in the window that appears when the [Generate Curve] button is clicked. <br/> <br/>Next, you can choose the growth type using the slider. The rate of growth (the amount at which parameter values increase) will become slower when set to the left side of the slider (early growth) and quicker when set to the right side of the slider (late growth). Click the [OK] button and the parameters will be set based on your specifications.</p>
+				</li>
+				<li>
+					<h3>Graph</h3>
+					<p>The parameter values for each level will be displayed in a bar graph. By clicking/dragging within the displayed area, you can get the parameters for the level corresponding to the location clicked.</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

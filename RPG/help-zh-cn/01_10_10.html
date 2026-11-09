@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>画面</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>画面</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="画面">
+        <span>画面</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>画面</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">画面</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">淡出画面</h2>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">屏幕转暗（逐渐变暗并以纯黑色显示）。没有设置项目</p>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>转暗状态在[淡入画面]事件命令执行期间始终有效。</li>
+				<li>转暗后，菜单，消息窗口，战斗指令窗口等也会正常显示。</li>
+				<li>在战斗事件中执行时，除指令窗口和消息以外，都将以纯黑色显示，并且敌方角色等将不可见。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">淡入画面</h2>
+			<h3 class="title--h3">功能</h3>
+			<p>恢复因[淡出画面]而变暗的屏幕。没有设置项目</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">变更画面色调</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img03.png" height="353" width="472" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">改变整个画面的色调。信息窗口、图片的色调等不会改变。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>色调</h4>
+					<p>指定要添加到[红色]，[绿色]和[蓝色]每种颜色的成分（-255~255）。在[灰度]中，指定灰度滤镜的强度（0~255）。值越高，强调整体加算的颜色越多。通过单击下面的[正常]，[暗]，[棕褐色]，[黄昏]和[夜晚]按钮，可以应用表示每种色调的默认值（选择[正常]则会恢复原始色调）。您可以在右侧的预览区域中看到色调的变化。</p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>指定进行处理的时间帧数（1~999）。一帧等于1/60秒。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，则直到此事件命令的处理完成为止，处理将暂时停止。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>包括在战斗期间，更改后的色调直到再次使用此事件指令进行更改为止会始终有效。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">闪烁画面</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img04.png" height="314" width="472" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">整个屏幕仅在一瞬间显示指定颜色，然后逐渐返回到原始颜色。可以用来表现闪电的状态。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>闪烁颜色</h4>
+					<p>根据[红色]，[绿色]和[蓝色]每种颜色的成分比率（0~255）指定显示颜色。您可以在右侧的预览区域中确认指定的颜色。用[强度]，指定颜色的不透明度（0~255）。设置为0则会完全透明，并且对显示没有影响。</p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>用帧数（1~999）指定处理延续的时间。一帧等于1/60秒。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，则直到此事件命令的处理完成为止，处理将暂时停止。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">震动画面</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img05.png" height="252" width="414" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">左右摇晃整个画面。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>震动</h4>
+					<p>用[强度]指定震动幅度的大小（1~9），用[速度]来指定震动速度（1~9）。</p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>用帧数（1~999）指定处理延续的时间。一帧等于1/60秒。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，则直到此事件命令的处理完成为止，处理将暂时停止。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">设置天气</h2>
+			<div class="al-c mt20px mb20px">
+				<img src="assets/img/01_10_10_img06.png" height="258" width="414" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">控制代表天气（雨/风暴/雪）的效果图像的显示。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>种类</h4>
+					<p>指定显示的图像的种类。要停止显示图像，请指定[无]。</p>
+				</li>
+				<li>
+					<h4>强度</h4>
+					<p>指定图像的显示量（1~9）。</p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>用帧数（1~999）指定更改处理所需的时间。一帧等于1/60秒。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，则直到此事件命令的处理完成为止，处理将暂时停止。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+	</div><!-- /main -->
+
+
+
+</body></html>

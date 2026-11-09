@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Map Properties</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Map Properties</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="Map Properties">
+        <span>Map Properties</span>
+      </div>
+      <div class="gotohome" title="Click here to see this page in full context">
+        <span>Click here to see this page in full context</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG MAKER MZ HELP</p>
+			<h1 class="title--h1">Map</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_07.html">Map</a></li>
+				<li>&gt;</li>
+				<li>Map Properties</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">Map Properties</h1>
+
+		<div class="section">
+			<h2 class="title--h2">Data Settings</h2>
+			<p class="text">The Map Properties Window will be displayed when you create a new map or by right-clicking the map and selecting &quot;Edit&quot;. In this window, you can edit things like the size of the map or the tileset used to design it, conditions for BGM or encounters (when a battle starts) with troops, and other behavior during gameplay.</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">Parameter Details</h2>
+			<div class="img--center mb30px">
+				<img src="assets/img/01_07_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				Basic Settings
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>
+						Name
+					</h3>
+					<p>The name of the map event. This property is used only in the editor and does not affect the game. </p>
+				</li>
+				<li>
+					<h3>
+						Display Name
+					</h3>
+					<p>The name of the map that is displayed when the player moves onto that map.</p>
+				</li>
+				<li>
+					<h3>
+						Tilesets
+					</h3>
+					<p>Specifies tilesets to be used in the design of the map.  </p>
+				</li>
+				<li>
+					<h3>
+						Width/Height
+					</h3>
+					<p>The size of the map. The [Width] and [Height] can each be set as a value between 0 and 256. When making the map smaller after creation, parts which extend beyond the new size will be deleted.</p>
+				</li>
+				<li>
+					<h3>
+						Scroll Type
+					</h3>
+					<p>Determines how the map loops. When you set the map to loop, the edge pairs of the map that you designate will connect and allow the player to loop from one edge to the other.</p>
+					<dl class="dl--default">
+						<dt>No Loop </dt>
+						<dd>There will be no looping.</dd>
+						<dt>Loop Vertically </dt>
+						<dd>The upper and lower edges of the map will be connected.</dd>
+						<dt>Loop Horizontally </dt>
+						<dd>The left and right edges of the map will be connected.</dd>
+						<dt>Loop Both </dt>
+						<dd>Both the upper and lower, and the left and right edges of the map will be connected.</dd>
+					</dl>
+				</li>
+				<li>
+					<h3 id="p01">
+						Specify Battleback
+					</h3>
+					<p>When enabled, the background when a battle occurs on this map can be designated using a combination of two types of images. <br/>When not specified, a background that conforms to the terrain on the field will be automatically selected. For other maps, a background which uses a processed image of the map screen will be used.
+					</p>
+					<div class="img--center">
+						<img src="assets/img/01_07_03_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h3>
+						Encounter Steps (Enc. Steps)
+					</h3>
+					<p>Determine the frequency of random encounters by setting the average number of steps a player walks on the map before an encounter occurs. This can be set between 1 and 999 steps, where one step equals the movement distance of a single tile. Set this value low when you want monsters to appear more frequently.</p>
+				</li>
+				<li>
+					<h3>
+						Autoplay BGM/Autoplay BGS
+					</h3>
+					<p>When enabled, BGM (background music) and BGS (background sounds) will start playing automatically when the player is on a map. Select the sound files for each that you wish to play. <br/>When the map and battle BGM is identical, the music will not stop when switching between screens.</p>
+				</li>
+				<li>
+					<h3>
+						Disable Dashing
+					</h3>
+					<p>When enabled, a player cannot dash on this map.</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				Parallax Background
+			</h3>
+			<p class="text">An image that appears in the transparent part of the map. Select the file you want to use in the window that appears when you click [...]. <br/> <br/> When you enable [Loop Vertically] or [Loop Horizontally], the parallax background will scroll according to the movement direction of the player. Also, by setting the scroll to a value other than 0 (-32 to 32), it will automatically scroll. If it&#39;s a positive value, it will scroll left/up. If it is a negative number, it will scroll right/down. The higher the absolute value, the faster it will scroll. <br/> <br/> When you enable [Show in the Editor], you can check the parallax background that you set in the editor. However, the way it is displayed may differ in the actual game. <br/> <br/>Also, when you add a &quot;!&quot; to the beginning of a parallax background image file name, the parallax will become 0.
+			</p>
+
+			<h3 class="title--h3">
+				Memo
+			</h3>
+			<p class="text">Here you can freely add notes when creating your game. The content is used only in the editor and does not affect the game. </p>
+
+			<h3 class="title--h3">
+				Encounter
+			</h3>
+			<p class="text--sub">Troops that randomly appear while the player moves around the map. Specify the following content in the window that appears when you double click the blank within the field. If you left click on a registered troop, you can also copy or delete it using the context menu.</p>
+
+			<div class="flex--bw--dl-img">
+				<dl class="dl">
+					<dt>Troops </dt>
+					<dd>Define the troops you want to configure.</dd>
+					<dt>Weight</dt>
+					<dd>Set the priority level (0 to 100) for troops to appear as battle opponents in an encounter. When there are multiple troops configured, the higher a troop&#39;s priority value, the higher its encounter rate. <br/> <br/>The encounter rate for troops will be calculated based on a percentage of the total weight of all troops. <br/>So for example, let&#39;s assume that Troop A&#39;s weight is 9, B&#39;s is 7, and C&#39;s is 4. In this case, Troop A&#39;s encounter rate is 9/20 (the total weight being 9+7+4), or 0.45. In other words, it has a 45% chance of appearing. Likewise, Troop B&#39;s is 7/20 (35%) and Troop C&#39;s is 4/20 (20%).
+					</dd>
+					<dt>Scope </dt>
+					<dd>Specifies the region where this troop will appear. Specify &quot;Entire Map&quot; when you want it to appear regardless of region. To have an enemy encountered only in a specified region, select &quot;Specify by Region ID&quot; and specify the region ID (up to 3 regions). Please refer to the section below to see how to set a region.</dd>
+				</dl>
+				<img src="assets/img/01_07_03_img03.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section">
+
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">Setting the Region</h2>
+					<p>The [Region] specified in the Encounter settings of a map indicates the regions in which troops appear. One map can be divided into 255 regions. <br/><br/>*To set up a region, select the [R] tab in the Tileset to enter the Region Editor Mode. Click in the upper left of the window to select the region ID (1 to 255), and by clicking on the Map View, the region will be configured to the tile in that position. Only one region ID can be assigned per tile.
+					</p>
+				</div>
+				<img src="assets/img/01_07_03_img04.png" width="1383" height="940" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

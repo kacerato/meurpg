@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_9";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>バトル</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>バトル</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="バトル">
+        <span>バトル</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>バトル</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">バトル</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">敵キャラのHP増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラのHPを増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。［敵グループ全体］とすると、すべての敵キャラが対象になります。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>［増やす］［減らす］のどちらかを指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>HPの増減量を指定します。一定の値を指定する場合は［定数］を選んで値を入力します。変数の値で指定する場合は［変数］を選んで参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>戦闘不能を許可</h4>
+					<p>有効にすると、HPが0以下になったとき戦闘不能とします。無効の場合はHPが0以下になっても1にします。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">敵キャラのMP増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img02.png" height="300" width="352" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラのMPを増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。［敵グループ全体］にすると、戦闘中のすべての敵キャラが対象になります。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>［増やす］［減らす］のどちらかを指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>MPの増減量を指定します。一定の値を指定する場合は［定数］を選んで値を入力します。変数の値で指定する場合は［変数］を選んで参照する変数を指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">敵キャラのTP増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img03.png" width="352" height="300" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラのTPを増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。［敵グループ全体］にすると、戦闘中のすべての敵キャラが対象になります。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>［増やす］［減らす］のどちらかを指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>TPの増減量を指定します。一定の値を指定する場合は［定数］を選んで値を入力します。変数の値で指定する場合は［変数］を選んで参照する変数を指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">敵キャラのステート変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img04.png" height="251" width="262" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラのステートを変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。［敵グループ全体］にすると、戦闘中のすべての敵キャラが対象になります。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>［付加］［解除］のどちらかを指定します。</p>
+				</li>
+				<li>
+					<h4>ステート</h4>
+					<p>不可／解除するステートの種類を指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">敵キャラの全回復</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img05.png" height="134" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラのHPとMPを最大値まで回復し、すべてのステートを解除します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。［敵グループ全体］にすると、戦闘中のすべての敵キャラが対象になります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">敵キャラの出現</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img06.png" height="134" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵グループのデータで［途中から出現］のオプションが設定されている敵キャラを出現させます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">敵キャラの変身</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img07.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">出現中の敵キャラを、別の敵キャラに変身させます。変身した敵キャラのHPとMPは、変身前の敵キャラの値を引き継ぎます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>変身させる敵キャラを指定します。</p>
+				</li>
+				<li>
+					<h4>変身</h4>
+					<p>変身後の敵キャラを指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">戦闘アニメーションの表示</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img08.png" height="189" width="222" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラを対象として、アニメーションを表示します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>敵キャラ</h4>
+					<p>対象の敵キャラを指定します。</p>
+				</li>
+				<li>
+					<h4>アニメーション</h4>
+					<p>表示するアニメーションを指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">戦闘行動の強制</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_15_img09.png" height="285" width="352" alt=""/>
+			</div>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">敵キャラ／アクターに特定のスキルを強制実行させます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>行動主体</h4>
+					<p>対象の敵キャラ／アクターを指定します。</p>
+				</li>
+				<li>
+					<h4>戦闘行動</h4>
+					<p>［スキル］で強制実行するスキルを指定します。［行動対象］でスキルの標的を［ラストターゲット］（直前の行動者の標的と同じ）、［ランダム］（不作為に選定）、［Index X］（Xは1～8／詳細は備考参照）から指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">バトルの中断</h2>
+			<h3 class="title--h3">機能 </h3>
+			<p class="text">戦闘を強制終了してマップに戻ります。設定項目はありません。<br/>
+				またイベントコマンド「戦闘の処理」から開始し、かつ「逃走可」の場合、逃走に分岐した処理が実行されます。<br/>
+				なお、この場合、変数-その他で取得できる逃走回数にはカウントされません。</p>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>バトルイベントのみで動作します。</li>
+			</ul>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

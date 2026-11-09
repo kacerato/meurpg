@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>信息</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>信息</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="信息">
+        <span>信息</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>信息</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">信息</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">显示文本</h2>
+
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">
+				功能
+			</h3>
+			<p class="text">打开消息窗口并显示文本。</p>
+
+			<h3 class="title--h3">
+				设置项目
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>脸部</h4>
+					<p>指定要在消息窗口内左侧显示的头像。在双击时就会出现的[选择图像]窗口中指定图像。</p>
+				</li>
+				<li>
+					<h4>文本</h4>
+					<p>
+						输入要显示的文本。一次在消息窗口中最多可以显示4行文本。如果要输入第二行和后续行的文本，请使用[Enter]键来换行。<br/>右键单击以显示菜单。
+						</p><ul class="ul">
+							<li>[插件帮助]・・・显示插件帮助。</li>
+							<li>[插入颜色编号]・・・选择一种颜色并插入颜色编号。</li>
+							<li>[插入图标编号]・・・选择图标并插入图标编号。</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>名称</h4>
+					<p>设置显示在消息上方的名称。</p>
+				</li>
+				<li>
+					<h4>背景</h4>
+					<p>选择显示文本的消息窗口的形式。</p>
+				</li>
+				<li>
+					<h4>窗口位置</h4>
+					<p>可以指定消息窗口的显示位置为[下方]，[中间]或[上方]。</p>
+				</li>
+				<li>
+					<h4>预览</h4>
+					<p>单击就能查看实际显示的文本。</p>
+				</li>
+				<li>
+					<h4>批量输入</h4>
+					<p>如果启用此功能，则您可以一次输入4行以上的文本。超过4行的文本，会以每4行为单位分为多个[显示文本]的事件指令，然后在执行内容列表中进行设置。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				备注
+			</h3>
+			<div class="flex--bw--p-table">
+				<div>
+					<ul class="ul mb60px">
+						<li>如果在输入文本时同时按[Ctrl] + [Enter]键，相当于进行了一次单击[OK]按钮的动作。</li>
+						<li>[文本]栏中的竖线表示在消息窗口中能够显示的文字数。请一边输入文本，一边在[预览]中检查文本是否会按预期效果显示。</li>
+						<li>您可以通过在文本中输入控制字符来显示变量的值、作用物名称等。控制字符和显示的内容如下所示。请确保用半角字符输入控制字符。</li>
+					</ul>
+
+					<p class="mb10px">
+						※控制字符 \V，\N，\P，\G，\C，\I，\\，也可以在以下位置使用。
+					</p>
+		
+					<ul class="ul">
+						<li>事件指令[<a href="#p02">显示选项</a>]</li>
+						<li>数据库[<a href="01_08_01.html">作用物设置</a>] 的 [简介]</li>
+						<li>数据库[<a href="01_08_03.html">技能设置</a>] 的 [消息]</li>
+						<li>数据库[<a href="01_08_04.html">物品设置</a>] 和 [<a href="01_08_05.html">武器・护甲设置</a>] 的 [说明]</li>
+						<li>数据库[<a href="01_08_08.html">状态设置</a>] 的 [消息]</li>
+						<li>数据库[<a href="01_08_14.html">用语设置</a>] 的 [消息]内的项目，[保存消息] 和 [加载消息]</li>
+						<li>数据库[<a href="01_08_14.html">用语设置</a>] 的 [消息]内的项目，[队伍名称] 之下，在战斗中使用的消息（在窗口中显示的内容，\ $ \。\ | \！ \&gt; \&lt; \^也可以使用）</li>
+					</ul>
+				</div>
+				<table class="table--type01">
+					<tbody><tr>
+						<th>\V[n]</th>
+						<td>替换为第n个变量的值。</td>
+					</tr>
+					<tr>
+						<th>\N[n]</th>
+						<td>替换为第n个角色的名字。</td>
+					</tr>
+					<tr>
+						<th>\P[n]</th>
+						<td>替换为第n个（按顺序排列的）队伍成员的名字。</td>
+					</tr>
+					<tr>
+						<th>\G</th>
+						<td>替换为货币单位的文字。</td>
+					</tr>
+					<tr>
+						<th>\C[n]</th>
+						<td>后续文字以第n号颜色显示。文字颜色以系统图像[Window.png]的内容为准。</td>
+					</tr>
+					<tr>
+						<th>\I[n]</th>
+						<td>绘制第n个图标。</td>
+					</tr>
+					<tr>
+						<th>\{</th>
+						<td>将字体大小增加一级。</td>
+					</tr>
+					<tr>
+						<th>\}</th>
+						<td>将字体大小减小一级。</td>
+					</tr>
+					<tr>
+						<th>\\</th>
+						<td>替换为反斜杠字符。</td>
+					</tr>
+					<tr>
+						<th>\$</th>
+						<td>打开金钱窗口。</td>
+					</tr>
+					<tr>
+						<th>\.</th>
+						<td>文本显示间隔设为1/4秒。</td>
+					</tr>
+					<tr>
+						<th>\|</th>
+						<td>文本显示间隔设为1秒。</td>
+					</tr>
+					<tr>
+						<th>\!</th>
+						<td>文本显示期间需等待按钮输入。</td>
+					</tr>
+					<tr>
+						<th>\&gt;</th>
+						<td>立即显示同一行内剩余的文字。</td>
+					</tr>
+					<tr>
+						<th>\&lt;</th>
+						<td>取消立刻显示文字的效果。</td>
+					</tr>
+					<tr>
+						<th>\^</th>
+						<td>显示文本后，不等待按钮输入。</td>
+					</tr>
+					<tr>
+						<th>\PX[n]</th>
+						<td>向右移动n个像素并显示。</td>
+					</tr>
+					<tr>
+						<th>\PY[n]</th>
+						<td>向下移动n个像素并显示。</td>
+					</tr>
+					<tr>
+						<th>\FS[n]</th>
+						<td>将字体大小更改为n。</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">显示选项</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">显示选项窗口（最多6个），并根据玩家的选择处理分支进程。您可以像在消息中一样使用控制字符。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>选项（1~6）</h4>
+					<p>指定选项的语句。未显示的选项会设为空白</p>
+				</li>
+				<li>
+					<h4>背景</h4>
+					<p>指定选项的背景类型。</p>
+				</li>
+				<li>
+					<h4>窗口位置</h4>
+					<p>指定选项在画面上的显示位置。</p>
+				</li>
+				<li>
+					<h4>默认</h4>
+					<p>指定光标的初始位置。</p>
+				</li>
+				<li>
+					<h4>取消</h4>
+					<p>指定当取消按键被点击时的处理方式。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>决定设置项目后，将在[执行内容]中创建与每个选项（包括取消）相对应的分支。在这些分支中，设置选择了选项后要执行的内容。</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">数值输入处理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">显示数值输入画面，并将玩家输入的值代入给变量。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>变量</h4>
+					<p>指定一个变量来代入玩家输入的数值。</p>
+				</li>
+				<li>
+					<h4>位数</h4>
+					<p>指定输入的数值的位数上限（1到8）。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">物品选择处理</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">显示物品的选择窗口。将玩家选择的物品的ID代入给变量。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>变量</h4>
+					<p>指定变量以代入玩家选择的物品编号（物品ID）。</p>
+				</li>
+				<li>
+					<h4>物品类型</h4>
+					<p>指定在列表中显示的物品的种类。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">滚动显示文本</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_01_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">文本会以从屏幕底部向顶部滚动的方式显示。可以通过按确定键的方式快进滚动。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>文本</h4>
+					<p>
+						输入要显示的文本。<br/>右键单击以显示菜单。
+						</p><ul class="ul">
+							<li>[插件帮助]・・・显示插件帮助。</li>
+							<li>[图标集查看器]・・・显示图标集查看器。</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>速度</h4>
+					<p>指定滚动的速度（1~8）。数值越大，滚动速度越快。</p>
+				</li>
+				<li>
+					<h4>禁止快进</h4>
+					<p>禁止使用按确定键的方式快进内容。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

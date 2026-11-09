@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.1_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>图块设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>图块设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="图块设置">
+        <span>图块设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">数据库</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">数据库</a></li>
+				<li>&gt;</li>
+				<li>图块设置</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">图块设置</h1>
+
+		<div class="section">
+			<h2 class="title--h2">数据的作用</h2>
+			<p class="text--sub">
+				图块组集合了设计一个地图时使用的“图块”的数据。通过设置游戏中诸如人物是否能通行等行为，制作作为图块的图像。<br/> <br/>即使是为了地图而制作的原创图像，也可以制作以该图像制成的图块组，并将它分配为地图数据。<br/> <br/>此外，图块上的载具（小舟与大船）是否能通行，由图块组上的位置决定。更多详情，请参见[<a href="01_11_01.html">素材规格</a>]。<br/>飞艇在所有图块上都能通行。但是，能够着陆的地方仅限可以步行的场所。
+			</p>
+			<p class="mb10px">
+				※可以步行的场所若含以下地方则不能着陆。
+			</p>
+			<ul class="ul">
+				<li>草木繁茂处属性</li>
+				<li>图块组 A1</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">项目设置内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_08_10_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本设置
+			</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						名称
+					</h4>
+					<p>图块组的名称。此设置仅由编辑器使用（不会影响您正在玩的游戏）。</p>
+				</li>
+				<li>
+					<h4>
+						模式
+					</h4>
+					<p>图块组的用途。主要影响<a href="01_07_01.html#p01">下层图块的特殊规格</a>和<a href="01_07_03.html#p01">战斗背景的处理</a>。<br/>基本上，表达诸如海和陆地等世界全图的图块时选择[世界类型]图块，其他时候则选择[区域类型]图块。
+				</p></li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				图像
+			</h3>
+			<p class="text">设置为图块的图像文件。个别按下不同类型的图块（A~E 图块组）的按钮，在出现的[选择图像]窗口中指定使用的文件。指定了文件后，其内容会显示在右边的[图块列表]。</p>
+
+			<h3 class="title--h3">
+				图块列表
+			</h3>
+			<p class="text--sub">在[图像]显示被设为图块的图像。单击下方[A]至[E]的标签，就能切换显示的图像。[A]标签依次显示[图像]的[A1]至[A5]指定的文件的图块。<br/> <br/>每个图块上都重叠显示着代表当前设置的编辑模式中设置值的标记。双击打开该标记就能更改设置值。<br/>对于具有 3 种项目（通行、地形标志）或以上的设置值，按右边的按钮时会面向与左边按钮相反的方向。<br/>此外，同时长按按钮和移动指示器可以连续更改指示器划过的图块的设置。
+			</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						通行
+					</h4>
+					<p>切换到图块是否能通行的编辑模式。图块列表中显示的标记中[○]为可以通行，[×]为不可通行。[☆]也代表图块可以通行，但是这表示人物位于建筑物后面（仅能对除[A]以外的标签进行此设置）。</p>
+				</li>
+				<li>
+					<h4>
+						通行（四方向）
+					</h4>
+					<p>切换到图块上可通行的方向的编辑模式。[通行：不可]的补助设置，用来制作只能往特定方向移动的图块。例如，把表现悬崖的图块的边缘部分设为不可移动时，该边缘和旁边衔接的图块之间将成为无法移动的区域，表现出“高低差”。<br/> <br/>图块列表中显示的标志中，关于上下左右四个方向的移动，有箭头代表可以移动，无箭头则代表不可移动。更改[通行]设置值时，此设置值也会自动改变。
+					</p>
+				</li>
+				<li>
+					<h4>
+						梯子
+					</h4>
+					<p>切换到梯子设置的编辑模式。添加此设置后，在图块上通行的人物面向的方向将固定朝上方，表现出在使用梯子或绳子升降的样子等。<br/> <br/>您可以通过单击图块列表上的标记以更改有无设置。添加了设置的图块会显示标记（梯子的图案）。
+					</p>
+				</li>
+				<li>
+					<h4>
+						有害地形
+					</h4>
+					<p>切换到有害地形的编辑模式。添加此设置后，在图块上通行的人物会受到伤害。用于表现诸如有毒的沼泽和突刺的地板等危险的地面。<br/> <br/>您可以通过单击图块列表上的标记更改有无设置。添加了设置的图块会显示标记（两个三角形）。
+					</p>
+				</li>
+				<li>
+					<h4>
+						草木繁茂处
+					</h4>
+					<p class="mb5px">切换到草木繁茂处设置的编辑模式。添加此设置后，在图块上通行的人物的下方 12 个点处呈半透明，表现出步入草木繁茂处后脚被遮盖的样子等。<br/> <br/>但是，若设置中含有[A1]至[A4]的图块，有些图块不会变半透明。<br/> <br/>您可以通过单击图块列表上的标记更改有无设置。添加了设置的图块会显示标记（两个波浪线）。
+					</p>
+					<div class="img--center--half mt10px">
+						<img src="assets/img/01_08_10_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h4>
+						柜台
+					</h4>
+					<p class="mb5px">切换到柜台设置的编辑模式。添加这个设置时，即使人物和事件彼此不相邻也能越过图块执行事件，可以表现“人物之间隔着桌子对话”的样子等。<br/> <br/>设置[A2]的图块时，拥有该属性的图块的图案底部边缘会偏移 12 个点处呈现。<br/> <br/>您可以通过单击图块列表上的标记更改有无设置。添加了设置的图块会显示标记（菱形四角形）。
+					</p>
+					<div class="img--center--half mt10px">
+						<img src="assets/img/01_08_10_img03.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<h4>
+						地形标志
+					</h4>
+					<p>对每个图块分配 0~7 的相对数值。具体的用途并无规定。使用事件指令[获取指定位置的信息]时可获得。获得的地形标志中，以除 0 以外上位的图层为优先。
+					</p>
+				</li>
+				<li>
+					<h4 id="renew01">
+						备注
+					</h4>
+					<p>可以在游戏制作过程做备注。<br/>右键单击以显示菜单，然后选择[插件帮助]来显示插件帮助。</p>
+				</li>
+			</ul>
+
+
+
+
+
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

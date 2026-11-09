@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.2.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>编辑地图设计</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>编辑地图设计</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="编辑地图设计">
+        <span>编辑地图设计</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--07">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">地图</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_07.html">地图</a></li>
+				<li>&gt;</li>
+				<li>编辑地图设计</li>
+			</ul>
+			<img src="assets/img/common/cha07.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">编辑地图设计</h1>
+
+		<div class="section">
+			<h2 class="title--h2">基础编辑方法</h2>
+			<ul class="ul--2c--line">
+				<li>
+					<h3>
+						切换到编辑模式
+					</h3>
+					<p>编辑地图设计时，单击工具栏的[地图]按钮（或菜单的[模式]→[地图]），切换到编辑模式。</p>
+				</li>
+				<li>
+					<h3>
+						选择地图数据
+					</h3>
+					<p>在窗口左下方的地图列表单击选择要编辑的对象地图数据。该地图的形状会显示在窗口右侧的地图视图。</p>
+				</li>
+				<li>
+					<h3 class="title--h3--sub">
+						选择图块
+					</h3>
+					<p>从图块调色盘选择要绘画的图块。所选的图块会被白色框包围。在图块调色盘显示的图块可以通过单击下方的 A~E 标签进行切换。<br/> <br/>通过在图块调色板上拖动，可以将该范围内的图块共同指定为绘制目标。</p>
+				</li>
+				<li>
+					<h3 class="title--h3--sub">
+						选择绘画工具与绘画
+					</h3>
+					<p>在工具栏单击选择用于绘画图块的工具（以下五种）。然后，单击或拖动至窗口右侧的地图显示区域（地图视图）就能绘制图块。您也可以从[绘画]菜单中选择各个工具。<br/> <br/>已绘制的图块可以通过绘画透明图块进行删除。在[B]标签内左上方的是上层透明图块。</p>
+
+					<dl class="dl--flex">
+						<dt><img src="assets/img/01_07_01_img01.png" alt=""/> 铅笔 </dt>
+						<dd>在单击的场所绘制所选图块。</dd>
+						<dt><img src="assets/img/01_07_01_img02.png" alt=""/> 矩形 </dt>
+						<dd>将选定的图块散布在对角线为连接拖动起点和终点的线的矩形内部。</dd>
+						<dt><img src="assets/img/01_07_01_img03.png" alt=""/> 椭圆</dt>
+						<dd>将选定的图块以椭圆形绘制在对角线为连接拖动起点和终点的线的矩形范围内。</dd>
+						<dt><img src="assets/img/01_07_01_img04.png" alt=""/> 填充 </dt>
+						<dd>在连续范围内绘制单击位置的图块及从该位置开始的相同类型的图块。</dd>
+						<dt><img src="assets/img/01_07_01_img05.png" alt=""/> 影笔 </dt>
+						<dd>在单击场所添加或删除墙壁等的影子。</dd>
+					</dl>
+				</li>
+			</ul>
+
+
+
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">其他编辑功能</h2>
+
+			<ul class="ul--2c--line">
+				<li>
+					<h3>自动图块 </h3>
+					<p>在图块调色盘[A]标签中显示的图块含有称作“自动图块”功能的图块。一个类型的自动图块拥有多种图案，会根据排列方式自动调整边框。含自动图块功能的图块是在数据库[<a href="01_08_10.html">图块组</a>]中[A1]至[A4]中指定的图块。<br/> <br/>另外，自动图块的功能可以通过长按[Shift]键绘制图块或进行滴管，使其暂时无效。
+					</p>
+				</li>
+				<li>
+					<h3>自动生成影子 </h3>
+					<p>在自动图块中，有一个可以在有竖着排列两块以上的图块时，在其中右下方的图块上自动绘制影子的工具。但是，某些特定的图块上无法绘制影子。</p>
+				</li>
+				<li>
+					<h3>影笔 </h3>
+					<p>影笔是用来绘画墙壁和建筑物等的影子的工具。可以调暗图块的 1/4 大小单位的色调。<br/> <br/>单击工具栏的[影笔]按钮（或菜单的[绘画]→[影笔]），并单击地图试图以进行编辑。单击没有影子的地方就能绘制影子，单击已经有影子的地方则会删除该影子。<br/> <br/>
+						</p><div class="">
+							<img src="assets/img/01_07_01_img06.png" alt=""/>
+						</div>
+					<p></p>
+				</li>
+				<li>
+					<h3 id="p02">上层图块的特殊标准 </h3>
+					<p>
+						</p><ul class="ul">
+							<li>您可以同时重叠两种 B~E 的上层图块。<br/>※重叠第三种的时候，第一种上层图块会消失。<br/>※当第三种与第二种为相同图块时，第一种图块不会消失。<br/>※只有 B 的左上方图块拥有删除所有上层图块的功能。
+							</li>
+							<li>重叠可通行和不可通行的图块时，会优先应用稍后放置的图块的信息。<br/>※即使通行为☆的图块在下方，显示顺序上☆依旧为先。<br/>※当重叠通行为☆的图块时，会优先应用不可通行图块的信息。
+							</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h3 id="p01">下层图块的特殊标准 </h3>
+					<p>在图块调色盘[A]标签中显示的图块中，[图块组]的设置为[A2]的图块（图块调色盘上由上往下第 3~6 层）被分为“基础”（左起 1~4 行，左半边）和“装饰”（左起 5~8 行，右半边）两种。装饰图块可以和基础图块重叠配置。<br/> <br/>但是，在[图块组]的设置中[模式]为[世界类型]的图块，若是重叠配置装饰图块到基础图块中第 2 行或第 4 行的图块上，基础图块就会变成第 1 行或第 3 行的图块。
+					</p>
+				</li>
+				<li>
+					<h3 id="p03">地图图层的选择功能</h3>
+					<p>
+						在地图编辑模式切换图层。分别选择图层，就能在不影响其他图层的情况下编辑地图。<br/>一般来说，可以在[自动]设置下制作地图，但是分成不同图层后可以更细致地制作地图。<br/> <br/>选中图层时，会强调选择图层中配置的图块。<br/>这时您只能编辑强调的图块，因此可以在使用上层图块做装饰后，想要统一更改下层图块时运用。<br/> <br/>图中显示的分别是使用[自动]和[图层 1]配置的地图。<br/>如您所见，[图层 1]的设置中统一更改了房间的地板图块。
+					</p>
+					<div class="img--center"><img src="assets/img/01_01_01_05_img03.png" alt=""/></div>
+				</li>
+			</ul>
+			
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

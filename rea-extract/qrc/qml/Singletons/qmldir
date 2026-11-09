@@ -1,0 +1,13 @@
+singleton AssetStripper AssetStripper.qml
+singleton AudioPlayer AudioPlayer.qml
+singleton Clipboard Clipboard.qml
+singleton CommonUtils CommonUtils.qml
+singleton Constants Constants.qml
+singleton DataConverter DataConverter.qml
+singleton DataManager DataManager.qml
+singleton EventCommands EventCommands.qml
+singleton JsonTemplates JsonTemplates.qml
+singleton MovementCommands MovementCommands.qml
+singleton NewDataMaker NewDataMaker.qml
+singleton PluginParser PluginParser.qml
+singleton SettingsManager SettingsManager.qml

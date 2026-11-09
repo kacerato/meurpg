@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.1.1.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>MV 数据的转换</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>MV 数据的转换</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="MV 数据的转换">
+        <span>MV 数据的转换</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+
+		<div class="mainvisual mainvisual--01_01">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">关于 RPG Maker MZ</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_01.html">关于 RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>新功能</li>
+				<li>&gt;</li>
+				<li>MV 数据的转换</li>
+			</ul>
+			<img src="assets/img/common/cha01_01.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">MV 数据的转换</h1>
+
+		<p class="text--lead">
+			您可以将 RPG Maker MV（以下称 MV）中制作的项目数据转换为能够在 RPG Maker MZ（以下称 MZ）使用的游戏制作项目数据。
+		</p>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">数据的转换步骤</h2>
+			<p class="text--sub">
+				通过复制项目数据进行转换。首先，先准备好以下事项。
+			</p>
+			<ul class="ul mb30px">
+				<li>在计算机上展开“文件扩展名”</li>
+				<li>对转换用的 MV 的项目数据源进行备份</li>
+				<li>在 MZ 新建用于转换项目数据的路径</li>
+			</ul>
+
+			<h3 class="title--h3">将各种文件复制到 MZ 的项目中</h3>
+			<p class="text--sub">
+				将 MV 项目数据中的各种文件复制到 MZ 的项目中。<br/>在那之后，只要启动 MZ，数据转换处理便会执行。<br/>※ MZ 中项目处于打开状态时，不会执行转换。要复制文件的时候，请先关闭 MZ。
+			</p>
+			<h4 class="title--h3--sub">MV 和 MZ 各种数据的保存路径</h4>
+			<p class="text--sub">根据下表，将所需的 MV 数据复制到 MZ 并覆盖保存。</p>
+			<table class="table--type05 mb90px">
+				<tbody><tr>
+					<th></th>
+					<th>RPG Maker MV</th>
+					<th>RPG Maker MZ</th>
+				</tr>
+				<tr>
+					<td>音乐数据</td>
+					<td>\audio</td>
+					<td>\audio</td>
+				</tr>
+				<tr>
+					<td>图像数据</td>
+					<td>
+						\img\battlebacks1 <br/> \img\battlebacks2 <br/> \img\characters <br/> \img\enemies <br/> \img\faces <br/> \img\parallaxes <br/> \img\pictures <br/> \img\sv_actors <br/> \img\sv_enemies <br/> \img\tilesets <br/> \img\titles1 <br/> \img\titles2
+					</td>
+					<td>
+						\img\battlebacks1 <br/> \img\battlebacks2 <br/> \img\characters <br/> \img\enemies <br/> \img\faces <br/> \img\parallaxes <br/> \img\pictures <br/> \img\sv_actors <br/> \img\sv_enemies <br/> \img\tilesets <br/> \img\titles1 <br/> \img\titles2
+					</td>
+				</tr>
+				<tr>
+					<td>
+						图标图像数据
+					</td>
+					<td>
+						\icon
+					</td>
+					<td>
+						\icon
+					</td>
+				</tr>
+				<tr>
+					<td>
+						系统图像数据
+					</td>
+					<td>
+						\img\system <br/> <br/> ※以下文件除外 <br/>
+						<ul class="ul">
+							<li>ButtonSet.png</li>
+							<li>Damage.png</li>
+							<li>Loading.png</li>
+							<li>MadeWithMv.png</li>
+						</ul>
+					</td>
+					<td>
+						\img\system
+					</td>
+				</tr>
+				<tr>
+					<td>
+						动画（不建议）
+					</td>
+					<td>
+						\data\Animations.json <br/> \img\animations
+					</td>
+					<td>
+						\data\Animations.json <br/> \img\animations <br/> <br/> ※转换时，需要复制 \img\animations 文件夹
+					</td>
+				</tr>
+				<tr>
+					<td>
+						字符数据
+					</td>
+					<td>
+						\fonts <br/> <br/> ※以下文件除外 <br/>
+						<ul class="ul">
+							<li>gamefont.css</li>
+						</ul>
+					</td>
+					<td>
+						\fonts
+					</td>
+				</tr>
+				<tr>
+					<td>
+						地图与地图事件
+					</td>
+					<td>
+						\data\MapInfos.json <br/> \data\Mapxxx.json <br/> (xxx 是地图 ID 的数字)
+					</td>
+					<td>
+						\data\MapInfos.json <br/> \data\Mapxxx.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						角色
+					</td>
+					<td>
+						\data\Actors.json
+					</td>
+					<td>
+						\data\Actors.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						职业
+					</td>
+					<td>
+						\data\Classes.json
+					</td>
+					<td>
+						\data\Classes.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						技能
+					</td>
+					<td>
+						\data\Skills.json
+					</td>
+					<td>
+						\data\Skills.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						物品
+					</td>
+					<td>
+						\data\Items.json
+					</td>
+					<td>
+						\data\Items.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						武器
+					</td>
+					<td>
+						\data\Weapons.json
+					</td>
+					<td>
+						\data\Weapons.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						护甲
+					</td>
+					<td>
+						\data\Armors.json
+					</td>
+					<td>
+						\data\Armors.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						敌方角色
+					</td>
+					<td>
+						\data\Enemies.json
+					</td>
+					<td>
+						\data\Enemies.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						敌群
+					</td>
+					<td>
+						\data\Troops.json
+					</td>
+					<td>
+						\data\Troops.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						状态
+					</td>
+					<td>
+						\data\States.json
+					</td>
+					<td>\data\States.json
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						图块组
+					</td>
+					<td>
+						\data\Tilesets.json
+					</td>
+					<td>
+						\data\Tilesets.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						公共事件
+					</td>
+					<td>
+						\data\CommonEvents.json
+					</td>
+					<td>
+						\data\CommonEvents.json
+					</td>
+				</tr>
+				<tr>
+					<td>
+						系统<br/>用语<br/>类型<br/>开关名<br/>变量名
+					</td>
+					<td>
+						\data\System.json
+					</td>
+					<td>
+						\data\System.json
+					</td>
+				</tr>
+			</tbody></table>
+
+			<h3 class="title--h3">转换注意事项</h3>
+			<p class="text--sub">
+				可以转换的数据包括使用 RPG Maker MV 制作的地图数据、地图事件和数据库内容。有些数据不需要复制或不建议进行转换。
+			</p>
+			<table class="table--type06 mb90px">
+				<tbody><tr>
+					<th>
+						<b>系统图像数据</b><br/> \img\system
+					</th>
+					<td>
+						不需要复制以下的图像数据。
+						<ul class="ul">
+							<li>ButtonSet.png</li>
+							<li>Damage.png</li>
+							<li>Loading.png</li>
+							<li>MadeWithMv.png</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>动画</b><br/> \data\Animations.json<br/> \img\animations
+					</th>
+					<td>
+						在 RPG Maker MZ 内无法编辑，因此不建议转换。<br/>MZ 的“img”文件夹内不存在“animations”文件夹，因此需要复制整个文件夹。
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>字符数据</b><br/> \fonts
+					</th>
+					<td>
+						在 MZ 使用的字符需从数据库进行设置。因此只需要复制字符文件就够了。<br/>要使用的字符可以通过 [数据库] → [系统 2] → [高级配置] 进行指定。
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<b>插件数据</b><br/> \js\plugins<br/> \js\plugin.js
+					</th>
+					<td>
+						插件的运作不受保证。
+					</td>
+				</tr>
+			</tbody></table>
+
+			<div class="flex--bw--p-img">
+				<div>
+					<h3 class="title--h3">关于插件</h3>
+					<p class="text--sub">
+						如果含有用于 RPG Maker MV 的插件，插件管理窗口中会显示以下信息。
+					</p>
+				</div>
+				<img src="assets/img/01_01_01_02_img01.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

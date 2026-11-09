@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_5";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>角色</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>角色</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="角色">
+        <span>角色</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>角色</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">角色</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">增减HP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减角色的HP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有角色）。如要通过ID号指定目标角色请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定HP的增减值。如果要设置一个固定数量，请选择[常量]并输入一个值（1至9999）。要将数值指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>允许无法战斗</h4>
+					<p>启用后，HP减少至0以下时，将进入无法战斗状态。如果禁用，则当HP低于0时，将其调整为1。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">增减MP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减角色的MP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有角色）。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定MP的增减值。如果要设置一个固定数量，请选择[常量]并输入一个值（1至9999）。要将数值指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">增减TP</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减角色的TP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有角色。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定TP的增减值。如果要设置一个固定数量，请选择[常量]并输入一个值（1至100）。要将数值指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">变更状态</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色的状态。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有角色。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（附加/解除）。</p>
+				</li>
+				<li>
+					<h4>状态</h4>
+					<p>指定操作对象的状态。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">完全恢复</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">解除所有状态，恢复角色的全部HP和MP。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有角色）。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">增减经验值</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减角色的经验值。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有角色）。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定经验值的增减值。如果要设置一个固定数量，请选择[常量]并输入一个值（1至9999999）。要将数值指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>显示升级信息</h4>
+					<p>启用后，如果您通过增加经验值升级了，则游戏画面上将显示一条消息来提示您。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">增减等级</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img07.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减角色的等级。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有作用物）。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定等级的增减值。如果要设置一个固定数量，请选择[常量]并输入一个值（1至98）。要将数值指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>显示升级信息</h4>
+					<p>启用后，如果您升级了，则游戏画面上将显示一条消息来提示您。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">增减能力值</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img08.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减角色的能力值。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色（如选中[队伍全体]则将选中队伍中的所有作用物）。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>能力值</h4>
+					<p>指定要增减的能力值种类。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定能力值的增减值。如果要设置一个固定数量，请选择[常量]并输入一个值（1至9999）。要将数值指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">增减技能</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img09.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色的技能。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。如果要选中特定的角色，请选择[固定]并指定角色。如要通过ID号指定目标角色，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定[记住]以启用该技能，或指定[忘记]以禁用该技能。</p>
+				</li>
+				<li>
+					<h4>技能</h4>
+					<p>指定操作对象的技能。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">变更装备</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img10.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色的装备。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色</p>
+				</li>
+				<li>
+					<h4>装备类型</h4>
+					<p>指定要更改的装备种类。</p>
+				</li>
+				<li>
+					<h4>装备品</h4>
+					<p>指定要新装备上的装备品。队伍必须已经持有指定的装备品。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>如果队伍未持有指定的装备品，则不会更改装备。如要强制装备任何装备品，必须使用[武器的增减]和[护甲的增减]的事件指令，使队伍预先持有此装备。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p11">
+			<h2 class="title--h2">变更名字</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img11.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色名字。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。</p>
+				</li>
+				<li>
+					<h4>名称 </h4>
+					<p>指定变更后的名称。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p12">
+			<h2 class="title--h2">变更职业</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img12.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色等级。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。</p>
+				</li>
+				<li>
+					<h4>职业</h4>
+					<p>指定变更后的职业。</p>
+				</li>
+				<li>
+					<h4>保存等级</h4>
+					<p>如果勾选了此项，将保持变更职业之前的等级。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注</h3>
+			<ul class="ul">
+				<li>无法装备的武器、护甲等将自动解除装备。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p13">
+			<h2 class="title--h2">变更别名</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img13.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色的别名。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。</p>
+				</li>
+				<li>
+					<h4>别名</h4>
+					<p>指定变更后的别名。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p14">
+			<h2 class="title--h2">变更个人资料</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img14.png" height="214" width="422" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改角色的个人资料。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定目标角色。</p>
+				</li>
+				<li>
+					<h4>个人资料</h4>
+					<p>指定变更后的个人资料。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>職業の設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>職業の設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="職業の設定">
+        <span>職業の設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">データベース</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">データベース</a></li>
+				<li>&gt;</li>
+				<li>職業の設定</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">職業の設定</h1>
+
+		<div class="section">
+			<h2 class="title--h2">データの役割</h2>
+			<p>
+				アクターの能力に関する特徴をまとめたのが職業のデータです。アクターは、いずれかの職業に属する必要があり、その設定をもとにレベルアップの仕方や能力値の上がり方、習得できるスキルなどが決まります。職業固有の特徴も付与できます。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb60px">
+				<img src="assets/img/01_08_02_img01.png" alt=""/>
+			</div>
+
+
+			<h3 class="title--h3">
+				基本設定
+			</h3>
+			<ul class="ul--2c--line mb30px">
+				<li>
+					<h3>
+						名前
+					</h3>
+					<p>職業の名前です。プレイ中、メニュー画面やステータス一覧画面の上部に表示されます。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3--sub">
+				経験値曲線
+			</h3>
+			<p class="text">レベルアップの基準となる経験値の設定です。アクターがレベルごとの必要経験値を獲得するごとに、アクターのレベルが1段階アップし、能力値が上昇したりスキルを習得したりします。<br/>
+				<br/>
+				必要経験値は、設定欄の［…］をクリックすると表示されるウィンドウで下記の4つの値をもとに設定します。ウィンドウの［次のレベルまで］タブでは、各レベルの必要経験値が一覧表示され、背景にはグラフで示されます。これらを参考にしながら設定するとよいでしょう。［累計］タブでは、各レベルに達するまでの経験値の累計を表示します。
+			</p>
+			<div class="flex--bw--dl-img pb30px border--bottom mb90px">
+				<dl>
+					<dt>基本値 </dt>
+					<dd>必要経験値を算出するための基準値です。値を小さくすると全体的に必要経験値が下がります。</dd>
+					<dt>補正値 </dt>
+					<dd>各レベルの必要経験値に指定値を加算します。</dd>
+					<dt>増加度A </dt>
+					<dd>必要経験値の増加量を調節します。値を大きくすると、レベルの上昇に応じて必要経験値が比例的に増加します。</dd>
+					<dt>増加度B</dt>
+					<dd>必要経験値の増加量を調節します。値を大きくすると、主に高いレベルで必要経験値の増加率が大きくなります。</dd>
+				</dl>
+				<img src="assets/img/01_08_02_img02.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				能力値成長曲線
+			</h3>
+			<p class="text">レベルごとの能力値の設定です。グラフをダブルクリックすると設定ウィンドウが開きます。設定方法は後述の［<a href="#p01">能力値成長曲線の設定方法</a>］をご覧ください。</p>
+
+			<h3 class="title--h3">
+				獲得するスキル
+			</h3>
+			<p class="text">レベルアップに応じて習得するスキルです。欄内をダブルクリックすると表示されるウィンドウで、習得するレベルとスキルを指定します。［メモ］はゲーム作成中のメモ書きに使えます。</p>
+			<h3 class="title--h3">
+				特徴
+			</h3>
+			<p class="text">この職業を設定したアクターに与える特徴です。詳細は［<a href="01_08_15.html">特徴の設定方法</a>］を参照してください。</p>
+			<h3 class="title--h3">
+				メモ
+			</h3>
+			<p class="text">ゲーム作成中のメモ書きに使えます。<br/>
+				右クリックするとメニューが表示され、［プラグインヘルプ］を選択するとプラグインのヘルプが表示されます。<br/>
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<div class="flex--bw--p-img mb90px">
+				<div>
+					<h2 class="title--h2" id="p01">能力値成長曲線の設定方法</h2>
+					<p class="text--sub">［能力値成長曲線］のウィンドウでは、レベルごとの能力値を以下の項目をもとに指定します。能力値の名前のタブをクリックすることで編集対象を切り替えられます。編集後［OK］をクリックすると指定した値が反映されます（［キャンセル］をクリックすると内容が破棄されます）。</p>
+				</div>
+				<img src="assets/img/01_08_02_img03.png" alt=""/>
+			</div>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>簡単設定</h3>
+					<p>全レベルの能力値にあらかじめ用意された値を適用します。値のパターンには［A］～［E］の5種類あり、それぞれのボタンをクリックすると適用されます。</p>
+				</li>
+				<li>
+					<h3>レベル／値 </h3>
+					<p>レベルごとの能力値を直接編集します。［レベル］で対象のレベル数（1～99）を指定した後、そのレベルのときの能力値を［値］（最大HPは1～9999／最大MPは0～9999、これら以外は0～999）に指定します。</p>
+				</li>
+				<li>
+					<h3>曲線生成 </h3>
+					<p>レベル1とレベル99のときの値をもとに、その間のレベルの値を自動算出します。<br/>
+						<br/>
+						クリックすると表示される［曲線生成］ウィンドウで、［レベル1］［レベル99］に、それぞれのレベルのときの値（最大HPは1～9999／最大MPは0～9999、これら以外は0～999）を指定します。<br/>
+						<br/>
+						次にスライダーで成長タイプを決めます。左側（早熟）にするとレベルの上昇に合わせて成長率（能力値の上昇分）が緩やかになり、右側（晩熟）にするほど成長率が高くなります。［OK］ボタンをクリックすると指定内容に基づいて能力値が設定されます。</p>
+				</li>
+				<li>
+					<h3>グラフ</h3>
+					<p>各レベルに設定された能力値を棒グラフで表示します。表示範囲をクリック／ドラッグすると、その箇所に応じたレベルの能力値が取得できます。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

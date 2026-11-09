@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>移動ルートの設定</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>移動ルートの設定</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="移動ルートの設定">
+        <span>移動ルートの設定</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10_06.html">移動</a></li>
+				<li>&gt;</li>
+				<li>移動ルートの設定</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">移動ルートの設定</h1>
+
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">移動ルートとは</h2>
+			<p class="text">移動ルートとは、プレイヤーやイベントをどのように移動させるかを決めるものです。イベントの［自律移動］の設定で［カスタム］を指定した場合、および［移動ルートの設定］のイベントコマンドを使用する場合に設定します。<br/>
+				<br/>
+				どちらも設定は［移動ルート］ウィンドウで行ないます。ルートは、プレイヤーなどの移動や向きなどを制御する［移動コマンド］を組み合わせることで編集できる仕組みです。例えば［右に移動］［下に移動］［左に移動］［上に移動］の移動コマンドを順に登録すれば、プレイヤーなどを現在位置から右回りに一周させられます。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">設定項目の内容</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_06_01_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">プレイヤー</h3>
+			<p class="text">設定対象のアクター／イベントを指定します。［移動ルートの設定］のイベントコマンドの設定時のみ指定します。</p>
+
+			<h3 class="title--h3">プレビュー</h3>
+			<p class="text">マップ上で移動ルートのプレビューを行います。</p>
+
+			<h3 class="title--h3">コマンドリスト</h3>
+			<p class="text--sub">登録した移動コマンドのリストです。ここに設定するルートに合わせ、実行順に移動コマンドを登録します。<br/>
+				<br/>
+				リスト上の項目をクリックで選択すると、そこが移動コマンドの一覧でクリックしたものを追加する位置になります。項目を右クリックするとコンテキストメニューが表示され、設定の再編集やコピーなどの操作が行なえます。</p>
+
+			<h3 class="title--h3--sub">移動コマンド</h3>
+			<p class="text--sub">キャラクター（プレイヤー／イベント）の移動や向きを制御する命令群です。ボタンをクリックすると、コマンドリスト上で選択中の位置に追加（挿入）されます。各コマンドの働きは以下のとおりです。なお、1歩の移動距離はタイルひとつぶんです。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>下に移動／左に移動／右に移動／上に移動／左下に移動／右下に移動／左上に移動／右上に移動</h4>
+					<p>コマンド名の方向に1歩移動します。</p>
+				</li>
+				<li>
+					<h4>ランダムに移動</h4>
+					<p>上下左右のうち、ランダムで選ばれた方向に1歩移動します。</p>
+				</li>
+				<li>
+					<h4>プレイヤーに近づく</h4>
+					<p>プレイヤーに近づく方向に1歩移動します。</p>
+				</li>
+				<li>
+					<h4>プレイヤーから遠ざかる</h4>
+					<p>プレイヤーから遠ざかる方向に1歩移動します。</p>
+				</li>
+				<li>
+					<h4>一歩前進</h4>
+					<p>現在の向きの方向に1歩移動します。</p>
+				</li>
+				<li>
+					<h4>一歩後退</h4>
+					<p>現在の向きを変えず、反対方向に1歩移動します。</p>
+				</li>
+				<li>
+					<h4>ジャンプ</h4>
+					<p>ジャンプで移動します。ジャンプさせる距離を［X座標］［Y座標］（それぞれ-100～100、正の値は右／下方向）にそれぞれ指定します。ジャンプ中は障害物をすり抜けます。なお、隊列歩行表示をONにしたパーティをジャンプで移動させた場合、2番目以降のメンバーはその場に留まります。</p>
+				</li>
+				<li>
+					<h4>ウェイト</h4>
+					<p>処理を停止する時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>下を向く／左を向く／右を向く／上を向く</h4>
+					<p>コマンド名の方向に向きを変えます。</p>
+				</li>
+				<li>
+					<h4>右に90度回転／左に90度回転</h4>
+					<p>コマンド名の方向に90度向きを変えます。</p>
+				</li>
+				<li>
+					<h4>180度回転</h4>
+					<p>現在と真逆の方向に向きを変えます。</p>
+				</li>
+				<li>
+					<h4>右か左に90度回転</h4>
+					<p>ランダムで向きを90度変えます。</p>
+				</li>
+				<li>
+					<h4>ランダムに方向転換</h4>
+					<p>ランダムで上下左右に向きを変えます。</p>
+				</li>
+				<li>
+					<h4>プレイヤーの方を向く</h4>
+					<p>プレイヤーのいる方向に向きを変えます。</p>
+				</li>
+				<li>
+					<h4>プレイヤーの逆を向く</h4>
+					<p>プレイヤーがいる方向とは逆方向に向きを変えます。</p>
+				</li>
+				<li>
+					<h4>スイッチON／スイッチOFF</h4>
+					<p>指定したスイッチをコマンド名の値に変えます。</p>
+				</li>
+				<li>
+					<h4>移動速度の変更</h4>
+					<p>対象のマップイベントの［自律移動］の［速度］の設定を変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>移動頻度の変更</h4>
+					<p>対象のマップイベントの［自律移動］の［頻度］の設定値を変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>歩行アニメON／歩行アニメOFF</h4>
+					<p>対象のマップイベントの［オプション］の［歩行アニメ］の設定値を変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>足踏みアニメON／足踏みアニメOFF</h4>
+					<p>対象のマップイベントの［オプション］の［足踏みアニメ］の設定値を変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>向き固定ON／向き固定OFF</h4>
+					<p>対象のマップイベントの［オプション］の［向き固定］の設定値を変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>すり抜けON／すり抜けOFF</h4>
+					<p>対象のマップイベントの［オプション］の［すり抜け］の設定値を変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>透明化ON／透明化OFF</h4>
+					<p>キャラクターの画像の表示／非表示を変更します。ONにすると表示されなくなります。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>画像の変更</h4>
+					<p>キャラクターの画像を指定のものに変更します。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>不透明度の変更</h4>
+					<p>キャラクターの画像の透明度（0～255）を変更します。0にすると見えなくなります。この変更は移動終了後も継続します。</p>
+				</li>
+				<li>
+					<h4>合成方法の変更</h4>
+					<div>
+						キャラクターとマップの画像の表示色の合成方法を変更します。
+						この変更は移動終了後も継続します。
+						<ul class="ul">
+							<li>［通常］ ・・・ 標準の表示です。</li>
+							<li>［加算］ ・・・ 白っぽく表示されます。</li>
+							<li>［乗算］ ・・・ 黒っぽく表示されます。</li>
+							<li>［スクリーン］ ・・・ 明るく表示されます。</li>
+						</ul>
+					</div>
+				</li>
+				<li>
+					<h4>SEの演奏</h4>
+					<p>指定したSEを演奏します。</p>
+				</li>
+				<li>
+					<h4>スクリプト</h4>
+					<p>入力したスクリプトを実行します。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">オプション</h3>
+			<p class="text--sub">コマンドリストに登録した移動コマンド全体の処理方法です。必要に応じて適用するものを有効にします。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>動作を繰り返す</h4>
+					<p>有効にすると、コマンドリストの内容を繰り返し実行します。</p>
+				</li>
+				<li>
+					<h4>移動できない場合は飛ばす</h4>
+					<p>有効にすると、障害物などで移動コマンドによる移動ができない場合、その処理を飛ばします。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、移動コマンドの処理がすべて終了するまで、他の処理を一時停止します。［移動ルートの設定］のイベントコマンドの設定時のみ指定できます。</p>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

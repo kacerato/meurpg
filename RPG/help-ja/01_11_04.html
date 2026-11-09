@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>プラグインを有効にする方法</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>プラグインを有効にする方法</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="プラグインを有効にする方法">
+        <span>プラグインを有効にする方法</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">資料集</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>資料集</li>
+				<li>&gt;</li>
+				<li>プラグインを有効にする方法</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">プラグインを有効にする方法</h1>
+		<p class="text--lead">RPGツクールMZでは、ユーザーにとってより使いやすいプラグイン機能が採用されています。</p>
+
+
+		<div class="section" id="m01">
+			<h2 class="title--h2">プラグインを有効にする方法</h2>
+			<p class="text">
+				［ツール］の［プラグイン管理］を使用してプラグインを有効にします。
+			</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<p class="mb30px b">1. 空欄をダブルクリックします。</p>
+					<div class="img--center">
+						<img src="assets/img/01_11_04_img01.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<p class="mb30px b">2. 使用するプラグインを選択し、［OK］ボタンをクリックします。</p>
+					<div class="img--center">
+						<img src="assets/img/01_11_04_img02.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<p class="mb30px b">3. 選択したプラグインが一覧に表示されます。</p>
+					<div class="img--center">
+						<img src="assets/img/01_11_04_img03.png" alt=""/>
+					</div>
+				</li>
+			
+
+		</ul></div><!-- /section -->
+
+
+		<div class="section" id="m02">
+			<h2 class="title--h2">公式以外のプラグインを追加する方法</h2>
+			<p class="text">
+				プラグインを追加する場合は、プロジェクトフォルダの［js］→［plugins］フォルダに該当のプラグインのjsファイルをコピーした後、上記の手順で有効にしてください。
+			</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<p class="mb30px b">1. プロジェクトフォルダの［js］→［plugins］フォルダに該当のプラグインのjsファイルをコピーします。</p>
+					<div class="img--center">
+						<img src="assets/img/01_11_04_img04.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<p class="mb30px b">2. プラグイン管理の空欄をダブルクリックし、［名前］をクリックすると、追加したプラグイン名が表示されます。これを選択して［OK］をクリックします。</p>
+					<div class="img--center">
+						<img src="assets/img/01_11_04_img05.png" alt=""/>
+					</div>
+				</li>
+				<li>
+					<p class="mb30px b">3. 追加したプラグインが一覧に表示されます。</p>
+					<div class="img--center">
+						<img src="assets/img/01_11_04_img06.png" alt=""/>
+					</div>
+				</li>
+			
+		</ul></div><!-- /section -->
+
+
+		<div class="section" id="m03">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">プラグインのON/OFFを切り替える</h2>
+					<p class="text--sub">チェックボタンで一覧画面から簡単にプラグインのON/OFFを切り替えることができます。</p>
+				</div>
+				<img src="assets/img/01_11_04_img07.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+		<div class="section" id="m04">
+			<div class="flex--bw--p-img">
+				<div>
+					<h2 class="title--h2">プラグインを更新</h2>
+					<p class="text--sub">
+						プラグインのアップデート等を行う際、jsファイルを上書きした後で［更新］を選択すると、パラメータの設定情報および説明文の変更が反映されます。<br/>
+						Shiftキーでプラグインを複数選択して、一括で更新することが可能です。 
+					</p>
+				</div>
+				<img src="assets/img/01_11_04_img08.png" alt=""/>
+			</div>
+		</div><!-- /section -->
+
+
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

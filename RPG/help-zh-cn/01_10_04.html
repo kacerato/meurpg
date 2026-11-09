@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>队伍</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>队伍</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="队伍">
+        <span>队伍</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>队伍</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">队伍</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">增减金钱</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减队伍持有的金钱数。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定想要增减的数额。如果要增加或减少固定数额，请选择[常量]并输入一个金额。要将数额指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">增减物品</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减队伍持有的物品数量。如果增减的结果使得持有个数超过了0~99个的范围，则将其调整为99个（最大持有数）或0个（未持有该物品）。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>物品</h4>
+					<p>指定增加或减少的目标物品。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定想要增减的数量。如果要增加或减少固定数量，请选择[常量]并输入一个数量。要将数量指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">增减武器</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减队伍持有的武器数量。如果增减的结果使得持有个数超过了0~99个的范围，则将其调整为99个（最大持有数）或0个（未持有该物品）。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>武器</h4>
+					<p>指定增加或减少的目标武器。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定想要增减的数量。如果要增加或减少固定数量，请选择[常量]并输入一个数量。要将数量指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>包括装备</h4>
+					<p>启用的话，则作用物装备中的武器也将列入减少的对象。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">增减护甲</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">增减队伍持有的武器数量。如果增减的结果使得持有个数超过了0~99个的范围，则将其调整为99个（最大持有数）或0个（未持有该物品）。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>护甲</h4>
+					<p>指定增加或减少的目标护甲。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（增加/减少）。</p>
+				</li>
+				<li>
+					<h4>运算数</h4>
+					<p>指定想要增减的数量。如果要增加或减少固定数量，请选择[常量]并输入一个数量。要将数量指定为一个变量时，请选择[变量]并指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>包括装备</h4>
+					<p>启用的话，则作用物装备中的护甲也将列入减少的对象。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">交换成员</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_04_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改队伍中的角色构成。作为替换的结果，该队伍中的角色人数可以为0。在这种情况下，玩家将不再在地图上显示。</p>
+
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>指定要替换目标的角色。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>指定操作内容（加入/去除）。</p>
+				</li>
+				<li>
+					<h4>初始化</h4>
+					<p>如果启用，则添加角色时的设置将基于数据库中的设置。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

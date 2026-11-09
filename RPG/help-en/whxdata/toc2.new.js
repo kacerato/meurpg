@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"New Functions","type":"book","tilePath":"","key":"toc3"},{"name":"System Requirements","type":"item","tilePath":"","url":"01_01_02.html"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

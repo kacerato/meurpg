@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>イベント</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>イベント</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="イベント">
+        <span>イベント</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベント</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li>イベント</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+		<div class="section">
+			<h2 class="title--h2">イベントとは</h2>
+			<p class="text">
+				RPGでは人物との会話、宝箱からのアイテムの入手、ボス敵との戦闘などのできごとを通してゲームが進行します。<br/>
+				本ソフトでは、そうした個々のできごとを“イベント”というデータで用意します。<br/>
+				<br/>
+				イベントとは、ゲーム中で何らかの処理を行なう仕掛けのことです。<br/>
+				たとえばプレイヤーが話しかけるとメッセージを返す人物キャラクターは、イベントに人物の画像を割り当て、画面に文章を表示させる処理を持たせることで表現できます。<br/>
+				<br/>
+				このイベントをプレイ状況やプレイヤーの働きかけによって“作動”させることで、ゲームにいろんなできごとをもたらす仕組みです。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">イベントの種類</h2>
+			<p class="text">イベントには以下の3種類があります。ゲームのストーリーや進行に関する処理は“マップイベント”で作成します。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>マップイベント</h3>
+					<p>マップ画面で実行するイベントです。人物との会話シーン、アイテムを入手できる宝箱などを表現するのに使用します。また画像を持たないイベントにより、プレイヤーの場所移動や演出シーンなど、ゲームの仕組みや進行に関する処理も定義できます。<br/>
+						<br/>
+						作成・編集は、メインウィンドウのツールバーで［イベント］のボタン（またはメニューバーの ［モード］ →［イベント］）をクリックしてイベントの編集モードを切り替えることで行なえます。
+					</p>
+				</li>
+				<li>
+					<h3>バトルイベント </h3>
+					<p>戦闘画面で実行するイベントです。たとえば“敵のHPが一定以下になったときに変身する”といった処理に使用します。作成・編集はデータベースの［<a href="01_08_07.html">敵グループ</a>］で行ないます。</p>
+				</li>
+				<li>
+					<h3>コモンイベント </h3>
+					<p>汎用的に実行するイベントです。マップイベントやバトルイベントから呼び出したり、特殊なアイテムを使用したときの処理を設定したりするのに使います。作成・編集はデータベースの ［<a href="01_08_11.html">コモンイベント</a>］ のタブで行ないます。</p>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

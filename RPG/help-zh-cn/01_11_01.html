@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.6.0_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>素材规格</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>素材规格</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="素材规格">
+        <span>素材规格</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--11">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">资料集</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li>资料集</li>
+				<li>&gt;</li>
+				<li>素材规格</li>
+			</ul>
+			<img src="assets/img/common/cha11.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1 mb30px">素材规格</h1>
+		<p class="text--lead">使用RPG Maker MZ，您可以将例如图像、音频等各种各样的素材当做原始文件来使用。<br/>将材料文件复制到相应的文件夹，就可以从编辑器中选择它。
+		</p>
+
+
+		<div class="section">
+			<ul class="ul--inline">
+				<li><a href="#p01">图像素材</a></li>
+				<li><a href="#p02">图块组详情</a></li>
+				<li><a href="#p04">音频素材</a></li>
+				<li><a href="#p05">影像素材</a></li>
+			</ul>
+		</div>
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">图像素材</h2>
+			<p class="text">全部为您​准备成了PNG文件。</p>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3>战斗背景(img/battlebacks1,img/battlebacks2)</h3>
+					<p>
+						用作战斗屏幕的背景的图像。<br/>尺寸为1000 x 740，battlebacks1中主要包括地面绘图，而battlebacks2里主要是墙壁的绘图，可将其任意组合成战斗背景<br/>在正视图战斗中会修剪图像的上部、在侧视图战斗中将修剪图像的下部后显示。
+					</p>
+				</li>
+				<li>
+					<h3>正视图用 敌方人物(img/enemies)</h3>
+					<p>
+						前视图战斗中显示的敌方角色的图像。尺寸是任意的。<br/> <br/> ※如果图像尺寸的宽度（水平方向）是奇数，则根据规格而可能发生显示模糊。建议您使用偶数。 
+					</p>
+				</li>
+				<li>
+					<h3>面部图像(img/faces)</h3>
+					<p>
+						显示在菜单画面或消息窗口上的图像。<br/>每张面部图像都由数张144 x 144的图像组成，横向4张，纵向2张，总共8张排列组成一个文件。
+					</p>
+				</li>
+				<li>
+					<h3>地图远景(img/parallaxes)</h3>
+					<p>
+						显示在地图背面的图像。尺寸是任意的。<br/>如果想要进行循环，请使上下左右连接起来，就像墙纸一样连接在一起。<br/>另外，远景文件名的第一个字符为［!］时，会被视为地板（零视差）。
+					</p>
+				</li>
+				<li>
+					<h3>图片(img/pictures)</h3>
+					<p>
+						这是在游戏过程中要使用事件指令显示的图像。尺寸是任意的。<br/> <br/> ※如果图像尺寸的宽度（水平方向）是奇数，则根据规格而可能发生显示模糊。建议您使用偶数。  
+					</p>
+				</li>
+				<li>
+					<h3>侧视图用 友方人物(img/sv_actors)</h3>
+					<p>
+						这是在侧视图战斗中显示的角色图像。  <br/>请参阅[<a href="01_11_02.html">侧视图角色规格</a>]。
+					</p>
+				</li>
+				<li>
+					<h3>侧视图用 敌方人物(img/sv_enemies)</h3>
+					<p>
+						这是在侧视图战斗中显示的敌方角色的图像。尺寸是任意的。<br/> <br/> ※如果图像尺寸的宽度（水平方向）是奇数，则根据规格而可能发生显示模糊。建议您使用偶数。
+					</p>
+				</li>
+				<li>
+					<h4>图块组(img/tilesets)</h4>
+					<p>
+						这是一张包含了组成地图的图块（即所谓的地图片）的图像。
+					</p>
+				</li>
+				<li>
+					<h4>标题画面(img/titles1,img/titles2)</h4>
+					<p>
+						显示了标题画面的图像。<br/>尺寸为816 x 624，主背景绘制在titles1中，框架等绘制在titles2中，将其进行任意组合成标题画面。
+					</p>
+				</li>
+				<li>
+					<h3>步行人物(img/characters)</h3>
+					<p>
+						在地图画面上显示的人物图像。<br/> 每个人物的尺寸是任意的（标准为48 x 48），将4个方向（下、左、右、上）x 3个图案的共计12个图案按规定的顺序排列。将这1个人物以纵向2个，横向4个，总共8个形象排列在一起，组成一个文件。从这个文件的宽度的1/12和高度的1/8计算出1个人物的尺寸。为了使与建筑物的重叠看起来更自然，人物会显示在图块向上方偏移6个点处。
+
+						</p><ul class="ul">
+							<li>通过在文件名的开头添加&quot;$&quot;，可以使1个人物 = 1个文件。</li>
+							<li>文件名的开头附加&quot;!&quot;的话，将不会使用偏移6个点的设置，也不再受由于灌木丛属性进行的半透明处理的影响。主要用于地图物体类型的人物，例如门、宝箱等。</li>
+							<li>也可以与特殊文字&quot;$&quot;和&quot;!&quot;一起使用。</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h3>系统图像(img/system)</h3>
+					<p>
+						用来在整个游戏中使用的各种图像。
+					</p>
+					<dl class="dl--default">
+						<dt>Balloon.png</dt>
+						<dd>用于角色的气泡图标的素材。图像下方的透明区域是用户定义框。</dd>
+						<dt>ButtonSet.png</dt>
+						<dd>触摸操作中使用的按钮的素材。 用于打开和关闭菜单、取消操作、返回上一步以及在购买物品时决定商品数量等操作。</dd>
+						<dt>GameOver.png</dt>
+						<dd>游戏结束画面上显示的素材。</dd>
+						<dt>IconSet.png</dt>
+						<dd>用于物品，武器防具，技能等图标中使用的素材。</dd>
+						<dt>Shadow1.png</dt>
+						<dd> 乘坐飞船时显示的阴影素材。</dd>
+						<dt>Shadow2.png</dt>
+						<dd>这是在侧视图战斗用的友方角色阴影的素材。</dd>
+						<dt>States.png</dt>
+						<dd>
+						这是在侧视图战斗用的表示友方角色状态的素材。<br/>
+						</dd>
+						<dt>Weapons1.png, Weapons2.png, Weapons3.png</dt>
+						<dd>
+						这是友方角色在侧视图战斗中普通攻击时显示的武器图像。<br/> Weapons1、Weapons2中有12种，Weapons3中收录了6中图像。Weapons3是用户自定义框。
+						</dd>
+						<dt>Window.png</dt>
+						<dd>
+						收集了构成窗口的图像的素材。
+						</dd>
+					</dl>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">图块组详情</h2>
+			<p class="text">每个图块的尺寸为48x48，并且必须根据以下规则将它们分为5个种类的集A~E。<br/> <br/>另外，规格可能会根据数据库[图块组]的[模式]中的设置而改变。
+			</p>
+			<h3 class="title--h3">
+				图块组 A
+			</h3>
+			<div class="flex--bw--p-img mb30px">
+				<div>
+					<p class="text--sub">绘制地图时，将其视为一个下层集。该集将进一步分为五个图块，其中大多数由称为“自动图块”的特殊图块组成，这些图块会自动创建边框。<br/> <br/>通常，自动图块的基本结构是如下所示排列的6个图案。
+					</p>
+				</div>
+				<img src="assets/img/01_11_01_img01.png" alt=""/>
+			</div>
+			<ul class="ul--2c--line mb40px">
+				<li>
+					<h4>a</h4>
+					<p>代表图案（图块调色盘显示用）</p>
+				</li>
+				<li>
+					<h4>b</h4>
+					<p>四个角带有边框的图案</p>
+				</li>
+				<li>
+					<h4>c</h4>
+					<p>集合图案（在8个方向上的边框和中心处合起来表示一个对象）</p>
+				</li>
+			</ul>
+
+
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_01_img02.png" alt=""/>
+			</div>
+			<p class="text">如果在自动图块中从右下角开始的位置（8,8）是透明的，则该自动图块会被判断为“森林类型”。如果将灌木属性添加到森林类型的自动图块，则在以下8种类型的图块（包括右下角和左下角的边界）上，行走图像不会变成半透明。</p>
+
+			<h3 class="title--h3--sub">A1（动画）</h3>
+			<div class="flex--bw--p-img mb60px">
+				<p class="text--sub">尺寸是768×576。如右图所示，通过组合5个图案的图块来构成。原则上，即使这些图块相邻，也不会在它们之间创建边框。<br/>坐小型船・大型船能够通行的地方，只有此类图块。但是，如果将图块组设置为可以步行，则小型船・大型船将无法进入。
+				</p>
+				<img src="assets/img/01_11_01_img03.png" alt=""/>
+			</div>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h5>板块 A</h5>
+					<p>作为海洋图块使用的自动图块您可以通过横向并排3个自动图块基本构造图案来使其动画化。</p>
+				</li>
+				<li>
+					<h5>板块 B</h5>
+					<p>作为深海图块使用的自动图块当与A1（动画）中的图块相邻时，仅限此板块中的图块将生成海洋图块的边框。此外，此板块的透明色部分会自动用板块A的图块填充。与板块A一样，您可以通过横向并排3个自动图块基本构造图案来使其动画化。另外，在这种板块的图块上，小型船无法通行。</p>
+				</li>
+				<li>
+					<h5>板块 C</h5>
+					<p>这是装饰板块A的海洋图块用的自动图块。此板块的透明色部分会自动用板块A的图块填充。另外，在这种板块的图块上，小型船・大型船将无法通行。</p>
+				</li>
+				<li>
+					<h5>板块 D</h5>
+					<p>作为水图块使用的自动图块您可以通过横向并排3个自动图块基本构造图案来使其动画化。</p>
+				</li>
+				<li>
+					<h5>板块 E</h5>
+					<p>作为瀑布图块使用的自动图块。您可以通过横向使用2个图块形成集合图案，或是纵向并排配置3个图块来使其动画化。另外，在这种板块的图块上，小型船・大型船将无法通行。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3--sub">A2（地面）</h3>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_11_01_img04.png" alt=""/>
+			</div>
+			<div class="flex--bw--p-img mb60px">
+				<p class="text--sub">尺寸是768×576。如上图所示，由纵向4个并列的2个图案的板块组合构成。仅对于此图块，规格会根据在数据库[图块设置]的[模式]中设置的内容而改变。<br/>如果将柜台属性添加到此图块 则它将被用作表现桌台的自动图块，并且配置了该属性时，图案下端将向下偏移12个点。
+				</p>
+				<img src="assets/img/01_11_01_img05.png" alt=""/>
+			</div>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h5>板块A（陆地类型）</h5>
+					<p>由4种图案的自动图块组成，在实际的图块组中，会采用：仅有1、1和2重叠、仅有3、3和4重叠这四种不同处理方式。
+						</p><div class="img--center mt10px">
+							<img src="assets/img/01_11_01_img06.png" alt=""/><br/> <b>↓</b><br/> <img src="assets/img/01_11_01_img07.png" alt=""/>
+						</div>
+					<p></p>
+				</li>
+				<li>
+					<h5>板块 B（陆地类型）</h5>
+					<p>它包括了4个图案，在实际的图块组中，这是可以重叠放置在板块A图块上面的特殊图块。</p>
+				</li>
+				<li>
+					<h5>板块A（区域类型）</h5>
+					<p>它包括了4个图案，在实际的图块组中，这是可以重叠放置在板块B图块上面的特殊图块。</p>
+				</li>
+				<li>
+					<h5>板块B（区域类型）</h5>
+					<p>它包括了4个图案，在实际的图块组中，这是可以重叠放置在板块A图块上面的特殊图块。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3--sub">A3(建筑)</h3>
+			<p class="text">它是一种主要用于建筑物外观的自动图块。将仅由自动图块的集合图案形成的尺寸为768 x 384的图案，通过横向8个、纵向4个的排列来构成。<br/> <br/>使用这些图块时，通过在绘制地图时纵向并列配置两个以上的图块，可以在右侧的相邻图块上自动生成阴影。但是，如果相邻的图块不是A2（地面）（板块C除外）或A5（正常）时，则不会自动生成阴影。</p>
+			<h3 class="title--h3--sub">A4（墙壁）</h3>
+			<p class="text">主要作为墙壁使用的自动图块。也可以用来生成地下城的墙壁。尺寸是768×720。将仅由自动图块的基本构造、自动图块的集合图案等纵向排列图样，通过横向8个、纵向3个的排列来构成。<br/> <br/>使用这些图块时，通过在绘制地图时纵向并列配置两个以上的图块，可以在右侧的相邻图块上自动生成阴影。但是，如果相邻的图块不是A2（地面）（板块C除外）或A5（正常）时，则不会自动生成阴影。</p>
+
+			<h3 class="title--h3--sub">A5（普通）</h3>
+			<p class="text">尺寸为384x768，并且请在其中排列8x16个图块。此文件中包含的所有图块均视为普通图块。从顶部起第3、5、7行中的图块也可以用于生成地下城的地板。</p>
+			<h3 class="title--h3">
+				图块组 B ~ 图块组 E
+			</h3>
+			<p>绘制地图时，将其视为一个上层集。<br/> 各自的尺寸为768×768，并且请在其中排列16x16个图块。</p>
+
+			<ul class="ul">
+				<li>图块组B的最靠左上的图块，为表示上层没有放置任何东西的状态，务必请将其留白。</li>
+			</ul>
+		</div><!-- /section -->
+
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">音频文件（音乐，音效）</h2>
+			<p class="text--sub">
+				将用以下保存格式保存音频文件。
+			</p>
+			<ul class="ul mb30px">
+				<li>Ogg Vorbis(.ogg)</li>
+			</ul>
+			<p>
+				如果在元数据中嵌入了值LOOPSTART和LOOPLENGTH，则与该值对应的样本位置将被识别为重复范围。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">视频文件（影像）</h2>
+			<p class="text--sub">
+				由于可以播放的文件格式因执行环境而异，因此请准备文件名相同的以下两种格式的文件。
+			</p>
+			<ul class="ul mb30px">
+				<li>WebM(.webm)</li>
+				<li>MP4（使用.mp4 H.264解码器编码的格式）</li>
+			</ul>
+			<p>
+				※制作要在Windows或Mac上玩的游戏时，请准备WebM格式的文件。在网络上发布时，这两种格式的文件都是必须的。
+			</p>
+		</div><!-- /section -->
+
+
+	</div><!-- /main -->
+
+
+
+</body></html>

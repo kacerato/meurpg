@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>移動</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>移動</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="移動">
+        <span>移動</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>移動</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">移動</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">場所移動</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">パーティの位置を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>位置</h4>
+					<p>変更後の位置を指定します。特定の位置に移動させる場合は［直接指定］を選択し、［…］をクリックすると表示されるウィンドウで移動先の位置をクリックで指定します。マップのIDや座標で指定するには［変数で指定］を選択し、［ID］［X］［Y］に参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>向き</h4>
+					<p>場所移動後のプレイヤーの向きを指定します。</p>
+				</li>
+				<li>
+					<h4>フェード</h4>
+					<p>場所移動の際の画面の切り替え方を指定します。［黒］では黒色、［白］では白色の表示にしてから移動先のマップを表示します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">乗り物の位置設定</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">乗り物の位置を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>乗り物</h4>
+					<p>対象の乗り物（小型船／大型船／飛行船）を指定します。</p>
+				</li>
+				<li>
+					<h4>場所</h4>
+					<p>変更後の位置を指定します。特定の位置に移動させる場合は［直接指定］を選択し、［…］をクリックすると表示されるウィンドウで移動先の位置をクリックで指定します。マップのIDや座標で指定するには［変数で指定］を選択し、［マップID］［X座標］［Y座標］に参照する変数を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">イベントの位置設定</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">イベントの位置を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>イベント</h4>
+					<p>対象のイベントを指定します。［このイベント］にすると、イベント自身が位置を変える対象になります。移動させられるのは、同じマップにあるイベントに限られます。</p>
+				</li>
+				<li>
+					<h4>場所</h4>
+					<p>変更後の位置を指定します。特定の位置に移動させる場合は［直接指定］を選択し、［…］をクリックすると表示されるウィンドウで移動先の位置をクリックで指定します。マップの座標で指定するには［変数で指定］を選択し、［X］［Y］に参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>向き</h4>
+					<p>場所移動後のプレイヤーの向きを指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">マップのスクロール</h2>
+			<div class="img--center">
+				<img src="assets/img/01_10_06_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">プレイヤーの位置を変えずに、プレイ画面に表示されるマップの範囲を移動（スクロール）します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>方向</h4>
+					<p>スクロール方向を指定します。</p>
+				</li>
+				<li>
+					<h4>距離</h4>
+					<p>移動距離（タイル数）を指定します。</p>
+				</li>
+				<li>
+					<h4>速度</h4>
+					<p>処理の速度（6段階）を指定します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、スクロールの終了まで待ちます。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">移動ルートの設定</h2>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">プレイヤーまたはマップイベントを、指定のルートに沿って強制移動させます。<br/>詳細は［<a href="01_10_06_01.html">移動ルートの設定</a>］の項目を参照してください。</p>
+
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>移動ルートを設定されたキャラクターは、すぐに移動を開始します。</li>
+				<li>すでに移動ルートを設定しているキャラクターに対してこのイベントコマンドを実行すると、それまでの設定は破棄され、新しい設定のみが有効となります。以前の移動ルートによる移動が終了してから次の移動ルートを設定したい場合は、［移動が終わるまでウェイト］を有効にしてください。</li>
+				<li>［移動が終わるまでウェイト］を有効にすると、移動コマンドが終了するまでプレイヤーは操作できません（並列処理中は除く）。このとき、移動ルートを指定したキャラクターが障害物にぶつかるなどして移動コマンドが実行できなくなると、そこで処理が停止したままになります。このような事態は、オプションの［移動できない場合は無視］を有効にするなどの方法で回避してください。</li>
+				<li>このイベントコマンドでプレイヤーが移動しても、累計の移動歩数には加算されません。</li>
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">乗り物の乗降</h2>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">乗り物の乗り降りを操作します。乗っている場合は地上に降り、乗っていない場合は乗ります。設定項目はありません。</p>
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>このイベントコマンドは、プレイヤーが［決定］キーで行なう乗り降りの操作を強制実行するものです。通常の乗り降りの操作ができない場合（乗れる乗り物がないとき、地上に降りられないとき）は何も起こりません。</li>
+				<li>バトルイベントでは使用できません。</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

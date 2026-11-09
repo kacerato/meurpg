@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"移动路线的设置","type":"item","tilePath":"","url":"01_10_06_01.html"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

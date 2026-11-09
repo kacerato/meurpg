@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>ピクチャ</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>ピクチャ</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="ピクチャ">
+        <span>ピクチャ</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>ピクチャ</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">ピクチャ</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">ピクチャの表示</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">ピクチャ（静止画像）を画面に表示します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ピクチャ：番号</h4>
+					<p>ピクチャにひも付ける管理番号（1～100）を指定します。</p>
+				</li>
+				<li>
+					<h4>ピクチャ：画像</h4>
+					<p>表示するピクチャのファイルを指定します。</p>
+				</li>
+				<li>
+					<h4>位置</h4>
+					<p>ピクチャを表示する位置を指定します。まず［原点］で基準となる位置を画面の［左上］か［中心］のどちらかを選びます。そのうえで原点を（0，0）とする座標で位置を指定します。［直接指定］の場合は［X］に横方向、［Y］に縦方向の座標（-9999～9999）を入力します。変数の値で座標を指定する場合は［変数で指定］を選択し、［X］［Y］に参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>拡大率</h4>
+					<p>ピクチャの［幅］［高さ］の拡大率（元画像のサイズは100％として-2000～2000％）をそれぞれ指定します。<br/>
+						また、負の値にすると反転することができます。</p>
+				</li>
+				<li>
+					<h4>合成</h4>
+					<p>［不透明度］でピクチャの不透明度（0～255）を指定します。数値が小さいほど画像が透過します（0の場合は表示されません）。［合成方法］ではピクチャを透過表示するときの色の合成の仕方を指定します。
+						</p><ul class="ul">
+							<li>［通常］ ・・・ 標準の表示です。</li>
+							<li>［加算］ ・・・ 白っぽく表示されます。</li>
+							<li>［乗算］ ・・・ 黒っぽく表示されます。</li>
+							<li>［スクリーン］ ・・・ 明るく表示されます。</li>
+						</ul>
+					<p></p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>ピクチャは同時に100点まで表示可能です。ピクチャの管理番号が大きいほど優先して表示されます。</li>
+				<li>管理番号が重複した場合、最後に表示させたピクチャのみが表示されます（以前のピクチャは消去されます）。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">ピクチャの移動</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">表示中のピクチャを移動します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ピクチャ：番号</h4>
+					<p>対象ピクチャの管理番号（1～100）を指定します。</p>
+				</li>
+				<li>
+					<h4>イージング</h4>
+					<p>移動の加速と減速を設定します。</p>
+					<ul class="ul">
+						<li>一定速度</li>
+						<li>ゆっくり始まる</li>
+						<li>ゆっくり終わる</li>
+						<li>ゆっくり始まってゆっくり終わる</li>
+					</ul>
+				</li>
+				<li>
+					<h4>位置</h4>
+					<p>移動後のピクチャの位置を指定します。まず［原点］で基準となる位置を画面の［左上］［中心］のどちらかで指定します。次に原点を（0，0）とする座標で位置を指定します。特定の座標を指定する場合は［直接指定］を選び、［X］に横方向、［Y］に縦方向の座標（-9999～9999）を入力します。変数の値で指定する場合は［変数で指定］を選択し、［X］［Y］に参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>拡大率</h4>
+					<p>移動後のピクチャの［幅］［高さ］の拡大率（元画像のサイズは100％として-2000～2000％）をそれぞれ指定します。<br/>
+						また、負の値にすると反転することができます。</p>
+				</li>
+				<li>
+					<h4>合成</h4>
+					<p>［不透明度］で移動後のピクチャの不透明度（0～255）を指定します。数値が小さいほど画像が透過します（0の場合は表示されません）。［合成方法］ではピクチャを透過表示するときの色の合成の仕方を指定します。
+						</p><ul class="ul">
+							<li>［通常］ ・・・ 標準の表示です。</li>
+							<li>［加算］ ・・・ 白っぽく表示されます。</li>
+							<li>［乗算］ ・・・ 黒っぽく表示されます。</li>
+							<li>［スクリーン］ ・・・ 明るく表示されます。</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>移動にかける時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、このイベントコマンドの処理が終わるまで処理の進行を停止します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">ピクチャの回転</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">表示されているピクチャを回転させます。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ピクチャ：番号</h4>
+					<p>対象ピクチャの管理番号（1～100）を指定します。</p>
+				</li>
+				<li>
+					<h4>回転：速度</h4>
+					<p>回転速度（-90～90）を指定します。正の値では時計回り、負の値では反時計回りになります。回転を止めるには0を指定します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>回転軸（中心点）は、対象のピクチャを最後に表示／移動するときに指定した原点（左上／中心）に準じます。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">ピクチャの色調変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">表示されているピクチャの色調を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ピクチャ：番号</h4>
+					<p>処理対象のピクチャの管理番号（1～100）を指定します。</p>
+				</li>
+				<li>
+					<h4>色調</h4>
+					<p>［赤］［緑］［青］の各色に加算する成分（-255～255）を指定します。［グレー］にはグレースケールフィルターの強さ（0～255）を指定します。値は大きいほど全体的に加算する色が強調されます。色調の変化は右側のプレビュー領域で確認できます。</p>
+				</li>
+				<li>
+					<h4>時間</h4>
+					<p>変更にかける時間をフレーム数（1～999）で指定します。1フレームは1/60秒に相当します。</p>
+				</li>
+				<li>
+					<h4>完了までウェイト</h4>
+					<p>有効にすると、このイベントコマンドの処理が終わるまで処理の進行を停止します。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考 </h3>
+			<ul class="ul">
+				<li>変更した色調は、再度このイベントコマンドで変更するまで有効です。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">ピクチャの消去</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">表示されているピクチャを消去します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ピクチャ：番号</h4>
+					<p>消去するピクチャの管理番号（1～100）を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_2";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>图片</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>图片</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="图片">
+        <span>图片</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>图片</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">图片</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">显示图片</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">在屏幕上显示图片（静止图像）。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>图片：编号</h4>
+					<p>指定要附加到图片的管理编号（1至100）。</p>
+				</li>
+				<li>
+					<h4>图片：图像</h4>
+					<p>指定要显示的图片文件。</p>
+				</li>
+				<li>
+					<h4>位置</h4>
+					<p>指定显示图片的位置。首先，在[原点]中，选择屏幕的[左上]或[中心]之一作为基准位置。然后，将原点设为（0,0），用坐标指定位置。使用[直接指定]时，在[X]中输入水平坐标，在[Y]中输入垂直坐标（-9999~9999）。要通过变量值指定坐标时，请选择[按变量指定]，然后用[X]和[Y]指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>缩放率</h4>
+					<p>指定图片的[宽度]和[高度]的放大比例（原始图像尺寸为100％，缩放范围是-2000%~2000%）。<br/>另外，可以通过设置负值来将其反转。</p>
+				</li>
+				<li>
+					<h4>合成</h4>
+					<p>在[不透明度]中，指定图片的不透明度（0~255）。数字越小，图像将越透明（当为0时，将不显示图像）。在[合成方法]中，指定穿透显示图片时如何合成色彩。
+						</p><ul class="ul">
+							<li>[普通]・・・ 按标准显示。</li>
+							<li>[加法]・・・ 使显示看起来发白。</li>
+							<li>[乘法]・・・ 使显示看起来发黑。</li>
+							<li>[屏幕]・・・ 使显示看起来更明亮。</li>
+						</ul>
+					<p></p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>最多可以同时显示100张图片。图片的管理编号越大，优先级越高。</li>
+				<li>如果管理编号重复，则仅显示最后一次显示的图片（将删除之前的图片）。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">移动图片</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">移动显示中的图片。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>图片：编号</h4>
+					<p>指定目标图片的管理编号（1至100）。</p>
+				</li>
+				<li>
+					<h4>缓和</h4>
+					<p>设定移动的加速和减速。</p>
+					<ul class="ul">
+						<li>固定速度</li>
+						<li>缓缓开始</li>
+						<li>缓缓终止</li>
+						<li>缓缓开始然后缓缓终止</li>
+					</ul>
+				</li>
+				<li>
+					<h4>位置</h4>
+					<p>指定移动后的图片位置。首先，在[原点]中，指定屏幕的[左上]或[中心]之一作为基准位置。随后，将原点设为（0,0），用坐标指定位置。想要指定特定的坐标时，选择[直接指定]，在[X]中输入横坐标，在[Y]中输入纵坐标（-9999~9999）。要通过变量值指定时，请选择[按变量指定]，然后用[X]和[Y]指定要引用的变量。</p>
+				</li>
+				<li>
+					<h4>缩放率</h4>
+					<p>指定移动后的图片的[宽度]和[高度]的放大比例（原始图像尺寸为100％，缩放范围是-2000%~2000%）。<br/>另外，可以通过设置负值来将其反转。</p>
+				</li>
+				<li>
+					<h4>合成</h4>
+					<p>用[不透明度]指定移动后的图片的不透明度（0~255）。数字越小，图像将越透明（当为0时，将不显示图像）。在[合成方法]中，指定穿透显示图片时如何合成色彩。
+						</p><ul class="ul">
+							<li>[普通]・・・ 按标准显示。</li>
+							<li>[加法]・・・ 使显示看起来发白。</li>
+							<li>[乘法]・・・ 使显示看起来发黑。</li>
+							<li>[屏幕]・・・ 使显示看起来更明亮。</li>
+						</ul>
+					<p></p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>指定移动的时间帧数（1至999）。一帧等于1/60秒。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，则直到此事件命令的处理完成为止，处理将暂时停止。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">旋转图片</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">旋转显示的图片。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>图片：编号</h4>
+					<p>指定目标图片的管理编号（1至100）。</p>
+				</li>
+				<li>
+					<h4>旋转：速度</h4>
+					<p>指定旋转速度（-90~90）。正值时顺时针旋转，负值时逆时针旋转。指定0时停止旋转。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>旋转轴（中心点）以上一次显示/移动的目标图片时指定的原点（左上/中心）为准。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">图片的色调变更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">更改显示的图片的色调。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>图片：编号</h4>
+					<p>指定目标处理图片的管理编号（1~100）。</p>
+				</li>
+				<li>
+					<h4>色调</h4>
+					<p>指定要添加到[红色]，[绿色]和[蓝色]每种颜色的成分（-255~255）。在[灰度]中，指定灰度滤镜的强度（0~255）。值越高，强调整体加算的颜色越多。您可以在右侧的预览区域中看到色调的变化。</p>
+				</li>
+				<li>
+					<h4>时间</h4>
+					<p>指定变更的时间帧数（1至999）。一帧等于1/60秒。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，则直到此事件命令的处理完成为止，处理将暂时停止。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>更改的色调的有效期限是直到再次使用此事件命令进行变更为止。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">消除图片</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_08_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">消去显示的图片。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>图片：编号</h4>
+					<p>指定要删除图片的管理编号（1~100）。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

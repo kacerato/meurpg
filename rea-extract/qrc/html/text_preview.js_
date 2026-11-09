@@ -1,0 +1,420 @@
+Utils = {};
+Utils.containsArabic = function(str) {
+    const regExp = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
+    return regExp.test(str);
+};
+ImageManager = {};
+ImageManager.iconWidth = 32;
+ImageManager.iconHeight = 32;
+ImageManager.faceWidth = 144;
+ImageManager.faceHeight = 144;
+TextManager = {};
+TextManager.currencyUnit = "";
+TextManager.actorNames = [];
+TextManager.partyMemberNames = [];
+
+class TextPreview {
+    constructor() {
+        this.canvas = document.getElementById("canvas");
+        this.context = this.canvas.getContext("2d");
+        this.defaultFontSize = 16;
+        this.fontUrl = "";
+        this.fontLoaded = false;
+        this.fontFace = this.mainFontFace();
+        this.fontSize = this.defaultFontSize;
+        this.fallbackFonts = "";
+        this.iconSetLoaded = false;
+        this.iconSetImage = null;
+        this.textColor = "white";
+        this.backgroundColor = "black";
+        this.textColorList = [];
+        this.outlineColor = "rgba(0, 0, 0, 0.6)";
+        this.outlineWidth = 4;
+        this.text = "";
+        this.textHeight = 0;
+    }
+
+    setSize(width, height) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+    }
+
+    getTextHeight() {
+        return this.textHeight;
+    }
+
+    setBackgroundColor(color) {
+        this.backgroundColor = color;
+        this.paint();
+    }
+
+    setTextColor(colorIndex, color) {
+        this.textColorList[colorIndex] = color;
+    }
+
+    loadMainFont(url) {
+        if (this.fontUrl !== url) {
+            const source = "url(" + url + ")";
+            const font = new FontFace("rmmz-mainfont", source);
+            this.fontUrl = url;
+            this.fontLoaded = false;
+            font.load()
+                .then(() => {
+                    document.fonts.add(font);
+                    this.fontLoaded = true;
+                    this.paint();
+                })
+                .catch(() => {
+                    this.fontLoaded = true;
+                    this.paint();
+                });
+        }
+    }
+
+    setFallbackFonts(fonts) {
+        this.fallbackFonts = fonts;
+    }
+
+    loadIconSet(url) {
+        this.iconSetLoaded = false;
+        this.iconSetImage = new Image();
+        this.iconSetImage.onload = () => {
+            this.iconSetLoaded = true;
+            this.paint();
+        };
+        this.iconSetImage.onerror = () => {
+            this.iconSetLoaded = true;
+            this.paint();
+        };
+        this.iconSetImage.src = url;
+    }
+
+    setDefaultFontSize(size) {
+        this.defaultFontSize = size;
+    }
+
+    setFaceFlag(flag) {
+        this.faceFlag = flag;
+    }
+
+    setText(text) {
+        this.text = text;
+    }
+
+    fontLoaded() {
+        return this.fontLoaded;
+    }
+
+    paint() {
+        if (this.fontLoaded) {
+            this.textHeight = this.textSizeEx(this.text).height;
+        }
+        this.context.fillStyle = this.backgroundColor;
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.fillStyle = "white";
+        if (this.fontLoaded) {
+            this.drawTextEx(this.text, 0, 0, this.canvas.width);
+        }
+    }
+
+    drawText(text, x, y, maxWidth, lineHeight) {
+        const tx = x;
+        const ty = y + lineHeight - (lineHeight - this.fontSize * 0.7) / 2;
+        this.context.font = this.makeFontNameText();
+        this.context.lineWidth = this.outlineWidth;
+        this.context.lineJoin = "round";
+        this.context.strokeStyle = this.outlineColor;
+        this.context.strokeText(text, tx, ty, maxWidth);
+        this.context.fillStyle = this.textColor;
+        this.context.fillText(text, tx, ty, maxWidth);
+    }
+
+    textWidth(text) {
+        const context = this.context;
+        context.save();
+        context.font = this.makeFontNameText();
+        const width = context.measureText(text).width;
+        context.restore();
+        return width;
+    }
+
+    makeFontNameText() {
+        return this.fontSize + "px " + this.fontFace;
+    }
+
+    mainFontFace() {
+        return "rmmz-mainfont, " + this.fallbackFonts;
+    }
+
+    lineHeight() {
+        return 36;
+    }
+
+    resetFontSettings() {
+        this.fontFace = this.mainFontFace();
+        this.fontSize = this.defaultFontSize;
+        this.resetTextColor();
+    }
+
+    resetTextColor() {
+        this.changeTextColor(this.textColorList[0]);
+    }
+
+    changeTextColor(color) {
+        this.textColor = color;
+    }
+
+    changeOutlineColor(color) {
+        this.outlineColor = color;
+    }
+
+    drawTextEx(text, x, y, width) {
+        this.resetFontSettings();
+        const textState = this.createTextState(text, x, y, width);
+        this.processAllText(textState);
+        return textState.outputWidth;
+    }
+
+    textSizeEx(text) {
+        this.resetFontSettings();
+        const textState = this.createTextState(text, 0, 0, 0);
+        textState.drawing = false;
+        this.processAllText(textState);
+        return { width: textState.outputWidth, height: textState.outputHeight };
+    }
+
+    createTextState(text, x, y, width) {
+        const rtl = Utils.containsArabic(text);
+        const textState = {};
+        const margin = x + (this.faceFlag ? ImageManager.faceWidth + 18 : 2);
+        textState.text = this.convertEscapeCharacters(text);
+        textState.index = 0;
+        textState.x = rtl ? width - margin : margin;
+        textState.y = y;
+        textState.width = width;
+        textState.height = this.calcTextHeight(textState);
+        textState.startX = textState.x;
+        textState.startY = textState.y;
+        textState.rtl = rtl;
+        textState.buffer = this.createTextBuffer(rtl);
+        textState.drawing = true;
+        textState.outputWidth = 0;
+        textState.outputHeight = 0;
+        return textState;
+    }
+
+    processAllText(textState) {
+        while (textState.index < textState.text.length) {
+            this.processCharacter(textState);
+        }
+        this.flushTextState(textState);
+    }
+
+    flushTextState(textState) {
+        const text = textState.buffer;
+        const rtl = textState.rtl;
+        const width = this.textWidth(text);
+        const height = textState.height;
+        const x = rtl ? textState.x - width : textState.x;
+        const y = textState.y;
+        if (textState.drawing) {
+            this.drawText(text, x, y, width, height);
+        }
+        textState.x += rtl ? -width : width;
+        textState.buffer = this.createTextBuffer(rtl);
+        const outputWidth = Math.abs(textState.x - textState.startX);
+        if (textState.outputWidth < outputWidth) {
+            textState.outputWidth = outputWidth;
+        }
+        textState.outputHeight = y - textState.startY + height;
+    }
+
+    createTextBuffer(rtl) {
+        return rtl ? "\u202B" : "";
+    }
+
+    convertEscapeCharacters(text) {
+        /* eslint no-control-regex: 0 */
+        text = text.replace(/\\/g, "\x1b");
+        text = text.replace(/\x1b\x1b/g, "\\");
+        text = text.replace(/\x1bV\[(\d+)\]/gi, (_, p1) =>
+            0 //$gameVariables.value(parseInt(p1))
+        );
+        text = text.replace(/\x1bV\[(\d+)\]/gi, (_, p1) =>
+            0 //$gameVariables.value(parseInt(p1))
+        );
+        text = text.replace(/\x1bN\[(\d+)\]/gi, (_, p1) =>
+            this.actorName(parseInt(p1))
+        );
+        text = text.replace(/\x1bP\[(\d+)\]/gi, (_, p1) =>
+            this.partyMemberName(parseInt(p1))
+        );
+        text = text.replace(/\x1bG/gi, TextManager.currencyUnit);
+        return text;
+    }
+
+    actorName(n) {
+        return TextManager.actorNames[n] || "";
+    }
+
+    partyMemberName(n) {
+        return TextManager.partyMemberNames[n - 1] || "";
+    }
+
+    processCharacter(textState) {
+        const c = textState.text[textState.index++];
+        if (c.charCodeAt(0) < 0x20) {
+            this.flushTextState(textState);
+            this.processControlCharacter(textState, c);
+        } else {
+            textState.buffer += c;
+        }
+    }
+
+    processControlCharacter(textState, c) {
+        if (c === "\n") {
+            this.processNewLine(textState);
+        }
+        if (c === "\x1b") {
+            const code = this.obtainEscapeCode(textState);
+            this.processEscapeCharacter(code, textState);
+        }
+    }
+
+    processNewLine(textState) {
+        textState.x = textState.startX;
+        textState.y += textState.height;
+        textState.height = this.calcTextHeight(textState);
+    }
+
+    obtainEscapeCode(textState) {
+        const regExp = /^[$.|^!><{}\\]|^[A-Z]+/i;
+        const arr = regExp.exec(textState.text.slice(textState.index));
+        if (arr) {
+            textState.index += arr[0].length;
+            return arr[0].toUpperCase();
+        } else {
+            return "";
+        }
+    }
+
+    obtainEscapeParam(textState) {
+        const regExp = /^\[\d+\]/;
+        const arr = regExp.exec(textState.text.slice(textState.index));
+        if (arr) {
+            textState.index += arr[0].length;
+            return parseInt(arr[0].slice(1));
+        } else {
+            return "";
+        }
+    }
+
+    processEscapeCharacter(code, textState) {
+        switch (code) {
+            case "C":
+                this.processColorChange(this.obtainEscapeParam(textState));
+                break;
+            case "I":
+                this.processDrawIcon(
+                    this.obtainEscapeParam(textState),
+                    textState
+                );
+                break;
+            case "PX":
+                textState.x = this.obtainEscapeParam(textState);
+                break;
+            case "PY":
+                textState.y = this.obtainEscapeParam(textState);
+                break;
+            case "FS":
+                this.fontSize = this.obtainEscapeParam(textState);
+                break;
+            case "{":
+                this.makeFontBigger();
+                break;
+            case "}":
+                this.makeFontSmaller();
+                break;
+        }
+    }
+
+    processColorChange(colorIndex) {
+        this.changeTextColor(this.textColorList[colorIndex]);
+    }
+
+    processDrawIcon(iconIndex, textState) {
+        this.drawIcon(iconIndex, textState.x + 2, textState.y + 2);
+        textState.x += ImageManager.iconWidth + 4;
+    }
+
+    makeFontBigger() {
+        if (this.fontSize <= 96) {
+            this.fontSize += 12;
+        }
+    }
+
+    makeFontSmaller() {
+        if (this.fontSize >= 24) {
+            this.fontSize -= 12;
+        }
+    }
+
+    calcTextHeight(textState) {
+        const lineSpacing = this.lineHeight() - this.defaultFontSize;
+        const lastFontSize = this.fontSize;
+        const lines = textState.text.slice(textState.index).split("\n");
+        const textHeight = this.maxFontSizeInLine(lines[0]) + lineSpacing;
+        this.fontSize = lastFontSize;
+        return textHeight;
+    }
+
+    maxFontSizeInLine(line) {
+        let maxFontSize = this.fontSize;
+        const regExp = /\x1b({|}|FS)(\[(\d+)])?/gi;
+        for (;;) {
+            const array = regExp.exec(line);
+            if (!array) {
+                break;
+            }
+            const code = String(array[1]).toUpperCase();
+            if (code === "{") {
+                this.makeFontBigger();
+            } else if (code === "}") {
+                this.makeFontSmaller();
+            } else if (code === "FS") {
+                this.fontSize = parseInt(array[3]);
+            }
+            if (this.fontSize > maxFontSize) {
+                maxFontSize = this.fontSize;
+            }
+        }
+        return maxFontSize;
+    }
+
+    drawIcon(iconIndex, x, y) {
+        const pw = ImageManager.iconWidth;
+        const ph = ImageManager.iconHeight;
+        const sx = (iconIndex % 16) * pw;
+        const sy = Math.floor(iconIndex / 16) * ph;
+        this.context.drawImage(this.iconSetImage, sx, sy, pw, ph, x, y, pw, ph);
+    }
+}
+
+const preview = new TextPreview();
+
+document.body.addEventListener(
+    "dragover",
+    function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    false
+);
+document.body.addEventListener(
+    "drop",
+    function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    false
+);

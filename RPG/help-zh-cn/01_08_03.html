@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.3.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>技能设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>技能设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="技能设置">
+        <span>技能设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--08">
+			<p class="en">RPG Maker MZ 帮助</p>
+			<h1 class="title--h1">数据库</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">数据库</a></li>
+				<li>&gt;</li>
+				<li>技能设置</li>
+			</ul>
+			<img src="assets/img/common/cha08.png" alt="" class="cha"/>
+		</div>
+
+		<h1 class="title--h1">技能设置</h1>
+
+		<div class="section">
+			<h2 class="title--h2">数据的作用</h2>
+			<p class="text">
+				这是用于定义战斗中的攻击与防御、魔法与必杀技等角色进行的行动的数据。通过设置可以行动的状况与条件、成功率、对目标造成的伤害等一连串的内容，可以表现出各种各样的行动。
+			</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2">项目设置内容</h2>
+			<div class="img--center mb60px">
+				<img src="assets/img/01_08_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">
+				基本设置
+			</h3>
+
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h4>
+						名称
+					</h4>
+					<p>技能的名称。若名字太长，游戏画面中可能会无法显示全文。</p>
+				</li>
+				<li>
+					<h4>
+						图标
+					</h4>
+					<p>游戏中附在技能名称旁边的图像。在双击时就会出现的[选择图像]窗口中指定任意图像。一般上会选择与技能特性相对应的图像。</p>
+				</li>
+				<li>
+					<h4>
+						说明
+					</h4>
+					<p>游戏中将光标指向技能时显示的说明。</p>
+				</li>
+				<li>
+					<h4>
+						技能类型
+					</h4>
+					<p>指定技能的类型。默认设置中仅预备了[魔法]和[TP]，您可以通过[<a href="01_08_14.html">用语</a>]设置进行更改。除了[无]之外的设置，其他类型的技能只能由具有该[添加技能类型]特性的角色或职业使用。</p>
+				</li>
+				<li>
+					<h4>
+						MP 消耗与 TP 消耗
+					</h4>
+					<p>启动技能时消耗的 MP（0~9999）和 TP（0~100）点数。使用者的 MP 与 TP 若未达到这个值则无法使用该技能。</p>
+				</li>
+				<li>
+					<h4>
+						可以使用时
+					</h4>
+					<p>选择一个可以使用的状况。您可以从[随时可用]（可以在战斗中或菜单中两处做选择）、[战斗画面]（只能在战斗中选择）、[菜单画面]（只能在菜单做选择）或[不能使用]中指定任意一个。</p>
+				</li>
+			</ul>
+			<h4 class="title--h3--sub" id="m01">
+				范围
+			</h4>
+			<p class="text--sub">技能效果波及的对象。从以下的项目中分别指定一个项目。</p>
+			<div class="flex--bw--p-img pb40px border--bottom mb90px">
+				<div>
+					<dl class="dl--default">
+						<dt>阵营</dt>
+						<dd>指定目标。可以从敌方、我方、我方和敌方双方、使用者及无指定中做选择。</dd>
+						<dt>人数</dt>
+						<dd>指定目标人数。可以从敌方或我方一人、敌方或我方全体及随机中做选择。</dd>
+						<dt>状态 </dt>
+						<dd>指定目标的条件。可以从存活、无法战斗及无条件中做选择。<br/> 该设置仅对我方有作用。</dd>
+					</dl>
+				</div>
+				<img src="assets/img/01_08_03_img02.png" alt=""/>
+			</div>
+
+
+
+			<h3 class="title--h3">
+				发动
+			</h3>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>
+						速度补正
+					</h4>
+					<p>执行技能时增加到敏捷的值（-2000~2000）。对战斗中的行动顺序的判定有影响，可以表现“效果虽然不明显但是可以即刻发动”、“效果显著但是发动需要时间”等的特性。</p>
+				</li>
+				<li>
+					<h4>
+						成功率
+					</h4>
+					<p>使用技能本身的成功概率（0~100%）。实际成功率会影响对目标的有效度。</p>
+				</li>
+				<li>
+					<h4>
+						连续次数
+					</h4>
+					<p>每一次使用时的发挥效果的次数（1~9）。</p>
+				</li>
+				<li>
+					<h4>
+						获得 TP
+					</h4>
+					<p>发动成功，对目标有效时获得的 TP（0~100）。</p>
+				</li>
+				<li>
+					<h4>
+						命中类型
+					</h4>
+					<p>判定命中的种类。从以下的项目中指定一个。</p>
+					<dl class="dl--default">
+						<dt>必定命中 </dt>
+						<dd>技能发动成功时被看作必定命中。反击、魔法反射、掩护技能对其无效。</dd>
+						<dt>物理攻击 </dt>
+						<dd>根据使用者的命中率及目标的回避率判定。是反击和掩护的对象。</dd>
+						<dt>魔法攻击 </dt>
+						<dd>根据目标的魔法回避率判定。是魔法反射和掩护的对象。</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>
+						动画
+					</h4>
+					<p>在战斗中显示于使用对象身上的动画。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				信息
+			</h3>
+			<p class="text">指定在战斗中使用技能时显示的固定短语（最多 2 行）。执行技能时，“%1”和“%2”的部分会分别被置换为执行者的名称和技能名称。按下[吟唱了~！]、[释放了~！]或[使用了~！]的按钮后就能分别输入固定短语。</p>
+
+
+
+			<h3 class="title--h3">
+				必要武器
+			</h3>
+
+			<h4 class="title--h3--sub">
+				武器类型 1 与武器类型 2
+			</h4>
+			<p class="text">作为使用技能的条件所需装备的必要武器。在两个栏中分别指定武器类型。若两个都是[无]则可以无条件使用技能。设置了两个类型时，只要装备有其中一个类型的武器就能使用。</p>
+
+			<h3 class="title--h3">
+				伤害
+			</h3>
+			<p class="text--sub">设置能对目标造成伤害的效果时，指定该类型和效果量的计算公式。</p>
+
+			<ul class="ul--2c--line mb30px">
+				<li>
+					<h4>类型 </h4>
+					<p>HP、MP 相关效果的种类。从以下 6 个项目中指定一个项目。[伤害]代表减少，[恢复]代表增加，而[吸收]代表转让（对技能使用者添加目标对象减少的分量）。</p>
+				</li>
+				<li>
+					<h4>属性 </h4>
+					<p>附加于效果的属性。</p>
+				</li>
+				<li>
+					<h4>分散度 </h4>
+					<p>效果的分散（0~100%）。用指定的比率范围增减计算出来的效果量。计算出来的效果量为 100， 分散度为 20 的时候，效果量以 80~120（100±20）的范围作变动。</p>
+				</li>
+				<li>
+					<h4>暴击 </h4>
+					<p>用[有]或[无]指定暴击的有无。设置为[有]时，根据使用者的暴击和目标的暴击回避率判定发生率。</p>
+				</li>
+			</ul>
+
+			<h4 class="title--h3--sub">计算公式 </h4>
+			<div class="flex--bw--p-tables pb30px border--bottom mb90px">
+				<p>
+					效果量的计算公式。<br/> <br/>直接指定计算公式时，指定以下的文字列为参考用参数。参考攻击者的值时，将“x”更改为“a”，参考目标的值时则改成“b”。标记为“a.atk”时会参考“攻击者的攻击力”的值。此外，记述“v[n]”（n 是数值）就能参照第 n 个变量值。运算符可以使用一般的加减乘除记号（+、-、*、/）。<br/> <br/>记述“a.atk * 4 - b.def * 2”时，就是以“（攻击者的攻击力×4）-（目标的防御力×2）”的值做效果量的计算。<br/> <br/>根据不同的属性和防御行动，效果会反映于其他形式，因此不包括在此计算公式内。
+				</p>
+
+				<table class="table--type01">
+					<tbody><tr>
+						<th>x.atk</th>
+						<td>攻击力</td>
+					</tr>
+					<tr>
+						<th>x.def</th>
+						<td>防御力</td>
+					</tr>
+					<tr>
+						<th>x.mat</th>
+						<td>魔法力</td>
+					</tr>
+					<tr>
+						<th>x.mdf</th>
+						<td>魔法防御</td>
+					</tr>
+					<tr>
+						<th>x.agi</th>
+						<td>敏捷</td>
+					</tr>
+					<tr>
+						<th>x.luk</th>
+						<td>幸运</td>
+					</tr>
+					<tr>
+						<th>x.mhp</th>
+						<td>最大 HP</td>
+					</tr>
+					<tr>
+						<th>x.mmp</th>
+						<td>最大 MP</td>
+					</tr>
+					<tr>
+						<th>x.hp</th>
+						<td>现在的 HP</td>
+					</tr>
+					<tr>
+						<th>x.mp</th>
+						<td>现在的 MP</td>
+					</tr>
+					<tr>
+						<th>x.tp</th>
+						<td>现在的 TP</td>
+					</tr>
+					<tr>
+						<th>x.level</th>
+						<td>等级</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+
+			<h3 class="title--h3">
+				效果
+			</h3>
+			<p class="text">除了伤害之外的各种效果内容。在双击时就会出现的[选择图像]窗口中设置。更多详情，请参见[<a href="01_08_16.html">效果的设置方法</a>]。</p>
+
+			<h3 class="title--h3">
+				备注
+			</h3>
+			<p>可以在游戏制作过程做备注。<br/>右键单击以显示菜单，然后选择[插件帮助]来显示插件帮助。
+			</p>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

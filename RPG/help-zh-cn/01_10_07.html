@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.1_1";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>人物</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>人物</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="人物">
+        <span>人物</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件指令</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">事件指令</a></li>
+				<li>&gt;</li>
+				<li>人物</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">人物</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">变更透明状态</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">控制在地图上移动的队伍的显示（透明度）。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>透明状态 </h4>
+					<p>指定[开启]隐藏它，指定[关闭]来显示。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">变更队列步行</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">控制是否显示队伍中第二个及后续角色的步行图像。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>队列步行 </h4>
+					<p>指定[开启]来显示，或[关闭]不显示。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>如果有队伍有5个以上的成员，则只有前4名会显示步行图像。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">集合队列成员</h2>
+			<h3 class="title--h3">功能</h3>
+			<div>在与头一个作用物相同的位置显示队伍中每个作用物的步行图像。没有设置项目</div>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">显示动画</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">显示地图上的动画。</p>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>根据玩家或事件的位置指定显示位置。</p>
+				</li>
+				<li>
+					<h4>动画</h4>
+					<p>指定要显示的动画。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，直到动画完成显示为止，事件处理将停止进行。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+				<li>如果要在战斗中显示动画，请使用[战斗动画的显示]的事件命令。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">显示气泡图标</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_07_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">功能</h3>
+			<p class="text--sub">在队伍或事件头顶，显示用气泡图标来表示情感的图标。图标包括代表惊讶的“！”，表现灵感的灯泡等全10种不同的图标。您还可以通过用户定义来设置自己的气泡图标。</p>
+			<div class="img--center mb90px">
+				<img src="assets/img/01_10_07_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">设置项目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>角色</h4>
+					<p>根据玩家或事件的位置指定显示位置。</p>
+				</li>
+				<li>
+					<h4>气泡图标</h4>
+					<p>指定要显示的气泡图标。</p>
+				</li>
+				<li>
+					<h4>等待完成</h4>
+					<p>如果启用，直到气泡图标显示结束为止，事件处理将停止进行。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">暂时消除事件</h2>
+			<h3 class="title--h3">功能</h3>
+			<p class="text">暂时消除正在执行的事件。没有设置项目消除状态将一直持续到队伍移动到另一张地图为止。</p>
+			<h3 class="title--h3">备注 </h3>
+			<ul class="ul">
+				<li>战斗事件中无法使用</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

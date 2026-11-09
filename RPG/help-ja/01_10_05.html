@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_5";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>アクター</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>アクター</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="アクター">
+        <span>アクター</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>アクター</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">アクター</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">HPの増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img01.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのHPを増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>HPの増減値を指定します。一定の値にする場合は［定数］を選び、値（1～9999）を入力します。変数で値を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>戦闘不能を許可</h4>
+					<p>有効にすると、HPの減少によって0以下になった場合に戦闘不能状態にします。無効にすると、HPが0以下になった場合に1に調整されます。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">MPの増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのMPを増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>MPの増減値を指定します。一定の値にする場合は［定数］を選び、値（1～9999）を入力します。変数で値を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">TPの増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのTPを増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>TPの増減値を指定します。一定の値にする場合は［定数］を選び、値（1～100）を入力します。変数で値を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">ステートの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのステートを変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（付加／解除）を指定します。</p>
+				</li>
+				<li>
+					<h4>ステート</h4>
+					<p>操作対象のステートを指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">全回復</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのHPとMPを最大値まで回復し、すべてのステートを解除します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">経験値の増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img06.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの経験値を増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>経験値の増減値を指定します。一定の値にする場合は［定数］を選び、値（1～9999999）を入力します。変数で値を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>レベルアップを表示</h4>
+					<p>有効にすると、経験値を増加によってレベルアップした場合、プレイ画面にその旨を知らせるメッセージを表示します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">レベルの増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img07.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのレベル数を増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>レベル数の増減値を指定します。一定の値にする場合は［定数］を選び、値（1～98）を入力します。変数で値を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>レベルアップを表示</h4>
+					<p>有効にすると、レベルアップした場合、プレイ画面にその旨を知らせるメッセージを表示します。</p>
+				</li>
+			</ul>
+			<dl class="dl--sub">
+			</dl>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">能力値の増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img08.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの能力値を増減します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します（［パーティ全体］にするとパーティ内のすべてのアクターが対象になります）。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>能力値</h4>
+					<p>増減させる能力値の種類を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>操作の内容（増やす／減らす）を指定します。</p>
+				</li>
+				<li>
+					<h4>オペランド</h4>
+					<p>能力値の増減値を指定します。一定の値にする場合は［定数］を選び、値（1～9999）を入力します。変数で値を指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p09">
+			<h2 class="title--h2">スキルの増減</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img09.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターが使用できるスキルを操作します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。特定のアクターを対象とする場合は［固定］を選び、アクターを指定します。ID番号で対象アクターを指定する場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>操作</h4>
+					<p>スキルを使用可能にするには［覚える］、使用不可にするには［忘れる］を指定します。</p>
+				</li>
+				<li>
+					<h4>スキル</h4>
+					<p>操作対象のスキルを指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p10">
+			<h2 class="title--h2">装備の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img10.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの装備を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>装備タイプ</h4>
+					<p>変更する装備の種類を指定します。</p>
+				</li>
+				<li>
+					<h4>装備品</h4>
+					<p>新しく装備する装備品を指定します。パーティが指定した装備品をもっている必要があります。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>指定の装備品をパーティが所持していない場合、装備は変更されません。何らかの装備品を強制的に装備させるには、あらかじめ［武器の増減］［防具の増減］のイベントコマンドで、装備品を持たせておく必要があります。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p11">
+			<h2 class="title--h2">名前の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img11.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの名前を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>名前 </h4>
+					<p>変更後の名前を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p12">
+			<h2 class="title--h2">職業の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img12.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの職業を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>職業</h4>
+					<p>変更後の職業を指定します。</p>
+				</li>
+				<li>
+					<h4>レベル保存</h4>
+					<p>チェックマークを付けると、職業を変更する前のレベルが保持されます。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3">備考</h3>
+			<ul class="ul">
+				<li>装備できない武器や防具は、自動で装備が解除されます。</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p13">
+			<h2 class="title--h2">二つ名の変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img13.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターの二つ名を変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>二つ名</h4>
+					<p>変更後の二つ名を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p14">
+			<h2 class="title--h2">プロフィールの変更</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_05_img14.png" height="214" width="422" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">アクターのプロフィールを変更します。</p>
+			<h3 class="title--h3">設定項目</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>アクター</h4>
+					<p>対象のアクターを指定します。</p>
+				</li>
+				<li>
+					<h4>プロフィール</h4>
+					<p>変更後のプロフィールを指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

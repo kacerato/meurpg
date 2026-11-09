@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.4.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>地图事件的设置</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>地图事件的设置</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="地图事件的设置">
+        <span>地图事件的设置</span>
+      </div>
+      <div class="gotohome" title="按一下此处即可查看此页面的完整内容">
+        <span>按一下此处即可查看此页面的完整内容</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--09">
+			<p class="en">RPG MAKER MZ 帮助</p>
+			<h1 class="title--h1">事件</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPG Maker MZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_08.html">事件</a></li>
+				<li>&gt;</li>
+				<li>地图事件的设置</li>
+			</ul>
+			<img src="assets/img/common/cha09.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">地图事件的设置</h1>
+
+
+		<div class="section">
+			<h2 class="title--h2" id="p01">共同设置和事件页的操作</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_09_03_img01.png" alt=""/>
+			</div>
+			<ul class="ul--2c--line--align mb30px">
+				<li>
+					<h3>
+						ID（在标题栏中显示）
+					</h3>
+					<p>事件的固定编号能够按照创建顺序为每张地图自动设置编号。在使用变量指定事件时会使用此ID。</p>
+				</li>
+				<li>
+					<h3>
+						名称
+					</h3>
+					<p>地图事件的名称。此设置仅由编辑器使用（不会影响您正在玩的游戏）。在初始状态下，会自动将使用的名称输入为ID。根据需要，可以将事件的内容更改为容易识别的名称。
+					</p>
+				</li>
+				<li>
+					<h3>
+						备注
+					</h3>
+					<p>
+						让你自由添加备注的文本区域。
+					</p>
+				</li>
+				<li>
+					<h3>
+						事件页的编号
+					</h3>
+					<p>是事件中包含的事件页的的编号。单击标签就可以切换编辑目标。</p>
+				</li>
+			</ul>
+			<h3 class="title--h3--sub">
+				事件页的操作按键
+			</h3>
+			<p>画面上方排列着的操作键可以实现事件页的创建、删除等操作。各按键的功能如下所示。</p>
+			<dl class="dl--default pb30px border--bottom">
+				<dt>创建事件页 </dt>
+				<dd>在当前编辑中的事件页之后，用下一个编号创建一个新的事件页。创建页之后的各事件页，编号会以1为单位逐渐增加。</dd>
+				<dt>复制事件页</dt>
+				<dd>将当前编辑中的事件页的内容复制到剪贴板。</dd>
+				<dt>粘贴事件页 </dt>
+				<dd>在当前编辑中的事件页之后，用剪贴板上的事件页在下一个编号添加（插入）一个新的事件页。新增页之后的各事件页，编号会以1为单位逐渐增加。</dd>
+				<dt>删除事件页 </dt>
+				<dd>删除当前编辑中的事件页。删除的页之后的各事件页，编号会以1为单位逐渐减少。</dd>
+				<dt>清空事件页 </dt>
+				<dd>将当前编辑中的事件页的设置内容全部删除（恢复至初始状态）。</dd>
+			</dl>
+
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p02">事件页的设置项目</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_09_03_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">
+				出现条件
+			</h3>
+			<p class="text--sub">根据该事件页上的设置，地图事件出现在地图上的条件。允许将[开关] [变量] [独立开关] [物品] [作用物]等项目用作条件，并设置判断标准。<br/> <br/>如果您需要事件无条件出现，则请不要设置出现条件。如果指定了多个项目时，则仅当所有项目均匹配的情况下，才算满足条件。<br/> <br/> 如果存在多个符合条件的事件页，则事件将基于事件页中编号最大的内容出现。如果没有任何一个页符合条件，则该事件将不会出现。
+			</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>开关</h4>
+					<p>当指定开关打开时出现。</p>
+				</li>
+				<li>
+					<h4>变量 </h4>
+					<p>当指定变量大于等于给定的值时出现。</p>
+				</li>
+				<li>
+					<h4>独立开关 </h4>
+					<p>当指定的独立开关打开时出现。</p>
+				</li>
+				<li>
+					<h4>物品 </h4>
+					<p>当队伍持有指定物品时出现。</p>
+				</li>
+				<li>
+					<h4>作用物 </h4>
+					<p>当指定的作用物在队伍中时出现。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				图像
+			</h3>
+			<p class="text">在地图上出现时显示的图像。在范围内进行双击就会出现的[选择图像]窗口中，依次单击文件列表（左侧）和图像（右侧）。<br/> <br/>如果未指定图像，则将在地图上显示为不可见。要删除设置好的图像，请在[选择图像]窗口的文件列表顶部选定[（无）]。
+			</p>
+
+			<h3 class="title--h3">
+				自主移动
+			</h3>
+			<p class="text--sub">根据[类型]，[速度]和[频率]这三个项目，指定地图事件的移动方法。[速度]是移动时的快速程度，数值越大，移动速度越快。[频率]是移动的周期，数值越大，移动周期越短。在[类型]中，可以从以下四种类型中指定移动方法。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>固定</h4>
+					<p>不进行移动</p>
+				</li>
+				<li>
+					<h4>随机 </h4>
+					<p>随机地来回移动</p>
+				</li>
+				<li>
+					<h4>接近 </h4>
+					<p>以向玩家目前的位置接近的方式移动。</p>
+				</li>
+				<li>
+					<h4>自定义 </h4>
+					<p>沿指定路线移动。您可以在单击[移动路线]后显示的窗口中指定路线。详情请参见[<a href="01_10_06_01.html">移动路线设置</a>]的项目。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				选项
+			</h3>
+			<p class="text--sub">图像的显示方法可以根据需要启用适用的项目。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>步行动画</h4>
+					<p>显示移动时的动画。用于表现人或动物角色的行走方式。</p>
+				</li>
+				<li>
+					<h4>踏步动画 </h4>
+					<p>显示停止时的动画。用于表示摇曳的海面和火焰一类。</p>
+				</li>
+				<li>
+					<h4>固定朝向 </h4>
+					<p>使图像移动时的朝向无法改变。</p>
+				</li>
+				<li>
+					<h4>穿透 </h4>
+					<p>使您可以穿越不可逾越的地形、事件等。</p>
+				</li>
+			</ul>
+
+
+			<h3 class="title--h3">
+				优先度
+			</h3>
+			<p class="text--sub">可以从以下项目中指定一种与玩家或是与其他事件的高低位置关系。如果事件和玩家可以重叠，则优先显示位于上层的图像。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>始终在人物下方</h4>
+					<p>玩家等人物将能够在此事件上方步行。但是，如果在[图像]中选择了图块，则能否通行将取决于该图块的设置。</p>
+				</li>
+				<li>
+					<h4>始终与人物相同</h4>
+					<p>将与玩家处于同一高度，并且将无法进入该事件所在的地点。</p>
+				</li>
+				<li>
+					<h4>始终在人物上方</h4>
+					<p>玩家等人物将能够在此事件下方步行。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				触发
+			</h3>
+			<p class="text--sub">对于出现在地图上的事件，请指定以下时机之一，以开始[执行内容]的处理。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>确定键</h4>
+					<p>当玩家在与事件相邻并面向事件方向的情况下（或在允许时与事件重叠的情况下）按下确定键时触发。</p>
+				</li>
+				<li>
+					<h4>玩家接触</h4>
+					<p>当玩家接触到此地图事件时（或在允许时与事件重叠的情况下），或处在该状态下按下确定键时触发。</p>
+				</li>
+				<li>
+					<h4>事件接触</h4>
+					<p>当事件自主向玩家移动后碰到玩家时（或在允许时与事件重叠的情况下）触发，或在发生了和［玩家接触］相同的情况时触发。</p>
+				</li>
+				<li>
+					<h4>自动执行</h4>
+					<p>满足了出现条件后在地图上出现时触发。</p>
+				</li>
+				<li>
+					<h4>并行处理</h4>
+					<p>
+						满足了出现条件后在地图上出现时，循环重复执行内容的处理。<br/> 即使其他事件正在运行，您也可以继续执行。
+					</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				执行内容
+			</h3>
+			<p>这是满足[触发]的内容时要执行的处理的列表。详情请参见项目[执行内容的设置方法]。</p>
+		</div><!-- /section -->
+
+		<div class="section">
+			<h2 class="title--h2" id="p03">执行内容的设置方法</h2>
+			<h3 class="title--h3">
+				执行内容列表的查看方法
+			</h3>
+			<p class="text">
+				在执行内容中，要添加到正在玩的游戏中的处理，是使用称为[事件指令]的命令来进行编辑的。<br/> <br/>事件指令会从列表中注册的命令开始按顺序处理，并反映到正在玩的游戏中。列表中带有[◆]的行显示的是已注册的事件指令。［：］所在的行表示的是本行事件指令的设置内容，或是处理流分支的位置。
+			</p>
+
+			<h3 class="title--h3">
+				事件指令的添加
+			</h3>
+			<p class="text">要将事件指令添加到列表中，请双击带有[◆]的行。在显示的窗口中可以选择要使用的事件指令，并设置处理的具体内容（除部分内容外）。如果双击已经注册了事件指令的行，则该事件指令将以被插入的形式注册到该位置。</p>
+
+			<h3 class="title--h3">
+				通过上下文菜单进行操作
+			</h3>
+			<p class="text--sub">已注册的事件指令会显示带有[◆]的记号。右键单击此行就会显示一个菜单，您可以在其中执行[复制]、[删除]等操作。各项目的内容如下所示。</p>
+			<ul class="ul--2c--line--align mb90px">
+				<li>
+					<h4>新建</h4>
+					<p>在选定的行位置插入一个新的事件指令。</p>
+				</li>
+				<li>
+					<h4>编辑</h4>
+					<p>重新编辑所选行的事件指令设置。</p>
+				</li>
+				<li>
+					<h4>剪切</h4>
+					<p>将所选行的注册内容导入剪贴板并从列表中删除。</p>
+				</li>
+				<li>
+					<h4>复制</h4>
+					<p>将所选行的注册内容导入剪贴板。</p>
+				</li>
+				<li>
+					<h4>粘贴</h4>
+					<p>在所选行的位置插入剪贴板中抓取的内容。</p>
+				</li>
+				<li>
+					<h4>删除</h4>
+					<p>删除所选行的事件命令。</p>
+				</li>
+				<li>
+					<h4>全选</h4>
+					<p>选择列表中的所有编辑对象。</p>
+				</li>
+				<li>
+					<h4>复制为文本</h4>
+					<p>将所选行的注册内容作为文本导入剪贴板。</p>
+				</li>
+				<li>
+					<h4>复制为HTML标签</h4>
+					<p>抓取所选行的HTML到剪贴板。</p>
+				</li>
+				<li>
+					<h4>测试</h4>
+					<p>在游戏画面上测试已选定的事件。</p>
+				</li>
+			</ul>
+
+			<h3 class="title--h3">
+				一次选择多个项目
+			</h3>
+			<p>如果单击列表中的任一行，然后在按住[Shift]键的同时单击另一行，则可以一次性选择该范围内的所有事件指令（显示带有[◆]的方块）。通过右键单击所选项目（以蓝色显示的行），您可以在上下文菜单中一起执行所有操作。但当其中包括分支处理时，只能同时选择同一分支内的所有项目。</p>
+
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>

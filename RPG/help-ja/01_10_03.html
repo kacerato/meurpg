@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  <script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+    function reDo() {
+      if (innerWidth != origWidth || innerHeight != origHeight)
+        location.reload();
+    }
+    if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+      origWidth = innerWidth;
+      origHeight = innerHeight;
+      onresize = reDo;
+    }
+    onerror = null;
+  //]]>
+  </script>
+  <style type="text/css">/*<![CDATA[*/
+
+    < !-- div.WebHelpPopupMenu {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 4;
+      visibility: hidden;
+    }
+
+    p.WebHelpNavBar {
+      text-align: right;
+    }
+
+    -->
+  
+/*]]>*/</style>
+
+  <script type="text/javascript">//<![CDATA[
+
+    gRootRelPath = ".";
+    gCommonRootRelPath = ".";
+    gTopicId = "1.5.0_3";
+  
+//]]></script>
+
+  <script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/common.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+  <script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<script type="text/javascript" src="./whxdata/projectsettings.js"></script>
+  <link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+  <link rel="stylesheet" type="text/css" href="./template/Azure_Blue/topicheader.css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>フロー制御</title>
+  <meta name="topic-status" content="Draft"/>
+
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>フロー制御</title>
+	<link rel="stylesheet" href="assets/css/style.min.css"/>
+</head>
+
+<body>
+  <div class="topic-header rh-hide" id="rh-topic-header" onclick="rh._.goToFullLayout()">
+    <div class="logo">
+    </div>
+    <div class="nav">
+      <div class="title" title="フロー制御">
+        <span>フロー制御</span>
+      </div>
+      <div class="gotohome" title="このページの全文を参照するには、ここをクリックしてください">
+        <span>このページの全文を参照するには、ここをクリックしてください</span>
+      </div>
+    </div>
+  </div>
+  <div class="topic-header-shadow rh-hide" id="rh-topic-header-shadow"></div>
+
+
+
+
+	<div class="main">
+
+		<div class="mainvisual mainvisual--10">
+			<p class="en">RPG TKOOL MZ HELP</p>
+			<h1 class="title--h1">イベントコマンド</h1>
+			<ul class="breadcrumb">
+				<li><a href="01.html">RPGツクールMZ</a></li>
+				<li>&gt;</li>
+				<li><a href="01_10.html">イベントコマンド</a></li>
+				<li>&gt;</li>
+				<li>フロー制御</li>
+			</ul>
+			<img src="assets/img/common/cha10.png" alt="" class="cha"/>
+		</div>
+
+
+		<h1 class="title--h1">フロー制御</h1>
+
+
+		<div class="section" id="p01">
+			<h2 class="title--h2">条件分岐</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img01.png" alt=""/>
+			</div>
+
+			<h3 class="title--h3">機能</h3>
+			<p class="text">指定の条件に合致した場合のみ特別な処理を実行できるように、処理を分岐させるイベントコマンドを設定します。［条件を満たさないときの分岐を作成］を有効にすると、指定の条件を満たさない場合に分岐させることができます。</p>
+
+			<h3 class="title--h3">設定項目</h3>
+			<p class="text--sub">条件は、以下の項目のなかから判定基準とともに指定します。</p>
+
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>スイッチ</h4>
+					<p>指定したスイッチの値を基準とします。対象のスイッチと値（ON／OFF）を指定します。</p>
+				</li>
+				<li>
+					<h4>変数</h4>
+					<p>指定した変数の値を基準とします。条件判定に用いる変数、比較の基準値、比較の方法を指定します。比較の基準値に変数を用いる場合は［変数］を選び、参照する変数を指定します。</p>
+				</li>
+				<li>
+					<h4>セルフスイッチ</h4>
+					<p>指定のセルフスイッチの状態を基準とします。対象のスイッチと判定値（ON／OFF）を指定します。</p>
+				</li>
+				<li>
+					<h4>タイマー</h4>
+					<p>タイマーの残り時間を基準とします。基準の残り時間と判定基準（以上／以下）を指定します。</p>
+				</li>
+				<li>
+					<h4>アクター</h4>
+					<p>指定したアクター基準とします。対象のアクター、参照する内容（パーティにいる／名前／職業／スキル／武器／防具／ステート）、判定基準（具体的な項目）を指定します。</p>
+				</li>
+				<li>
+					<h4>敵キャラ</h4>
+					<p>戦闘中の指定した敵キャラを基準とします。対象の敵キャラと判定基準（出現している／ステート）を指定します。バトルイベントでのみ有効です。</p>
+				</li>
+				<li>
+					<h4>キャラクター</h4>
+					<p>プレイヤーまたはマップイベントの向きを基準とします。対象のキャラクターと向きを指定します。マップイベントでのみ有効です。</p>
+				</li>
+				<li>
+					<h4>乗り物</h4>
+					<p>プレイヤーが指定の乗り物（小型船／大型船／飛行船）に乗っているかどうかを基準とします。</p>
+				</li>
+				<li>
+					<h4>お金</h4>
+					<p>パーティの所持金を基準とします。金額と比較方法（以上／以下）を指定します。</p>
+				</li>
+				<li>
+					<h4>アイテム</h4>
+					<p>パーティが指定のアイテムを持っているかどうかを基準とします。</p>
+				</li>
+				<li>
+					<h4>武器</h4>
+					<p>パーティが指定の武器を持っていることを基準とします。［装備品を含む］を有効にすると、アクターが装備中のものも条件判定の対象とします。</p>
+				</li>
+				<li>
+					<h4>防具</h4>
+					<p>パーティが指定の防具を持っていることを基準とします。［装備品を含む］を有効すると、アクターが装備中のものも条件判定の対象とします。</p>
+				</li>
+				<li>
+					<h4>ボタン</h4>
+					<p>指定のボタンが［押されている］［トリガーされている］［リピートされている］を基準とします。</p>
+					<dl class="dl--default">
+						<dt>押されている</dt>
+						<dd>ボタンが押されている間ずっと、条件を満たしていると判定します。</dd>
+						<dt>トリガーされている</dt>
+						<dd>ボタンが押された瞬間のみ、条件を満たしたと判定します。</dd>
+						<dt>リピートされている</dt>
+						<dd>ボタンが押しっぱなしになっているとき、押された瞬間、24フレーム後、その後6フレームごとに、条件を満たしたと判定します。</dd>
+					</dl>
+				</li>
+				<li>
+					<h4>スクリプト</h4>
+					<p>
+						上級者向け：スクリプトを評価した結果を基準とします。<br/>
+						右クリックするとメニューが表示され、［プラグインヘルプ］を選択するとプラグインのヘルプが表示されます。
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p02">
+			<h2 class="title--h2">ループ</h2>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h3 class="title--h3">機能</h3>
+					<p class="text">繰り返し処理を行なう［ループ］と［以上繰り返し］という制御用のイベントコマンドを追加します。これらの行の間に設定したイベントが繰り返し実行できるようになります。ループ処理の中でさらにループ処理を行なう“多重ループ”も可能です。</p>
+				</li>
+				<li>
+					<h3 class="title--h3">備考</h3>
+					<ul class="ul">
+						<li>［ループ］～［以上繰り返し］内のイベントベントコマンドは無限に繰り返されます。繰り返し処理を終えるには［ループの中断］などのイベントコマンドを使います。</li>
+					</ul>
+				</li>
+			</ul>
+
+		</div><!-- /section -->
+
+		<div class="section" id="p03">
+			<h2 class="title--h2">ループの中断</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>［ループ］のイベントコマンドで繰り返している処理を中断します。実行すると、［以上繰り返し］の次の行に設定したイベントコマンドに処理が移ります。設定項目はありません。</p>
+			
+		</div><!-- /section -->
+
+		<div class="section" id="p04">
+			<h2 class="title--h2">イベント処理の中断</h2>
+			<h3 class="title--h3">機能</h3>
+			<p>実行内容の処理を終了します。これ以降のイベントコマンドは処理されません。設定項目はありません。</p>
+		</div><!-- /section -->
+
+		<div class="section" id="p05">
+			<h2 class="title--h2">コモンイベント</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img02.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">コモンイベントを呼び出します。呼び出したコモンイベントの処理が終了すると、次のイベントコマンドの処理に移ります。</p>
+
+			<h3 class="title--h3">設定内容</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>コモンイベント</h4>
+					<p>呼び出すコモンイベントを指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p06">
+			<h2 class="title--h2">ラベル</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img03.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">［ラベルジャンプ］のイベントコマンドによる処理の移動先（目印）を作成します。</p>
+
+			<h3 class="title--h3">設定内容</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ラベル名</h4>
+					<p>ラベルの名前を指定します。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p07">
+			<h2 class="title--h2">ラベルジャンプ</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img04.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">処理対象の行を指定のラベルの位置に移動します。移動したラベルの次の行のイベントコマンドが処理されます。</p>
+
+			<h3 class="title--h3">設定内容</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>ラベル名</h4>
+					<p>移動先のラベル名を指定します。指定できるラベルは、同一のイベントページの実行内容に設定したものに限られます。</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+		<div class="section" id="p08">
+			<h2 class="title--h2">注釈</h2>
+			<div class="img--center mb40px">
+				<img src="assets/img/01_10_03_img05.png" alt=""/>
+			</div>
+			<h3 class="title--h3">機能</h3>
+			<p class="text">実行内容のリストに任意の文字をメモとして登録します。ゲームのプレイには一切影響しません。</p>
+
+			<h3 class="title--h3">設定内容</h3>
+			<ul class="ul--2c--line mb90px">
+				<li>
+					<h4>注釈</h4>
+					<p>注釈として表示する文字を指定します。<br/>
+						右クリックするとメニューが表示され、［プラグインヘルプ］を選択するとプラグインのヘルプが表示されます。
+					</p>
+				</li>
+			</ul>
+		</div><!-- /section -->
+
+	</div><!-- /main -->
+
+
+
+</body></html>
